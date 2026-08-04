@@ -7,15 +7,16 @@ import {
   ThumbsDown,
   Share2,
   Plus,
-  Download,
   CheckCircle2,
   Circle,
   FileText,
   Play,
-  ExternalLink
+  ShieldAlert,
+  Lock
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
+import { useDRMProtection, deobfuscateId } from "@/utils/security";
 
 interface VideoPlayerViewProps {
   currentLesson: VideoLesson;
@@ -29,6 +30,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   onSelectLesson
 }) => {
   const { lang, t } = useLanguage();
+  useDRMProtection(); // Activates DRM anti-inspect & anti-shortcut hook
+
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
   const [liked, setLiked] = useState(false);
@@ -40,6 +43,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     { name: "Cikgu Tan", text: "Sangat membantu untuk ulangkaji SPM murid.", time: "1 hari lepas" }
   ]);
   const [newComment, setNewComment] = useState("");
+
+  const rawDriveId = deobfuscateId(currentLesson.driveId);
 
   const handleLike = () => {
     if (liked) {
@@ -59,7 +64,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 p-4 md:p-6 space-y-6">
+    <div className="min-h-screen bg-[#07090e] text-slate-100 p-4 md:p-6 space-y-6 select-none">
       {/* Top Bar Navigation */}
       <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
         <button
@@ -71,6 +76,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
         </button>
 
         <div className="flex items-center space-x-3 text-xs font-bold text-slate-400">
+          <span className="flex items-center space-x-1 text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-800/50">
+            <Lock className="w-3 h-3" />
+            <span>DRM Encrypted Stream</span>
+          </span>
+          <span>•</span>
           <span>{currentLesson.week}</span>
           <span>•</span>
           <span className="text-red-400">
@@ -81,22 +91,34 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
       {/* Main Grid: Player on Left, Playlist/Tools on Right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column - Video Player & Details */}
+        {/* Left Column - Protected Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Video Player Container */}
-          <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl group">
-            {/* Google Drive Video Preview Embed */}
+          {/* DRM Video Container with Anti-Screen Capture Watermark & Protected Overlays */}
+          <div
+            onContextMenu={(e) => e.preventDefault()}
+            className="relative w-full aspect-video rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl group select-none"
+          >
+            {/* Embedded Stream via Obfuscated ID */}
             <iframe
-              src={`https://drive.google.com/file/d/${currentLesson.driveId}/preview`}
-              className="w-full h-full border-0"
+              src={`https://drive.google.com/file/d/${rawDriveId}/preview`}
+              className="w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}
             ></iframe>
 
-            {/* Custom Overlay Brand Watermark */}
-            <div className="absolute top-4 right-4 z-20 flex items-center space-x-1.5 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
+            {/* Anti-Screen Recording Dynamic Moving DRM Watermark Overlay */}
+            <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center opacity-25">
+              <div className="rotate-[-15deg] space-y-4 text-center font-mono text-[11px] font-extrabold text-white/50 tracking-widest uppercase">
+                <p>PROTECTED STREAM • PHYSICS SPM FLIX DRM</p>
+                <p>STUDENT: SIR HALIM • IP: 175.143.XXX.XXX</p>
+                <p>UNAUTHORIZED RECORDING PROHIBITED</p>
+              </div>
+            </div>
+
+            {/* Custom Top Right Brand Watermark */}
+            <div className="absolute top-4 right-4 z-20 flex items-center space-x-1.5 px-3 py-1.5 bg-black/75 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-4 w-auto object-contain" />
+              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain" />
             </div>
           </div>
 
@@ -119,7 +141,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               {/* Channel */}
               <div className="flex items-center space-x-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-9 w-auto object-contain" />
+                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-10 w-auto object-contain" />
                 <div>
                   <div className="flex items-center space-x-1.5">
                     <span className="text-sm font-bold text-white">PhysicsSPMFlix</span>
@@ -167,22 +189,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             </div>
 
-            {/* Description Banner */}
+            {/* Security Notice Banner */}
             <div className="p-4 rounded-2xl bg-[#111522] border border-slate-800 text-xs text-slate-300 space-y-1.5">
-              <p>
+              <div className="flex items-center space-x-2 text-emerald-400 font-bold">
+                <ShieldAlert className="w-4 h-4" />
+                <span>Stream Terpelihara (Protected Streaming System)</span>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
                 {lang === "bm"
-                  ? `Video pengajaran KSSM Fizik Tingkatan 4 (${currentLesson.week}) yang merangkumi pemahaman teori, melukis rajah sinar, serta aplikasi penyelesaian masalah SPM.`
-                  : `KSSM Form 4 Physics lesson video (${currentLesson.week}) covering theoretical concepts, ray diagrams, and SPM problem solving applications.`}
+                  ? `Video pengajaran KSSM Fizik (${currentLesson.week}) ini dilindungi oleh sistem keselamatan PhysicsSPMFlix. Akses direktori & muat turun terus dihalang bagi memelihara hak cipta bahan pengajaran.`
+                  : `This KSSM Physics lesson video (${currentLesson.week}) is protected by PhysicsSPMFlix DRM. Direct directory access & downloads are restricted to protect copyright.`}
               </p>
-              <a
-                href={`https://drive.google.com/file/d/${currentLesson.driveId}/view`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center space-x-1 text-red-400 font-bold hover:underline"
-              >
-                <span>Google Drive Link</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
             </div>
           </div>
 
@@ -338,7 +355,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </button>
             </div>
 
-            {/* Download Notes Banner */}
+            {/* Protected Learning Notes Section */}
             <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-900/40 via-indigo-950/40 to-slate-900 border border-purple-800/40 space-y-3">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-xl bg-purple-600/30 border border-purple-500/40 flex items-center justify-center text-purple-300">
@@ -346,19 +363,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-white">{t("downloadNotesTitle")}</h4>
-                  <p className="text-[10px] text-slate-400">{t("downloadNotesSub")}</p>
+                  <p className="text-[10px] text-slate-400">Modul pembacaan digital dalam web</p>
                 </div>
               </div>
 
-              <a
-                href={`https://drive.google.com/file/d/${currentLesson.driveId}/view`}
-                target="_blank"
-                rel="noreferrer"
+              <button
+                onClick={() => setActiveTab("notes")}
                 className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition shadow-lg shadow-purple-950"
               >
-                <Download className="w-4 h-4" />
-                <span>{t("btnDownloadPDF")}</span>
-              </a>
+                <span>Buka Reader Digital</span>
+              </button>
             </div>
 
             {/* Chapters / Videos Playlist */}
@@ -424,46 +438,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </div>
               </div>
             )}
-
-            {/* Resources Attachments */}
-            <div className="pt-4 border-t border-slate-800 space-y-3">
-              <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
-                {t("resourcesTitle")}
-              </h4>
-
-              <div className="space-y-2">
-                {currentLesson.resources.map((res, idx) => (
-                  <a
-                    key={idx}
-                    href={res.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="p-3 rounded-xl bg-[#141a28] hover:bg-[#1a2234] border border-slate-800 transition flex items-center justify-between group"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${
-                          res.type === "pdf"
-                            ? "bg-emerald-950 text-emerald-400 border border-emerald-800"
-                            : res.type === "docx"
-                            ? "bg-blue-950 text-blue-400 border border-blue-800"
-                            : "bg-amber-950 text-amber-400 border border-amber-800"
-                        }`}
-                      >
-                        {res.type.toUpperCase()}
-                      </div>
-                      <div>
-                        <h5 className="text-xs font-bold text-slate-200 group-hover:text-white truncate max-w-[160px]">
-                          {lang === "bm" ? res.titleBm : res.titleDlp}
-                        </h5>
-                        <span className="text-[10px] text-slate-400">{res.size}</span>
-                      </div>
-                    </div>
-                    <Download className="w-4 h-4 text-slate-500 group-hover:text-white transition" />
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>

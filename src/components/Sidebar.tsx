@@ -53,8 +53,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-64 hidden md:flex flex-col bg-[#0b0e17] border-r border-slate-800/80 p-4 space-y-6 h-[calc(100vh-5rem)] overflow-y-auto sticky top-20">
-      {/* Main Navigation - Logo removed from sidebar to prevent duplicate header */}
+    <aside className="w-64 hidden md:flex flex-col bg-[#0b0e17] border-r border-slate-800/80 p-4 space-y-6 h-[calc(100vh-7rem)] overflow-y-auto sticky top-28 select-none">
+      {/* Main Navigation */}
       <div className="space-y-1">
         {mainNav.map((item) => {
           const Icon = item.icon;

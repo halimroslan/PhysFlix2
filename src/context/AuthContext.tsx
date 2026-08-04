@@ -5,6 +5,8 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   signInWithRedirect,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut,
   User
 } from "firebase/auth";
@@ -14,6 +16,8 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
+  loginWithEmail: (email: string, pass: string) => Promise<void>;
+  signupWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
   authError: string | null;
 }
@@ -36,7 +40,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithGoogle = async () => {
     setAuthError(null);
     try {
-      // Force real Google Account verification popup
       await signInWithPopup(auth, googleProvider);
     } catch (error: any) {
       console.warn("Popup blocked or failed, trying redirect fallback:", error);
@@ -53,6 +56,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginWithEmail = async (email: string, pass: string) => {
+    setAuthError(null);
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+    } catch (error: any) {
+      console.error("Email Login Error:", error);
+      setAuthError(error.message || "Gagal log masuk dengan e-mel.");
+    }
+  };
+
+  const signupWithEmail = async (email: string, pass: string) => {
+    setAuthError(null);
+    try {
+      await createUserWithEmailAndPassword(auth, email, pass);
+    } catch (error: any) {
+      console.error("Email Signup Error:", error);
+      setAuthError(error.message || "Gagal mendaftar e-mel baru.");
+    }
+  };
+
   const logout = async () => {
     try {
       await signOut(auth);
@@ -63,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout, authError }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, loginWithEmail, signupWithEmail, logout, authError }}>
       {children}
     </AuthContext.Provider>
   );

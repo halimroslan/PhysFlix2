@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Bell } from "lucide-react";
+import { Search, Bell, LogOut } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useAuth } from "@/context/AuthContext";
 
 interface NavbarProps {
   onSearchChange?: (val: string) => void;
@@ -10,6 +11,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
   const { lang, toggleLang, t } = useLanguage();
+  const { user, logout } = useAuth();
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,13 +21,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
 
   return (
     <header className="sticky top-0 z-40 w-full h-24 md:h-28 glass-nav px-4 md:px-8 flex items-center justify-between gap-6">
-      {/* Massive Prominent Official Branding Logo */}
+      {/* Official Branding Logo - NO GLOW EFFECT */}
       <div className="flex items-center space-x-3 shrink-0 py-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.png"
           alt="PhysicsSPMFlix Logo"
-          className="h-20 md:h-24 lg:h-28 max-w-[280px] md:max-w-[360px] object-contain drop-shadow-[0_10px_20px_rgba(229,9,20,0.3)] hover:scale-105 transition-transform duration-300 cursor-pointer"
+          className="h-20 md:h-24 lg:h-28 max-w-[280px] md:max-w-[360px] object-contain"
         />
       </div>
 
@@ -77,15 +79,37 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
           </span>
         </button>
 
-        {/* User Profile */}
+        {/* Authenticated User Profile */}
         <div className="flex items-center space-x-3 border-l border-slate-800 pl-4">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/30">
-            SH
-          </div>
+          {user?.photoURL ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={user.photoURL}
+              alt={user.displayName || "User"}
+              className="w-10 h-10 rounded-full ring-2 ring-red-500/30 object-cover"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/30">
+              {user?.displayName ? user.displayName.substring(0, 2).toUpperCase() : "SH"}
+            </div>
+          )}
+
           <div className="hidden lg:block text-left">
-            <span className="block text-xs font-bold text-white">Sir Halim</span>
-            <span className="block text-[10px] text-slate-400">{t("teacherRole")}</span>
+            <span className="block text-xs font-bold text-white max-w-[120px] truncate">
+              {user?.displayName || "Sir Halim"}
+            </span>
+            <span className="block text-[10px] text-slate-400 max-w-[120px] truncate">
+              {user?.email || t("teacherRole")}
+            </span>
           </div>
+
+          <button
+            onClick={logout}
+            className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/60 rounded-lg transition"
+            title="Log Keluar"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </header>

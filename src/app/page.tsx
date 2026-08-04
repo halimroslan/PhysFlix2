@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { HeroSpotlight } from "@/components/HeroSpotlight";
@@ -13,16 +14,18 @@ import { FormulaSheetModal } from "@/components/FormulaSheetModal";
 import { DictionaryModal } from "@/components/DictionaryModal";
 import { QuizModal } from "@/components/QuizModal";
 import { CalculatorModal } from "@/components/CalculatorModal";
+import { LoginPage } from "@/components/LoginPage";
 import {
   allVideoLessons,
   form4VideoLessons,
   form5VideoLessons,
   VideoLesson
 } from "@/data/physicsData";
-import { Play, BookOpen, GraduationCap, Search } from "lucide-react";
+import { Play, BookOpen, GraduationCap, Search, Loader2 } from "lucide-react";
 
 function MainDashboard() {
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
+  const { user, loading } = useAuth();
   const [currentTab, setCurrentTab] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState<VideoLesson | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,6 +35,21 @@ function MainDashboard() {
   const [isDictOpen, setIsDictOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
+
+  // If Auth Loading
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#07090e] flex items-center justify-center text-white space-x-3">
+        <Loader2 className="w-8 h-8 text-red-600 animate-spin" />
+        <span className="text-sm font-bold">Memuatkan Pengesahan Firebase...</span>
+      </div>
+    );
+  }
+
+  // If Not Authenticated -> Require Google Sign-In Login Page!
+  if (!user) {
+    return <LoginPage />;
+  }
 
   // Filter lessons based on search
   const filteredLessons = allVideoLessons.filter((item) => {
@@ -261,8 +279,10 @@ function MainDashboard() {
 
 export default function Home() {
   return (
-    <LanguageProvider>
-      <MainDashboard />
-    </LanguageProvider>
+    <AuthProvider>
+      <LanguageProvider>
+        <MainDashboard />
+      </LanguageProvider>
+    </AuthProvider>
   );
 }

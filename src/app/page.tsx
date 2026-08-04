@@ -36,20 +36,9 @@ function MainDashboard() {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
 
-  // If Auth Loading
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#07090e] flex items-center justify-center text-white space-x-3">
-        <Loader2 className="w-8 h-8 text-red-600 animate-spin" />
-        <span className="text-sm font-bold">Memuatkan Pengesahan Firebase...</span>
-      </div>
-    );
-  }
-
-  // If Not Authenticated -> Require Google Sign-In Login Page!
-  if (!user) {
-    return <LoginPage />;
-  }
+  // [TEMPORARILY DISABLED] Login check disabled as per user request
+  // if (loading) { ... }
+  // if (!user) { return <LoginPage />; }
 
   // Filter lessons based on search
   const filteredLessons = allVideoLessons.filter((item) => {

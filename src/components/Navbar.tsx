@@ -103,13 +103,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
             </span>
           </div>
 
-          <button
-            onClick={logout}
-            className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/60 rounded-lg transition"
-            title="Log Keluar"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
+          {user && (
+            <button
+              onClick={logout}
+              className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/60 rounded-lg transition"
+              title="Log Keluar"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
     </header>

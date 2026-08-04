@@ -6,23 +6,12 @@ import {
   ThumbsUp,
   ThumbsDown,
   Share2,
-  Bookmark,
   Plus,
   Download,
   CheckCircle2,
   Circle,
   FileText,
-  FileSpreadsheet,
-  FileCode,
-  Volume2,
-  Maximize2,
-  Settings,
-  RotateCcw,
-  RotateCw,
   Play,
-  Pause,
-  MessageSquare,
-  Sparkles,
   ExternalLink
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -40,13 +29,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   onSelectLesson
 }) => {
   const { lang, t } = useLanguage();
-  const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa" | "chapters">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(1240);
   const [isSaved, setIsSaved] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [speed, setSpeed] = useState("1.0x");
   const [comments, setComments] = useState([
     { name: "Ahmad Rizky", text: "Terbaik Sir! Baru faham melukis sinar selari dan sinar fokus.", time: "2 jam lepas" },
     { name: "Siti Sarah", text: "Fast explanation and clear graphics for DLP students!", time: "5 jam lepas" },
@@ -108,12 +95,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Custom Overlay Brand Watermark */}
             <div className="absolute top-4 right-4 z-20 flex items-center space-x-1.5 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
-              <div className="w-3.5 h-3.5 rounded-full bg-red-600 flex items-center justify-center text-[8px] font-black text-white">
-                S
-              </div>
-              <span className="text-[10px] font-bold text-white tracking-tight">
-                SHP<span className="text-red-500">Flix</span>
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-4 w-auto object-contain" />
             </div>
           </div>
 
@@ -135,12 +118,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-b border-slate-800/80 py-3">
               {/* Channel */}
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center text-white font-black text-sm ring-2 ring-red-500/30">
-                  S
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-9 w-auto object-contain" />
                 <div>
                   <div className="flex items-center space-x-1.5">
-                    <span className="text-sm font-bold text-white">SHPFlix Physics</span>
+                    <span className="text-sm font-bold text-white">PhysicsSPMFlix</span>
                     <span className="w-3.5 h-3.5 rounded-full bg-blue-500 text-white text-[9px] flex items-center justify-center font-bold">
                       ✓
                     </span>

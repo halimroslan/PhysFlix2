@@ -54,19 +54,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside className="w-64 hidden md:flex flex-col bg-[#0b0e17] border-r border-slate-800/80 p-4 space-y-6 h-[calc(100vh-4rem)] overflow-y-auto sticky top-16">
-      {/* Brand logo if sidebar expanded */}
-      <div className="flex items-center space-x-3 px-2">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center font-black text-white text-2xl shadow-lg shadow-red-950">
-          S
-        </div>
-        <div>
-          <div className="text-lg font-black text-white tracking-tight leading-none">
-            SHP<span className="text-red-500">Flix</span>
-          </div>
-          <span className="text-[10px] text-slate-400 font-medium">
-            Physics. Anytime. Anywhere.
-          </span>
-        </div>
+      {/* Official Branding Logo in Sidebar */}
+      <div className="flex items-center space-x-3 px-2 py-1">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="PhysicsSPMFlix Logo"
+          className="h-10 w-auto object-contain drop-shadow"
+        />
       </div>
 
       {/* Main Navigation */}

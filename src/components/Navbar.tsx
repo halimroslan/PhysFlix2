@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Bell, ChevronDown, Sparkles } from "lucide-react";
+import { Search, Bell } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface NavbarProps {
@@ -19,22 +19,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
 
   return (
     <header className="sticky top-0 z-40 w-full h-16 glass-nav px-4 md:px-6 flex items-center justify-between gap-4">
-      {/* Brand logo for mobile / header */}
-      <div className="flex items-center space-x-3">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-red-700 to-red-500 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-red-900/40">
-          S
-        </div>
-        <div className="hidden sm:block">
-          <h1 className="text-base font-extrabold text-white tracking-tight flex items-center gap-1.5">
-            Physics<span className="text-red-500">SPM</span>Flix
-            <span className="px-1.5 py-0.2 text-[9px] font-bold text-red-400 bg-red-950/60 border border-red-800/60 rounded">
-              PRO
-            </span>
-          </h1>
-          <p className="text-[10px] text-slate-400 font-medium">
-            {t("tagline")}
-          </p>
-        </div>
+      {/* Official Branding Logo */}
+      <div className="flex items-center space-x-3 shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="PhysicsSPMFlix Logo"
+          className="h-10 md:h-11 w-auto object-contain drop-shadow-md"
+        />
       </div>
 
       {/* Center Search Bar */}

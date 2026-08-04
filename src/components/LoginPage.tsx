@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { ShieldCheck, AlertCircle, Lock, Key } from "lucide-react";
+import { ShieldCheck, AlertCircle, Lock, ExternalLink } from "lucide-react";
 
 export const LoginPage: React.FC = () => {
   const { signInWithGoogle, authError } = useAuth();
@@ -19,6 +19,7 @@ export const LoginPage: React.FC = () => {
     }
   };
 
+  const isIdentityToolkitBlocked = authError && (authError.includes("identitytoolkit") || authError.includes("projectconfigservice"));
   const isApiKeyInvalid = authError && authError.includes("api-key-not-valid");
 
   return (
@@ -50,16 +51,32 @@ export const LoginPage: React.FC = () => {
 
         {/* Error Alert Message if Any */}
         {authError && (
-          <div className="w-full p-4 bg-red-950/80 border border-red-800/80 rounded-2xl flex items-start space-x-3 text-left text-xs text-red-300">
-            <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-            <div className="flex-1 space-y-1">
-              <span className="font-bold block text-red-200">Pengesahan Gagal:</span>
-              <p className="leading-relaxed">
-                {isApiKeyInvalid
-                  ? "Firebase API Key rasmi belum dimasukkan. Sila berikan Firebase Web API Key daripada Firebase Console tuan (Project Settings ➔ General ➔ Web App) kepada saya atau tambah variabel NEXT_PUBLIC_FIREBASE_API_KEY di Vercel."
-                  : authError}
-              </p>
+          <div className="w-full p-4 bg-red-950/80 border border-red-800/80 rounded-2xl flex items-start space-x-3 text-left text-xs text-red-300 space-y-2 flex-col">
+            <div className="flex items-center space-x-2">
+              <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+              <span className="font-bold text-red-200">Tetapan Firebase Perlu Diaktifkan:</span>
             </div>
+            <p className="leading-relaxed text-[11px]">
+              {isIdentityToolkitBlocked ? (
+                <>
+                  Penjelajah Google Sign-In belum diaktifkan di Firebase Console tuan.
+                  <br />
+                  <a
+                    href="https://console.firebase.google.com/u/0/project/physicsspmflix/authentication/providers"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center space-x-1 text-amber-400 font-bold hover:underline mt-1"
+                  >
+                    <span>Klik Sini Untuk Aktifkan Google Provider</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </>
+              ) : isApiKeyInvalid ? (
+                "Firebase Web API Key belum sah di Firebase Console."
+              ) : (
+                authError
+              )}
+            </p>
           </div>
         )}
 

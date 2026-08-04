@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "gen-lang-client-0414668770",
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "gen-lang-client-0414668770.firebasestorage.app",
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "414396564667",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:414396564667:web:998d4beaae834cfc99159e"
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:414396564667:web:ec730cf305646c5f99159e"
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

@@ -45,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: "continue", label: t("navContinue"), icon: PlayCircle },
     { id: "topics", label: t("navBrowse"), icon: Grid },
     { id: "form4", label: t("navForm4"), icon: BookOpen, badge: "43 Videos" },
-    { id: "form5", label: t("navForm5"), icon: GraduationCap },
+    { id: "form5", label: t("navForm5"), icon: GraduationCap, badge: "38 Videos" },
     { id: "spm", label: t("navSPMRevision"), icon: Target },
     { id: "experiments", label: t("navExperiments"), icon: FlaskConical },
     { id: "playlists", label: t("navPlaylists"), icon: ListVideo },
@@ -53,18 +53,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-64 hidden md:flex flex-col bg-[#0b0e17] border-r border-slate-800/80 p-4 space-y-6 h-[calc(100vh-4rem)] overflow-y-auto sticky top-16">
-      {/* Official Branding Logo in Sidebar */}
-      <div className="flex items-center space-x-3 px-2 py-1">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo.png"
-          alt="PhysicsSPMFlix Logo"
-          className="h-10 w-auto object-contain drop-shadow"
-        />
-      </div>
-
-      {/* Main Navigation */}
+    <aside className="w-64 hidden md:flex flex-col bg-[#0b0e17] border-r border-slate-800/80 p-4 space-y-6 h-[calc(100vh-5rem)] overflow-y-auto sticky top-20">
+      {/* Main Navigation - Logo removed from sidebar to prevent duplicate header */}
       <div className="space-y-1">
         {mainNav.map((item) => {
           const Icon = item.icon;
@@ -151,7 +141,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Profile Card Footer */}
       <div className="mt-auto pt-4 border-t border-slate-800/80">
         <div className="p-3 bg-[#131724] border border-slate-800 rounded-xl flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/20">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/20">
             SH
           </div>
           <div className="flex-1 overflow-hidden">

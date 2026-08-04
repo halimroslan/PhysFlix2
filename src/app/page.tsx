@@ -13,8 +13,13 @@ import { FormulaSheetModal } from "@/components/FormulaSheetModal";
 import { DictionaryModal } from "@/components/DictionaryModal";
 import { QuizModal } from "@/components/QuizModal";
 import { CalculatorModal } from "@/components/CalculatorModal";
-import { allVideoLessons, VideoLesson } from "@/data/physicsData";
-import { Play, BookOpen, Search, Sparkles } from "lucide-react";
+import {
+  allVideoLessons,
+  form4VideoLessons,
+  form5VideoLessons,
+  VideoLesson
+} from "@/data/physicsData";
+import { Play, BookOpen, GraduationCap, Search } from "lucide-react";
 
 function MainDashboard() {
   const { lang, t } = useLanguage();
@@ -28,7 +33,7 @@ function MainDashboard() {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
 
-  // Filter lessons based on search or selected chapter
+  // Filter lessons based on search
   const filteredLessons = allVideoLessons.filter((item) => {
     const q = searchQuery.toLowerCase();
     const title = lang === "bm" ? item.titleBm.toLowerCase() : item.titleDlp.toLowerCase();
@@ -135,12 +140,61 @@ function MainDashboard() {
                   </p>
                 </div>
                 <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
-                  43 Video Lengkap
+                  {form4VideoLessons.length} Video Lengkap
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {allVideoLessons.map((item) => (
+                {form4VideoLessons.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handlePlayLesson(item)}
+                    className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg flex flex-col justify-between"
+                  >
+                    <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
+                      <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition shadow-xl">
+                        <Play className="w-4 h-4 fill-white ml-0.5" />
+                      </div>
+                      <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
+                        {item.duration}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
+                      <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2">
+                        {lang === "bm" ? item.titleBm : item.titleDlp}
+                      </h4>
+                      <p className="text-[10px] text-slate-400 pt-1">
+                        {lang === "bm" ? `Bab ${item.chapterNum}: ${item.chapterBm}` : `Ch ${item.chapterNum}: ${item.chapterDlp}`}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : currentTab === "form5" ? (
+            /* Dedicated Form 5 Video Catalog View */
+            <div className="space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
+                    <GraduationCap className="w-6 h-6 text-red-500" />
+                    {lang === "bm" ? "Katalog Video Fizik Tingkatan 5 (KSSM)" : "Form 5 SPM Physics Video Catalog"}
+                  </h2>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {lang === "bm"
+                      ? "Disusun mengikut nombor minggu (T5 M1, T5 M2... T5 M39) dari Google Drive"
+                      : "Sorted according to week number (T5 M1, T5 M2... T5 M39) from Google Drive"}
+                  </p>
+                </div>
+                <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
+                  {form5VideoLessons.length} Video Lengkap
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {form5VideoLessons.map((item) => (
                   <div
                     key={item.id}
                     onClick={() => handlePlayLesson(item)}

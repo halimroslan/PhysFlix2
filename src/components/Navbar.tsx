@@ -18,38 +18,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full h-16 glass-nav px-4 md:px-6 flex items-center justify-between gap-4">
-      {/* Official Branding Logo */}
-      <div className="flex items-center space-x-3 shrink-0">
+    <header className="sticky top-0 z-40 w-full h-20 glass-nav px-4 md:px-8 flex items-center justify-between gap-6">
+      {/* Prominent Large Official Branding Logo */}
+      <div className="flex items-center space-x-3 shrink-0 py-1">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.png"
           alt="PhysicsSPMFlix Logo"
-          className="h-10 md:h-11 w-auto object-contain drop-shadow-md"
+          className="h-14 md:h-16 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300 cursor-pointer"
         />
       </div>
 
       {/* Center Search Bar */}
       <div className="flex-1 max-w-xl mx-2">
         <div className="relative">
-          <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-4 top-3 w-4 h-4 text-slate-400" />
           <input
             type="text"
             value={searchValue}
             onChange={handleSearch}
             placeholder={t("searchPlaceholder")}
-            className="w-full pl-10 pr-4 py-2 bg-[#121622]/90 border border-slate-800 rounded-full text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition"
+            className="w-full pl-11 pr-4 py-2.5 bg-[#121622]/90 border border-slate-800 rounded-full text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition shadow-inner"
           />
         </div>
       </div>
 
       {/* Right controls */}
-      <div className="flex items-center space-x-3 md:space-x-4">
+      <div className="flex items-center space-x-3 md:space-x-5">
         {/* Minimalist BM | DLP Language Toggle */}
-        <div className="flex items-center bg-[#131826] p-1 rounded-full border border-slate-800">
+        <div className="flex items-center bg-[#131826] p-1 rounded-full border border-slate-800 shadow-md">
           <button
             onClick={() => lang !== "bm" && toggleLang()}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
               lang === "bm"
                 ? "bg-red-600 text-white shadow-md shadow-red-950"
                 : "text-slate-400 hover:text-white"
@@ -59,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
           </button>
           <button
             onClick={() => lang !== "dlp" && toggleLang()}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
               lang === "dlp"
                 ? "bg-red-600 text-white shadow-md shadow-red-950"
                 : "text-slate-400 hover:text-white"
@@ -78,8 +78,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
         </button>
 
         {/* User Profile */}
-        <div className="flex items-center space-x-2 border-l border-slate-800 pl-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/30">
+        <div className="flex items-center space-x-2.5 border-l border-slate-800 pl-4">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/30">
             SH
           </div>
           <div className="hidden lg:block text-left">

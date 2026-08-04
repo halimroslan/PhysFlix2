@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { ShieldCheck, AlertCircle, Lock, ExternalLink } from "lucide-react";
+import { ShieldCheck, AlertCircle, Lock, ExternalLink, RefreshCw } from "lucide-react";
 
 export const LoginPage: React.FC = () => {
   const { signInWithGoogle, authError } = useAuth();
@@ -20,7 +20,7 @@ export const LoginPage: React.FC = () => {
   };
 
   const isIdentityToolkitBlocked = authError && (authError.includes("identitytoolkit") || authError.includes("projectconfigservice"));
-  const isApiKeyInvalid = authError && authError.includes("api-key-not-valid");
+  const isUnauthorizedDomain = authError && authError.includes("unauthorized-domain");
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col justify-center items-center p-4 relative overflow-hidden select-none">
@@ -54,29 +54,47 @@ export const LoginPage: React.FC = () => {
           <div className="w-full p-4 bg-red-950/80 border border-red-800/80 rounded-2xl flex items-start space-x-3 text-left text-xs text-red-300 space-y-2 flex-col">
             <div className="flex items-center space-x-2">
               <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
-              <span className="font-bold text-red-200">Tetapan Firebase Perlu Diaktifkan:</span>
+              <span className="font-bold text-red-200">Perhatian Firebase Auth:</span>
             </div>
-            <p className="leading-relaxed text-[11px]">
+            
+            <div className="leading-relaxed text-[11px] space-y-1.5 w-full">
               {isIdentityToolkitBlocked ? (
-                <>
-                  Penjelajah Google Sign-In belum diaktifkan di Firebase Console tuan.
-                  <br />
+                <div>
+                  <p>
+                    Kunci API Google Cloud menyekat <strong>Identity Toolkit API</strong>.
+                  </p>
                   <a
-                    href="https://console.firebase.google.com/u/0/project/physicsspmflix/authentication/providers"
+                    href="https://console.cloud.google.com/apis/credentials?project=physicsspmflix"
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center space-x-1 text-amber-400 font-bold hover:underline mt-1"
                   >
-                    <span>Klik Sini Untuk Aktifkan Google Provider</span>
+                    <span>Klik Sini Untuk Buka Google Cloud Credentials</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
-                </>
-              ) : isApiKeyInvalid ? (
-                "Firebase Web API Key belum sah di Firebase Console."
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    (Pilih API Key ➔ Tukar API Restrictions kepada &quot;Don&apos;t restrict key&quot; ➔ Save)
+                  </p>
+                </div>
+              ) : isUnauthorizedDomain ? (
+                <div>
+                  <p>
+                    Domain <code>physicsflix.vercel.app</code> belum didaftarkan di Authorized Domains.
+                  </p>
+                  <a
+                    href="https://console.firebase.google.com/u/0/project/physicsspmflix/authentication/settings"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center space-x-1 text-amber-400 font-bold hover:underline mt-1"
+                  >
+                    <span>Klik Sini Untuk Tambah Domain Di Firebase Settings</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
               ) : (
-                authError
+                <p className="font-mono text-[10px] text-red-300 break-all">{authError}</p>
               )}
-            </p>
+            </div>
           </div>
         )}
 

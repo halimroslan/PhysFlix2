@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { ShieldCheck, AlertCircle, Lock, ExternalLink, RefreshCw } from "lucide-react";
+import { ShieldCheck, AlertCircle, Lock, ExternalLink } from "lucide-react";
 
 export const LoginPage: React.FC = () => {
   const { signInWithGoogle, authError } = useAuth();
@@ -54,45 +54,20 @@ export const LoginPage: React.FC = () => {
           <div className="w-full p-4 bg-red-950/80 border border-red-800/80 rounded-2xl flex items-start space-x-3 text-left text-xs text-red-300 space-y-2 flex-col">
             <div className="flex items-center space-x-2">
               <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
-              <span className="font-bold text-red-200">Perhatian Firebase Auth:</span>
+              <span className="font-bold text-red-200">Ralat Pengesahan Firebase:</span>
             </div>
             
-            <div className="leading-relaxed text-[11px] space-y-1.5 w-full">
-              {isIdentityToolkitBlocked ? (
+            <div className="leading-relaxed text-[11px] space-y-2 w-full">
+              <p className="font-mono text-[10px] text-amber-300 bg-black/40 p-2 rounded-lg break-all">
+                {authError}
+              </p>
+
+              {isIdentityToolkitBlocked && (
                 <div>
                   <p>
-                    Kunci API Google Cloud menyekat <strong>Identity Toolkit API</strong>.
-                  </p>
-                  <a
-                    href="https://console.cloud.google.com/apis/credentials?project=physicsspmflix"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center space-x-1 text-amber-400 font-bold hover:underline mt-1"
-                  >
-                    <span>Klik Sini Untuk Buka Google Cloud Credentials</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                  <p className="text-[10px] text-slate-400 mt-1">
-                    (Pilih API Key ➔ Tukar API Restrictions kepada &quot;Don&apos;t restrict key&quot; ➔ Save)
+                    Sila pastikan <strong>Google Sign-In Provider</strong> telah di-Enable di dalam projek Firebase ini.
                   </p>
                 </div>
-              ) : isUnauthorizedDomain ? (
-                <div>
-                  <p>
-                    Domain <code>physicsflix.vercel.app</code> belum didaftarkan di Authorized Domains.
-                  </p>
-                  <a
-                    href="https://console.firebase.google.com/u/0/project/physicsspmflix/authentication/settings"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center space-x-1 text-amber-400 font-bold hover:underline mt-1"
-                  >
-                    <span>Klik Sini Untuk Tambah Domain Di Firebase Settings</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              ) : (
-                <p className="font-mono text-[10px] text-red-300 break-all">{authError}</p>
               )}
             </div>
           </div>
@@ -132,7 +107,7 @@ export const LoginPage: React.FC = () => {
         {/* Security badge footer */}
         <div className="pt-4 border-t border-slate-800/80 w-full flex items-center justify-center space-x-2 text-[11px] text-slate-500 font-semibold">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Pengesahan Akaun Firebase Terkawal (physicsspmflix)</span>
+          <span>Pengesahan Akaun Firebase Terkawal</span>
         </div>
       </div>
     </div>

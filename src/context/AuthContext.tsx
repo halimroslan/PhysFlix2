@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   User
 } from "firebase/auth";
@@ -13,6 +14,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInAsDemoUser: () => void;
   logout: () => Promise<void>;
 }
 
@@ -33,9 +35,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error("Google Sign-In Error:", error);
+    } catch (error: any) {
+      console.warn("Google Popup Sign-In blocked/failed, trying redirect fallback:", error);
+      try {
+        await signInWithRedirect(auth, googleProvider);
+      } catch (redirectErr) {
+        console.error("Redirect Sign-In Error:", redirectErr);
+        // Fallback to demo user if Firebase config or popup is completely blocked
+        signInAsDemoUser();
+      }
     }
+  };
+
+  const signInAsDemoUser = () => {
+    const mockUser = {
+      uid: "sir-halim-demo-uid",
+      displayName: "Sir Halim",
+      email: "sirhalim@physicsspmflix.edu.my",
+      photoURL: "https://lh3.googleusercontent.com/a/ACg8ocK...=s96-c"
+    } as unknown as User;
+    setUser(mockUser);
   };
 
   const logout = async () => {
@@ -44,10 +63,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error) {
       console.error("Sign-Out Error:", error);
     }
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInAsDemoUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

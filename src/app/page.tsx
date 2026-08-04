@@ -1,69 +1,214 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState } from "react";
+import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
+import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
+import { HeroSpotlight } from "@/components/HeroSpotlight";
+import { ContinueWatching } from "@/components/ContinueWatching";
+import { TopPicks } from "@/components/TopPicks";
+import { RevisionCollections } from "@/components/RevisionCollections";
+import { VideoPlayerView } from "@/components/VideoPlayerView";
+import { FormulaSheetModal } from "@/components/FormulaSheetModal";
+import { DictionaryModal } from "@/components/DictionaryModal";
+import { QuizModal } from "@/components/QuizModal";
+import { CalculatorModal } from "@/components/CalculatorModal";
+import { allVideoLessons, VideoLesson } from "@/data/physicsData";
+import { Play, BookOpen, Search, Sparkles } from "lucide-react";
+
+function MainDashboard() {
+  const { lang, t } = useLanguage();
+  const [currentTab, setCurrentTab] = useState("home");
+  const [selectedLesson, setSelectedLesson] = useState<VideoLesson | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Modals
+  const [isFormulaOpen, setIsFormulaOpen] = useState(false);
+  const [isDictOpen, setIsDictOpen] = useState(false);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [isCalcOpen, setIsCalcOpen] = useState(false);
+
+  // Filter lessons based on search or selected chapter
+  const filteredLessons = allVideoLessons.filter((item) => {
+    const q = searchQuery.toLowerCase();
+    const title = lang === "bm" ? item.titleBm.toLowerCase() : item.titleDlp.toLowerCase();
+    const ch = lang === "bm" ? item.chapterBm.toLowerCase() : item.chapterDlp.toLowerCase();
+    return (
+      title.includes(q) ||
+      ch.includes(q) ||
+      item.week.toLowerCase().includes(q)
+    );
+  });
+
+  const handlePlayLesson = (lesson: VideoLesson) => {
+    setSelectedLesson(lesson);
+    setCurrentTab("playing");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSelectTopic = (chapterNum: number) => {
+    const topicLesson = allVideoLessons.find((l) => l.chapterNum === chapterNum) || allVideoLessons[0];
+    handlePlayLesson(topicLesson);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans">
+      {/* Navbar */}
+      <Navbar onSearchChange={(val) => setSearchQuery(val)} />
+
+      <div className="flex-1 flex">
+        {/* Sidebar */}
+        <Sidebar
+          currentTab={currentTab}
+          onTabChange={(tab) => {
+            setCurrentTab(tab);
+            if (tab !== "playing") setSelectedLesson(null);
+          }}
+          onOpenFormula={() => setIsFormulaOpen(true)}
+          onOpenDict={() => setIsDictOpen(true)}
+          onOpenQuiz={() => setIsQuizOpen(true)}
+          onOpenCalc={() => setIsCalcOpen(true)}
+        />
+
+        {/* Main Content Area */}
+        <main className="flex-1 p-4 md:p-8 space-y-8 max-w-7xl mx-auto overflow-x-hidden">
+          {/* Active View Switch */}
+          {currentTab === "playing" && selectedLesson ? (
+            <VideoPlayerView
+              currentLesson={selectedLesson}
+              onBack={() => setCurrentTab("home")}
+              onSelectLesson={(lesson) => setSelectedLesson(lesson)}
+            />
+          ) : searchQuery.trim() !== "" ? (
+            /* Search Results View */
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3">
+                <Search className="w-6 h-6 text-red-500" />
+                <h2 className="text-xl font-extrabold text-white">
+                  {lang === "bm" ? `Hasil Carian: "${searchQuery}"` : `Search Results for: "${searchQuery}"`}
+                </h2>
+                <span className="text-xs text-slate-400">({filteredLessons.length} video)</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {filteredLessons.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handlePlayLesson(item)}
+                    className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg"
+                  >
+                    <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
+                      <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition">
+                        <Play className="w-4 h-4 fill-white ml-0.5" />
+                      </div>
+                      <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
+                        {item.duration}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
+                      <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-1">
+                        {lang === "bm" ? item.titleBm : item.titleDlp}
+                      </h4>
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        {lang === "bm" ? `Tingkatan ${item.form} • Bab ${item.chapterNum}` : `Form ${item.form} • Chapter ${item.chapterNum}`}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : currentTab === "form4" ? (
+            /* Dedicated Form 4 Video Catalog View */
+            <div className="space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
+                    <BookOpen className="w-6 h-6 text-red-500" />
+                    {lang === "bm" ? "Katalog Video Fizik Tingkatan 4 (KSSM)" : "Form 4 SPM Physics Video Catalog"}
+                  </h2>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {lang === "bm"
+                      ? "Disusun mengikut nombor minggu (T4 M1, T4 M2... T4 M39) dari Google Drive"
+                      : "Sorted according to week number (T4 M1, T4 M2... T4 M39) from Google Drive"}
+                  </p>
+                </div>
+                <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
+                  43 Video Lengkap
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {allVideoLessons.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handlePlayLesson(item)}
+                    className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg flex flex-col justify-between"
+                  >
+                    <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
+                      <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition shadow-xl">
+                        <Play className="w-4 h-4 fill-white ml-0.5" />
+                      </div>
+                      <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
+                        {item.duration}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
+                      <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2">
+                        {lang === "bm" ? item.titleBm : item.titleDlp}
+                      </h4>
+                      <p className="text-[10px] text-slate-400 pt-1">
+                        {lang === "bm" ? `Bab ${item.chapterNum}: ${item.chapterBm}` : `Ch ${item.chapterNum}: ${item.chapterDlp}`}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Standard Dashboard View matching Image 1 */
+            <>
+              {/* Hero Spotlight */}
+              <HeroSpotlight
+                featuredLesson={allVideoLessons[38]} // T4 M36 Optics lesson
+                onPlay={handlePlayLesson}
+              />
+
+              {/* Continue Watching Row */}
+              <ContinueWatching
+                lessons={allVideoLessons}
+                onPlay={handlePlayLesson}
+              />
+
+              {/* Top Picks for You Categories */}
+              <TopPicks onSelectTopic={handleSelectTopic} />
+
+              {/* SPM Revision Collections */}
+              <RevisionCollections
+                onOpenQuiz={() => setIsQuizOpen(true)}
+                onOpenFormula={() => setIsFormulaOpen(true)}
+              />
+            </>
+          )}
+        </main>
+      </div>
+
+      {/* Modals */}
+      <FormulaSheetModal isOpen={isFormulaOpen} onClose={() => setIsFormulaOpen(false)} />
+      <DictionaryModal isOpen={isDictOpen} onClose={() => setIsDictOpen(false)} />
+      <QuizModal isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
+      <CalculatorModal isOpen={isCalcOpen} onClose={() => setIsCalcOpen(false)} />
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <LanguageProvider>
+      <MainDashboard />
+    </LanguageProvider>
   );
 }

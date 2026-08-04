@@ -26,7 +26,7 @@ export interface VideoLesson {
 
 export const rawForm4Videos = [
   {
-    driveId: "1hMp0FStdmyhvsn4jBHI0TUmxCPEig4ar",
+    driveId: "cmE0Z2lFUEN4bVVUMElIQmo0bnN2aHltZHRTRjBwTWgx",
     week: "T4 M1",
     weekNum: 1,
     titleBm: "T4 M1 1.1 Kuantiti Fizik",
@@ -40,7 +40,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Base Quantities", "Derived Quantities", "Scalar Quantities", "Vector Quantities"],
   },
   {
-    driveId: "14GQJv5QfpAQ6r9b7vBLo9D0LIA6ayoQA",
+    driveId: "QVFveWE2QUlMMEQ5b0xCdjdiOXI2UUFwZlE1dkpRRzQx",
     week: "T4 M2",
     weekNum: 2,
     titleBm: "T4 M2 1.2a Penyiasatan Saintifik",
@@ -54,7 +54,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Plotting Graphs", "Graph Gradient", "Manipulated Variable"],
   },
   {
-    driveId: "100_A8Kq28aiXou-pe4yHcW05XDNZEOYh",
+    driveId: "aFlPRVpORFg1MFdjSHk0ZXAtdW9YaWE4MnFLOEFfMDAx",
     week: "T4 M3",
     weekNum: 3,
     titleBm: "T4 M3 1.2b Penyiasatan Saintifik",
@@ -68,7 +68,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Graph Analysis", "Variable Relationship", "Systematic Error"],
   },
   {
-    driveId: "1_CvQXW3SmIbDkCCBuj1kW3HI2waFz_ao",
+    driveId: "b2FfekZhdzJJSDNXazFqdUJDQ2tEYkltUzNXWFF2Q18x",
     week: "T4 M5",
     weekNum: 5,
     titleBm: "T4 M5 2.2 Graf Gerakan Linear",
@@ -82,7 +82,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["s-t Graph", "v-t Graph", "Velocity & Acceleration"],
   },
   {
-    driveId: "12xM6KSNg_LMjXEQexMDBWwW9NzRmr3fv",
+    driveId: "dmYzcm1Sek45V3dXQkRNeGVRRVhqTUxfZ05TSzZNeDIx",
     week: "T4 M5",
     weekNum: 5.5,
     titleBm: "T4 M5 2.2b Graf Gerakan Linear & 2.3 Jatuh Bebas Ulangkaji",
@@ -96,7 +96,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Area Under Graph", "Gravitational Acceleration g", "Displacement"],
   },
   {
-    driveId: "13qAp29bkK1X_heemz9wHZ6XsgSy02ADf",
+    driveId: "ZkRBMjB5U2dzWDZaSHc5em1lZWhfWDFLa2I5MnBBcTMx",
     week: "T4 M6",
     weekNum: 6,
     titleBm: "T4 M6 2.3 Gerakan Jatuh Bebas",
@@ -110,7 +110,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Vacuum", "Terminal Velocity", "Air Resistance"],
   },
   {
-    driveId: "1LauyOKHrl9ETJRmVqTSVP8K2SC6SitJ8",
+    driveId: "OEp0aVM2Q1MySzhQVlNUcVZtUkpURTlsckhLT3l1YUwx",
     week: "T4 M7",
     weekNum: 7,
     titleBm: "T4 M7 2.4 Inersia",
@@ -124,7 +124,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Newton's First Law", "Mass & Inertia", "Applications of Inertia"],
   },
   {
-    driveId: "1HwI2CAvCD2PV95uwRsEaHsjvZEV5WFqi",
+    driveId: "aXFGVzVWRVp2anNIYUVzUnd1NTlWUDJEQ3ZBQzJJd0gx",
     week: "T4 M8",
     weekNum: 8,
     titleBm: "T4 M8 2.5 Momentum",
@@ -138,7 +138,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Principle of Conservation of Momentum", "Elastic Collision", "Inelastic Collision"],
   },
   {
-    driveId: "1goLJcrR-XVZ2DXLBcAuHFJ9oiScLPiOi",
+    driveId: "aU9pUExjU2lvOUpGSHVBY0JMWEQyWlZYLVJyY0pMb2cx",
     week: "T4 M9",
     weekNum: 9,
     titleBm: "T4 M9 2.6 Daya",
@@ -152,7 +152,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Newton's Second Law", "F = ma", "Resultant Force"],
   },
   {
-    driveId: "1smsA5HVStTqnhPvzDy7vrfm8wLUEnxE-",
+    driveId: "LUV4bkVVTHc4bWZydjd5RHp2UGhucVR0U1ZINUFzbXMx",
     week: "T4 M10",
     weekNum: 10,
     titleBm: "T4 M10 2.7 Daya Impuls & 2.8 Berat",
@@ -166,7 +166,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Impulse (Ft)", "Time of Impact", "Car Safety Features"],
   },
   {
-    driveId: "1mCHeYm14qIPJlIVmBoz1chA8BcqXQV8C",
+    driveId: "QzhWUVhxY0I4QWhjMXpvQm1WSWxKUElxNDFtWWVIQ20x",
     week: "T4 M11",
     weekNum: 11,
     titleBm: "T4 M11 3.1a Hukum Kegravitian Semesta Newton",
@@ -180,7 +180,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Newton's Universal Law", "Gravitational Force", "Gravitational Constant G"],
   },
   {
-    driveId: "1m3e7SOQBVy_DnZNEBoLLHIgTGiNaAlM2",
+    driveId: "Mk1sQWFOaUdUZ0lITExvQkVOWm5EX3lWQlFPUzdlM20x",
     week: "T4 M12",
     weekNum: 12,
     titleBm: "T4 M12 3.1b Hukum Kegravitian Semesta Newton",
@@ -194,7 +194,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Gravitational Acceleration", "Variation in g", "Earth Mass & Radius"],
   },
   {
-    driveId: "16vBqyTndLNWhstjXGkLE2G65gwRrgpSW",
+    driveId: "V1NwZ3JSd2c1NkcyRUxrR1hqdHNoV05MZG5UeXFCdjYx",
     week: "T4 M12",
     weekNum: 12.5,
     titleBm: "T4 M12 3.1c Daya Memusat & Gerakan Membulat Ulangkaji",
@@ -208,7 +208,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Centripetal Force F = mv²/r", "Circular Path", "Satellite Orbit"],
   },
   {
-    driveId: "1A_ys4vH362yZtJJ3cd00K9ikmQ91I5up",
+    driveId: "cHU1STE5UW1raTlLMDBkYzNKSnRaeTI2M0h2NHN5X0Ex",
     week: "T4 M13",
     weekNum: 13,
     titleBm: "T4 M13 3.2 Hukum Kepler",
@@ -222,7 +222,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Kepler's First Law", "Kepler's Second Law", "Kepler's Third Law T²/r³"],
   },
   {
-    driveId: "1ztrAWqxrU-1ZQ2VsNGlBijWOAGSqG847",
+    driveId: "NzQ4R3FTR0FPV2ppQmxHTnNWMlFaMS1VcnhxV0FydHox",
     week: "T4 M14",
     weekNum: 14,
     titleBm: "T4 M14 3.3a Satelit Buatan Manusia",
@@ -236,7 +236,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Geostationary Satellite", "Non-geostationary Satellite", "Orbital Velocity"],
   },
   {
-    driveId: "1vvNHdEOYSkjEgz3LixE42aMYqitFWDSG",
+    driveId: "R1NEV0Z0aXFZTWEyNEV4aUwzemdFamtTWU9FZEhOdnYx",
     week: "T4 M15",
     weekNum: 15,
     titleBm: "T4 M15 3.3b Satelit Buatan Manusia",
@@ -250,7 +250,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Escape Velocity", "Formula v = √(2GM/R)", "Space Station"],
   },
   {
-    driveId: "1NyOn5dDilKBNmGeHAvfLQity0TN5nNia",
+    driveId: "YWlObjVOVDB5dGlRTGZ2QUhlR21OQktsaURkNW5PeU4x",
     week: "T4 M16",
     weekNum: 16,
     titleBm: "T4 M16 4.1 Keseimbangan Terma",
@@ -264,7 +264,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Thermal Equilibrium", "Net Temperature", "Thermometer Principle"],
   },
   {
-    driveId: "1eHEvGOVqowmoqHq_9caVSX_O6I8eS8FY",
+    driveId: "WUY4U2U4STZPX1hTVmFjOV9xSHFvbXdvcVZPR3ZFSGUx",
     week: "T4 M17",
     weekNum: 17,
     titleBm: "T4 M17 4.2a Muatan Haba Tentu",
@@ -278,7 +278,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Formula Q = mcΔθ", "Specific Heat of Water", "Sea Breeze & Land Breeze"],
   },
   {
-    driveId: "1L_3eflmUkVsp-jb0zsf_H6mStX7sulNq",
+    driveId: "cU5sdXM3WHRTbTZIX2ZzejBiai1wc1ZrVW1sZmUzX0wx",
     week: "T4 M18",
     weekNum: 18,
     titleBm: "T4 M18 4.2b Muatan Haba Tentu",
@@ -292,7 +292,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Applications of Specific Heat", "Pressure Cooker", "Electric Heater"],
   },
   {
-    driveId: "1v_iUbJBTXD6_O7nPrg7fZOAwPgR2gy6c",
+    driveId: "YzZ5ZzJSZ1B3QU9aZjdnclBuN09fNkRYVEJKYlVpX3Yx",
     week: "T4 M19",
     weekNum: 19,
     titleBm: "T4 M19 4.3a Haba Pendam Tentu",
@@ -306,7 +306,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Formula Q = mL", "Latent Heat of Fusion", "Latent Heat of Vaporisation"],
   },
   {
-    driveId: "1CI9O0XBRqvsHWHvH_VtNDR4nf7DzbwUk",
+    driveId: "a1V3YnpEN2ZuNFJETnRWX0h2SFdIc3ZxUkJYME85SUMx",
     week: "T4 M19",
     weekNum: 19.5,
     titleBm: "T4 M19 4.3c Haba Pendam Tentu Ulangkaji",
@@ -320,7 +320,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Heating Curve", "Cooling Curve", "Ice Melting"],
   },
   {
-    driveId: "1cMBnh-Xexv0WSXmWqG_5qQYx_YlGKRCU",
+    driveId: "VUNSS0dsWV94WVFxNV9HcVdtWFNXMHZ4ZVgtaG5CTWMx",
     week: "T4 M20",
     weekNum: 20,
     titleBm: "T4 M20 4.3b Haba Pendam Tentu",
@@ -334,7 +334,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Refrigeration System", "Latent Heat Measurement", "Steaming Food"],
   },
   {
-    driveId: "14wFOMjbdfbbkxcW0f3W_YbyKApvTgbgK",
+    driveId: "S2diZ1R2cEFLeWJZX1czZjBXY3hrYmJmZGJqTU9GdzQx",
     week: "T4 M21",
     weekNum: 21,
     titleBm: "T4 M21 4.4 Hukum-hukum Gas",
@@ -348,7 +348,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Boyle's Law P1V1 = P2V2", "Charles' Law V1/T1 = V2/T2", "Pressure Law P1/T1 = P2/T2"],
   },
   {
-    driveId: "1_wE3sSG4y-1sy0_glhjJpjJpGC-3dcRa",
+    driveId: "YVJjZDMtQ0dwSmpwSmpobGdfMHlzMS15NEdTczNFd18x",
     week: "T4 M21",
     weekNum: 21.5,
     titleBm: "T4 M21 4.4b Hukum Gas Ulangkaji",
@@ -362,7 +362,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Absolute Temperature (Kelvin)", "Absolute Zero -273°C", "Gas Law Graphs"],
   },
   {
-    driveId: "1P4Kv8iAJiWexLfel3x2O7ARLLkkCcaB8",
+    driveId: "OEJhY0Nra0xMUkE3TzJ4M2xlZkx4ZVdpSkFpOHZLNFAx",
     week: "T4 M22",
     weekNum: 22,
     titleBm: "T4 M22 5.1 Asas Gelombang",
@@ -376,7 +376,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Transverse Wave", "Longitudinal Wave", "Formula v = fλ"],
   },
   {
-    driveId: "1LFDFmCGcWQww8iHDRmtC9bJZOwOfu5rj",
+    driveId: "anI1dWZPd09aSmI5Q3RtUkRIaTh3d1FXY0dDbUZERkwx",
     week: "T4 M23",
     weekNum: 23,
     titleBm: "T4 M23 5.2 Pelembapan & Resonans",
@@ -390,7 +390,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["External & Internal Damping", "Natural Frequency", "Barton's Pendulum Resonance"],
   },
   {
-    driveId: "1h6bTyqjp5BO8hx9AzO0a__uusquYxQU2",
+    driveId: "MlVReFl1cXN1dV9fYTBPekE5eGg4T0I1cGpxeVRiNmgx",
     week: "T4 M24",
     weekNum: 24,
     titleBm: "T4 M24 5.3 Pantulan Gelombang",
@@ -404,7 +404,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Wavefront", "Angle of Incidence = Angle of Reflection", "Echo Applications (SONAR)"],
   },
   {
-    driveId: "159UfkVFAoKBBaeqribYqvM-2YgvuywdM",
+    driveId: "TWR3eXV2Z1kyLU12cVliaXJxZWFCQktvQUZWa2ZVOTUx",
     week: "T4 M24",
     weekNum: 24.5,
     titleBm: "T4 M24 5.3b Pantulan Gelombang Ulangkaji",
@@ -418,7 +418,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Ripple Tank", "Sound Wave Reflection", "Ultrasound"],
   },
   {
-    driveId: "1qN70ILmOcHUYOl9n34jJgSwk8DKkdHkl",
+    driveId: "bGtIZGtLRDhrd1NnSmo0M245bE9ZVUhjT21MSTA3TnEx",
     week: "T4 M25",
     weekNum: 25,
     titleBm: "T4 M25 5.4 Pembiasan Gelombang",
@@ -432,7 +432,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Wavelength Change λ", "Deep vs Shallow Water", "Sea Wave Refraction"],
   },
   {
-    driveId: "1dydW4O_265gN66aV6xhhtdDWxkiCludu",
+    driveId: "dWR1bENpa3hXRGR0aGh4NlZhNjZOZzU2Ml9PNFdkeWQx",
     week: "T4 M26",
     weekNum: 26,
     titleBm: "T4 M26 5.5 Pembelauan Gelombang",
@@ -446,7 +446,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Gap Size vs Wavelength", "Sound Diffraction", "Wavefront Shape"],
   },
   {
-    driveId: "17ITHVVnsO43uyyllO4JAXNJtwseNmxm6",
+    driveId: "Nm14bU5lc3d0Sk5YQUo0T2xseXl1MzRPc25WVkhUSTcx",
     week: "T4 M27",
     weekNum: 27,
     titleBm: "T4 M27 5.6a Interferens Gelombang",
@@ -460,7 +460,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Constructive Interference", "Destructive Interference", "Formula λ = ax/D"],
   },
   {
-    driveId: "1tWLzk73dNuXnMnkVK1ui9DPrRZRAH5Nk",
+    driveId: "a041SEFSWlJyUEQ5aXUxS1Zrbk1uWHVOZDM3a3pMV3Qx",
     week: "T4 M28",
     weekNum: 28,
     titleBm: "T4 M28 5.6b Interferens Gelombang",
@@ -474,7 +474,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Young's Double Slit Experiment", "Light Wave Interference", "Bright & Dark Fringes"],
   },
   {
-    driveId: "1x_7BqTNQ1ywcLCIHQ-6YBV8X2uUdIFyH",
+    driveId: "SHlGSWRVdTJYOFZCWTYtUUhJQ0xjd3kxUU5UcUI3X3gx",
     week: "T4 M29",
     weekNum: 29,
     titleBm: "T4 M29 5.7 Gelombang EM",
@@ -488,7 +488,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["EM Spectrum", "Radio Waves, X-Rays, Gamma Rays", "EM Applications & Hazards"],
   },
   {
-    driveId: "1i5pAOWmdK8hCzHX_1Aog21VHEvzIwP5Q",
+    driveId: "UTVQd0l6dkVIVjEyZ29BMV9YSHpDaDhLZG1XT0FwNWkx",
     week: "T4 M30",
     weekNum: 30,
     titleBm: "T4 M30 6.1 Pembiasan Cahaya",
@@ -502,7 +502,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Snell's Law n = sin i / sin r", "Refractive Index n", "Real Depth & Apparent Depth"],
   },
   {
-    driveId: "16-ZxPiG_3imuQGjzAb_OPuJ6glGXig33",
+    driveId: "MzNnaVhHbGc2SnVQT19iQXpqR1F1bWkzX0dpUHhaLTYx",
     week: "T4 M31",
     weekNum: 31,
     titleBm: "T4 M31 6.2 Pantulan Dalam Penuh",
@@ -516,7 +516,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Critical Angle c", "Formula sin c = 1/n", "Optical Fibres & Prism Binoculars"],
   },
   {
-    driveId: "1W6_akrkwT7MsQ_MlnH1_oTaPpQ1FDDqR",
+    driveId: "UnFEREYxUXBQYVRvXzFIbmxNX1FzTTdUd2tya2FfNlcx",
     week: "T4 M32",
     weekNum: 32,
     titleBm: "T4 M32 6.3 Pembentukan Imej oleh Kanta",
@@ -530,7 +530,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Convex & Concave Lenses", "Focal Point F", "Lens Ray Diagrams"],
   },
   {
-    driveId: "1jtzwDDPpLgjRQa1RYSNj1qk8hxxtNRbq",
+    driveId: "cWJSTnR4eGg4a3Exak5TWVIxYVFSamdMcFBERHd6dGox",
     week: "T4 M33",
     weekNum: 33,
     titleBm: "T4 M33 6.4 Pembentukan Imej oleh Kanta",
@@ -544,7 +544,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Lens Formula 1/f = 1/u + 1/v", "Linear Magnification m = v/u", "Image Characteristics"],
   },
   {
-    driveId: "1XAvK2gCcjJIxgNJrtPAbyu7n-XeLSXi8",
+    driveId: "OGlYU0xlWC1uN3V5YkFQdHJKTmd4SUpqY0NnMkt2QVgx",
     week: "T4 M34",
     weekNum: 34,
     titleBm: "T4 M34 6.5 Peralatan Optik",
@@ -558,7 +558,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Compound Microscope", "Astronomical Telescope", "Magnification M = f0/fe"],
   },
   {
-    driveId: "1dKZR3T1HhwWyiTabV4tAmXbYZ5IK3anl",
+    driveId: "bG5hM0tJNVpZYlhtQXQ0VmJhVGl5V3doSDFUM1JaS2Qx",
     week: "T4 M36",
     weekNum: 36,
     titleBm: "T4 M36 6.6a Pembentukan Imej Oleh Cermin Sfera",
@@ -572,7 +572,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Concave Mirror", "Focus (F)", "Centre of Curvature (C)", "Principal Rays"],
   },
   {
-    driveId: "1ZUTKpMJg5hPqRVIG37byzIF4L-VoVtUR",
+    driveId: "UlV0Vm9WLUw0Rkl6eWI3M0dJVlJxUGg1Z0pNcEtUVVox",
     week: "T4 M36",
     weekNum: 36.5,
     titleBm: "T4 M36 6.6b Pembentukan Imej Oleh Cermin Sfera",
@@ -586,7 +586,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Convex Mirror", "Road Safety Mirror Applications", "Makeup Mirror"],
   },
   {
-    driveId: "11si1nWqXJO18Y2kCXkncWu2qosPmkKWa",
+    driveId: "YVdLa21Qc29xMnVXY25rWENrMlk4MU9KWHFXbjFpczEx",
     week: "T4 M37",
     weekNum: 37,
     titleBm: "T4 M37 Ulangkaji Homework 1",
@@ -600,7 +600,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["HOTs Optics Question Discussion", "Paper 2 Answering Technique", "Marking Scheme"],
   },
   {
-    driveId: "1RikytOYe_kOu0XGLU48SVcmCTeah4jJu",
+    driveId: "dUpqNGhhZVRDbWNWUzg0VUxHWDB1T2tfZVlPdHlraVIx",
     week: "T4 M38",
     weekNum: 38,
     titleBm: "T4 M38 Ulangkaji Homework 2",
@@ -614,7 +614,7 @@ export const rawForm4Videos = [
     keyConceptsDlp: ["Waves & Optics Practice", "Ray Diagram Drawing", "Common Mistakes"],
   },
   {
-    driveId: "17OEFVki9AGvwtdNBEkKuqVt2GxKIlLCX",
+    driveId: "WENMbElLeEcydFZxdUtrRUJOZHR3dkdBOWlrVkZFTzcx",
     week: "T4 M39",
     weekNum: 39,
     titleBm: "T4 M39 Ulangkaji Homework 3",
@@ -631,7 +631,7 @@ export const rawForm4Videos = [
 
 export const rawForm5Videos = [
   {
-    driveId: "10GvCTt5UiCnQMWJRF4Po_J0RhaRsKD-Q",
+    driveId: "US1ES3NSYWhSMEpfb1A0RlJKV01RbkNpVTV0VEN2RzAx",
     week: "T5 M1",
     weekNum: 1,
     titleBm: "T5 M1 1.1 Daya Paduan",
@@ -645,7 +645,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Triangle of Forces", "Resolution of Forces", "Resultant Force"],
   },
   {
-    driveId: "1o3uyp337YacKOvYgOiqCWuKsszTZYqvi",
+    driveId: "aXZxWVpUenNzS3VXQ3FpT2dZdk9LY2FZNzMzcHl1M28x",
     week: "T5 M2",
     weekNum: 2,
     titleBm: "T5 M2 1.3 Keseimbangan Daya",
@@ -659,7 +659,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Equilibrium of Forces", "Inclined Plane", "String Tension"],
   },
   {
-    driveId: "1hSjxZVlGB5cBY0qhUD2-Fou6TLYkOOSr",
+    driveId: "clNPT2tZTFQ2dW9GLTJEVWhxMFlCYzVCR2xWWnhqU2gx",
     week: "T5 M4",
     weekNum: 4,
     titleBm: "T5 M4 1.4 Kekenyalan",
@@ -673,7 +673,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Hooke's Law F = kx", "Spring Constant k", "Elastic Potential Energy"],
   },
   {
-    driveId: "14Etd84quSuVsFehrvIF4kSJwxCYel9S0",
+    driveId: "MFM5bGVZQ3h3SlNrNEZJdnJoZUZzVnVTdXE0OGR0RTQx",
     week: "T5 M6",
     weekNum: 6,
     titleBm: "T5 M6 2.2 Tekanan Atmosfera",
@@ -687,7 +687,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Mercury Barometer", "Manometer", "Liquid Pressure P = hρg"],
   },
   {
-    driveId: "1mj4P1l4n7OkbI6t29na1jFeOHQXNXB5G",
+    driveId: "RzVCWE5YUUhPZUZqMWFuOTJ0Nklia083bjRsMVA0am0x",
     week: "T5 M7",
     weekNum: 7,
     titleBm: "T5 M7 2.3 Tekanan Gas & 2.4 Prinsip Pascal",
@@ -701,7 +701,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Pascal's Principle", "Hydraulic System F1/A1 = F2/A2", "Hydraulic Jack"],
   },
   {
-    driveId: "1QLzxUGeZVpoytq0dHa8mS56T2f5THsHo",
+    driveId: "b0hzSFQ1ZjJUNjVTbThhSGQwcXR5b3BWWmVHVXh6TFEx",
     week: "T5 M8",
     weekNum: 8,
     titleBm: "T5 M8 2.5 Prinsip Archimedes",
@@ -715,7 +715,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Buoyant Force F = ρVg", "Archimedes' Principle", "Hydrometer & Submarine"],
   },
   {
-    driveId: "15TrcaN_rcAuHQ_FBYRMXMU3va3R9a-lO",
+    driveId: "T2wtYTlSM2F2M1VNWE1SWUJGX1FIdUFjcl9OYWNyVDUx",
     week: "T5 M9",
     weekNum: 9,
     titleBm: "T5 M9 2.6 Prinsip Bernoulli",
@@ -729,7 +729,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Bernoulli's Principle", "Aerofoil Lift Force", "Venturi Tube & Atomizer"],
   },
   {
-    driveId: "1h1DxreFvaSM4ReW_RXwpv4zRS9faXtNF",
+    driveId: "Rk50WGFmOVNSejR2cHdYUl9XZVI0TVNhdkZlcnhEMWgx",
     week: "T5 M10",
     weekNum: 10,
     titleBm: "T5 M10 3.1 Arus & Beza Keupayaan",
@@ -743,7 +743,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Current Definition I = Q/t", "Potential Difference V = W/Q", "Van de Graaff Generator"],
   },
   {
-    driveId: "1ny2_A_BZuB864ml5nFmP2g6zTE3n0WtX",
+    driveId: "WHRXMG4zRVR6NmcyUG1GbjVsbTQ2OEJ1WkJfQV8yeW4x",
     week: "T5 M11",
     weekNum: 11,
     titleBm: "T5 M11 3.2a Rintangan",
@@ -757,7 +757,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Ohm's Law V = IR", "Factors Affecting Resistance", "Wire Resistivity"],
   },
   {
-    driveId: "1JiYWzh45NA3ShedSdI8QjXz7tTlhuIHn",
+    driveId: "bkhJdWhsVHQ3elhqUThJZFNkZWhTM0FONTRoeldZaUox",
     week: "T5 M12",
     weekNum: 12,
     titleBm: "T5 M12 3.2b Rintangan",
@@ -771,7 +771,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Series Circuit", "Parallel Circuit", "Effective Resistance"],
   },
   {
-    driveId: "1rq7Go2wGfIjJ1RqqQOUYToCfMcxqQ1Hp",
+    driveId: "cEgxUXF4Y01mQ29UWVVPUXFxUjFKaklmR3cyb0c3cXIx",
     week: "T5 M13",
     weekNum: 13,
     titleBm: "T5 M13 3.3 DGE & Rintangan Dalam",
@@ -785,7 +785,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Electromotive Force (E.M.F)", "Internal Resistance (r)", "Formula E = V + Ir"],
   },
   {
-    driveId: "1YkI63ZNaNSHM73qlmSIw4nw1UIJ11t_L",
+    driveId: "TF90MTFKSVUxd240d0lTbWxxMzdNSFNOYU5aMzZJa1kx",
     week: "T5 M14",
     weekNum: 14,
     titleBm: "T5 M14 3.4 Tenaga & Kuasa Elektrik",
@@ -799,7 +799,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Energy Formula E = VIt", "Power P = VI = I²R", "Cost of Electricity (kWh)"],
   },
   {
-    driveId: "1o6v1yAdO-SIBdbbP-b6yvn7JFqfeqy8G",
+    driveId: "Rzh5cWVmcUZKN252eTZiLVBiYmRCSVMtT2RBeTF2Nm8x",
     week: "T5 M15",
     weekNum: 15,
     titleBm: "T5 M15 4.1a Fleming Kiri",
@@ -813,7 +813,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Catapult Field", "Fleming's Left Hand Rule", "DC Motor"],
   },
   {
-    driveId: "1KVoBwq6l6usXxZQYcv-Aa4Mxev5ZwyJx",
+    driveId: "eEp5d1o1dmV4TTRhQS12Y1lRWnhYc3U2bDZxd0JvVksx",
     week: "T5 M16",
     weekNum: 16,
     titleBm: "T5 M16 4.1b Fleming Kiri",
@@ -827,7 +827,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Factors Affecting Magnetic Force", "Sliding Conductor", "Loudspeaker"],
   },
   {
-    driveId: "12O0MOQsSZbP_UXZgboaPQiAnPLwrvHk0",
+    driveId: "MGtIdnJ3TFBuQWlRUGFvYmdaWFVfUGJaU3NRT00wTzIx",
     week: "T5 M17",
     weekNum: 17,
     titleBm: "T5 M17 4.2 Aruhan Elektromagnet",
@@ -841,7 +841,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Faraday's Law", "Lenz's Law", "Fleming's Right Hand Rule", "AC/DC Generators"],
   },
   {
-    driveId: "1fCGE93gqckaBR3ORS4hpuhB2UcmQKZhx",
+    driveId: "eGhaS1FtY1UyQmh1cGg0U1JPM1JCYWtjcWczOUVHQ2Yx",
     week: "T5 M18",
     weekNum: 18,
     titleBm: "T5 M18 4.3a Transformer",
@@ -855,7 +855,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Step-up Transformer", "Step-down Transformer", "Formula Vp/Vs = Np/Ns"],
   },
   {
-    driveId: "1Ek4goR9qYyUr-hkHdHyezDgs3V2MWv9H",
+    driveId: "SDl2V00yVjNzZ0R6ZXlIZEhraC1yVXlZcTlSb2c0a0Ux",
     week: "T5 M19",
     weekNum: 19,
     titleBm: "T5 M19 4.3b Transformer",
@@ -869,7 +869,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Transformer Efficiency η", "Energy Losses (Eddy Currents)", "Power Transmission"],
   },
   {
-    driveId: "1Zb6RSzx-ZhL_w87RHqRJFori-AGketfR",
+    driveId: "UmZ0ZWtHQS1pcm9GSlJxSFI3OHdfTGhaLXh6U1I2Ylox",
     week: "T5 M20",
     weekNum: 20,
     titleBm: "T5 M20 5.1 Elektron",
@@ -883,7 +883,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Thermionic Emission", "Cathode Rays", "Cathode Ray Oscilloscope (CRO)"],
   },
   {
-    driveId: "1dwfhAEpnQIwVGRZmb0WyOaTOrhdefVuS",
+    driveId: "U3VWZmVkaHJPVGFPeVcwYm1aUkdWd0lRbnBFQWhmd2Qx",
     week: "T5 M21",
     weekNum: 21,
     titleBm: "T5 M21 5.2 Diod Semikonduktor",
@@ -897,7 +897,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["P-type & N-type Semiconductors", "P-N Junction", "Full Wave Rectification"],
   },
   {
-    driveId: "1KJFdAPItImlZCWJhEBEf9vsZMH57bdYR",
+    driveId: "UllkYjc1SE1ac3Y5ZkVCRWhKV0NabG1JdElQQWRGSksx",
     week: "T5 M22",
     weekNum: 22,
     titleBm: "T5 M22 5.3 Transistor",
@@ -911,7 +911,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["npn & pnp Transistors", "Transistor as Current Amplifier", "Transistor as Automatic Switch"],
   },
   {
-    driveId: "1iWv0SXm5tlf5H-EpaoynkE8EURF7eBCy",
+    driveId: "eUNCZTdGUlVFOEVrbnlvYXBFLUg1Zmx0NW1YUzB2V2kx",
     week: "T5 M23",
     weekNum: 23,
     titleBm: "T5 M23 6.1a Reputan Radioaktif",
@@ -925,7 +925,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Alpha (α), Beta (β), Gamma (γ) Particles", "Nuclear Decay Equations", "Radioactive Rays"],
   },
   {
-    driveId: "1G1D0eAvAE5xZGvfHfYkbrvUYaxNKOiTV",
+    driveId: "VlRpT0tOeGFZVXZyYmtZZkhmdkdaeDVFQXZBZTBEMUcx",
     week: "T5 M24",
     weekNum: 24,
     titleBm: "T5 M24 6.1b Reputan Radioaktif & Separuh Hayat",
@@ -939,7 +939,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Half-life (T½)", "Decay Curve", "Remaining Activity Calculation"],
   },
   {
-    driveId: "1LMK9Ic7nyhEr4NntfGPMBtF-SU9fuqRZ",
+    driveId: "WlJxdWY5VVMtRnRCTVBHZnRuTjRyRWh5bjdjSTlLTUwx",
     week: "T5 M25",
     weekNum: 25,
     titleBm: "T5 M25 6.2a Tenaga Nuklear",
@@ -953,7 +953,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Mass Defect m", "Formula E = mc²", "Nuclear Fission"],
   },
   {
-    driveId: "1CjFv7A5BdhgeesZZNJpIXyyQYZUyWZhy",
+    driveId: "eWhaV3lVWllReXlYSXBKTlpac2VlZ2hkQjVBN3ZGakMx",
     week: "T5 M26",
     weekNum: 26,
     titleBm: "T5 M26 6.2b Tenaga Nuklear & Pelakuran",
@@ -967,7 +967,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Nuclear Fusion", "Nuclear Reactor", "Nuclear Power Plant"],
   },
   {
-    driveId: "1rBtCiD3W3FoU5RnQTi7dlfLEBMMUlKh6",
+    driveId: "NmhLbFVNTUJFTGZsZDdpVFFuUjVVb0YzVzNEaUN0QnIx",
     week: "T5 M27",
     weekNum: 27,
     titleBm: "T5 M27 7.1a Teori Kuantum Cahaya",
@@ -981,7 +981,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Black Body", "Photon Energy Quantum E = hf", "Planck's Constant h"],
   },
   {
-    driveId: "1S7WzleePgFPGMuvZn2pXYtLHiSB8Ab25",
+    driveId: "NTJiQThCU2lITHRZWHAyblp2dU1HUEZnUGVlbHpXN1Mx",
     week: "T5 M28",
     weekNum: 28,
     titleBm: "T5 M28 7.1b Teori Kuantum Cahaya",
@@ -995,7 +995,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Wave-Particle Duality", "de Broglie Wavelength λ = h/p", "Electron Microscope"],
   },
   {
-    driveId: "1BSBSONrKtK8hzKJNSMgXs8lKU7u6gq_t",
+    driveId: "dF9xZzZ1N1VLbDhzWGdNU05KS3poOEt0S3JOT1NCU0Ix",
     week: "T5 M29",
     weekNum: 29,
     titleBm: "T5 M29 7.2 Kesan Fotoelektrik",
@@ -1009,7 +1009,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Photoelectric Effect", "Threshold Frequency f₀", "Work Function W = hf₀"],
   },
   {
-    driveId: "1fdOBpCKPJ6OjcISp3Rf-5iOxTTdTSiwi",
+    driveId: "aXdpU1RkVFR4T2k1LWZSM3BTSWNqTzZKUEtDcEJPZGYx",
     week: "T5 M30",
     weekNum: 30,
     titleBm: "T5 M30 7.3a Fotoelektrik Einstein",
@@ -1023,7 +1023,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Einstein Equation hf = W + Kmax", "Maximum Kinetic Energy", "Photoelectric Cell"],
   },
   {
-    driveId: "1zZ8kVve7h2PsLM3lpM3z7q3LId4xe5n_",
+    driveId: "X241ZXg0ZElMM3E3ejNNcGwzTUxzUDJoN2V2Vms4Wnox",
     week: "T5 M31",
     weekNum: 31,
     titleBm: "T5 M31 7.3b Fotoelektrik Einstein & Aplikasi",
@@ -1037,7 +1037,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Solar Panels", "Automatic Door Light Sensor", "Ray Speedometer"],
   },
   {
-    driveId: "1AdeW0pdWY_vW7wnuvrhFUixjiaQM3QHd",
+    driveId: "ZEhRM01RYWlqeGlVRmhydnVudzdXdl9ZV2RwMFdlZEEx",
     week: "T5 M32",
     weekNum: 32,
     titleBm: "T5 M32 2.2 Graf Gerakan Linear & Jatuh Bebas Ulangkaji",
@@ -1051,7 +1051,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["SPM Trial Question Discussion", "Kinematic Graphs", "SPM Answering Techniques"],
   },
   {
-    driveId: "1yhH0OYneYL0Fnxgxcgsaa5JRxq5pezAC",
+    driveId: "Q0F6ZXA1cXhSSjVhYXNnY3hneG5GMExZZW5ZTzBIaHkx",
     week: "T5 M33",
     weekNum: 33,
     titleBm: "T5 M33 3.1b Daya Memusat & Gerakan Membulat Ulangkaji",
@@ -1065,7 +1065,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Selected Gravitation Exercises", "Centripetal Force v²/r", "Satellite Orbit"],
   },
   {
-    driveId: "1a3-hTL0OZBGGt0-QtPYhKfk-veKeOwA0",
+    driveId: "MEF3T2VLZXYta2ZLaFlQdFEtMHRHR0JaTzBMVGgtM2Ex",
     week: "T5 M34",
     weekNum: 34,
     titleBm: "T5 M34 4.3 Haba Pendam Tentu Ulangkaji",
@@ -1079,7 +1079,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Latent Heat Q = mL Revision", "Heat Experiments", "HOTs Discussion"],
   },
   {
-    driveId: "1xfiH6haRXhMpfK-IDouUaMb7KG1VoxmQ",
+    driveId: "UW14b1YxR0s3Yk1hVXVvREktS2ZwTWhYUmFoNkhpZngx",
     week: "T5 M35",
     weekNum: 35,
     titleBm: "T5 M35 4.4 Hukum Gas Ulangkaji",
@@ -1093,7 +1093,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Boyle, Charles, Pressure Laws", "Kelvin Temperature", "SPM Paper 2 Exercises"],
   },
   {
-    driveId: "16wSG1mUVyWZ3g3AXN_13QJkkDnXbC2sx",
+    driveId: "eHMyQ2JYbkRra0pRMzFfTlhBM2czWld5VlVtMUdTdzYx",
     week: "T5 M36",
     weekNum: 36,
     titleBm: "T5 M36 5.1 Asas Gelombang, 5.2 Pelebapan & Resonans",
@@ -1107,7 +1107,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Wavefront v = fλ", "Barton's Resonance", "SPM Wave Practice"],
   },
   {
-    driveId: "1dBfr2_XA-FY7niTa6rQxpTu53q9t8azY",
+    driveId: "WXphOHQ5cTM1dVRweFFyNmFUaW43WUYtQVhfMnJmQmQx",
     week: "T5 M37",
     weekNum: 37,
     titleBm: "T5 M37 5.3 Pantulan Gelombang Ulangkaji",
@@ -1121,7 +1121,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["Ripple Tank Reflection", "SONAR Echo", "Paper 2 Structured Questions"],
   },
   {
-    driveId: "1QnGoX9fq7yLpekf_G-AXFgt_PlPXPOHR",
+    driveId: "UkhPUFhQbFBfdGdGWEEtR19ma2VwTHk3cWY5WG9HblEx",
     week: "T5 M38",
     weekNum: 38,
     titleBm: "T5 M38 Ulangkaji Percubaan SPM 1",
@@ -1135,7 +1135,7 @@ export const rawForm5Videos = [
     keyConceptsDlp: ["State SPM Trial Exam Papers", "HOTs Physics SPM", "A+ Scoring Techniques"],
   },
   {
-    driveId: "1Uz6eg5exn3iKU3t65W2A4PFMnRoY7uj-",
+    driveId: "LWp1N1lvUm5NRlA0QTJXNTZ0M1VLaTNueGU1Z2U2elUx",
     week: "T5 M39",
     weekNum: 39,
     titleBm: "T5 M39 Ulangkaji Percubaan SPM 2",
@@ -1151,6 +1151,17 @@ export const rawForm5Videos = [
 ];
 
 // Helper to build Form 4 processed lessons
+
+const getRawId = (obfuscated: string) => {
+  try {
+    if (typeof atob !== 'undefined') return atob(obfuscated).split('').reverse().join('');
+    if (typeof Buffer !== 'undefined') return Buffer.from(obfuscated, 'base64').toString('utf8').split('').reverse().join('');
+    return obfuscated;
+  } catch (e) {
+    return obfuscated;
+  }
+};
+
 export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) => {
   const learningBm = [
     `Mengenal pasti konsep utama ${v.titleBm}`,
@@ -1179,21 +1190,21 @@ export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) =>
         titleDlp: `Summary Notes - ${v.titleDlp}.pdf`,
         type: "pdf",
         size: "1.2 MB",
-        url: `https://drive.google.com/file/d/${v.driveId}/view`
+        url: `https://drive.google.com/file/d/${getRawId(v.driveId)}/view`
       },
       {
         titleBm: `Latihan Pengukuhan SPM - ${v.chapterBm}.docx`,
         titleDlp: `SPM Practice Worksheet - ${v.chapterDlp}.docx`,
         type: "docx",
         size: "850 KB",
-        url: `https://drive.google.com/file/d/${v.driveId}/view`
+        url: `https://drive.google.com/file/d/${getRawId(v.driveId)}/view`
       },
       {
         titleBm: `Slaid Pembentangan ${v.chapterBm}.pptx`,
         titleDlp: `Presentation Deck ${v.chapterDlp}.pptx`,
         type: "pptx",
         size: "3.4 MB",
-        url: `https://drive.google.com/file/d/${v.driveId}/view`
+        url: `https://drive.google.com/file/d/${getRawId(v.driveId)}/view`
       }
     ]
   };
@@ -1228,21 +1239,21 @@ export const form5VideoLessons: VideoLesson[] = rawForm5Videos.map((v, index) =>
         titleDlp: `F5 Summary Notes - ${v.titleDlp}.pdf`,
         type: "pdf",
         size: "1.4 MB",
-        url: `https://drive.google.com/file/d/${v.driveId}/view`
+        url: `https://drive.google.com/file/d/${getRawId(v.driveId)}/view`
       },
       {
         titleBm: `Latihan Pengukuhan T5 - ${v.chapterBm}.docx`,
         titleDlp: `F5 SPM Practice Worksheet - ${v.chapterDlp}.docx`,
         type: "docx",
         size: "920 KB",
-        url: `https://drive.google.com/file/d/${v.driveId}/view`
+        url: `https://drive.google.com/file/d/${getRawId(v.driveId)}/view`
       },
       {
         titleBm: `Slaid Pembentangan T5 ${v.chapterBm}.pptx`,
         titleDlp: `F5 Presentation Deck ${v.chapterDlp}.pptx`,
         type: "pptx",
         size: "3.8 MB",
-        url: `https://drive.google.com/file/d/${v.driveId}/view`
+        url: `https://drive.google.com/file/d/${getRawId(v.driveId)}/view`
       }
     ]
   };

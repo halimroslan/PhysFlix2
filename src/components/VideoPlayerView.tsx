@@ -115,10 +115,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             </div>
 
-            {/* Custom Top Right Brand Watermark */}
-            <div className="absolute top-4 right-4 z-20 flex items-center space-x-1.5 px-3 py-1.5 bg-black/75 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
+            {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
+            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain" />
+              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
             </div>
           </div>
 

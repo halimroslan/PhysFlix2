@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { ShieldCheck, Sparkles, UserCheck } from "lucide-react";
+import { ShieldCheck, AlertCircle, Lock } from "lucide-react";
 
 export const LoginPage: React.FC = () => {
-  const { signInWithGoogle, signInAsDemoUser } = useAuth();
+  const { signInWithGoogle, authError } = useAuth();
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleSignIn = async () => {
@@ -20,7 +20,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col justify-center items-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col justify-center items-center p-4 relative overflow-hidden select-none">
       {/* Subtle Background Physics Grid */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
 
@@ -37,15 +37,27 @@ export const LoginPage: React.FC = () => {
         </div>
 
         <div className="space-y-2 max-w-xs">
-          <h1 className="text-xl font-black text-white tracking-tight">
-            Log Masuk Pelajar / Guru
+          <h1 className="text-xl font-black text-white tracking-tight flex items-center justify-center gap-2">
+            <Lock className="w-5 h-5 text-red-500" />
+            Pengesahan Akaun Google
           </h1>
           <p className="text-xs text-slate-400 font-medium">
-            Sila log masuk menggunakan Akaun Google untuk mengakses video pembelajaran Fizik SPM KSSM.
+            Akses platform ini memerlukan pengesahan akaun Google pelajar / guru yang sah menerusi Firebase Auth.
           </p>
         </div>
 
-        {/* Primary Google Sign-In Button */}
+        {/* Error Alert Message if Any */}
+        {authError && (
+          <div className="w-full p-3.5 bg-red-950/80 border border-red-800/80 rounded-2xl flex items-start space-x-2 text-left text-xs text-red-300">
+            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <span className="font-bold block">Pengesahan Gagal:</span>
+              <span>{authError}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Strict Google Sign-In Button */}
         <button
           type="button"
           onClick={handleSignIn}
@@ -72,24 +84,14 @@ export const LoginPage: React.FC = () => {
             />
           </svg>
           <span className="font-extrabold">
-            {isSigningIn ? "Menghubungkan ke Google..." : "Log Masuk Dengan Akaun Google"}
+            {isSigningIn ? "Menghubungkan Pengesahan Google..." : "Log Masuk Dengan Akaun Google"}
           </span>
-        </button>
-
-        {/* Fallback Instant Demo Access Button */}
-        <button
-          type="button"
-          onClick={signInAsDemoUser}
-          className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-[#171e2e] hover:bg-[#1f283d] text-slate-300 hover:text-white font-semibold text-xs border border-slate-700 transition cursor-pointer"
-        >
-          <UserCheck className="w-4 h-4 text-emerald-400" />
-          <span>Akses Pantas Demo (Pilihan Tanpa Popup)</span>
         </button>
 
         {/* Security badge footer */}
         <div className="pt-4 border-t border-slate-800/80 w-full flex items-center justify-center space-x-2 text-[11px] text-slate-500 font-semibold">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Pengesahan Akaun Firebase Secure (physicsflix.vercel.app)</span>
+          <span>Pengesahan Akaun Firebase Terkawal (physicsspmflix)</span>
         </div>
       </div>
     </div>

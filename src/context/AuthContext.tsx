@@ -14,8 +14,8 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
-  signInAsDemoUser: () => void;
   logout: () => Promise<void>;
+  authError: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -33,28 +34,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signInWithGoogle = async () => {
+    setAuthError(null);
     try {
+      // Force real Google Account verification popup
       await signInWithPopup(auth, googleProvider);
     } catch (error: any) {
-      console.warn("Google Popup Sign-In blocked/failed, trying redirect fallback:", error);
-      try {
-        await signInWithRedirect(auth, googleProvider);
-      } catch (redirectErr) {
-        console.error("Redirect Sign-In Error:", redirectErr);
-        // Fallback to demo user if Firebase config or popup is completely blocked
-        signInAsDemoUser();
+      console.warn("Popup blocked or failed, trying redirect fallback:", error);
+      if (error.code === "auth/popup-blocked" || error.code === "auth/cancelled-popup-request") {
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectErr: any) {
+          console.error("Redirect Auth Error:", redirectErr);
+          setAuthError(redirectErr.message || "Ralat pengesahan akaun Google.");
+        }
+      } else {
+        setAuthError(error.message || "Pengesahan Google dibatalkan atau terhalang.");
       }
     }
-  };
-
-  const signInAsDemoUser = () => {
-    const mockUser = {
-      uid: "sir-halim-demo-uid",
-      displayName: "Sir Halim",
-      email: "sirhalim@physicsspmflix.edu.my",
-      photoURL: "https://lh3.googleusercontent.com/a/ACg8ocK...=s96-c"
-    } as unknown as User;
-    setUser(mockUser);
   };
 
   const logout = async () => {
@@ -67,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInAsDemoUser, logout }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout, authError }}>
       {children}
     </AuthContext.Provider>
   );

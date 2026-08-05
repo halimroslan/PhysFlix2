@@ -1,3 +1,5 @@
+import { dskpMappings } from './dskpData';
+
 export interface VideoLesson {
   id: string;
   driveId: string;
@@ -1150,11 +1152,23 @@ export const rawForm5Videos = [
   },
 ];
 
-const generateLearningPointsBm = (title: string, concepts: string[]) => {
+const generateLearningPointsBm = (title: string, concepts: string[], form: number) => {
   const points = [
     `Memahami Standard Kandungan DSKP bagi topik ${title}`,
   ];
   
+  const match = title.match(/^(\d+\.\d+)/);
+  if (match) {
+    const key = `F${form}_${match[1]}`;
+    const sp = dskpMappings[key];
+    if (sp && sp.length > 0) {
+      // Add standard pembelajaran points from DSKP
+      sp.forEach(p => points.push(p));
+      return points; // Return early if DSKP matches
+    }
+  }
+
+  // Fallback for revision/non-DSKP chapters
   if (concepts.length > 0) {
     points.push(`Menganalisis konsep ${concepts[0]} secara terperinci untuk Kertas 1 & 2`);
   } else {
@@ -1204,7 +1218,7 @@ const getRawId = (obfuscated: string) => {
 };
 
 export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) => {
-  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm);
+  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm, 4);
   const learningDlp = generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
   
   return {
@@ -1245,7 +1259,7 @@ export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) =>
 
 // Helper to build Form 5 processed lessons
 export const form5VideoLessons: VideoLesson[] = rawForm5Videos.map((v, index) => {
-  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm);
+  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm, 5);
   const learningDlp = generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
 
   return {

@@ -191,6 +191,7 @@ function MainDashboard() {
           {/* Active View Switch */}
           {currentTab === "playing" && selectedLesson ? (
             <VideoPlayerView
+              key={selectedLesson.id}
               currentLesson={selectedLesson}
               onBack={() => setCurrentTab("home")}
               onSelectLesson={(lesson) => setSelectedLesson(lesson)}

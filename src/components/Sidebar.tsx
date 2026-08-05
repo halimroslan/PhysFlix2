@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={item.id}
               onClick={() => {
                 if (item.id === "experiments") {
-                  window.open("https://myphysicstutor2.vercel.app/", "_blank");
+                  window.open("https://myphysicstutor2.vercel.app/#myhomephysicslab", "_blank");
                 } else {
                   onTabChange(item.id);
                 }

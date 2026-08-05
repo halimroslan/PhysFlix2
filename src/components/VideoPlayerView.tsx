@@ -19,6 +19,8 @@ import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
 import { useDRMProtection, deobfuscateId } from "@/utils/security";
 import { useUserActivity } from "@/context/UserActivityContext";
+import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 interface VideoPlayerViewProps {
   currentLesson: VideoLesson;
@@ -100,7 +102,42 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(1240);
+  const [likeCount, setLikeCount] = useState(0);
+  const [shareText, setShareText] = useState("Kongsi");
+
+  // Helper to generate a stable, realistic number of likes based on video ID
+  const getBaseLikes = (id: string) => {
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) hash = id.charCodeAt(i) + ((hash << 5) - hash);
+    return 1200 + (Math.abs(hash) % 4000); // Generates a number between 1200 and 5200
+  };
+
+  useEffect(() => {
+    if (!currentLesson?.id) return;
+    
+    // Check local storage for like state
+    const localLiked = localStorage.getItem(`liked_${currentLesson.id}`) === "true";
+    setLiked(localLiked);
+
+    const fetchLikes = async () => {
+      const baseLikes = getBaseLikes(currentLesson.id);
+      try {
+        const docRef = doc(db, "videoStats", currentLesson.id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setLikeCount(docSnap.data().likes);
+        } else {
+          // Initialize document with base likes
+          await setDoc(docRef, { likes: baseLikes });
+          setLikeCount(baseLikes + (localLiked ? 1 : 0));
+        }
+      } catch (e) {
+        console.warn("Firestore likes unavailable, using fallback.", e);
+        setLikeCount(baseLikes + (localLiked ? 1 : 0));
+      }
+    };
+    fetchLikes();
+  }, [currentLesson]);
   const [comments, setComments] = useState([
     { name: "Ahmad Rizky", text: "Terbaik Sir! Baru faham melukis sinar selari dan sinar fokus.", time: "2 jam lepas" },
     { name: "Siti Sarah", text: "Fast explanation and clear graphics for DLP students!", time: "5 jam lepas" },
@@ -110,13 +147,41 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   const rawDriveId = deobfuscateId(currentLesson.driveId);
 
-  const handleLike = () => {
-    if (liked) {
-      setLiked(false);
-      setLikeCount((c) => c - 1);
-    } else {
-      setLiked(true);
-      setLikeCount((c) => c + 1);
+  const handleLike = async () => {
+    const newLikedState = !liked;
+    setLiked(newLikedState);
+    
+    // Update local UI immediately
+    setLikeCount((c) => newLikedState ? c + 1 : c - 1);
+    localStorage.setItem(`liked_${currentLesson.id}`, newLikedState ? "true" : "false");
+    
+    // Update Firestore
+    try {
+      const docRef = doc(db, "videoStats", currentLesson.id);
+      await updateDoc(docRef, {
+        likes: increment(newLikedState ? 1 : -1)
+      });
+    } catch (e) {
+      console.warn("Error updating likes in Firestore", e);
+    }
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: currentLesson.titleBm,
+      text: "Jom tonton video pengajaran Fizik ini di Physics SPM Flix!",
+      url: window.location.href,
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        setShareText("Tersalin!");
+        setTimeout(() => setShareText("Kongsi"), 2000);
+      }
+    } catch (err) {
+      console.error("Error sharing", err);
     }
   };
 
@@ -312,9 +377,12 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   </button>
                 </div>
 
-                <button className="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-[#131826] hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 transition">
+                <button 
+                  onClick={handleShare}
+                  className="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-[#131826] hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 transition"
+                >
                   <Share2 className="w-3.5 h-3.5 text-blue-400" />
-                  <span>{t("btnShare")}</span>
+                  <span>{shareText === "Kongsi" ? t("btnShare") : shareText}</span>
                 </button>
 
                 <button

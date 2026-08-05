@@ -231,10 +231,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </div>
                 
                 {/* Top-Right Tavis Protector (M21+) */}
-                <div className="absolute top-[15%] right-[18%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-lg shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute top-[5%] right-[18%] z-20 flex items-center justify-center w-40 h-14 bg-[#0a0a0a] rounded-lg shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
-                   <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain mr-2" />
+                   <span className="text-white text-[11px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
               </>
             )}

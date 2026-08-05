@@ -335,11 +335,31 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
   const { lang, t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Filter out any video containing "Ulangkaji", "Homework", "Tips"
-  const cleanLessons = (featuredLessons || []).filter((lesson) => {
-    const text = `${lesson.titleBm} ${lesson.titleDlp} ${lesson.week}`.toLowerCase();
-    return !text.includes("ulangkaji") && !text.includes("homework") && !text.includes("tips");
+  const [cleanLessons, setCleanLessons] = useState<VideoLesson[]>(() => {
+    const filtered = (featuredLessons || []).filter((lesson) => {
+      const text = `${lesson.titleBm} ${lesson.titleDlp} ${lesson.week}`.toLowerCase();
+      return !text.includes("ulangkaji") && !text.includes("homework") && !text.includes("tips");
+    });
+    const chapterMap = new Map<string, VideoLesson>();
+    filtered.forEach(l => {
+      const key = `${l.form}-${l.chapterNum}`;
+      if (!chapterMap.has(key)) {
+        chapterMap.set(key, l);
+      }
+    });
+    return Array.from(chapterMap.values());
   });
+
+  useEffect(() => {
+    setCleanLessons(prev => {
+      const shuffled = [...prev];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    });
+  }, [featuredLessons]);
 
   useEffect(() => {
     if (cleanLessons.length <= 1) return;
@@ -392,9 +412,9 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
         <AnimatePresence mode="wait">
           <motion.div
             key={currentLesson.id}
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
+            exit={{ opacity: 0, x: 40 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="space-y-3"
           >

@@ -108,7 +108,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
-              src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=360s`}
+              src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=660s`}
               className="w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}
@@ -127,6 +127,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
+            </div>
+
+            {/* Custom Top Left Brand Watermark - Blocks Uploader Name/Profile (e.g. Tavis) */}
+            <div className="absolute top-0 left-0 z-20 flex items-center justify-start w-64 h-16 bg-black/90 rounded-br-2xl pointer-events-auto cursor-default shadow-br-xl border-r border-b border-white/5 pl-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain mr-2" />
+              <span className="text-white text-xs font-bold font-mono tracking-wider">PHYSICS SPM FLIX</span>
             </div>
           </div>
 

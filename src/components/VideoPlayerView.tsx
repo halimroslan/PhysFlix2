@@ -127,14 +127,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     setNewComment("");
   };
 
-  const applyTavisProtector = (() => {
-    if (currentLesson.form !== 4 && currentLesson.form !== 5) return false;
-    const match = currentLesson.week.match(/M(\d+)/);
+  const { showTavisM1toM20, showTavisM21Plus } = (() => {
+    const formStr = String(currentLesson.form);
+    if (formStr !== "4" && formStr !== "5") return { showTavisM1toM20: false, showTavisM21Plus: false };
+    
+    const match = String(currentLesson.week).match(/M(\d+)/i);
     if (match) {
       const num = parseInt(match[1], 10);
-      return num >= 1 && num <= 20;
+      if (num >= 1 && num <= 20) return { showTavisM1toM20: true, showTavisM21Plus: false };
+      if (num >= 21) return { showTavisM1toM20: false, showTavisM21Plus: true };
     }
-    return false;
+    return { showTavisM1toM20: false, showTavisM21Plus: false };
   })();
 
   return (
@@ -199,21 +202,39 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-3/4 h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
-            {/* Permanent Protectors for 'Tavis' Logo (Form 4/5, M1-M20) */}
-            {applyTavisProtector && (
+            {/* Permanent Protectors for 'Tavis' Logo */}
+            {showTavisM1toM20 && (
               <>
-                {/* Top-Right Tavis Protector */}
+                {/* Top-Right Tavis Protector (M1-M20) */}
                 <div className="absolute top-[14%] right-[24%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
                    <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
                 
-                {/* Bottom-Right Tavis Protector */}
+                {/* Bottom-Right Tavis Protector (M1-M20) */}
                 <div className="absolute bottom-[10%] right-[24%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
                    <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                </div>
+              </>
+            )}
+
+            {showTavisM21Plus && (
+              <>
+                {/* Top-Left Tavis Protector (M21+) */}
+                <div className="absolute top-[6%] left-[2%] z-20 flex items-center justify-center w-32 h-10 bg-[#0a0a0a] rounded-lg shadow-xl border border-white/10 pointer-events-none">
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-4 w-auto object-contain mr-2" />
+                   <span className="text-white text-[9px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                </div>
+                
+                {/* Top-Right Tavis Protector (M21+) */}
+                <div className="absolute top-[6%] right-[22%] z-20 flex items-center justify-center w-32 h-10 bg-[#0a0a0a] rounded-lg shadow-xl border border-white/10 pointer-events-none">
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-4 w-auto object-contain mr-2" />
+                   <span className="text-white text-[9px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
               </>
             )}
@@ -246,14 +267,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </div>
               </div>
             )}
-
-            {/* Secret Dev Test Button */}
-            <button 
-              onClick={() => setShowEndCover(true)}
-              className="absolute bottom-2 left-2 z-30 px-3 py-1.5 bg-black/50 text-white/50 text-xs rounded pointer-events-auto hover:bg-red-600 hover:text-white transition-all font-mono"
-            >
-              Uji Cover Penamat
-            </button>
 
             {/* Full Screen End Cover (Last 10 Seconds) */}
             {showEndCover && (

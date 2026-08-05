@@ -218,14 +218,20 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </>
             )}
 
-            {/* Full Screen Initial Cover With a Hole for Play Button */}
+            {/* Full Screen Initial Cover With a Perfect Rounded Hole for Play Button */}
             {showCover && (
-              <>
-                {/* Top Cover */}
+              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
+                {/* 
+                  This div represents the 'hole'. 
+                  It is transparent but casts a massive solid black shadow to cover the rest of the screen. 
+                  The border-radius ensures the hole perfectly matches the Google Drive play button.
+                */}
                 <div 
-                  className="absolute top-0 left-0 right-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-end pb-8 pointer-events-auto" 
-                  style={{ bottom: "calc(50% + 45px)" }}
-                >
+                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_9999px_#0a0a0a]"
+                ></div>
+
+                {/* Additional UI elements (Logo, text) placed around the hole */}
+                <div className="absolute top-10 left-0 right-0 flex flex-col items-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
                   <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
@@ -233,28 +239,12 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   </span>
                 </div>
                 
-                {/* Bottom Cover */}
-                <div 
-                  className="absolute bottom-0 left-0 right-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-start pt-8 pointer-events-auto" 
-                  style={{ top: "calc(50% + 45px)" }}
-                >
-                  <span className="text-red-500/80 text-sm md:text-base font-bold tracking-wide animate-pulse mt-4">
+                <div className="absolute bottom-16 left-0 right-0 flex justify-center">
+                  <span className="text-red-500/80 text-sm md:text-base font-bold tracking-wide animate-pulse">
                     ↑ Klik butang Play di atas ↑
                   </span>
                 </div>
-
-                {/* Left Cover */}
-                <div 
-                  className="absolute left-0 z-30 bg-[#0a0a0a] pointer-events-auto" 
-                  style={{ top: "calc(50% - 45px)", bottom: "calc(50% - 45px)", right: "calc(50% + 55px)" }}
-                ></div>
-
-                {/* Right Cover */}
-                <div 
-                  className="absolute right-0 z-30 bg-[#0a0a0a] pointer-events-auto" 
-                  style={{ top: "calc(50% - 45px)", bottom: "calc(50% - 45px)", left: "calc(50% + 55px)" }}
-                ></div>
-              </>
+              </div>
             )}
 
             {/* Secret Dev Test Button */}

@@ -27,7 +27,7 @@ const translations: Record<Language, Record<string, string>> = {
     navForm5: "Tingkatan 5",
     navSPMRevision: "Ulangkaji SPM",
     navExperiments: "Amali Virtual",
-    navPlaylists: "Senarai Main",
+    navPlaylists: "Tonton Semula",
     navLiveClasses: "Kelas Langsung",
     
     // Quick Access
@@ -86,7 +86,7 @@ const translations: Record<Language, Record<string, string>> = {
     keyConcepts: "Konsep Kunci",
     
     // Sidebar Player
-    tabPlaylist: "Senarai Main",
+    tabPlaylist: "Tonton Semula",
     tabLearningTools: "Alat Pembelajaran",
     downloadNotesTitle: "Muat Turun Nota",
     downloadNotesSub: "Nota lengkap & ringkasan dalam PDF",

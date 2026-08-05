@@ -103,6 +103,9 @@ function MainDashboard() {
           {/* Subtle physics grid overlay */}
           <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px]"></div>
 
+          {/* Large background icon for visual interest */}
+          <CategoryIcon className="absolute -right-4 -bottom-4 w-28 h-28 text-white opacity-[0.08] rotate-12 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:opacity-[0.15]" />
+
           {/* Mini Category Icon Badge */}
           <div className="absolute top-2 left-2 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 flex items-center space-x-1 text-[9px] font-bold text-slate-200">
             <CategoryIcon className="w-3 h-3 text-red-400" />
@@ -236,7 +239,7 @@ function MainDashboard() {
               <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
                 <ListVideo className="w-6 h-6 text-purple-500" />
                 <h2 className="text-2xl font-extrabold text-white">
-                  {lang === "bm" ? "Senarai Main (Sejarah Tontonan)" : "Playlists (Watch History)"}
+                  {lang === "bm" ? "Tonton Semula (Sejarah Tontonan)" : "Watch History"}
                 </h2>
                 <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-extrabold rounded-full">
                   {historyLessons.length} Video
@@ -293,13 +296,8 @@ function MainDashboard() {
                 <div>
                   <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
                     <BookOpen className="w-6 h-6 text-red-500" />
-                    {lang === "bm" ? "Katalog Video Fizik Tingkatan 4 (KSSM)" : "Form 4 SPM Physics Video Catalog"}
+                    {lang === "bm" ? "Fizik Tingkatan 4 (KSSM)" : "Form 4 SPM Physics (KSSM)"}
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {lang === "bm"
-                      ? "Disusun mengikut nombor minggu (T4 M1, T4 M2... T4 M39) dari Google Drive"
-                      : "Sorted according to week number (T4 M1, T4 M2... T4 M39) from Google Drive"}
-                  </p>
                 </div>
                 <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
                   {form4VideoLessons.length} Video Lengkap
@@ -315,13 +313,8 @@ function MainDashboard() {
                 <div>
                   <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
                     <GraduationCap className="w-6 h-6 text-red-500" />
-                    {lang === "bm" ? "Katalog Video Fizik Tingkatan 5 (KSSM)" : "Form 5 SPM Physics Video Catalog"}
+                    {lang === "bm" ? "Fizik Tingkatan 5 (KSSM)" : "Form 5 SPM Physics (KSSM)"}
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {lang === "bm"
-                      ? "Disusun mengikut nombor minggu (T5 M1, T5 M2... T5 M39) dari Google Drive"
-                      : "Sorted according to week number (T5 M1, T5 M2... T5 M39) from Google Drive"}
-                  </p>
                 </div>
                 <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
                   {form5VideoLessons.length} Video Lengkap

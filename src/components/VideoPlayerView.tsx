@@ -218,26 +218,43 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </>
             )}
 
-            {/* Full Screen Initial Cover / Custom Thumbnail */}
+            {/* Full Screen Initial Cover With a Hole for Play Button */}
             {showCover && (
-              <div 
-                className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center pointer-events-none"
-              >
-                {/* Pulsing Play Button */}
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center animate-pulse mb-8 shadow-[0_0_40px_rgba(220,38,38,0.5)] transition-all duration-300">
-                  <Play className="w-10 h-10 fill-white ml-2 text-white" />
+              <>
+                {/* Top Cover */}
+                <div 
+                  className="absolute top-0 left-0 right-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-end pb-8 pointer-events-auto" 
+                  style={{ bottom: "calc(50% + 45px)" }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/logo.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
+                  <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
+                    {currentLesson.titleBm}
+                  </span>
                 </div>
                 
-                {/* Branding */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
-                <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
-                  {currentLesson.titleBm}
-                </span>
-                <span className="text-slate-400 text-xs mt-2 font-medium tracking-wide">
-                  Klik di mana-mana ruang ini untuk mula menonton
-                </span>
-              </div>
+                {/* Bottom Cover */}
+                <div 
+                  className="absolute bottom-0 left-0 right-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-start pt-8 pointer-events-auto" 
+                  style={{ top: "calc(50% + 45px)" }}
+                >
+                  <span className="text-red-500/80 text-sm md:text-base font-bold tracking-wide animate-pulse mt-4">
+                    ↑ Klik butang Play di atas ↑
+                  </span>
+                </div>
+
+                {/* Left Cover */}
+                <div 
+                  className="absolute left-0 z-30 bg-[#0a0a0a] pointer-events-auto" 
+                  style={{ top: "calc(50% - 45px)", bottom: "calc(50% - 45px)", right: "calc(50% + 55px)" }}
+                ></div>
+
+                {/* Right Cover */}
+                <div 
+                  className="absolute right-0 z-30 bg-[#0a0a0a] pointer-events-auto" 
+                  style={{ top: "calc(50% - 45px)", bottom: "calc(50% - 45px)", left: "calc(50% + 55px)" }}
+                ></div>
+              </>
             )}
 
             {/* Secret Dev Test Button */}

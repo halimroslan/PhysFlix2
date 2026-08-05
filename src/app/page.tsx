@@ -167,8 +167,8 @@ function MainDashboard() {
     return a.form - b.form;
   });
 
-  // Select exactly 1 video per chapter (Form 4 & Form 5) excluding Ulangkaji/Homework/Tips, and shuffle them randomly
-  const heroFeaturedLessons = React.useMemo(() => {
+  // Select exactly 1 video per chapter (Form 4 & Form 5) excluding Ulangkaji/Homework/Tips
+  const [heroFeaturedLessons, setHeroFeaturedLessons] = useState<VideoLesson[]>(() => {
     const chapterMap = new Map<string, VideoLesson[]>();
 
     allVideoLessons.forEach((l) => {
@@ -191,13 +191,19 @@ function MainDashboard() {
       }
     });
 
-    const shuffled = [...onePerChapter];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
+    return onePerChapter;
+  });
 
-    return shuffled;
+  // Shuffle on client mount to avoid hydration mismatch
+  React.useEffect(() => {
+    setHeroFeaturedLessons((prev) => {
+      const shuffled = [...prev];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    });
   }, []);
 
   return (

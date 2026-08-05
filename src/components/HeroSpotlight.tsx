@@ -352,6 +352,8 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
   if (cleanLessons.length === 0) return null;
 
   const currentLesson = cleanLessons[currentIndex % cleanLessons.length];
+  if (!currentLesson) return null;
+
   const categoryKey = getPhysicsTopicCategory(currentLesson);
   const config = CategoryConfig[categoryKey] || CategoryConfig.mechanics;
   const CategoryIcon = config.icon;

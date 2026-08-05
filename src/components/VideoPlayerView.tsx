@@ -38,8 +38,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
+      setShowCover(true); // Reset cover when lesson changes
     }
   }, [currentLesson]);
+
+  const [showCover, setShowCover] = useState(true);
 
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
@@ -129,12 +132,28 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
             </div>
 
-            {/* Custom Center-Left Brand Watermark - Blocks Huge 'tavi' Logo */}
-            <div className="absolute top-1/2 left-[25%] -translate-y-1/2 w-[40%] h-[35%] bg-[#0a0a0a] z-20 flex flex-col items-center justify-center rounded-2xl shadow-2xl border border-white/5 pointer-events-none">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-10 md:h-16 w-auto object-contain mb-3" />
-              <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center">PHYSICS SPM FLIX</span>
-            </div>
+            {/* Full Screen Initial Cover / Custom Thumbnail */}
+            {showCover && (
+              <div 
+                onClick={() => setShowCover(false)}
+                className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center cursor-pointer group"
+              >
+                {/* Pulsing Play Button */}
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center animate-pulse mb-8 shadow-[0_0_40px_rgba(220,38,38,0.5)] group-hover:scale-110 group-hover:bg-red-500 transition-all duration-300">
+                  <Play className="w-10 h-10 fill-white ml-2 text-white" />
+                </div>
+                
+                {/* Branding */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
+                <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
+                  {currentLesson.titleBm}
+                </span>
+                <span className="text-slate-400 text-xs mt-2 font-medium tracking-wide">
+                  Klik untuk mula menonton • Tonton. Faham. Skor A+.
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Video Header & Actions */}

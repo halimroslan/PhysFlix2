@@ -294,24 +294,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </p>
             </div>
 
-            {/* Channel Info & Action Buttons */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-b border-slate-800/80 py-3">
-              {/* Channel */}
-              <div className="flex items-center space-x-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-10 w-auto object-contain" />
-                <div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-sm font-bold text-white">PhysicsSPMFlix</span>
-                    <span className="w-3.5 h-3.5 rounded-full bg-blue-500 text-white text-[9px] flex items-center justify-center font-bold">
-                      ✓
-                    </span>
-                  </div>
-                  <span className="text-xs text-slate-400">{t("videoSubscribers")}</span>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center justify-end gap-4 pt-2 border-t border-b border-slate-800/80 py-3">
               <div className="flex items-center space-x-2">
                 <div className="flex items-center bg-[#131826] rounded-full border border-slate-800 p-0.5">
                   <button
@@ -345,19 +329,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <span>{isBookmarked(currentLesson.id) ? t("saved") : t("save")}</span>
                 </button>
               </div>
-            </div>
-
-            {/* Security Notice Banner */}
-            <div className="p-4 rounded-2xl bg-[#111522] border border-slate-800 text-xs text-slate-300 space-y-1.5">
-              <div className="flex items-center space-x-2 text-emerald-400 font-bold">
-                <ShieldAlert className="w-4 h-4" />
-                <span>Stream Terpelihara (Protected Streaming System)</span>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                {lang === "bm"
-                  ? `Video pengajaran KSSM Fizik (${currentLesson.week}) ini dilindungi oleh sistem keselamatan PhysicsSPMFlix. Akses direktori & muat turun terus dihalang bagi memelihara hak cipta bahan pengajaran.`
-                  : `This KSSM Physics lesson video (${currentLesson.week}) is protected by PhysicsSPMFlix DRM. Direct directory access & downloads are restricted to protect copyright.`}
-              </p>
             </div>
           </div>
 

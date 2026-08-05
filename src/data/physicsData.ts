@@ -1150,6 +1150,47 @@ export const rawForm5Videos = [
   },
 ];
 
+const generateLearningPointsBm = (title: string, concepts: string[]) => {
+  const points = [
+    `Memahami standard pembelajaran DSKP bagi subtopik ${title}`,
+  ];
+  
+  if (concepts.length > 0) {
+    points.push(`Menganalisis konsep ${concepts[0]} secara terperinci untuk Kertas 1 & 2`);
+  } else {
+    points.push(`Menganalisis prinsip asas fizik dan pengaplikasiannya`);
+  }
+  
+  if (concepts.length > 1) {
+    points.push(`Menguasai teknik penyelesaian masalah SPM melibatkan ${concepts[1]}`);
+  } else {
+    points.push(`Melatih teknik menjawab soalan KBAT mengikut format pemarkahan SPM`);
+  }
+
+  return points;
+};
+
+const generateLearningPointsDlp = (title: string, concepts: string[]) => {
+  const points = [
+    `Understand the DSKP learning standards for ${title}`,
+  ];
+  
+  if (concepts.length > 0) {
+    points.push(`Analyze the concept of ${concepts[0]} in detail for Paper 1 & 2`);
+  } else {
+    points.push(`Analyze fundamental physics principles and their applications`);
+  }
+  
+  if (concepts.length > 1) {
+    points.push(`Master SPM problem-solving techniques involving ${concepts[1]}`);
+  } else {
+    points.push(`Practice answering HOTS questions according to SPM marking scheme`);
+  }
+
+  return points;
+};
+
+
 // Helper to build Form 4 processed lessons
 
 const getRawId = (obfuscated: string) => {
@@ -1163,16 +1204,8 @@ const getRawId = (obfuscated: string) => {
 };
 
 export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) => {
-  const learningBm = [
-    `Mengenal pasti konsep utama ${v.titleBm}`,
-    `Mengaplikasikan formula berkaitan dalam penyelesaian masalah SPM`,
-    `Melukis rajah dan analisis graf mengikut format pemarkahan SPM`
-  ];
-  const learningDlp = [
-    `Identify core concepts in ${v.titleDlp}`,
-    `Apply relevant SPM physics formulas in problem solving`,
-    `Draw diagrams and graph analysis according to SPM marking scheme`
-  ];
+  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm);
+  const learningDlp = generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
   
   return {
     ...v,
@@ -1212,16 +1245,8 @@ export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) =>
 
 // Helper to build Form 5 processed lessons
 export const form5VideoLessons: VideoLesson[] = rawForm5Videos.map((v, index) => {
-  const learningBm = [
-    `Mengenal pasti konsep utama ${v.titleBm}`,
-    `Mengaplikasikan formula berkaitan dalam penyelesaian masalah SPM`,
-    `Melukis rajah dan analisis graf mengikut format pemarkahan SPM`
-  ];
-  const learningDlp = [
-    `Identify core concepts in ${v.titleDlp}`,
-    `Apply relevant SPM physics formulas in problem solving`,
-    `Draw diagrams and graph analysis according to SPM marking scheme`
-  ];
+  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm);
+  const learningDlp = generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
 
   return {
     ...v,

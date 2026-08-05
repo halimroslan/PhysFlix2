@@ -111,7 +111,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
-              src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=660s`}
+              src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
               className="w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}

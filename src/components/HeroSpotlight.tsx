@@ -1,17 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Play, Info } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson } from "@/data/physicsData";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface HeroSpotlightProps {
   onPlay: (lesson: VideoLesson) => void;
-  featuredLesson: VideoLesson;
+  featuredLessons: VideoLesson[];
 }
 
-export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLesson }) => {
+export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLessons }) => {
   const { lang, t } = useLanguage();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (!featuredLessons || featuredLessons.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % featuredLessons.length);
+    }, 7000);
+    return () => clearInterval(interval);
+  }, [featuredLessons]);
+
+  if (!featuredLessons || featuredLessons.length === 0) return null;
+
+  const currentLesson = featuredLessons[currentIndex];
 
   return (
     <div className="relative w-full h-[360px] md:h-[400px] rounded-3xl overflow-hidden bg-gradient-to-r from-[#0d0914] via-[#161226] to-[#0a1526] border border-slate-800/80 shadow-2xl p-6 md:p-10 flex flex-col justify-between">
@@ -69,38 +83,53 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-xl space-y-4">
-        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-none">
-          {lang === "bm" ? featuredLesson.titleBm : featuredLesson.titleDlp}
-        </h2>
-        <p className="text-xs md:text-sm text-slate-300 line-clamp-3 leading-relaxed font-medium">
-          {t("heroDesc")}
-        </p>
-
-        {/* Buttons */}
-        <div className="flex items-center space-x-4 pt-2">
-          <button
-            onClick={() => onPlay(featuredLesson)}
-            className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs md:text-sm transition shadow-lg shadow-red-950/80 active:scale-95"
+      <div className="relative z-10 max-w-xl flex-1 flex flex-col justify-center overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentLesson.id}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="space-y-4"
           >
-            <Play className="w-4 h-4 fill-white" />
-            <span>{t("playNow")}</span>
-          </button>
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-none">
+              {lang === "bm" ? currentLesson.titleBm : currentLesson.titleDlp}
+            </h2>
+            <p className="text-xs md:text-sm text-slate-300 line-clamp-3 leading-relaxed font-medium">
+              {t("heroDesc")}
+            </p>
 
-          <button className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 font-semibold text-xs md:text-sm transition active:scale-95">
-            <Info className="w-4 h-4" />
-            <span>{t("moreInfo")}</span>
-          </button>
-        </div>
+            {/* Buttons */}
+            <div className="flex items-center space-x-4 pt-2">
+              <button
+                onClick={() => onPlay(currentLesson)}
+                className="flex items-center space-x-2 px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs md:text-sm transition shadow-lg shadow-red-950/80 active:scale-95"
+              >
+                <Play className="w-4 h-4 fill-white" />
+                <span>{t("playNow")}</span>
+              </button>
+
+              <button className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 font-semibold text-xs md:text-sm transition active:scale-95">
+                <Info className="w-4 h-4" />
+                <span>{t("moreInfo")}</span>
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Carousel dots */}
-      <div className="relative z-10 flex items-center space-x-2">
-        <span className="w-6 h-2 rounded-full bg-red-600"></span>
-        <span className="w-2 h-2 rounded-full bg-slate-700"></span>
-        <span className="w-2 h-2 rounded-full bg-slate-700"></span>
-        <span className="w-2 h-2 rounded-full bg-slate-700"></span>
-        <span className="w-2 h-2 rounded-full bg-slate-700"></span>
+      <div className="relative z-10 flex items-center space-x-2 mt-4">
+        {featuredLessons.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              idx === currentIndex ? "w-6 bg-red-600" : "w-2 bg-slate-700 hover:bg-slate-500"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );

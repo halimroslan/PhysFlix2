@@ -296,7 +296,13 @@ function MainDashboard() {
             <>
               {/* Hero Spotlight */}
               <HeroSpotlight
-                featuredLesson={allVideoLessons[38]} // T4 M36 Optics lesson
+                featuredLessons={[
+                  allVideoLessons[38],
+                  allVideoLessons[10],
+                  allVideoLessons[24],
+                  allVideoLessons[42],
+                  allVideoLessons[15]
+                ]}
                 onPlay={handlePlayLesson}
               />
               {/* Continue Watching Row */}

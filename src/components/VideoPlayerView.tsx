@@ -15,7 +15,6 @@ import {
   Lock,
   Bookmark
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
 import { useDRMProtection, deobfuscateId } from "@/utils/security";
@@ -36,29 +35,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const { isBookmarked, toggleBookmark, addToHistory } = useUserActivity();
   useDRMProtection(); // Activates DRM anti-inspect & anti-shortcut hook
 
-  const [showShield, setShowShield] = useState(true);
-  const iframeRef = React.useRef<HTMLIFrameElement>(null);
-
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
-      setShowShield(true); // reset shield on new lesson
     }
   }, [currentLesson]);
-
-  useEffect(() => {
-    const handleBlur = () => {
-      // If the active element is the iframe, user clicked inside it (likely Play button)
-      if (document.activeElement === iframeRef.current) {
-        setTimeout(() => {
-          setShowShield(false);
-        }, 3000); // 3 seconds after click, the shield opens
-        window.removeEventListener('blur', handleBlur);
-      }
-    };
-    window.addEventListener('blur', handleBlur);
-    return () => window.removeEventListener('blur', handleBlur);
-  }, [currentLesson]); // re-bind listener when lesson changes
 
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
@@ -127,8 +108,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
-              ref={iframeRef}
-              src={`https://drive.google.com/file/d/${rawDriveId}/preview`}
+              src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=360s`}
               className="w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}
@@ -143,29 +123,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             </div>
 
-            {/* Shield Overlay to Censor "Tavis" Intro - Dissolves 3s after click */}
-            <AnimatePresence>
-              {showShield && (
-                <motion.div
-                  initial={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1 }}
-                  className="absolute inset-0 z-30 flex items-center justify-center bg-[#07090e] pointer-events-none"
-                >
-                  <div className="flex flex-col items-center justify-center space-y-6">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/logo.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain drop-shadow-2xl opacity-90" />
-                    <div className="flex items-center space-x-2 text-slate-200 font-extrabold text-sm animate-pulse bg-black/60 px-6 py-3 rounded-full backdrop-blur-md border border-white/10 shadow-xl">
-                      <Play className="w-5 h-5 text-red-500 fill-red-500" />
-                      <span>Klik Untuk Mainkan Video</span>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
-            <div className="absolute top-0 right-0 z-40 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
+            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
             </div>

@@ -6,7 +6,8 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { UserActivityProvider, useUserActivity } from "@/context/UserActivityContext";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
-import { HeroSpotlight } from "@/components/HeroSpotlight";
+import { HeroSpotlight, getPhysicsTopicCategory } from "@/components/HeroSpotlight";
+import { Compass, Waves, Flame, Zap, Atom, Sparkles } from "lucide-react";
 import { ContinueWatching } from "@/components/ContinueWatching";
 import { TopPicks } from "@/components/TopPicks";
 import { RevisionCollections } from "@/components/RevisionCollections";
@@ -77,32 +78,69 @@ function MainDashboard() {
   };
 
   // Helper render video card
-  const renderVideoCard = (item: VideoLesson) => (
-    <div
-      key={item.id}
-      onClick={() => handlePlayLesson(item)}
-      className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg flex flex-col justify-between"
-    >
-      <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
-        <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition shadow-xl">
-          <Play className="w-4 h-4 fill-white ml-0.5" />
-        </div>
-        <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
-          {item.duration}
-        </span>
-      </div>
+  const renderVideoCard = (item: VideoLesson) => {
+    const cat = getPhysicsTopicCategory(item);
+    const CategoryIcon =
+      cat === "optics"
+        ? Compass
+        : cat === "waves"
+        ? Waves
+        : cat === "heat"
+        ? Flame
+        : cat === "electricity"
+        ? Zap
+        : cat === "quantum"
+        ? Atom
+        : Sparkles;
 
-      <div className="space-y-1">
-        <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
-        <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2">
-          {lang === "bm" ? item.titleBm : item.titleDlp}
-        </h4>
-        <p className="text-[10px] text-slate-400 pt-1">
-          {lang === "bm" ? `Tingkatan ${item.form} • Bab ${item.chapterNum}` : `Form ${item.form} • Ch ${item.chapterNum}`}
-        </p>
+    return (
+      <div
+        key={item.id}
+        onClick={() => handlePlayLesson(item)}
+        className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800/90 hover:border-red-500/60 p-3.5 space-y-3 transition-all duration-300 shadow-xl flex flex-col justify-between hover:-translate-y-1 relative overflow-hidden"
+      >
+        <div className={`w-full h-34 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden shadow-inner`}>
+          {/* Subtle physics grid overlay */}
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px]"></div>
+
+          {/* Mini Category Icon Badge */}
+          <div className="absolute top-2 left-2 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 flex items-center space-x-1 text-[9px] font-bold text-slate-200">
+            <CategoryIcon className="w-3 h-3 text-red-400" />
+            <span>T{item.form} • Bab {item.chapterNum}</span>
+          </div>
+
+          {/* Play Button Overlay */}
+          <div className="w-10 h-10 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300 shadow-2xl z-10">
+            <Play className="w-4 h-4 fill-white ml-0.5" />
+          </div>
+
+          {/* Duration Badge */}
+          <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded backdrop-blur-sm border border-white/10">
+            {item.duration}
+          </span>
+        </div>
+
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-extrabold text-red-400 block tracking-wider uppercase">{item.week}</span>
+            <span className="text-[9px] font-semibold text-slate-400 truncate max-w-[120px]">{lang === "bm" ? item.chapterBm : item.chapterDlp}</span>
+          </div>
+          <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2 leading-snug">
+            {lang === "bm" ? item.titleBm : item.titleDlp}
+          </h4>
+          {item.keyConceptsBm && item.keyConceptsBm.length > 0 && (
+            <div className="flex flex-wrap gap-1 pt-1">
+              {item.keyConceptsBm.slice(0, 2).map((kc, idx) => (
+                <span key={idx} className="text-[9px] px-1.5 py-0.5 rounded bg-slate-800/80 text-slate-300 border border-slate-700/60 font-medium">
+                  {kc}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const myListLessons = allVideoLessons.filter((l) => isBookmarked(l.id));
   const historyLessons = [...allVideoLessons]
@@ -296,13 +334,10 @@ function MainDashboard() {
             <>
               {/* Hero Spotlight */}
               <HeroSpotlight
-                featuredLessons={[
-                  allVideoLessons[38],
-                  allVideoLessons[10],
-                  allVideoLessons[24],
-                  allVideoLessons[42],
-                  allVideoLessons[15]
-                ]}
+                featuredLessons={allVideoLessons.filter((l) => {
+                  const text = `${l.titleBm} ${l.titleDlp} ${l.week}`.toLowerCase();
+                  return !text.includes("ulangkaji") && !text.includes("homework") && !text.includes("tips");
+                })}
                 onPlay={handlePlayLesson}
               />
               {/* Continue Watching Row */}

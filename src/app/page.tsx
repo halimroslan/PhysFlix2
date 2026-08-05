@@ -125,7 +125,7 @@ function MainDashboard() {
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-extrabold text-red-400 block tracking-wider uppercase">{item.week}</span>
+            {/* Week badge removed */}
             <span className="text-[9px] font-semibold text-slate-400 truncate max-w-[120px]">{lang === "bm" ? item.chapterBm : item.chapterDlp}</span>
           </div>
           <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2 leading-snug">

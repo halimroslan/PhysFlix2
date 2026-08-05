@@ -83,7 +83,7 @@ const translations: Record<Language, Record<string, string>> = {
     tabQA: "Soal Jawab (32)",
     tabChapters: "Bab & Topik",
     whatYoullLearn: "Apa yang akan anda pelajari",
-    keyConcepts: "Konsep Kunci",
+    keyConcepts: "Konsep Utama",
     
     // Sidebar Player
     tabPlaylist: "Tonton Semula",

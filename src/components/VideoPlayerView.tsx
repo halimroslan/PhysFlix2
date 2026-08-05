@@ -223,8 +223,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             <span>DRM Encrypted Stream</span>
           </span>
           <span>•</span>
-          <span>{currentLesson.week}</span>
-          <span>•</span>
           <span className="text-red-400">
             {lang === "bm" ? currentLesson.chapterBm : currentLesson.chapterDlp}
           </span>
@@ -348,9 +346,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           {/* Video Header & Actions */}
           <div className="space-y-4">
             <div>
-              <span className="text-xs font-extrabold text-red-500 bg-red-950/60 border border-red-800/60 px-2.5 py-0.5 rounded-md">
-                {currentLesson.week}
-              </span>
               <h1 className="text-xl md:text-2xl font-black text-white tracking-tight mt-2">
                 {lang === "bm" ? currentLesson.titleBm : currentLesson.titleDlp}
               </h1>
@@ -477,7 +472,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {activeTab === "notes" && (
               <div className="p-5 rounded-2xl bg-[#111624] border border-slate-800 space-y-3 text-xs text-slate-300 leading-relaxed">
                 <h3 className="text-sm font-bold text-white">
-                  Nota Ringkas & Formula SPM ({currentLesson.week})
+                  Nota Ringkas & Formula SPM
                 </h3>
                 <p>
                   1. Pastikan perhatikan tanda positif dan negatif bagi jarak objek (u) dan jarak imej (v).

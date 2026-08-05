@@ -167,45 +167,6 @@ function MainDashboard() {
     return a.form - b.form;
   });
 
-  // Select exactly 1 video per chapter (Form 4 & Form 5) excluding Ulangkaji/Homework/Tips
-  const [heroFeaturedLessons, setHeroFeaturedLessons] = useState<VideoLesson[]>(() => {
-    const chapterMap = new Map<string, VideoLesson[]>();
-
-    allVideoLessons.forEach((l) => {
-      const text = `${l.titleBm} ${l.titleDlp} ${l.week}`.toLowerCase();
-      if (text.includes("ulangkaji") || text.includes("homework") || text.includes("tips")) {
-        return;
-      }
-      const key = `${l.form}-${l.chapterNum}`;
-      if (!chapterMap.has(key)) {
-        chapterMap.set(key, []);
-      }
-      chapterMap.get(key)!.push(l);
-    });
-
-    const onePerChapter: VideoLesson[] = [];
-    chapterMap.forEach((lessonsInChapter) => {
-      if (lessonsInChapter.length > 0) {
-        const selected = lessonsInChapter.find((l) => l.keyConceptsBm && l.keyConceptsBm.length > 0) || lessonsInChapter[0];
-        onePerChapter.push(selected);
-      }
-    });
-
-    return onePerChapter;
-  });
-
-  // Shuffle on client mount to avoid hydration mismatch
-  React.useEffect(() => {
-    setHeroFeaturedLessons((prev) => {
-      const shuffled = [...prev];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    });
-  }, []);
-
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans">
       {/* Navbar */}
@@ -373,7 +334,10 @@ function MainDashboard() {
             <>
               {/* Hero Spotlight */}
               <HeroSpotlight
-                featuredLessons={heroFeaturedLessons}
+                featuredLessons={allVideoLessons.filter((l) => {
+                  const text = `${l.titleBm} ${l.titleDlp} ${l.week}`.toLowerCase();
+                  return !text.includes("ulangkaji") && !text.includes("homework") && !text.includes("tips");
+                })}
                 onPlay={handlePlayLesson}
               />
               {/* Continue Watching Row */}

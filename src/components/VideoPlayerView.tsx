@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
+import { conceptDefinitions } from "@/data/conceptDefinitions";
 import { useDRMProtection, deobfuscateId } from "@/utils/security";
 import { useUserActivity } from "@/context/UserActivityContext";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
@@ -104,6 +105,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [shareText, setShareText] = useState("Kongsi");
+  const [saved, setSaved] = useState(false);
+  const [selectedConcept, setSelectedConcept] = useState<string | null>(null);
 
   // Helper to generate a stable, realistic number of likes based on video ID
   const getBaseLikes = (id: string) => {
@@ -456,15 +459,31 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <div className="flex flex-wrap gap-2">
                     {(lang === "bm" ? currentLesson.keyConceptsBm : currentLesson.keyConceptsDlp).map(
                       (concept, i) => (
-                        <span
+                        <button
                           key={i}
-                          className="px-3 py-1 bg-[#1a2133] border border-slate-700/60 rounded-lg text-xs font-medium text-slate-200"
+                          onClick={() => setSelectedConcept(selectedConcept === concept ? null : concept)}
+                          className={`px-3 py-1 border rounded-lg text-xs font-medium transition-colors ${
+                            selectedConcept === concept
+                              ? "bg-red-600 border-red-500 text-white"
+                              : "bg-[#1a2133] border-slate-700/60 text-slate-200 hover:bg-slate-800 hover:text-white"
+                          }`}
                         >
                           {concept}
-                        </span>
+                        </button>
                       )
                     )}
                   </div>
+                  {selectedConcept && (
+                    <div className="mt-3 p-4 bg-slate-900/80 border border-slate-700 rounded-xl relative animate-in fade-in slide-in-from-top-2 duration-300">
+                      <h4 className="text-sm font-bold text-red-400 mb-1">{selectedConcept}</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        {conceptDefinitions[selectedConcept] || 
+                          (lang === "bm" 
+                            ? "Definisi untuk konsep ini akan dikemas kini kelak mengikut silibus SPM." 
+                            : "The definition for this concept will be updated soon according to the SPM syllabus.")}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

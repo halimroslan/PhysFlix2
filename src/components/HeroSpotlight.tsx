@@ -274,6 +274,55 @@ const CategoryConfig: Record<
   },
 };
 
+export function getLessonDescription(lesson: VideoLesson, lang: "bm" | "en" | string): string {
+  const isBm = lang !== "en";
+  const concepts = isBm ? lesson.keyConceptsBm : lesson.keyConceptsDlp;
+  const chapter = isBm ? lesson.chapterBm : lesson.chapterDlp;
+  const title = isBm ? lesson.titleBm : lesson.titleDlp;
+
+  if (concepts && concepts.length > 0) {
+    const conceptsText = concepts.slice(0, 3).join(", ");
+    if (isBm) {
+      return `Pelajari tajuk ${title} dalam ${chapter}. Kuasai konsep ${conceptsText} menerusi penerangan dan simulasi Fizik secara visual.`;
+    } else {
+      return `Master ${title} in ${chapter}. Understand key concepts including ${conceptsText} with interactive visual simulations.`;
+    }
+  }
+
+  const cat = getPhysicsTopicCategory(lesson);
+  if (isBm) {
+    switch (cat) {
+      case "optics":
+        return `Kuasai prinsip ${title} dan pembiasan cahaya, kanta serta pembentukan imej dengan animasi simulasi Fizik.`;
+      case "mechanics":
+        return `Fahami hukum gerakan, daya, momentum dan analisis graf Fizik bagi tajuk ${title} dengan langkah pengiraan lengkap.`;
+      case "waves":
+        return `Terokai sifat gelombang, interferensi, dan pembiasan gelombang menerusi simulasi grafik interaktif ${title}.`;
+      case "heat":
+        return `Kuasai konsep haba, suhu, dan hukum gas Fizik bagi tajuk ${title} menerusi penerangan visual yang mudah.`;
+      case "electricity":
+        return `Fahami hukum Ohm, litar elektrik, daya elektromagnet dan induksi bagi tajuk ${title} dengan rajah berskala.`;
+      case "quantum":
+        return `Terokai keajaiban Fizik Kuantum & Nuklear, struktur atom dan tenaga foton bagi tajuk ${title} secara mendalam.`;
+    }
+  } else {
+    switch (cat) {
+      case "optics":
+        return `Master ${title}, light refraction, lenses, and image formation with step-by-step physics visual animations.`;
+      case "mechanics":
+        return `Understand laws of motion, force vectors, momentum, and graph analysis for ${title} with full calculations.`;
+      case "waves":
+        return `Explore wave properties, interference patterns, and electromagnetic waves in ${title} through interactive simulations.`;
+      case "heat":
+        return `Master heat capacity, gas laws, and thermal equilibrium in ${title} with easy-to-follow visual explanations.`;
+      case "electricity":
+        return `Understand Ohm's law, circuits, magnetic flux, and electromagnetic induction in ${title} with clear diagrams.`;
+      case "quantum":
+        return `Discover quantum physics, nuclear decay, photons, and photoelectric effect for ${title} in detail.`;
+    }
+  }
+}
+
 export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLessons }) => {
   const { lang, t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -348,7 +397,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
               {lang === "bm" ? currentLesson.titleBm : currentLesson.titleDlp}
             </h2>
             <p className="text-xs md:text-sm text-slate-300 line-clamp-2 leading-relaxed font-medium">
-              {t("heroDesc")}
+              {getLessonDescription(currentLesson, lang)}
             </p>
 
             {/* Buttons */}

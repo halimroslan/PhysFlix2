@@ -280,12 +280,20 @@ export function getLessonDescription(lesson: VideoLesson, lang: "bm" | "en" | st
   const chapter = isBm ? lesson.chapterBm : lesson.chapterDlp;
   const title = isBm ? lesson.titleBm : lesson.titleDlp;
 
+  const titleLower = title.toLowerCase();
+  const chapterLower = chapter.toLowerCase();
+  const includesChapter = titleLower.includes(chapterLower);
+
+  const locationInfo = includesChapter
+    ? (isBm ? `Tingkatan ${lesson.form}` : `Form ${lesson.form}`)
+    : (isBm ? `Bab ${lesson.chapterNum}: ${chapter}` : `Chapter ${lesson.chapterNum}: ${chapter}`);
+
   if (concepts && concepts.length > 0) {
     const conceptsText = concepts.slice(0, 3).join(", ");
     if (isBm) {
-      return `Pelajari tajuk ${title} dalam ${chapter}. Kuasai konsep ${conceptsText} menerusi penerangan dan simulasi Fizik secara visual.`;
+      return `Pelajari tajuk ${title} (${locationInfo}). Kuasai Standard Pembelajaran DSKP Fizik KSSM merangkumi ${conceptsText} melalui simulasi interaktif.`;
     } else {
-      return `Master ${title} in ${chapter}. Understand key concepts including ${conceptsText} with interactive visual simulations.`;
+      return `Master subtopic ${title} (${locationInfo}). Learn KSSM DSKP Physics Learning Standards including ${conceptsText} via interactive simulations.`;
     }
   }
 
@@ -293,32 +301,32 @@ export function getLessonDescription(lesson: VideoLesson, lang: "bm" | "en" | st
   if (isBm) {
     switch (cat) {
       case "optics":
-        return `Kuasai prinsip ${title} dan pembiasan cahaya, kanta serta pembentukan imej dengan animasi simulasi Fizik.`;
+        return `Kuasai ${title} (${locationInfo}), pembiasan cahaya, kanta serta pembentukan imej mengikut DSKP Fizik KSSM.`;
       case "mechanics":
-        return `Fahami hukum gerakan, daya, momentum dan analisis graf Fizik bagi tajuk ${title} dengan langkah pengiraan lengkap.`;
+        return `Fahami hukum gerakan Newton, daya, momentum dan analisis graf bagi ${title} (${locationInfo}) mengikut DSKP KSSM.`;
       case "waves":
-        return `Terokai sifat gelombang, interferensi, dan pembiasan gelombang menerusi simulasi grafik interaktif ${title}.`;
+        return `Terokai sifat gelombang, pelembapan, resonans, dan interferensi gelombang bagi ${title} (${locationInfo}).`;
       case "heat":
-        return `Kuasai konsep haba, suhu, dan hukum gas Fizik bagi tajuk ${title} menerusi penerangan visual yang mudah.`;
+        return `Kuasai Keseimbangan Terma, Muatan Haba Tentu, dan Hukum Gas bagi ${title} (${locationInfo}) secara visual.`;
       case "electricity":
-        return `Fahami hukum Ohm, litar elektrik, daya elektromagnet dan induksi bagi tajuk ${title} dengan rajah berskala.`;
+        return `Fahami Hukum Ohm, Rintangan, Keelektromagnetan dan Induksi Elektromagnet bagi ${title} (${locationInfo}).`;
       case "quantum":
-        return `Terokai keajaiban Fizik Kuantum & Nuklear, struktur atom dan tenaga foton bagi tajuk ${title} secara mendalam.`;
+        return `Terokai Teori Kuantum Cahaya, Kesan Fotoelektrik dan Fizik Nuklear bagi ${title} (${locationInfo}) secara mendalam.`;
     }
   } else {
     switch (cat) {
       case "optics":
-        return `Master ${title}, light refraction, lenses, and image formation with step-by-step physics visual animations.`;
+        return `Master ${title} (${locationInfo}), light refraction, lenses, and image formation according to the KSSM Physics DSKP.`;
       case "mechanics":
-        return `Understand laws of motion, force vectors, momentum, and graph analysis for ${title} with full calculations.`;
+        return `Understand Newton's laws of motion, force vectors, momentum, and graph analysis for ${title} (${locationInfo}).`;
       case "waves":
-        return `Explore wave properties, interference patterns, and electromagnetic waves in ${title} through interactive simulations.`;
+        return `Explore wave fundamentals, damping, resonance, and wave interference in ${title} (${locationInfo}).`;
       case "heat":
-        return `Master heat capacity, gas laws, and thermal equilibrium in ${title} with easy-to-follow visual explanations.`;
+        return `Master Thermal Equilibrium, Specific Heat Capacity, and Gas Laws for ${title} (${locationInfo}) visually.`;
       case "electricity":
-        return `Understand Ohm's law, circuits, magnetic flux, and electromagnetic induction in ${title} with clear diagrams.`;
+        return `Understand Ohm's Law, Resistance, Electromagnetism, and Electromagnetic Induction for ${title} (${locationInfo}).`;
       case "quantum":
-        return `Discover quantum physics, nuclear decay, photons, and photoelectric effect for ${title} in detail.`;
+        return `Discover Quantum Theory of Light, Photoelectric Effect, and Nuclear Physics for ${title} (${locationInfo}).`;
     }
   }
 }

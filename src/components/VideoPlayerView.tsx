@@ -129,11 +129,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
             </div>
 
-            {/* Custom Top Left Brand Watermark - Blocks Uploader Name/Profile (e.g. Tavis) */}
-            <div className="absolute top-0 left-0 z-20 flex items-center justify-start w-64 h-16 bg-black/90 rounded-br-2xl pointer-events-auto cursor-default shadow-br-xl border-r border-b border-white/5 pl-4">
+            {/* Custom Center-Left Brand Watermark - Blocks Huge 'tavi' Logo */}
+            <div className="absolute top-1/2 left-[25%] -translate-y-1/2 w-[40%] h-[35%] bg-[#0a0a0a] z-20 flex flex-col items-center justify-center rounded-2xl shadow-2xl border border-white/5 pointer-events-none">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain mr-2" />
-              <span className="text-white text-xs font-bold font-mono tracking-wider">PHYSICS SPM FLIX</span>
+              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-10 md:h-16 w-auto object-contain mb-3" />
+              <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center">PHYSICS SPM FLIX</span>
             </div>
           </div>
 

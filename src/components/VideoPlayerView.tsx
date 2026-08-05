@@ -92,6 +92,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     setNewComment("");
   };
 
+  const applyTavisProtector = (() => {
+    if (currentLesson.form !== 4 && currentLesson.form !== 5) return false;
+    const match = currentLesson.week.match(/M(\d+)/);
+    if (match) {
+      const num = parseInt(match[1], 10);
+      return num >= 1 && num <= 20;
+    }
+    return false;
+  })();
+
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 p-4 md:p-6 space-y-6 select-none">
       {/* Top Bar Navigation */}
@@ -146,10 +156,31 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             </div>
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
-            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
-            </div>
+            {!applyTavisProtector && (
+              <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
+              </div>
+            )}
+
+            {/* Permanent Protectors for 'Tavis' Logo (Form 4/5, M1-M20) */}
+            {applyTavisProtector && (
+              <>
+                {/* Top-Right Tavis Protector */}
+                <div className="absolute top-[14%] right-[24%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-xl shadow-xl border border-white/10 pointer-events-none">
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
+                   <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                </div>
+                
+                {/* Bottom-Right Tavis Protector */}
+                <div className="absolute bottom-[10%] right-[24%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-xl shadow-xl border border-white/10 pointer-events-none">
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
+                   <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                </div>
+              </>
+            )}
 
             {/* Full Screen Initial Cover / Custom Thumbnail */}
             {showCover && (

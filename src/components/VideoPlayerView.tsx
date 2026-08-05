@@ -36,6 +36,19 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   useDRMProtection(); // Activates DRM anti-inspect & anti-shortcut hook
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Parse duration into total seconds
+  const totalSeconds = (() => {
+    if (!currentLesson?.duration) return 0;
+    const parts = currentLesson.duration.split(':').map(Number);
+    if (parts.length === 3) {
+      return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    } else if (parts.length === 2) {
+      return parts[0] * 60 + parts[1];
+    }
+    return 0;
+  })();
 
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
@@ -61,6 +74,28 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   }, []);
 
   const [showCover, setShowCover] = useState(true);
+  const [showEndCover, setShowEndCover] = useState(false);
+
+  // Manage end cover timer based on playback state (showCover)
+  useEffect(() => {
+    if (!showCover) {
+      // Calculate remaining time: Total duration - 14 minutes (840s) - 10s
+      // If remaining time is valid, start timer
+      const remainingSeconds = totalSeconds - 840 - 10;
+      if (remainingSeconds > 0) {
+        playTimerRef.current = setTimeout(() => {
+          setShowEndCover(true);
+        }, remainingSeconds * 1000);
+      }
+    } else {
+      setShowEndCover(false);
+      if (playTimerRef.current) clearTimeout(playTimerRef.current);
+    }
+    
+    return () => {
+      if (playTimerRef.current) clearTimeout(playTimerRef.current);
+    };
+  }, [showCover, totalSeconds]);
 
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
@@ -156,12 +191,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             </div>
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
-            {!applyTavisProtector && (
-              <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
-              </div>
-            )}
+            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
+            </div>
+
+            {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
+            <div className="absolute top-0 left-0 z-20 w-3/4 h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
             {/* Permanent Protectors for 'Tavis' Logo (Form 4/5, M1-M20) */}
             {applyTavisProtector && (
@@ -201,6 +237,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 <span className="text-slate-400 text-xs mt-2 font-medium tracking-wide">
                   Klik di mana-mana ruang ini untuk mula menonton
                 </span>
+              </div>
+            )}
+
+            {/* Full Screen End Cover (Last 10 Seconds) */}
+            {showEndCover && (
+              <div 
+                onClick={() => setShowEndCover(false)}
+                className="absolute inset-0 z-40 bg-[#0a0a0a] flex items-center justify-center cursor-pointer pointer-events-auto"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-20 md:h-32 w-auto object-contain opacity-90" />
               </div>
             )}
           </div>

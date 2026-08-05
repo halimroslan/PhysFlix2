@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ArrowLeft,
   ThumbsUp,
@@ -35,12 +35,30 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const { isBookmarked, toggleBookmark, addToHistory } = useUserActivity();
   useDRMProtection(); // Activates DRM anti-inspect & anti-shortcut hook
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
     }
   }, [currentLesson]);
+
+  // Detect clicks on the iframe when it gains focus
+  useEffect(() => {
+    const handleBlur = () => {
+      // Small timeout ensures document.activeElement has updated
+      setTimeout(() => {
+        if (document.activeElement === iframeRef.current) {
+          setShowCover(false);
+        }
+      }, 50);
+    };
+    window.addEventListener("blur", handleBlur);
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+    };
+  }, []);
 
   const [showCover, setShowCover] = useState(true);
 
@@ -111,6 +129,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
+              ref={iframeRef}
               src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
               className="w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
@@ -135,11 +154,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Full Screen Initial Cover / Custom Thumbnail */}
             {showCover && (
               <div 
-                onClick={() => setShowCover(false)}
-                className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center cursor-pointer group"
+                className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center pointer-events-none"
               >
                 {/* Pulsing Play Button */}
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center animate-pulse mb-8 shadow-[0_0_40px_rgba(220,38,38,0.5)] group-hover:scale-110 group-hover:bg-red-500 transition-all duration-300">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center animate-pulse mb-8 shadow-[0_0_40px_rgba(220,38,38,0.5)] transition-all duration-300">
                   <Play className="w-10 h-10 fill-white ml-2 text-white" />
                 </div>
                 
@@ -150,7 +168,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   {currentLesson.titleBm}
                 </span>
                 <span className="text-slate-400 text-xs mt-2 font-medium tracking-wide">
-                  Klik untuk mula menonton • Tonton. Faham. Skor A+.
+                  Klik di mana-mana ruang ini untuk mula menonton
                 </span>
               </div>
             )}

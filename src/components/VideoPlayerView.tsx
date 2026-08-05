@@ -240,6 +240,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             )}
 
+            {/* Secret Dev Test Button */}
+            <button 
+              onClick={() => setShowEndCover(true)}
+              className="absolute bottom-2 left-2 z-30 px-3 py-1.5 bg-black/50 text-white/50 text-xs rounded pointer-events-auto hover:bg-red-600 hover:text-white transition-all font-mono"
+            >
+              Uji Cover Penamat
+            </button>
+
             {/* Full Screen End Cover (Last 10 Seconds) */}
             {showEndCover && (
               <div 

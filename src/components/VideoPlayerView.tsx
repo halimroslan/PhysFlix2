@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowLeft,
   ThumbsUp,
@@ -12,11 +12,13 @@ import {
   FileText,
   Play,
   ShieldAlert,
-  Lock
+  Lock,
+  Bookmark
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
 import { useDRMProtection, deobfuscateId } from "@/utils/security";
+import { useUserActivity } from "@/context/UserActivityContext";
 
 interface VideoPlayerViewProps {
   currentLesson: VideoLesson;
@@ -30,13 +32,19 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   onSelectLesson
 }) => {
   const { lang, t } = useLanguage();
+  const { isBookmarked, toggleBookmark, addToHistory } = useUserActivity();
   useDRMProtection(); // Activates DRM anti-inspect & anti-shortcut hook
+
+  useEffect(() => {
+    if (currentLesson && currentLesson.id) {
+      addToHistory(currentLesson.id);
+    }
+  }, [currentLesson]);
 
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(1240);
-  const [isSaved, setIsSaved] = useState(false);
   const [comments, setComments] = useState([
     { name: "Ahmad Rizky", text: "Terbaik Sir! Baru faham melukis sinar selari dan sinar fokus.", time: "2 jam lepas" },
     { name: "Siti Sarah", text: "Fast explanation and clear graphics for DLP students!", time: "5 jam lepas" },
@@ -176,15 +184,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </button>
 
                 <button
-                  onClick={() => setIsSaved(!isSaved)}
-                  className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-full border text-xs font-bold transition ${
-                    isSaved
-                      ? "bg-emerald-950/60 border-emerald-500 text-emerald-400"
-                      : "bg-[#131826] hover:bg-slate-800 border-slate-800 text-slate-300"
+                  onClick={() => toggleBookmark(currentLesson.id)}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition ${
+                    isBookmarked(currentLesson.id)
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "bg-[#131724] hover:bg-[#1a2133] text-slate-300 border border-slate-800"
                   }`}
                 >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>{t("btnAddList")}</span>
+                  <Bookmark className={`w-4 h-4 ${isBookmarked(currentLesson.id) ? "fill-current" : ""}`} />
+                  <span>{isBookmarked(currentLesson.id) ? t("saved") : t("save")}</span>
                 </button>
               </div>
             </div>

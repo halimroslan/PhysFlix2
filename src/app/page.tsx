@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { UserActivityProvider, useUserActivity } from "@/context/UserActivityContext";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { HeroSpotlight } from "@/components/HeroSpotlight";
@@ -21,11 +22,12 @@ import {
   form5VideoLessons,
   VideoLesson
 } from "@/data/physicsData";
-import { Play, BookOpen, GraduationCap, Search, Loader2 } from "lucide-react";
+import { Play, BookOpen, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target } from "lucide-react";
 
 function MainDashboard() {
   const { lang } = useLanguage();
   const { user, loading } = useAuth();
+  const { isBookmarked, watchHistory } = useUserActivity();
   const [currentTab, setCurrentTab] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState<VideoLesson | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -74,6 +76,59 @@ function MainDashboard() {
     handlePlayLesson(topicLesson);
   };
 
+  // Helper render video card
+  const renderVideoCard = (item: VideoLesson) => (
+    <div
+      key={item.id}
+      onClick={() => handlePlayLesson(item)}
+      className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg flex flex-col justify-between"
+    >
+      <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
+        <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition shadow-xl">
+          <Play className="w-4 h-4 fill-white ml-0.5" />
+        </div>
+        <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
+          {item.duration}
+        </span>
+      </div>
+
+      <div className="space-y-1">
+        <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
+        <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2">
+          {lang === "bm" ? item.titleBm : item.titleDlp}
+        </h4>
+        <p className="text-[10px] text-slate-400 pt-1">
+          {lang === "bm" ? `Tingkatan ${item.form} • Bab ${item.chapterNum}` : `Form ${item.form} • Ch ${item.chapterNum}`}
+        </p>
+      </div>
+    </div>
+  );
+
+  const myListLessons = allVideoLessons.filter((l) => isBookmarked(l.id));
+  const historyLessons = [...allVideoLessons]
+    .filter((l) => watchHistory.includes(l.id))
+    .sort((a, b) => watchHistory.indexOf(a.id) - watchHistory.indexOf(b.id));
+
+  const spmLessons = allVideoLessons.filter((l) => {
+    const searchString = `${l.titleBm.toLowerCase()} ${l.keyConceptsBm.join(" ").toLowerCase()} ${l.titleDlp.toLowerCase()}`;
+    return searchString.includes("ulangkaji") || searchString.includes("tips") || searchString.includes("percubaan") || searchString.includes("spm");
+  });
+
+  const allChapters = Array.from(new Set(allVideoLessons.map(l => `${l.form}-${l.chapterNum}`))).map(formChap => {
+    const [form, chap] = formChap.split("-");
+    const lessons = allVideoLessons.filter(l => l.form === parseInt(form) && l.chapterNum === parseInt(chap));
+    return {
+      form: parseInt(form),
+      chapterNum: parseInt(chap),
+      chapterBm: lessons[0].chapterBm,
+      chapterDlp: lessons[0].chapterDlp,
+      lessons
+    };
+  }).sort((a, b) => {
+    if (a.form === b.form) return a.chapterNum - b.chapterNum;
+    return a.form - b.form;
+  });
+
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans">
       {/* Navbar */}
@@ -103,7 +158,6 @@ function MainDashboard() {
               onSelectLesson={(lesson) => setSelectedLesson(lesson)}
             />
           ) : searchQuery.trim() !== "" ? (
-            /* Search Results View */
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <Search className="w-6 h-6 text-red-500" />
@@ -112,38 +166,89 @@ function MainDashboard() {
                 </h2>
                 <span className="text-xs text-slate-400">({filteredLessons.length} video)</span>
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filteredLessons.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => handlePlayLesson(item)}
-                    className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg"
-                  >
-                    <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
-                      <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition">
-                        <Play className="w-4 h-4 fill-white ml-0.5" />
-                      </div>
-                      <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
-                        {item.duration}
-                      </span>
-                    </div>
-
-                    <div>
-                      <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
-                      <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-1">
-                        {lang === "bm" ? item.titleBm : item.titleDlp}
-                      </h4>
-                      <p className="text-[10px] text-slate-400 mt-1">
-                        {lang === "bm" ? `Tingkatan ${item.form} • Bab ${item.chapterNum}` : `Form ${item.form} • Chapter ${item.chapterNum}`}
-                      </p>
-                    </div>
+                {filteredLessons.map(renderVideoCard)}
+              </div>
+            </div>
+          ) : currentTab === "mylist" ? (
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                <Bookmark className="w-6 h-6 text-amber-500" />
+                <h2 className="text-2xl font-extrabold text-white">
+                  {lang === "bm" ? "Senarai Saya" : "My List"}
+                </h2>
+                <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-extrabold rounded-full">
+                  {myListLessons.length} Video
+                </span>
+              </div>
+              {myListLessons.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {myListLessons.map(renderVideoCard)}
+                </div>
+              ) : (
+                <div className="py-20 text-center text-slate-500 flex flex-col items-center">
+                  <Bookmark className="w-12 h-12 mb-4 opacity-50" />
+                  <p>{lang === "bm" ? "Tiada video dalam senarai bookmark." : "No videos bookmarked yet."}</p>
+                </div>
+              )}
+            </div>
+          ) : currentTab === "playlists" ? (
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                <ListVideo className="w-6 h-6 text-purple-500" />
+                <h2 className="text-2xl font-extrabold text-white">
+                  {lang === "bm" ? "Senarai Main (Sejarah Tontonan)" : "Playlists (Watch History)"}
+                </h2>
+                <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-extrabold rounded-full">
+                  {historyLessons.length} Video
+                </span>
+              </div>
+              {historyLessons.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {historyLessons.map(renderVideoCard)}
+                </div>
+              ) : (
+                <div className="py-20 text-center text-slate-500 flex flex-col items-center">
+                  <ListVideo className="w-12 h-12 mb-4 opacity-50" />
+                  <p>{lang === "bm" ? "Anda belum menonton mana-mana video." : "You haven't watched any videos yet."}</p>
+                </div>
+              )}
+            </div>
+          ) : currentTab === "topics" ? (
+            <div className="space-y-10">
+              <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                <Grid className="w-6 h-6 text-blue-500" />
+                <h2 className="text-2xl font-extrabold text-white">
+                  {lang === "bm" ? "Topik Pembelajaran Mengikut Bab" : "Learning Topics by Chapter"}
+                </h2>
+              </div>
+              {allChapters.map(chap => (
+                <div key={`${chap.form}-${chap.chapterNum}`} className="space-y-4">
+                  <h3 className="text-lg font-bold text-slate-200 border-l-4 border-blue-500 pl-3">
+                    {lang === "bm" ? `Tingkatan ${chap.form} - Bab ${chap.chapterNum}: ${chap.chapterBm}` : `Form ${chap.form} - Chapter ${chap.chapterNum}: ${chap.chapterDlp}`}
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {chap.lessons.map(renderVideoCard)}
                   </div>
-                ))}
+                </div>
+              ))}
+            </div>
+          ) : currentTab === "spm" ? (
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                <Target className="w-6 h-6 text-red-500" />
+                <h2 className="text-2xl font-extrabold text-white">
+                  {lang === "bm" ? "Koleksi Ulangkaji SPM" : "SPM Revision Collection"}
+                </h2>
+                <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
+                  {spmLessons.length} Video
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {spmLessons.map(renderVideoCard)}
               </div>
             </div>
           ) : currentTab === "form4" ? (
-            /* Dedicated Form 4 Video Catalog View */
             <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
@@ -161,38 +266,11 @@ function MainDashboard() {
                   {form4VideoLessons.length} Video Lengkap
                 </span>
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {form4VideoLessons.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => handlePlayLesson(item)}
-                    className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg flex flex-col justify-between"
-                  >
-                    <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
-                      <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition shadow-xl">
-                        <Play className="w-4 h-4 fill-white ml-0.5" />
-                      </div>
-                      <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
-                        {item.duration}
-                      </span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
-                      <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2">
-                        {lang === "bm" ? item.titleBm : item.titleDlp}
-                      </h4>
-                      <p className="text-[10px] text-slate-400 pt-1">
-                        {lang === "bm" ? `Bab ${item.chapterNum}: ${item.chapterBm}` : `Ch ${item.chapterNum}: ${item.chapterDlp}`}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                {form4VideoLessons.map(renderVideoCard)}
               </div>
             </div>
           ) : currentTab === "form5" ? (
-            /* Dedicated Form 5 Video Catalog View */
             <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
@@ -210,54 +288,24 @@ function MainDashboard() {
                   {form5VideoLessons.length} Video Lengkap
                 </span>
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {form5VideoLessons.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => handlePlayLesson(item)}
-                    className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800 hover:border-red-500/50 p-3.5 space-y-3 transition shadow-lg flex flex-col justify-between"
-                  >
-                    <div className={`w-full h-32 rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden`}>
-                      <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition shadow-xl">
-                        <Play className="w-4 h-4 fill-white ml-0.5" />
-                      </div>
-                      <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[9px] font-bold text-white bg-black/80 rounded">
-                        {item.duration}
-                      </span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-red-400 block">{item.week}</span>
-                      <h4 className="text-xs font-bold text-slate-100 group-hover:text-red-400 transition line-clamp-2">
-                        {lang === "bm" ? item.titleBm : item.titleDlp}
-                      </h4>
-                      <p className="text-[10px] text-slate-400 pt-1">
-                        {lang === "bm" ? `Bab ${item.chapterNum}: ${item.chapterBm}` : `Ch ${item.chapterNum}: ${item.chapterDlp}`}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                {form5VideoLessons.map(renderVideoCard)}
               </div>
             </div>
           ) : (
-            /* Standard Dashboard View matching Image 1 */
             <>
               {/* Hero Spotlight */}
               <HeroSpotlight
                 featuredLesson={allVideoLessons[38]} // T4 M36 Optics lesson
                 onPlay={handlePlayLesson}
               />
-
               {/* Continue Watching Row */}
               <ContinueWatching
                 lessons={allVideoLessons}
                 onPlay={handlePlayLesson}
               />
-
               {/* Top Picks for You Categories */}
               <TopPicks onSelectTopic={handleSelectTopic} />
-
               {/* SPM Revision Collections */}
               <RevisionCollections
                 onOpenQuiz={() => setIsQuizOpen(true)}
@@ -281,7 +329,9 @@ export default function Home() {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <MainDashboard />
+        <UserActivityProvider>
+          <MainDashboard />
+        </UserActivityProvider>
       </LanguageProvider>
     </AuthProvider>
   );

@@ -42,14 +42,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const mainNav = [
     { id: "home", label: t("navHome"), icon: Home },
     { id: "mylist", label: t("navMyList"), icon: Bookmark },
-    { id: "continue", label: t("navContinue"), icon: PlayCircle },
     { id: "topics", label: t("navBrowse"), icon: Grid },
     { id: "form4", label: t("navForm4"), icon: BookOpen, badge: "43 Videos" },
     { id: "form5", label: t("navForm5"), icon: GraduationCap, badge: "38 Videos" },
     { id: "spm", label: t("navSPMRevision"), icon: Target },
-    { id: "experiments", label: t("navExperiments"), icon: FlaskConical },
-    { id: "playlists", label: t("navPlaylists"), icon: ListVideo },
-    { id: "live", label: t("navLiveClasses"), icon: Radio, isLive: true }
+    { id: "experiments", label: "MyHomePhysics Lab", icon: FlaskConical },
+    { id: "playlists", label: t("navPlaylists"), icon: ListVideo }
   ];
 
   return (
@@ -62,7 +60,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
           return (
             <button
               key={item.id}
-              onClick={() => onTabChange(item.id)}
+              onClick={() => {
+                if (item.id === "experiments") {
+                  window.open("https://myphysicstutor2.vercel.app/", "_blank");
+                } else {
+                  onTabChange(item.id);
+                }
+              }}
               className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
                 isActive
                   ? "bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg shadow-red-950/60"
@@ -77,9 +81,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span className="px-2 py-0.5 text-[9px] font-bold text-red-400 bg-red-950/60 rounded-full border border-red-800/50">
                   {item.badge}
                 </span>
-              )}
-              {item.isLive && (
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
               )}
             </button>
           );
@@ -138,18 +139,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Profile Card Footer */}
-      <div className="mt-auto pt-4 border-t border-slate-800/80">
-        <div className="p-3 bg-[#131724] border border-slate-800 rounded-xl flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/20">
-            SH
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <h4 className="text-xs font-bold text-white truncate">Sir Halim</h4>
-            <p className="text-[10px] text-slate-400 truncate">{t("teacherRole")}</p>
-          </div>
-        </div>
-      </div>
+
     </aside>
   );
 };

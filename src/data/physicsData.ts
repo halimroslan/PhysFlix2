@@ -1152,7 +1152,7 @@ export const rawForm5Videos = [
 
 const generateLearningPointsBm = (title: string, concepts: string[]) => {
   const points = [
-    `Memahami standard pembelajaran DSKP bagi subtopik ${title}`,
+    `Memahami Standard Kandungan DSKP bagi topik ${title}`,
   ];
   
   if (concepts.length > 0) {
@@ -1172,7 +1172,7 @@ const generateLearningPointsBm = (title: string, concepts: string[]) => {
 
 const generateLearningPointsDlp = (title: string, concepts: string[]) => {
   const points = [
-    `Understand the DSKP learning standards for ${title}`,
+    `Understand the DSKP Content Standard for topic ${title}`,
   ];
   
   if (concepts.length > 0) {

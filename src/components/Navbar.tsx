@@ -25,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
       <div className="flex items-center shrink-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/logo.png"
+          src="/PHYSFLIX.png"
           alt="PhysicsSPMFlix Logo"
           className="h-12 md:h-24 lg:h-28 object-contain"
         />

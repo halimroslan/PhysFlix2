@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
         <img
           src="/PHYSFLIX.png"
           alt="PhysicsSPMFlix Logo"
-          className="h-12 md:h-24 lg:h-28 object-contain"
+          className="h-8 md:h-12 lg:h-14 object-contain"
         />
       </div>
 

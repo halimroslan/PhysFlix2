@@ -272,17 +272,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {showTavisM1toM20 && (
               <>
                 {/* Top-Right Tavis Protector (M1-M20) */}
-                <div className="absolute top-[14%] right-[24%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-xl shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute top-[14%] right-[24%] z-20 flex items-center justify-center w-24 md:w-36 h-8 md:h-12 bg-[#0a0a0a] rounded-lg md:rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
-                   <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-3 md:h-5 w-auto object-contain mr-1 md:mr-2" />
+                   <span className="text-white text-[6px] md:text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
                 
                 {/* Bottom-Right Tavis Protector (M1-M20) */}
-                <div className="absolute bottom-[10%] right-[24%] z-20 flex items-center justify-center w-36 h-12 bg-[#0a0a0a] rounded-xl shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute bottom-[10%] right-[24%] z-20 flex items-center justify-center w-24 md:w-36 h-8 md:h-12 bg-[#0a0a0a] rounded-lg md:rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-5 w-auto object-contain mr-2" />
-                   <span className="text-white text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-3 md:h-5 w-auto object-contain mr-1 md:mr-2" />
+                   <span className="text-white text-[6px] md:text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
               </>
             )}
@@ -290,17 +290,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {showTavisM21Plus && (
               <>
                 {/* Top-Left Tavis Protector (M21+) */}
-                <div className="absolute top-[6%] left-[2%] z-20 flex items-center justify-center w-32 h-10 bg-[#0a0a0a] rounded-lg shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute top-[6%] left-[2%] z-20 flex items-center justify-center w-20 md:w-32 h-6 md:h-10 bg-[#0a0a0a] rounded-md md:rounded-lg shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-4 w-auto object-contain mr-2" />
-                   <span className="text-white text-[9px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-2.5 md:h-4 w-auto object-contain mr-1 md:mr-2" />
+                   <span className="text-white text-[5px] md:text-[9px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
                 
                 {/* Top-Right Tavis Protector (M21+) */}
-                <div className="absolute top-[5%] right-[18%] z-20 flex items-center justify-center w-40 h-14 bg-[#0a0a0a] rounded-lg shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute top-[5%] right-[18%] z-20 flex items-center justify-center w-28 md:w-40 h-8 md:h-14 bg-[#0a0a0a] rounded-md md:rounded-lg shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain mr-2" />
-                   <span className="text-white text-[11px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/logo.png" alt="PhysicsSPMFlix" className="h-3 md:h-6 w-auto object-contain mr-1 md:mr-2" />
+                   <span className="text-white text-[6px] md:text-[11px] font-bold font-mono tracking-wider">SPM FLIX</span>
                 </div>
               </>
             )}

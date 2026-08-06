@@ -1,119 +1,243 @@
 "use client";
 
-import React, { useState } from "react";
-import { Search, Bell, LogOut } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Search, Bell, LogOut, Menu, X, ChevronDown, Book, FileText, Target, Calculator } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useAuth } from "@/context/AuthContext";
 
 interface NavbarProps {
   onSearchChange?: (val: string) => void;
+  currentTab?: string;
+  onTabChange?: (tab: string) => void;
+  onOpenFormula?: () => void;
+  onOpenDict?: () => void;
+  onOpenQuiz?: () => void;
+  onOpenCalc?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onSearchChange }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onSearchChange,
+  currentTab = "home",
+  onTabChange,
+  onOpenFormula,
+  onOpenDict,
+  onOpenQuiz,
+  onOpenCalc
+}) => {
   const { lang, toggleLang, t } = useLanguage();
   const { user, logout } = useAuth();
   const [searchValue, setSearchValue] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Netflix-style scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     if (onSearchChange) onSearchChange(e.target.value);
   };
 
+  const navLinks = [
+    { id: "home", label: "Laman Utama" },
+    { id: "form4", label: "Tingkatan 4" },
+    { id: "form5", label: "Tingkatan 5" },
+    { id: "spm", label: "Ulangkaji SPM" },
+    { id: "mylist", label: "Senarai Saya" },
+    { id: "experiments", label: "MyHomePhysics Lab" },
+  ];
+
+  const handleNavClick = (id: string) => {
+    if (id === "experiments") {
+      window.open("https://myphysicstutor2.vercel.app/#myhomephysicslab", "_blank");
+    } else if (onTabChange) {
+      onTabChange(id);
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-40 w-full min-h-[6rem] md:h-28 glass-nav px-3 md:px-8 py-3 md:py-0 flex flex-wrap md:flex-nowrap items-center justify-between gap-y-3 gap-x-2 md:gap-6">
-      {/* Official Branding Logo - NO GLOW EFFECT */}
-      <div className="flex items-center shrink-0">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/PHYSFLIX.png"
-          alt="PhysicsSPMFlix Logo"
-          className="h-8 md:h-12 lg:h-14 object-contain"
-        />
-      </div>
-
-      {/* Center Search Bar */}
-      <div className="w-full md:flex-1 md:max-w-xl order-3 md:order-2">
-        <div className="relative">
-          <Search className="absolute left-4 top-3.5 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            value={searchValue}
-            onChange={handleSearch}
-            placeholder={t("searchPlaceholder")}
-            className="w-full pl-11 pr-4 py-3 bg-[#121622]/90 border border-slate-800 rounded-full text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition shadow-inner"
-          />
-        </div>
-      </div>
-
-      {/* Right controls */}
-      <div className="flex items-center space-x-2 md:space-x-5 order-2 md:order-3">
-        {/* Minimalist BM | DLP Language Toggle */}
-        <div className="flex items-center bg-[#131826] p-1 rounded-full border border-slate-800 shadow-md">
-          <button
-            onClick={() => lang !== "bm" && toggleLang()}
-            className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-extrabold transition-all ${
-              lang === "bm"
-                ? "bg-red-600 text-white shadow-md shadow-red-950"
-                : "text-slate-400 hover:text-white"
-            }`}
+    <>
+      <header 
+        className={`fixed top-0 z-50 w-full transition-colors duration-300 ease-in-out px-4 md:px-12 py-4 flex items-center justify-between ${
+          isScrolled ? "bg-[#141414] shadow-md" : "bg-gradient-to-b from-black/80 to-transparent"
+        }`}
+      >
+        <div className="flex items-center gap-6 md:gap-10">
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-white" 
+            onClick={() => setIsMobileMenuOpen(true)}
           >
-            BM
+            <Menu className="w-6 h-6" />
           </button>
-          <button
-            onClick={() => lang !== "dlp" && toggleLang()}
-            className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-extrabold transition-all ${
-              lang === "dlp"
-                ? "bg-red-600 text-white shadow-md shadow-red-950"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            DLP
-          </button>
-        </div>
 
-        {/* Notifications */}
-        <button className="relative p-2 text-slate-300 hover:text-white rounded-full hover:bg-slate-800/60 transition">
-          <Bell className="w-4 h-4 md:w-5 md:h-5" />
-          <span className="absolute top-1 right-1 w-3 h-3 md:w-4 md:h-4 bg-red-600 text-white text-[8px] md:text-[10px] font-bold rounded-full flex items-center justify-center">
-            3
-          </span>
-        </button>
-
-        {/* Authenticated User Profile */}
-        <div className="flex items-center space-x-2 md:space-x-3 border-l border-slate-800 pl-2 md:pl-4">
-          {user?.photoURL ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
+          {/* Logo */}
+          <div className="shrink-0 cursor-pointer" onClick={() => handleNavClick("home")}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={user.photoURL}
-              alt={user.displayName || "User"}
-              className="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-red-500/30 object-cover"
+              src="/PHYSFLIX.png"
+              alt="PhysicsSPMFlix Logo"
+              className="h-6 md:h-8 lg:h-10 object-contain"
             />
-          ) : (
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-red-500/30">
-              {user?.displayName ? user.displayName.substring(0, 2).toUpperCase() : "SH"}
-            </div>
-          )}
-
-          <div className="hidden lg:block text-left">
-            <span className="block text-xs font-bold text-white max-w-[120px] truncate">
-              {user?.displayName || "Sir Halim"}
-            </span>
-            <span className="block text-[10px] text-slate-400 max-w-[120px] truncate">
-              {user?.email || t("teacherRole")}
-            </span>
           </div>
 
-          {user && (
-            <button
-              onClick={logout}
-              className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800/60 rounded-lg transition"
-              title="Log Keluar"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
-          )}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-5 text-sm">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.id)}
+                className={`transition-colors font-medium ${
+                  currentTab === link.id ? "text-white font-bold" : "text-gray-300 hover:text-gray-400"
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
+          </nav>
         </div>
-      </div>
-    </header>
+
+        {/* Right Controls */}
+        <div className="flex items-center gap-4 md:gap-6">
+          {/* Netflix-style Search */}
+          <div className="flex items-center">
+            {isSearchOpen ? (
+              <div className="flex items-center bg-black/60 border border-white/80 px-2 py-1 transition-all">
+                <Search className="w-4 h-4 text-white mr-2 cursor-pointer" onClick={() => setIsSearchOpen(false)} />
+                <input
+                  type="text"
+                  autoFocus
+                  value={searchValue}
+                  onChange={handleSearch}
+                  placeholder="Titles, people, genres"
+                  className="bg-transparent text-white text-sm focus:outline-none w-32 md:w-48 placeholder-gray-400"
+                />
+              </div>
+            ) : (
+              <Search 
+                className="w-5 h-5 text-white cursor-pointer hover:text-gray-300 transition" 
+                onClick={() => setIsSearchOpen(true)}
+              />
+            )}
+          </div>
+
+          {/* Minimalist BM | DLP Language Pill */}
+          <div className="hidden md:flex items-center font-medium text-xs border border-gray-600 rounded-sm">
+            <button
+              onClick={() => lang !== "bm" && toggleLang()}
+              className={`px-2 py-1 ${lang === "bm" ? "bg-white text-black" : "text-white hover:bg-white/10"}`}
+            >
+              BM
+            </button>
+            <button
+              onClick={() => lang !== "dlp" && toggleLang()}
+              className={`px-2 py-1 ${lang === "dlp" ? "bg-white text-black" : "text-white hover:bg-white/10"}`}
+            >
+              DLP
+            </button>
+          </div>
+
+          {/* Notifications */}
+          <button className="relative text-white hover:text-gray-300 transition hidden sm:block">
+            <Bell className="w-5 h-5" />
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+              3
+            </span>
+          </button>
+
+          {/* Profile & Tools Dropdown */}
+          <div 
+            className="relative flex items-center gap-2 cursor-pointer group"
+            onMouseEnter={() => setIsToolsDropdownOpen(true)}
+            onMouseLeave={() => setIsToolsDropdownOpen(false)}
+          >
+            {user?.photoURL ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={user.photoURL}
+                alt={user.displayName || "User"}
+                className="w-8 h-8 rounded object-cover"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded bg-gradient-to-br from-amber-500 to-red-600 flex items-center justify-center text-white font-bold text-xs">
+                {user?.displayName ? user.displayName.substring(0, 2).toUpperCase() : "SH"}
+              </div>
+            )}
+            <ChevronDown className={`w-4 h-4 text-white transition-transform ${isToolsDropdownOpen ? 'rotate-180' : ''}`} />
+
+            {/* Dropdown Menu */}
+            {isToolsDropdownOpen && (
+              <div className="absolute top-full right-0 mt-4 w-48 bg-black/90 border border-slate-800 rounded shadow-2xl py-2 flex flex-col text-sm text-gray-300">
+                {/* Arrow up pointing to profile */}
+                <div className="absolute -top-2 right-4 w-4 h-4 bg-black/90 border-t border-l border-slate-800 transform rotate-45"></div>
+                
+                <div className="px-4 py-2 font-bold text-white border-b border-slate-800 mb-2 truncate">
+                  {user?.displayName || "Sir Halim"}
+                </div>
+
+                <button onClick={onOpenFormula} className="flex items-center px-4 py-2 hover:underline">
+                  <Target className="w-4 h-4 mr-3 text-slate-400" /> Formula
+                </button>
+                <button onClick={onOpenDict} className="flex items-center px-4 py-2 hover:underline">
+                  <Book className="w-4 h-4 mr-3 text-slate-400" /> Kamus
+                </button>
+                <button onClick={onOpenQuiz} className="flex items-center px-4 py-2 hover:underline">
+                  <FileText className="w-4 h-4 mr-3 text-slate-400" /> Kuiz / Kertas
+                </button>
+                <button onClick={onOpenCalc} className="flex items-center px-4 py-2 hover:underline">
+                  <Calculator className="w-4 h-4 mr-3 text-slate-400" /> Kalkulator
+                </button>
+                
+                <div className="border-t border-slate-800 mt-2 pt-2">
+                  <button onClick={logout} className="flex items-center w-full px-4 py-2 hover:underline text-left">
+                    <LogOut className="w-4 h-4 mr-3 text-slate-400" /> Log Keluar
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Spacer so content doesn't hide under the fixed navbar */}
+      <div className="h-20 md:h-24 bg-[#141414]"></div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center space-y-6 animate-in fade-in duration-200">
+          <button 
+            className="absolute top-6 right-6 text-white p-2"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="w-8 h-8" />
+          </button>
+          
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => handleNavClick(link.id)}
+              className={`text-xl font-medium ${
+                currentTab === link.id ? "text-white font-bold" : "text-gray-400"
+              }`}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </>
   );
 };

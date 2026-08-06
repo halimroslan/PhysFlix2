@@ -5,7 +5,6 @@ import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { UserActivityProvider, useUserActivity } from "@/context/UserActivityContext";
 import { Navbar } from "@/components/Navbar";
-import { Sidebar } from "@/components/Sidebar";
 import { HeroSpotlight, getPhysicsTopicCategory } from "@/components/HeroSpotlight";
 import { Compass, Waves, Flame, Zap, Atom, Sparkles } from "lucide-react";
 import { ContinueWatching } from "@/components/ContinueWatching";
@@ -172,22 +171,21 @@ function MainDashboard() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans">
-      {/* Navbar */}
-      <Navbar onSearchChange={(val) => setSearchQuery(val)} />
+      {/* Navbar (Netflix Style Header) */}
+      <Navbar 
+        onSearchChange={(val) => setSearchQuery(val)}
+        currentTab={currentTab}
+        onTabChange={(tab) => {
+          setCurrentTab(tab);
+          if (tab !== "playing") setSelectedLesson(null);
+        }}
+        onOpenFormula={() => setIsFormulaOpen(true)}
+        onOpenDict={() => setIsDictOpen(true)}
+        onOpenQuiz={() => setIsQuizOpen(true)}
+        onOpenCalc={() => setIsCalcOpen(true)}
+      />
 
       <div className="flex-1 flex">
-        {/* Sidebar */}
-        <Sidebar
-          currentTab={currentTab}
-          onTabChange={(tab) => {
-            setCurrentTab(tab);
-            if (tab !== "playing") setSelectedLesson(null);
-          }}
-          onOpenFormula={() => setIsFormulaOpen(true)}
-          onOpenDict={() => setIsDictOpen(true)}
-          onOpenQuiz={() => setIsQuizOpen(true)}
-          onOpenCalc={() => setIsCalcOpen(true)}
-        />
 
         {/* Main Content Area */}
         <main className="flex-1 p-4 md:p-8 space-y-8 max-w-7xl mx-auto overflow-x-hidden">

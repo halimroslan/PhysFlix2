@@ -239,13 +239,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           {/* DRM Video Container with Anti-Screen Capture Watermark & Protected Overlays */}
           <div
             onContextMenu={(e) => e.preventDefault()}
-            className="relative w-full aspect-video rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl group select-none"
+            className="relative w-full pt-[56.25%] rounded-3xl overflow-hidden bg-black border border-slate-800 shadow-2xl group select-none"
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
               ref={iframeRef}
               src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
-              className="w-full h-full border-0 pointer-events-auto"
+              className="absolute top-0 left-0 w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}
             ></iframe>

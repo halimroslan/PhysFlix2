@@ -209,9 +209,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   })();
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 p-4 md:p-6 space-y-6 select-none">
+    <div className="w-full space-y-4 md:space-y-6 select-none">
       {/* Top Bar Navigation */}
-      <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
         <button
           onClick={onBack}
           className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-[#121622] hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white transition"
@@ -220,7 +220,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           <span>{t("backToHome")}</span>
         </button>
 
-        <div className="flex items-center space-x-3 text-xs font-bold text-slate-400">
+        <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-400">
           <span className="flex items-center space-x-1 text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-800/50">
             <Lock className="w-3 h-3" />
             <span>DRM Encrypted Stream</span>
@@ -400,10 +400,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
           {/* Detail Tabs Section */}
           <div className="space-y-4">
-            <div className="flex border-b border-slate-800 space-x-6 text-sm font-bold">
+            <div className="flex overflow-x-auto hide-scrollbar border-b border-slate-800 gap-4 md:gap-6 text-sm font-bold">
               <button
                 onClick={() => setActiveTab("overview")}
-                className={`pb-3 transition ${
+                className={`pb-3 whitespace-nowrap transition ${
                   activeTab === "overview"
                     ? "border-b-2 border-red-500 text-white"
                     : "text-slate-400 hover:text-slate-200"
@@ -413,7 +413,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </button>
               <button
                 onClick={() => setActiveTab("notes")}
-                className={`pb-3 transition ${
+                className={`pb-3 whitespace-nowrap transition ${
                   activeTab === "notes"
                     ? "border-b-2 border-red-500 text-white"
                     : "text-slate-400 hover:text-slate-200"
@@ -423,7 +423,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </button>
               <button
                 onClick={() => setActiveTab("qa")}
-                className={`pb-3 transition ${
+                className={`pb-3 whitespace-nowrap transition ${
                   activeTab === "qa"
                     ? "border-b-2 border-red-500 text-white"
                     : "text-slate-400 hover:text-slate-200"

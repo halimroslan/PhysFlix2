@@ -325,7 +325,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 {/* Additional UI elements (Logo, text) placed around the hole */}
                 <div className="absolute top-10 left-0 right-0 flex flex-col items-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
+                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
                   <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
                     {currentLesson.titleBm}
                   </span>
@@ -346,7 +346,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 className="absolute inset-0 z-40 bg-[#0a0a0a] flex items-center justify-center cursor-pointer pointer-events-auto"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="PhysicsSPMFlix" className="h-20 md:h-32 w-auto object-contain opacity-90" />
+                <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain opacity-90" />
               </div>
             )}
           </div>

@@ -51,7 +51,7 @@ export const LoginPage: React.FC = () => {
         <div className="py-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo.png"
+            src="/PHYSFLIX.png"
             alt="PhysicsSPMFlix Logo"
             className="h-28 md:h-32 w-auto object-contain"
           />

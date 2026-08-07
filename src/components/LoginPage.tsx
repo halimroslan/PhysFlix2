@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () => {
       {/* Header */}
       <header className="relative z-10 px-6 py-6 md:px-12 flex justify-between items-center w-full max-w-7xl mx-auto">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-8 md:h-12 object-contain" />
+        <img src="/PHYSFLIX.png" alt="PHYSFLIX" className="h-8 md:h-12 object-contain" />
         
         <div className="flex gap-4">
           <div className="hidden md:flex items-center bg-black/40 border border-white/30 rounded px-3 py-1.5 text-sm font-medium text-white hover:ring-2 ring-white/50 transition cursor-pointer">
@@ -198,7 +198,7 @@ export const LoginPage: React.FC = () => {
                 </p>
               ) : (
                 <p>
-                  Baru di PhysicsSPMFlix?{" "}
+                  Baru di PHYSFLIX?{" "}
                   <button onClick={() => setIsSignUpMode(true)} className="text-white hover:underline">
                     Daftar Sekarang
                   </button>

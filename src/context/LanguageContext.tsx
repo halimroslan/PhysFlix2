@@ -14,7 +14,7 @@ interface LanguageContextType {
 const translations: Record<Language, Record<string, string>> = {
   bm: {
     // Brand & Tagline
-    appName: "PhysicsSPMFlix",
+    appName: "PHYSFLIX",
     tagline: "Fizik SPM. Bila-bila Masa. Di Mana Jua.",
     searchPlaceholder: "Cari topik, video, kata kunci...",
     
@@ -107,7 +107,7 @@ const translations: Record<Language, Record<string, string>> = {
   },
   dlp: {
     // Brand & Tagline
-    appName: "PhysicsSPMFlix",
+    appName: "PHYSFLIX",
     tagline: "SPM Physics. Anytime. Anywhere.",
     searchPlaceholder: "Search topics, videos, keywords...",
     

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PhysicsSPMFlix | Platform Pembelajaran & Video Fizik SPM KSSM",
+  title: "PHYSFLIX | Platform Pembelajaran & Video Fizik SPM KSSM",
   description: "Platform pembelajaran online khusus untuk Fizik SPM (KSSM Tingkatan 4 & 5). Tonton video pembelajaran mengikut minggu, dwibahasa BM & DLP (English), nota PDF & latihan SPM.",
-  keywords: ["Physics SPM", "Fizik SPM", "PhysicsSPMFlix", "Tingkatan 4", "Tingkatan 5", "KSSM", "DLP Physics", "SPM Revision"],
+  keywords: ["Physics SPM", "Fizik SPM", "PHYSFLIX", "Tingkatan 4", "Tingkatan 5", "KSSM", "DLP Physics", "SPM Revision"],
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

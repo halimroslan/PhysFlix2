@@ -279,15 +279,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 {/* Top-Right Tavis Protector (M1-M20) */}
                 <div className="absolute top-[14%] right-[24%] z-20 flex items-center justify-center w-24 lg:w-36 h-8 lg:h-12 bg-[#0a0a0a] rounded-lg lg:rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-3 lg:h-5 w-auto object-contain mr-1 lg:mr-2" />
-                   <span className="text-white text-[6px] lg:text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-3 lg:h-5 w-auto object-contain" />
                 </div>
                 
                 {/* Bottom-Right Tavis Protector (M1-M20) */}
                 <div className="absolute bottom-[10%] right-[24%] z-20 flex items-center justify-center w-24 lg:w-36 h-8 lg:h-12 bg-[#0a0a0a] rounded-lg lg:rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-3 lg:h-5 w-auto object-contain mr-1 lg:mr-2" />
-                   <span className="text-white text-[6px] lg:text-[10px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-3 lg:h-5 w-auto object-contain" />
                 </div>
               </>
             )}
@@ -297,15 +295,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 {/* Top-Left Tavis Protector (M21+) */}
                 <div className="absolute top-[6%] left-[2%] z-20 flex items-center justify-center w-20 lg:w-32 h-6 lg:h-10 bg-[#0a0a0a] rounded-md lg:rounded-lg shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2.5 lg:h-4 w-auto object-contain mr-1 lg:mr-2" />
-                   <span className="text-white text-[5px] lg:text-[9px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2.5 lg:h-4 w-auto object-contain" />
                 </div>
                 
                 {/* Top-Right Tavis Protector (M21+) */}
                 <div className="absolute top-[5%] right-[18%] z-20 flex items-center justify-center w-28 lg:w-40 h-8 lg:h-14 bg-[#0a0a0a] rounded-md lg:rounded-lg shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-3 lg:h-6 w-auto object-contain mr-1 lg:mr-2" />
-                   <span className="text-white text-[6px] lg:text-[11px] font-bold font-mono tracking-wider">SPM FLIX</span>
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-3 lg:h-6 w-auto object-contain" />
                 </div>
               </>
             )}

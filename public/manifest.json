@@ -1,0 +1,21 @@
+{
+  "name": "Physics SPM Flix",
+  "short_name": "SPM Flix",
+  "description": "Tonton. Faham. Skor A+. Platform Fizik KSSM Terulung.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07090e",
+  "theme_color": "#e50914",
+  "icons": [
+    {
+      "src": "/PFlix.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/PFlix.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

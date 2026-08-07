@@ -90,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <img
               src="/PHYSFLIX.png"
               alt="PhysicsSPMFlix Logo"
-              className="h-6 md:h-8 lg:h-10 object-contain"
+              className="h-5 md:h-6 lg:h-7 object-contain mt-1"
             />
           </div>
 

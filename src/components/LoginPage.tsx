@@ -100,25 +100,20 @@ export const LoginPage: React.FC = () => {
               Tonton. Faham. Skor A+. Khas untuk Tingkatan 4 & 5.
             </p>
             <p className="text-base md:text-xl mb-6 font-light drop-shadow-md">
-              Bersedia untuk mulakan? Masukkan e-mel anda untuk mendaftar atau mulakan sesi pembelajaran.
+              Bersedia untuk mulakan? Log masuk menggunakan akaun Google anda.
             </p>
             
-            <form onSubmit={handleGetStarted} className="flex flex-col md:flex-row gap-2 md:gap-0 justify-center max-w-2xl mx-auto mt-4">
-              <input
-                type="email"
-                placeholder="Alamat E-mel"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full md:w-[400px] px-4 py-4 md:py-5 bg-black/60 border border-white/40 rounded md:rounded-l md:rounded-r-none text-white text-lg focus:outline-none focus:border-white focus:bg-black/80 transition backdrop-blur-sm"
-              />
-              <button 
-                type="submit"
-                className="w-full md:w-auto bg-[#e50914] hover:bg-[#c11119] text-white px-8 py-4 md:py-5 rounded md:rounded-r md:rounded-l-none text-xl md:text-2xl font-bold flex items-center justify-center transition duration-200"
+            <div className="flex justify-center max-w-2xl mx-auto mt-6">
+              <button
+                onClick={handleGoogleSignIn}
+                disabled={isSigningIn}
+                className="w-full md:w-auto flex items-center justify-center bg-white hover:bg-gray-200 text-black px-8 py-4 md:py-5 rounded-md text-lg md:text-xl font-bold transition duration-200 shadow-2xl disabled:opacity-50"
               >
-                Mulakan <ChevronRight className="w-6 h-6 ml-2" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-7 h-7 md:w-8 md:h-8 mr-4" />
+                Log Masuk melalui Google
               </button>
-            </form>
+            </div>
           </div>
         ) : (
           /* Netflix Sign In Card Overlay */

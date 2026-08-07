@@ -56,49 +56,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
-      setShowCover(true); // Reset cover when lesson changes
     }
   }, [currentLesson]);
-
-  // Detect clicks on the iframe when it gains focus
-  useEffect(() => {
-    const handleBlur = () => {
-      // Small timeout ensures document.activeElement has updated
-      setTimeout(() => {
-        if (document.activeElement === iframeRef.current) {
-          setShowCover(false);
-        }
-      }, 50);
-    };
-    window.addEventListener("blur", handleBlur);
-    return () => {
-      window.removeEventListener("blur", handleBlur);
-    };
-  }, []);
-
-  const [showCover, setShowCover] = useState(true);
-  const [showEndCover, setShowEndCover] = useState(false);
-
-  // Manage end cover timer based on playback state (showCover)
-  useEffect(() => {
-    if (!showCover) {
-      // Calculate remaining time: Total duration - 14 minutes (840s) - 10s
-      // If remaining time is valid, start timer
-      const remainingSeconds = totalSeconds - 840 - 10;
-      if (remainingSeconds > 0) {
-        playTimerRef.current = setTimeout(() => {
-          setShowEndCover(true);
-        }, remainingSeconds * 1000);
-      }
-    } else {
-      setShowEndCover(false);
-      if (playTimerRef.current) clearTimeout(playTimerRef.current);
-    }
-    
-    return () => {
-      if (playTimerRef.current) clearTimeout(playTimerRef.current);
-    };
-  }, [showCover, totalSeconds]);
 
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
@@ -294,45 +253,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </>
             )}
 
-            {/* Full Screen Initial Cover With a Perfect Rounded Hole for Play Button */}
-            {showCover && (
-              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
-                {/* 
-                  This div represents the 'hole'. 
-                  It is transparent but casts a massive solid black shadow to cover the rest of the screen. 
-                  The border-radius ensures the hole perfectly matches the Google Drive play button.
-                */}
-                <div 
-                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_9999px_#0a0a0a]"
-                ></div>
 
-                {/* Additional UI elements (Logo, text) placed around the hole */}
-                <div className="absolute top-10 left-0 right-0 flex flex-col items-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
-                  <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
-                    {currentLesson.titleBm}
-                  </span>
-                </div>
-                
-                <div className="absolute bottom-16 left-0 right-0 flex justify-center">
-                  <span className="text-red-500/80 text-sm md:text-base font-bold tracking-wide animate-pulse">
-                    ↑ Klik butang Play di atas ↑
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Full Screen End Cover (Last 10 Seconds) */}
-            {showEndCover && (
-              <div 
-                onClick={() => setShowEndCover(false)}
-                className="absolute inset-0 z-40 bg-[#0a0a0a] flex items-center justify-center cursor-pointer pointer-events-auto"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain opacity-90" />
-              </div>
-            )}
           </div>
 
           {/* Video Header & Actions */}

@@ -265,15 +265,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {showTavisM1toM20 && (
               <>
                 {/* Top-Right Tavis Protector (M1-M20) */}
-                <div className="absolute top-[18%] md:top-[14%] right-[5%] md:right-[24%] z-20 flex items-center justify-center w-16 md:w-24 lg:w-36 h-6 md:h-8 lg:h-12 bg-[#0a0a0a] rounded-md lg:rounded-xl shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute top-[18%] md:top-[14%] right-[15%] md:right-[24%] z-20 flex items-center justify-center w-20 md:w-24 lg:w-36 h-6 md:h-8 lg:h-12 bg-[#0a0a0a] rounded-md lg:rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2 md:h-3 lg:h-5 w-auto object-contain" />
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2.5 md:h-3 lg:h-5 w-auto object-contain" />
                 </div>
                 
                 {/* Bottom-Right Tavis Protector (M1-M20) */}
-                <div className="absolute bottom-[20%] md:bottom-[15%] right-[5%] md:right-[24%] z-20 flex items-center justify-center w-16 md:w-24 lg:w-36 h-6 md:h-8 lg:h-12 bg-[#0a0a0a] rounded-md lg:rounded-xl shadow-xl border border-white/10 pointer-events-none">
+                <div className="absolute bottom-[20%] md:bottom-[15%] right-[15%] md:right-[24%] z-20 flex items-center justify-center w-20 md:w-24 lg:w-36 h-6 md:h-8 lg:h-12 bg-[#0a0a0a] rounded-md lg:rounded-xl shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2 md:h-3 lg:h-5 w-auto object-contain" />
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2.5 md:h-3 lg:h-5 w-auto object-contain" />
                 </div>
               </>
             )}

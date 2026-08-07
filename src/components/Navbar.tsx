@@ -95,13 +95,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-5 text-sm">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm ml-4">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`transition-colors font-medium ${
-                  currentTab === link.id ? "text-white font-bold" : "text-gray-300 hover:text-gray-400"
+                className={`px-4 py-1.5 rounded-full transition-all duration-200 font-medium ${
+                  currentTab === link.id 
+                    ? "bg-white/20 text-white font-semibold" 
+                    : "text-gray-300 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {link.label}

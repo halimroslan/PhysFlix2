@@ -239,8 +239,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           {/* DRM Video Container with Anti-Screen Capture Watermark & Protected Overlays */}
           <div
             onContextMenu={(e) => e.preventDefault()}
-            className="relative w-full mx-auto overflow-hidden bg-black border border-slate-800 shadow-2xl group select-none rounded-xl"
-            style={{ paddingBottom: '56.25%' }}
+            className="relative w-full mx-auto overflow-hidden bg-black border border-slate-800 shadow-2xl group select-none rounded-xl aspect-[4/3] md:aspect-video"
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
@@ -251,23 +250,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               title={currentLesson.titleBm}
             ></iframe>
 
-            {/* Anti-Screen Recording Dynamic Moving DRM Watermark Overlay */}
-            <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center opacity-25">
-              <div className="rotate-[-15deg] space-y-4 text-center font-mono text-[11px] font-extrabold text-white/50 tracking-widest uppercase">
-                <p>PROTECTED STREAM • PHYSICS SPM FLIX DRM</p>
-                <p>STUDENT: SIR HALIM • IP: 175.143.XXX.XXX</p>
-                <p>UNAUTHORIZED RECORDING PROHIBITED</p>
-              </div>
-            </div>
+
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
-            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-16 h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
+            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/PFlix.png" alt="PhysicsSPMFlix" className="h-6 w-auto object-contain" />
+              <img src="/PFlix.png" alt="PhysicsSPMFlix" className="h-4 md:h-6 w-auto object-contain" />
             </div>
 
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
-            <div className="absolute top-0 left-0 z-20 w-3/4 h-16 pointer-events-auto cursor-default bg-transparent"></div>
+            <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
             {/* Permanent Protectors for 'Tavis' Logo */}
             {showTavisM1toM20 && (

@@ -259,15 +259,28 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column - Protected Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
-          {/* DRM Video Container with Anti-Screen Capture Watermark & Protected Overlays */}
+          {/* DRM Video Outer Wrapper */}
           <div
             ref={containerRef}
             onContextMenu={(e) => e.preventDefault()}
-            className={`relative w-full mx-auto overflow-hidden bg-black shadow-2xl group select-none ${
-              isFullscreen ? "fixed inset-0 z-50 h-screen w-screen rounded-none" : "border border-slate-800 rounded-xl aspect-[4/3] md:aspect-video"
+            className={`relative w-full mx-auto bg-black flex items-center justify-center shadow-2xl ${
+              isFullscreen ? "rounded-none h-screen w-screen" : "border border-slate-800 rounded-xl overflow-hidden aspect-[4/3] md:aspect-video"
             }`}
           >
-            {/* Embedded Stream via Obfuscated ID */}
+            {/* Inner Container - ALWAYS maintains 16:9 aspect ratio and scales to fit */}
+            <div 
+              className="relative group select-none overflow-hidden bg-black w-full h-full flex items-center justify-center"
+              style={isFullscreen ? { 
+                aspectRatio: '16/9',
+                maxWidth: '177.778vh',
+                maxHeight: '56.25vw'
+              } : {
+                aspectRatio: '16/9',
+                maxWidth: '100%',
+                maxHeight: '100%'
+              }}
+            >
+              {/* Embedded Stream via Obfuscated ID */}
             <iframe
               ref={iframeRef}
               src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
@@ -359,7 +372,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain opacity-90" />
               </div>
             )}
-
+            </div>
           </div>
 
           {/* Video Header & Actions */}

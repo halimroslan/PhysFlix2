@@ -50,7 +50,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     if (!containerRef.current) return;
     
     // Check if browser supports native fullscreen API
-    if (document.documentElement.requestFullscreen) {
+    if ('requestFullscreen' in document.documentElement) {
       if (!document.fullscreenElement) {
         containerRef.current.requestFullscreen().catch(err => {
           console.error("Native fullscreen failed, using CSS fallback:", err);

@@ -13,7 +13,8 @@ import {
   Play,
   ShieldAlert,
   Lock,
-  Bookmark
+  Bookmark,
+  Maximize
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
@@ -40,6 +41,28 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(err => {
+        console.error("Error attempting to enable fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   // Parse duration into total seconds
   const totalSeconds = (() => {
@@ -238,16 +261,18 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
         <div className="lg:col-span-8 space-y-6">
           {/* DRM Video Container with Anti-Screen Capture Watermark & Protected Overlays */}
           <div
+            ref={containerRef}
             onContextMenu={(e) => e.preventDefault()}
-            className="relative w-full mx-auto overflow-hidden bg-black border border-slate-800 shadow-2xl group select-none rounded-xl aspect-[4/3] md:aspect-video"
+            className={`relative w-full mx-auto overflow-hidden bg-black shadow-2xl group select-none ${
+              isFullscreen ? "fixed inset-0 z-50 h-screen w-screen rounded-none" : "border border-slate-800 rounded-xl aspect-[4/3] md:aspect-video"
+            }`}
           >
             {/* Embedded Stream via Obfuscated ID */}
             <iframe
               ref={iframeRef}
               src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
               className="absolute top-0 left-0 w-full h-full border-0 pointer-events-auto"
-              allow="autoplay; fullscreen"
-              allowFullScreen
+              allow="autoplay"
               title={currentLesson.titleBm}
             ></iframe>
 
@@ -384,6 +409,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 >
                   <Bookmark className={`w-4 h-4 ${isBookmarked(currentLesson.id) ? "fill-current" : ""}`} />
                   <span>{isBookmarked(currentLesson.id) ? t("saved") : t("save")}</span>
+                </button>
+
+                <button
+                  onClick={toggleFullscreen}
+                  className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-900/20 text-sm font-semibold transition"
+                >
+                  <Maximize className="w-4 h-4" />
+                  <span className="hidden sm:inline">Skrin Penuh</span>
                 </button>
               </div>
             </div>

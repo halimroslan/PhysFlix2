@@ -49,12 +49,27 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
     
-    if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen().catch(err => {
-        console.error("Error attempting to enable fullscreen:", err);
-      });
+    // Check if browser supports native fullscreen API
+    if (document.documentElement.requestFullscreen) {
+      if (!document.fullscreenElement) {
+        containerRef.current.requestFullscreen().catch(err => {
+          console.error("Native fullscreen failed, using CSS fallback:", err);
+          setIsFullscreen(true);
+        });
+      } else {
+        document.exitFullscreen().catch(() => {});
+        setIsFullscreen(false);
+      }
+    } else if ((containerRef.current as any).webkitRequestFullscreen) {
+      // Safari specific native
+      if (!(document as any).webkitFullscreenElement) {
+        (containerRef.current as any).webkitRequestFullscreen();
+      } else {
+        (document as any).webkitExitFullscreen();
+      }
     } else {
-      document.exitFullscreen();
+      // Complete fallback (iOS iPhone)
+      setIsFullscreen(!isFullscreen);
     }
   };
 
@@ -75,10 +90,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      setIsFullscreen(!!(document.fullscreenElement || (document as any).webkitFullscreenElement));
     };
     document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    };
   }, []);
 
   // Parse duration into total seconds
@@ -282,8 +301,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           <div
             ref={containerRef}
             onContextMenu={(e) => e.preventDefault()}
-            className={`relative w-full mx-auto bg-black flex items-center justify-center shadow-2xl ${
-              isFullscreen ? "rounded-none h-screen w-screen" : "border border-slate-800 rounded-xl overflow-hidden aspect-[4/3] md:aspect-video"
+            className={`mx-auto bg-black flex items-center justify-center shadow-2xl ${
+              isFullscreen ? "fixed inset-0 z-[100] h-[100dvh] w-screen rounded-none" : "relative w-full border border-slate-800 rounded-xl overflow-hidden aspect-[4/3] md:aspect-video"
             }`}
           >
             {/* Inner Container - ALWAYS maintains 16:9 aspect ratio and scales to fit */}
@@ -342,7 +361,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
             <div 
-              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30"
+              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30 max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0"
               style={shieldStyle}
               title="Sila tonton tanpa skip"
             ></div>
@@ -363,19 +382,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               <>
                 {showTavisM1toM20 && (
                   <>
-                    {/* Top-Right Tavis Protector (B7-B8 for M1-M20) */}
+                    {/* Top-Right Tavis Protector (B7-B8 for M1-M20) -> Portrait T10-U12 */}
                     <div 
-                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ top: '10%', right: '20%', width: '20%', height: '10%' }}
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none top-[10%] right-[20%] w-[20%] h-[10%] portrait:top-[73%] portrait:right-auto portrait:left-[60%] portrait:w-[20%] portrait:h-[7.7%]"
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
                        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                     </div>
                     
-                    {/* Bottom-Right Tavis Protector (I7-I8 for M1-M20) */}
+                    {/* Bottom-Right Tavis Protector (I7-I8 for M1-M20) -> Portrait G10-H12 */}
                     <div 
-                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ bottom: '10%', right: '20%', width: '20%', height: '10%' }}
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none bottom-[10%] right-[20%] w-[20%] h-[10%] portrait:bottom-auto portrait:top-[23%] portrait:right-auto portrait:left-[60%] portrait:w-[20%] portrait:h-[7.7%]"
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
                        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
@@ -385,10 +402,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
                 {showTavisM21Plus && (
                   <>
-                    {/* Top-Left Tavis Protector (B1-B2 for M21+) */}
+                    {/* Top-Left Tavis Protector (B1-B2 for M21+) -> Portrait F10-H12 */}
                     <div 
-                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ top: '10%', left: '0%', width: '20%', height: '10%' }}
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none top-[10%] left-[0%] w-[20%] h-[10%] portrait:top-[19.2%] portrait:left-[60%] portrait:w-[20%] portrait:h-[11.5%]"
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
                        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
@@ -396,8 +412,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
                     {/* Top-Right Tavis Protector 1 (B7-B8 for M21+) */}
                     <div 
-                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ top: '10%', right: '20%', width: '20%', height: '10%' }}
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none top-[10%] right-[20%] w-[20%] h-[10%] portrait:hidden"
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
                        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
@@ -405,8 +420,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     
                     {/* Top-Right Tavis Protector 2 (C9 for M21+) */}
                     <div 
-                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ top: '20%', right: '10%', width: '10%', height: '10%' }}
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none top-[20%] right-[10%] w-[10%] h-[10%] portrait:hidden"
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
                        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />

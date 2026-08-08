@@ -299,6 +299,12 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
+            {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
+            <div 
+              className="absolute bottom-0 left-[15%] right-[25%] z-20 h-[15%] pointer-events-auto cursor-not-allowed bg-transparent"
+              title="Sila tonton tanpa skip"
+            ></div>
+
             {/* Grid overlay removed */}
 
             {/* Permanent Protectors for 'Tavis' Logo */}

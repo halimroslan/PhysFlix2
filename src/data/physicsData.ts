@@ -932,10 +932,7 @@ export const rawForm5Videos = [
     chapterDlp: "Nuclear Physics",
     duration: "22:00",
     keyConceptsBm: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
-    keyConceptsDlp: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
-    tavisPositions: [
-      { bottom: '10%', right: '25%', width: '14%', height: '6%' }
-    ]
+    keyConceptsDlp: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"]
   },
   {
     driveId: "VlRpT0tOeGFZVXZyYmtZZkhmdkdaeDVFQXZBZTBEMUcx",
@@ -949,10 +946,7 @@ export const rawForm5Videos = [
     chapterDlp: "Nuclear Physics",
     duration: "25:10",
     keyConceptsBm: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
-    keyConceptsDlp: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
-    tavisPositions: [
-      { bottom: '10%', right: '25%', width: '14%', height: '6%' }
-    ]
+    keyConceptsDlp: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"]
   },
   {
     driveId: "WlJxdWY5VVMtRnRCTVBHZnRuTjRyRWh5bjdjSTlLTUwx",

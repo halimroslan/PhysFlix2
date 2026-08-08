@@ -299,20 +299,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
-            {/* TEMPORARY 10x10 GRID OVERLAY FOR PRECISE POSITIONING */}
-            <div className="absolute inset-0 z-50 pointer-events-none grid grid-cols-10 grid-rows-10">
-              {Array.from({ length: 100 }).map((_, i) => {
-                const col = i % 10;
-                const row = Math.floor(i / 10);
-                const letter = String.fromCharCode(65 + row); // A-J
-                const number = col + 1; // 1-10
-                return (
-                  <div key={i} className="border border-red-500/30 flex items-center justify-center">
-                    <span className="text-red-500/80 font-mono text-xs md:text-sm font-bold bg-black/40 px-1 rounded">{letter}{number}</span>
-                  </div>
-                )
-              })}
-            </div>
+            {/* Grid overlay removed */}
 
             {/* Permanent Protectors for 'Tavis' Logo */}
             {currentLesson.tavisPositions && currentLesson.tavisPositions.length > 0 ? (
@@ -352,22 +339,31 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
                 {showTavisM21Plus && (
                   <>
-                    {/* Top-Right Tavis Protector (M21+) */}
+                    {/* Top-Left Tavis Protector (B1-B2 for M21+) */}
                     <div 
                       className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ top: '8%', right: '20%', width: '14%', height: '6%' }}
+                      style={{ top: '10%', left: '0%', width: '20%', height: '10%' }}
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
+                    </div>
+
+                    {/* Top-Right Tavis Protector 1 (B7-B8 for M21+) */}
+                    <div 
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
+                      style={{ top: '10%', right: '20%', width: '20%', height: '10%' }}
+                    >
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                     </div>
                     
-                    {/* Bottom-Right Tavis Protector (M21+) */}
+                    {/* Top-Right Tavis Protector 2 (C9 for M21+) */}
                     <div 
                       className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ bottom: '15%', right: '25%', width: '14%', height: '6%' }}
+                      style={{ top: '20%', right: '10%', width: '10%', height: '10%' }}
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                     </div>
                   </>
                 )}

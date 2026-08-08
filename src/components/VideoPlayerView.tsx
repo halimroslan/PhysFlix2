@@ -43,6 +43,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const playTimerRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [shieldStyle, setShieldStyle] = useState({ bottom: '19.2%', height: '7.7%' });
 
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
@@ -55,6 +56,21 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       document.exitFullscreen();
     }
   };
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.contentRect.height >= 600) {
+          setShieldStyle({ bottom: '7.7%', height: '7.7%' }); // W-X
+        } else {
+          setShieldStyle({ bottom: '19.2%', height: '7.7%' }); // T-U
+        }
+      }
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -323,11 +339,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
             <div 
-              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-transparent"
-              style={{
-                bottom: isFullscreen ? '9%' : '18%',
-                height: isFullscreen ? '6%' : '10%'
-              }}
+              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30"
+              style={shieldStyle}
               title="Sila tonton tanpa skip"
             ></div>
 

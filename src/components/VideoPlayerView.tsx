@@ -120,7 +120,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
-      setIframeSrc(`${driveUrl}?t=15m`); // Auto start at min 15 for testing
+      setIframeSrc(`${driveUrl}?t=10m`); // Auto start at min 10 for testing
     }
   }, [currentLesson]);
 
@@ -143,8 +143,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   // Manage end cover timer based on playback state (showCover)
   useEffect(() => {
     if (!showCover) {
-      // Normal start is at 15m (900s). We want to stop 5 mins (300s) before end.
-      const watchTimeSeconds = totalSeconds - 900 - 300;
+      // Normal start is at 10m (600s). We want to stop 5 mins (300s) before end.
+      const watchTimeSeconds = totalSeconds - 600 - 300;
       if (watchTimeSeconds > 0) {
         playTimerRef.current = setTimeout(() => {
           setShowEndCover(true);
@@ -469,8 +469,22 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain opacity-90 mb-4" />
-                <span className="text-red-500 font-bold text-lg md:text-2xl animate-pulse">SESI TAMAT</span>
-                <span className="text-slate-400 mt-2 text-sm text-center px-4">Video telah tamat 5 minit lebih awal untuk tujuan pelindungan.</span>
+                <span className="text-red-500 font-bold text-lg md:text-2xl animate-pulse mb-6">SESI TAMAT</span>
+                
+                <button
+                  onClick={() => {
+                    setShowEndCover(false);
+                    setShowCover(true); // Reset the hole punch cover
+                    const driveUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
+                    setIframeSrc(`${driveUrl}?t=10m`); // Restart video at min 10
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                  </svg>
+                  Tonton Semula
+                </button>
               </div>
             )}
             </div>

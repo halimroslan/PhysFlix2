@@ -165,15 +165,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     fetchLikes();
   }, [currentLesson]);
 
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
-  }, []);
-
   const [comments, setComments] = useState([
     { name: "Ahmad Rizky", text: "Terbaik Sir! Baru faham melukis sinar selari dan sinar fokus.", time: "2 jam lepas" },
     { name: "Siti Sarah", text: "Fast explanation and clear graphics for DLP students!", time: "5 jam lepas" },

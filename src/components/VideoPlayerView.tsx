@@ -218,7 +218,18 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     setNewComment("");
   };
 
-  // Variables removed for cinematic bar protectors
+  const { showTavisM1toM20, showTavisM21Plus } = (() => {
+    const formStr = String(currentLesson.form);
+    if (formStr !== "4" && formStr !== "5") return { showTavisM1toM20: false, showTavisM21Plus: false };
+    
+    const match = String(currentLesson.week).match(/M(\d+)/i);
+    if (match) {
+      const num = parseInt(match[1], 10);
+      if (num >= 1 && num <= 20) return { showTavisM1toM20: true, showTavisM21Plus: false };
+      if (num >= 21) return { showTavisM1toM20: false, showTavisM21Plus: true };
+    }
+    return { showTavisM1toM20: false, showTavisM21Plus: false };
+  })();
   return (
     <div className="w-full space-y-4 md:space-y-6 select-none">
       {/* Top Bar Navigation */}
@@ -288,16 +299,65 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
-            {/* Cinematic Bar Protectors (Top and Bottom) */}
-            <div className="absolute top-0 left-0 w-full z-20 flex items-center justify-center bg-[#0a0a0a] border-b border-white/10 pointer-events-none" style={{ height: '28%' }}>
-               {/* eslint-disable-next-line @next/next/no-img-element */}
-               <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[25%] w-auto object-contain opacity-40" />
-            </div>
-            
-            <div className="absolute bottom-0 left-0 w-full z-20 flex items-center justify-center bg-[#0a0a0a] border-t border-white/10 pointer-events-none" style={{ height: '21%' }}>
-               {/* eslint-disable-next-line @next/next/no-img-element */}
-               <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[30%] w-auto object-contain opacity-40" />
-            </div>
+            {/* Permanent Protectors for 'Tavis' Logo */}
+            {currentLesson.tavisPositions && currentLesson.tavisPositions.length > 0 ? (
+              currentLesson.tavisPositions.map((pos, idx) => (
+                <div 
+                  key={idx}
+                  className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
+                  style={pos as React.CSSProperties}
+                >
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                </div>
+              ))
+            ) : (
+              <>
+                {showTavisM1toM20 && (
+                  <>
+                    {/* Top-Right Tavis Protector (M1-M20) */}
+                    <div 
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
+                      style={{ top: '22%', right: '25%', width: '14%', height: '6%' }}
+                    >
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                    </div>
+                    
+                    {/* Bottom-Right Tavis Protector (M1-M20) */}
+                    <div 
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
+                      style={{ bottom: '15%', right: '25%', width: '14%', height: '6%' }}
+                    >
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                    </div>
+                  </>
+                )}
+
+                {showTavisM21Plus && (
+                  <>
+                    {/* Top-Right Tavis Protector (M21+) */}
+                    <div 
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
+                      style={{ top: '8%', right: '20%', width: '14%', height: '6%' }}
+                    >
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                    </div>
+                    
+                    {/* Bottom-Right Tavis Protector (M21+) */}
+                    <div 
+                      className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
+                      style={{ bottom: '15%', right: '25%', width: '14%', height: '6%' }}
+                    >
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                    </div>
+                  </>
+                )}
+              </>
+            )}
 
             {/* Custom Initial Cover (Hole Punch for Drive Play Button) */}
             {showCover && (

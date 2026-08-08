@@ -306,16 +306,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {showTavisM21Plus && (
               <>
-                {/* Top-Left Tavis Protector (M21+) */}
-                <div className="absolute top-[10%] md:top-[6%] left-[5%] md:left-[2%] z-20 flex items-center justify-center w-16 md:w-20 lg:w-32 h-5 md:h-6 lg:h-10 bg-[#0a0a0a] rounded-sm lg:rounded-lg shadow-xl border border-white/10 pointer-events-none">
-                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2 md:h-2.5 lg:h-4 w-auto object-contain" />
-                </div>
-                
                 {/* Top-Right Tavis Protector (M21+) */}
                 <div className="absolute top-[10%] md:top-[5%] right-[5%] md:right-[18%] z-20 flex items-center justify-center w-20 md:w-28 lg:w-40 h-6 md:h-8 lg:h-14 bg-[#0a0a0a] rounded-sm lg:rounded-lg shadow-xl border border-white/10 pointer-events-none">
                    {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2 md:h-3 lg:h-6 w-auto object-contain" />
+                </div>
+                
+                {/* Bottom-Right Tavis Protector (M21+) */}
+                <div className="absolute bottom-[20%] md:bottom-[15%] right-[15%] md:right-[24%] z-20 flex items-center justify-center w-20 md:w-24 lg:w-36 h-6 md:h-8 lg:h-12 bg-[#0a0a0a] rounded-sm lg:rounded-lg shadow-xl border border-white/10 pointer-events-none">
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-2.5 md:h-3 lg:h-5 w-auto object-contain" />
                 </div>
               </>
             )}

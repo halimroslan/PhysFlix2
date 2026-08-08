@@ -246,7 +246,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               ref={iframeRef}
               src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
               className="absolute top-0 left-0 w-full h-full border-0 pointer-events-auto"
-              allow="autoplay"
+              allow="autoplay; fullscreen"
+              allowFullScreen
               title={currentLesson.titleBm}
             ></iframe>
 

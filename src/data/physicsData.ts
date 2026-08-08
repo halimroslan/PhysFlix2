@@ -24,6 +24,14 @@ export interface VideoLesson {
     size: string;
     url: string;
   }[];
+  tavisPositions?: {
+    top?: string;
+    bottom?: string;
+    left?: string;
+    right?: string;
+    width?: string;
+    height?: string;
+  }[];
 }
 
 export const rawForm4Videos = [
@@ -925,6 +933,9 @@ export const rawForm5Videos = [
     duration: "22:00",
     keyConceptsBm: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
     keyConceptsDlp: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
+    tavisPositions: [
+      { bottom: '10%', right: '25%', width: '14%', height: '6%' }
+    ]
   },
   {
     driveId: "VlRpT0tOeGFZVXZyYmtZZkhmdkdaeDVFQXZBZTBEMUcx",
@@ -939,6 +950,9 @@ export const rawForm5Videos = [
     duration: "25:10",
     keyConceptsBm: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
     keyConceptsDlp: ["Indeks Pembiasan", "Sudut Genting", "Pantulan Dalam Penuh", "Kanta Cembung", "Kanta Cekung"],
+    tavisPositions: [
+      { bottom: '10%', right: '25%', width: '14%', height: '6%' }
+    ]
   },
   {
     driveId: "WlJxdWY5VVMtRnRCTVBHZnRuTjRyRWh5bjdjSTlLTUwx",

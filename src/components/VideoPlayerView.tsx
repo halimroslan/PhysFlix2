@@ -306,7 +306,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 {/* Top-Right Tavis Protector (M1-M20) */}
                 <div 
                   className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                  style={{ top: '18%', right: '25%', width: '14%', height: '6%' }}
+                  style={{ top: '22%', right: '25%', width: '14%', height: '6%' }}
                 >
                    {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />

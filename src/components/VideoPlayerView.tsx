@@ -44,6 +44,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [shieldStyle, setShieldStyle] = useState({ bottom: '19.2%', height: '7.7%' });
+  const [iframeSrc, setIframeSrc] = useState("");
 
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
@@ -99,6 +100,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
+      const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
+      setIframeSrc(driveUrl);
     }
   }, [currentLesson]);
 
@@ -299,7 +302,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               {/* Embedded Stream via Obfuscated ID */}
             <iframe
               ref={iframeRef}
-              src={`https://drive.google.com/file/d/${rawDriveId}/preview?t=840s`}
+              src={iframeSrc}
               className="absolute top-0 left-0 w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}
@@ -316,35 +319,12 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
-            {/* TEMPORARY 15x26 GRID OVERLAY FOR PRECISE POSITIONING */}
-            <div 
-              className="absolute inset-0 z-50 pointer-events-none grid"
-              style={{ 
-                gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
-                gridTemplateRows: 'repeat(26, minmax(0, 1fr))'
-              }}
-            >
-              {Array.from({ length: 390 }).map((_, i) => {
-                const col = i % 15;
-                const row = Math.floor(i / 15);
-                const letter = String.fromCharCode(65 + row); // A-Z
-                const number = col + 1; // 1-15
-                return (
-                  <div key={i} className="border border-red-500/30 flex items-center justify-center overflow-hidden">
-                    <span className="text-red-500/80 font-mono text-[8px] md:text-xs font-bold bg-black/40 px-0.5 rounded">{letter}{number}</span>
-                  </div>
-                )
-              })}
-            </div>
-
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
             <div 
-              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30"
+              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-transparent"
               style={shieldStyle}
               title="Sila tonton tanpa skip"
             ></div>
-
-            {/* Grid overlay removed */}
 
             {/* Permanent Protectors for 'Tavis' Logo */}
             {currentLesson.tavisPositions && currentLesson.tavisPositions.length > 0 ? (
@@ -455,6 +435,34 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             )}
             </div>
+          </div>
+
+          {/* TEMPORARY JUMP FEATURE */}
+          <div className="mt-4 flex flex-col md:flex-row items-start md:items-center gap-3 bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
+            <span className="text-sm font-medium text-slate-300 whitespace-nowrap">⏳ Lompat ke Masa:</span>
+            <input 
+              type="text" 
+              placeholder="Cth: 12:30 atau 1m30s"
+              className="bg-black border border-slate-600 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 w-full md:w-48"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const val = e.currentTarget.value;
+                  if (!val) return;
+                  let formattedTime = val;
+                  if (val.includes(":")) {
+                    const parts = val.split(":");
+                    if (parts.length === 2) formattedTime = `${parts[0]}m${parts[1]}s`;
+                    else if (parts.length === 3) formattedTime = `${parts[0]}h${parts[1]}m${parts[2]}s`;
+                  }
+                  const baseUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
+                  const urlWithTime = `${baseUrl}?t=${formattedTime}`;
+                  setIframeSrc(urlWithTime);
+                }
+              }}
+            />
+            <span className="text-xs text-slate-400 italic">
+              (Taip masa dan tekan <strong>Enter</strong>. Video akan *reload* di minit tersebut. Ciri sementara.)
+            </span>
           </div>
 
           {/* Video Header & Actions */}

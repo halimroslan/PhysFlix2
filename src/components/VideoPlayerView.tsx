@@ -143,19 +143,22 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   // Manage end cover timer based on playback state (showCover)
   useEffect(() => {
     if (!showCover) {
-      // Calculate remaining time: Total duration - 14 minutes (840s) - 10s
-      // If remaining time is valid, start timer
-      const remainingSeconds = totalSeconds - 840 - 10;
-      if (remainingSeconds > 0) {
+      // Normal start is at 15m (900s). We want to stop 5 mins (300s) before end.
+      const watchTimeSeconds = totalSeconds - 900 - 300;
+      if (watchTimeSeconds > 0) {
         playTimerRef.current = setTimeout(() => {
           setShowEndCover(true);
-        }, remainingSeconds * 1000);
+          setIframeSrc(""); // Auto mute by destroying iframe
+        }, watchTimeSeconds * 1000);
+      } else if (totalSeconds > 0) {
+        // If video is short, block immediately
+        setShowEndCover(true);
+        setIframeSrc("");
       }
     } else {
       setShowEndCover(false);
       if (playTimerRef.current) clearTimeout(playTimerRef.current);
     }
-    
     return () => {
       if (playTimerRef.current) clearTimeout(playTimerRef.current);
     };
@@ -459,14 +462,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             )}
 
-            {/* Full Screen End Cover (Last 10 Seconds) */}
+            {/* Full Screen End Cover (Last 5 Minutes) */}
             {showEndCover && (
               <div 
-                onClick={() => setShowEndCover(false)}
-                className="absolute inset-0 z-40 bg-[#0a0a0a] flex items-center justify-center cursor-pointer pointer-events-auto"
+                className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center pointer-events-auto"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain opacity-90" />
+                <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 md:h-24 w-auto object-contain opacity-90 mb-4" />
+                <span className="text-red-500 font-bold text-lg md:text-2xl animate-pulse">SESI TAMAT</span>
+                <span className="text-slate-400 mt-2 text-sm text-center px-4">Video telah tamat 5 minit lebih awal untuk tujuan pelindungan.</span>
               </div>
             )}
             </div>

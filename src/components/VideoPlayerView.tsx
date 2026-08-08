@@ -323,29 +323,29 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   style={pos as React.CSSProperties}
                 >
                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                   <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                 </div>
               ))
             ) : (
               <>
                 {showTavisM1toM20 && (
                   <>
-                    {/* Top-Right Tavis Protector (M1-M20) */}
+                    {/* Top-Right Tavis Protector (B7-B8 for M1-M20) */}
                     <div 
                       className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ top: '22%', right: '25%', width: '14%', height: '6%' }}
+                      style={{ top: '10%', right: '20%', width: '20%', height: '10%' }}
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                     </div>
                     
-                    {/* Bottom-Right Tavis Protector (M1-M20) */}
+                    {/* Bottom-Right Tavis Protector (I7-I8 for M1-M20) */}
                     <div 
                       className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
-                      style={{ bottom: '15%', right: '25%', width: '14%', height: '6%' }}
+                      style={{ bottom: '10%', right: '20%', width: '20%', height: '10%' }}
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain" />
+                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                     </div>
                   </>
                 )}

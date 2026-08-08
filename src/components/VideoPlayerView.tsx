@@ -120,7 +120,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
-      setIframeSrc(driveUrl);
+      setIframeSrc(`${driveUrl}?t=15m`); // Auto start at min 15 for testing
     }
   }, [currentLesson]);
 
@@ -335,8 +335,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               <img src="/PFlix.png" alt="PhysicsSPMFlix" className="h-4 md:h-6 w-auto object-contain" />
             </div>
 
-            {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
-            <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
+            {/* Top-Left Shield - Blocks Google Drive Title Link (Solid black on mobile to hide menu) */}
+            <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
 
             {/* TEMPORARY 15x26 GRID OVERLAY FOR PRECISE POSITIONING */}
             <div 
@@ -439,7 +439,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   The border-radius ensures the hole perfectly matches the Google Drive play button.
                 */}
                 <div 
-                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_9999px_#0a0a0a]"
+                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_2000px_#0a0a0a]"
                 ></div>
 
                 {/* Additional UI elements (Logo, text) placed around the hole */}

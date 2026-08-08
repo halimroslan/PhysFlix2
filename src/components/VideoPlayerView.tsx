@@ -164,6 +164,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     };
     fetchLikes();
   }, [currentLesson]);
+
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   const [comments, setComments] = useState([
     { name: "Ahmad Rizky", text: "Terbaik Sir! Baru faham melukis sinar selari dan sinar fokus.", time: "2 jam lepas" },
     { name: "Siti Sarah", text: "Fast explanation and clear graphics for DLP students!", time: "5 jam lepas" },
@@ -299,30 +309,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
-            {/* TEMPORARY 15x22 GRID OVERLAY FOR PRECISE POSITIONING */}
-            <div 
-              className="absolute inset-0 z-50 pointer-events-none grid"
-              style={{ 
-                gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
-                gridTemplateRows: 'repeat(22, minmax(0, 1fr))'
-              }}
-            >
-              {Array.from({ length: 330 }).map((_, i) => {
-                const col = i % 15;
-                const row = Math.floor(i / 15);
-                const letter = String.fromCharCode(65 + row); // A-V
-                const number = col + 1; // 1-15
-                return (
-                  <div key={i} className="border border-red-500/30 flex items-center justify-center overflow-hidden">
-                    <span className="text-red-500/80 font-mono text-[9px] md:text-xs font-bold bg-black/40 px-0.5 rounded">{letter}{number}</span>
-                  </div>
-                )
-              })}
-            </div>
-
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
             <div 
-              className="absolute bottom-[10%] left-[2%] right-[2%] z-30 h-[12%] pointer-events-auto cursor-not-allowed bg-red-500/30"
+              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-transparent"
+              style={{
+                bottom: isFullscreen ? '9%' : '18%',
+                height: isFullscreen ? '6%' : '10%'
+              }}
               title="Sila tonton tanpa skip"
             ></div>
 

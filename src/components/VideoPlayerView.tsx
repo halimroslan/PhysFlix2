@@ -301,7 +301,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
             <div 
-              className="absolute bottom-[12%] left-[2%] right-[2%] z-30 h-[8%] pointer-events-auto cursor-not-allowed bg-transparent"
+              className="absolute bottom-[18%] left-[2%] right-[2%] z-30 h-[12%] pointer-events-auto cursor-not-allowed bg-red-500/30"
               title="Sila tonton tanpa skip"
             ></div>
 

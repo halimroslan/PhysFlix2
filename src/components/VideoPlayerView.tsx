@@ -299,18 +299,18 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Invisible Shield - Blocks Google Drive Title Link */}
             <div className="absolute top-0 left-0 z-20 w-1/2 h-10 md:h-16 pointer-events-auto cursor-default bg-transparent"></div>
 
-            {/* TEMPORARY 15x19 GRID OVERLAY FOR PRECISE POSITIONING */}
+            {/* TEMPORARY 15x22 GRID OVERLAY FOR PRECISE POSITIONING */}
             <div 
               className="absolute inset-0 z-50 pointer-events-none grid"
               style={{ 
                 gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
-                gridTemplateRows: 'repeat(19, minmax(0, 1fr))'
+                gridTemplateRows: 'repeat(22, minmax(0, 1fr))'
               }}
             >
-              {Array.from({ length: 285 }).map((_, i) => {
+              {Array.from({ length: 330 }).map((_, i) => {
                 const col = i % 15;
                 const row = Math.floor(i / 15);
-                const letter = String.fromCharCode(65 + row); // A-S
+                const letter = String.fromCharCode(65 + row); // A-V
                 const number = col + 1; // 1-15
                 return (
                   <div key={i} className="border border-red-500/30 flex items-center justify-center overflow-hidden">

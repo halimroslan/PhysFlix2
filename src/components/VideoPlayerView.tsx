@@ -569,7 +569,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="w-full h-full object-contain" />
+                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="w-full h-full object-contain scale-[0.85]" />
                 </div>
               </div>
             </div>

@@ -147,10 +147,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
           setShowCover(false);
-          // Auto-fullscreen on mobile when playing
-          if (window.innerWidth < 768) {
-            setIsFullscreen(true);
-          }
         }
       }, 50);
     };

@@ -560,7 +560,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 style={{ transform: 'rotate(-27deg)' }}
               >
                 <div 
-                  className="absolute flex items-center justify-center opacity-40 bg-slate-900 rounded-2xl border border-slate-700"
+                  className="absolute flex items-center justify-center"
                   style={{
                     left: '6.666%',   // Col 2 start (1 col before)
                     top: '30.769%',   // Row I start (8 rows before)
@@ -568,8 +568,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     height: '23.076%' // Span 6 rows (I to N)
                   }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="w-full h-full object-contain scale-[0.70]" />
+                  <div className="bg-slate-900 rounded-2xl p-3 md:p-5 opacity-40 scale-[0.70] h-full flex items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="h-full w-auto object-contain" />
+                  </div>
                 </div>
               </div>
             </div>

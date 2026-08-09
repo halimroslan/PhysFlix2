@@ -46,6 +46,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   // Developer Toggles
   const [devShowGrid, setDevShowGrid] = useState(false);
+  const [devShowFullScreenGrid, setDevShowFullScreenGrid] = useState(false);
   const [devShowShields, setDevShowShields] = useState(true);
   const [devShowControllerShield, setDevShowControllerShield] = useState(true);
   const [devShowJump, setDevShowJump] = useState(false);
@@ -360,6 +361,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <span className="text-sm text-slate-300">Tunjuk Grid Koordinat</span>
                   <input type="checkbox" checked={devShowGrid} onChange={(e) => setDevShowGrid(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
                 </label>
+
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-sm text-slate-300">Tunjuk Grid Skrin Penuh (Biru)</span>
+                  <input type="checkbox" checked={devShowFullScreenGrid} onChange={(e) => setDevShowFullScreenGrid(e.target.checked)} className="rounded text-blue-500 focus:ring-blue-500 bg-slate-800 border-slate-600" />
+                </label>
                 
                 <label className="flex items-center justify-between cursor-pointer">
                   <span className="text-sm text-slate-300">Aktifkan Cermin Ghaib</span>
@@ -419,6 +425,34 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
+            )}
+
+            {/* FULL SCREEN DEV GRID (BLUE) */}
+            {devShowFullScreenGrid && (
+              <div 
+                className="absolute inset-0 z-[120] pointer-events-none grid"
+                style={{ 
+                  gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
+                  gridTemplateRows: 'repeat(26, minmax(0, 1fr))'
+                }}
+              >
+                {Array.from({ length: 26 * 15 }).map((_, i) => {
+                  const row = Math.floor(i / 15);
+                  const col = i % 15;
+                  const rowLabel = String.fromCharCode(65 + row);
+                  const colLabel = col + 1;
+                  return (
+                    <div 
+                      key={i} 
+                      className="border border-blue-500/40 flex items-center justify-center relative"
+                    >
+                      <span className="text-[8px] md:text-[10px] text-blue-400/80 font-mono rotate-90 md:rotate-0">
+                        {rowLabel}{colLabel}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             )}
 
             {/* Inner Container - ALWAYS maintains 16:9 aspect ratio and scales to fit */}

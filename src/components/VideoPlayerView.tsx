@@ -155,6 +155,24 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
         if (document.activeElement === iframeRef.current) {
           if (Date.now() - coverMountedAt.current < 2000) return;
           setShowCover(false);
+          
+          // Auto-activate fullscreen on mobile
+          if (window.innerWidth < 768) {
+            if (containerRef.current) {
+              if ('requestFullscreen' in document.documentElement) {
+                containerRef.current.requestFullscreen().catch(() => {
+                  // Fallback to CSS fullscreen if native fails (e.g. due to lack of direct user gesture)
+                  setIsFullscreen(true);
+                });
+              } else if ((containerRef.current as any).webkitRequestFullscreen) {
+                (containerRef.current as any).webkitRequestFullscreen();
+                // Safari might not return a promise, so we also set CSS fallback just in case
+                setIsFullscreen(true);
+              } else {
+                setIsFullscreen(true);
+              }
+            }
+          }
         }
       }, 50);
     };

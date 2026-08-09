@@ -14,13 +14,16 @@ import {
   ShieldAlert,
   Lock,
   Bookmark,
-  Maximize
+  Maximize,
+  Settings,
+  X
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
 import { conceptDefinitions } from "@/data/conceptDefinitions";
 import { useDRMProtection, deobfuscateId } from "@/utils/security";
 import { useUserActivity } from "@/context/UserActivityContext";
+import { useAuth } from "@/context/AuthContext";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -37,6 +40,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 }) => {
   const { lang, t } = useLanguage();
   const { isBookmarked, toggleBookmark, addToHistory } = useUserActivity();
+  const { user } = useAuth();
+  const isDev = user?.email === "abdulhalimroslan@gmail.com";
+
+  // Developer Toggles
+  const [devShowGrid, setDevShowGrid] = useState(false);
+  const [devShowShields, setDevShowShields] = useState(true);
+  const [devShowControllerShield, setDevShowControllerShield] = useState(true);
+  const [devShowJump, setDevShowJump] = useState(false);
+  const [devPanelOpen, setDevPanelOpen] = useState(false);
+
   useDRMProtection(); // Activates DRM anti-inspect & anti-shortcut hook
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -344,44 +357,52 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
 
             {/* Bottom Controller Shield (Solid Black) - Hides player controls completely on PC */}
-            <div 
-              className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black hidden md:block"
-              style={{
-                height: isFullscreen ? '7.692%' : '11.538%',
-              }}
-            ></div>
+            {devShowControllerShield && (
+              <div 
+                className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black hidden md:block"
+                style={{
+                  height: isFullscreen ? '7.692%' : '11.538%',
+                }}
+              ></div>
+            )}
 
             {/* TEMPORARY 15x26 GRID OVERLAY FOR PRECISE POSITIONING */}
-            <div 
-              className="absolute inset-0 z-50 pointer-events-none grid"
-              style={{ 
-                gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
-                gridTemplateRows: 'repeat(26, minmax(0, 1fr))'
-              }}
-            >
-              {Array.from({ length: 390 }).map((_, i) => {
-                const col = i % 15;
-                const row = Math.floor(i / 15);
-                const letter = String.fromCharCode(65 + row); // A-Z
-                const number = col + 1; // 1-15
-                return (
-                  <div key={i} className="border border-red-500/30 flex items-center justify-center overflow-hidden">
-                    <span className="text-red-500/80 font-mono text-[8px] md:text-xs font-bold bg-black/40 px-0.5 rounded">{letter}{number}</span>
-                  </div>
-                )
-              })}
-            </div>
+            {devShowGrid && (
+              <div 
+                className="absolute inset-0 z-50 pointer-events-none grid"
+                style={{ 
+                  gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
+                  gridTemplateRows: 'repeat(26, minmax(0, 1fr))'
+                }}
+              >
+                {Array.from({ length: 15 * 26 }).map((_, i) => {
+                  const col = i % 15;
+                  const row = Math.floor(i / 15);
+                  const letter = String.fromCharCode(65 + row); // A-Z
+                  const number = col + 1; // 1-15
+                  return (
+                    <div key={i} className="border border-red-500/30 flex items-center justify-center overflow-hidden">
+                      <span className="text-red-500/80 font-mono text-[8px] md:text-xs font-bold bg-black/40 px-0.5 rounded">{letter}{number}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
 
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
-            <div 
-              className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30 max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0"
-              style={shieldStyle}
-              title="Sila tonton tanpa skip"
-            ></div>
+            {devShowShields && (
+              <div 
+                className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30 max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0"
+                style={shieldStyle}
+                title="Sila tonton tanpa skip"
+              ></div>
+            )}
 
             {/* Permanent Protectors for 'Tavis' Logo */}
-            {currentLesson.tavisPositions && currentLesson.tavisPositions.length > 0 ? (
-              currentLesson.tavisPositions.map((pos, idx) => (
+            {devShowShields && (
+              <>
+                {currentLesson.tavisPositions && currentLesson.tavisPositions.length > 0 ? (
+                  currentLesson.tavisPositions.map((pos, idx) => (
                 <div 
                   key={idx}
                   className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none"
@@ -436,12 +457,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[4px] md:rounded-lg shadow-xl border border-white/10 pointer-events-none top-[20%] right-[10%] w-[10%] h-[10%] portrait:hidden"
                     >
                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
+                        <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[45%] w-auto object-contain opacity-80" />
                     </div>
                   </>
                 )}
               </>
             )}
+            </>
+          )}
 
             {/* Custom Initial Cover (Hole Punch for Drive Play Button) */}
             {showCover && (
@@ -502,45 +525,85 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           </div>
 
           {/* TEMPORARY JUMP FEATURE */}
-          <div className="mt-4 flex flex-col md:flex-row items-start md:items-center gap-3 bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
-            <span className="text-sm font-medium text-slate-300 whitespace-nowrap">⏳ Lompat ke Masa:</span>
-            <input 
-              type="text" 
-              placeholder="Cth: 12:30 atau 1m30s"
-              className="bg-black border border-slate-600 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 w-full md:w-48"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  const val = e.currentTarget.value;
-                  if (!val) return;
-                  let formattedTime = val;
-                  if (val.includes(":")) {
-                    const parts = val.split(":");
-                    if (parts.length === 2) formattedTime = `${parts[0]}m${parts[1]}s`;
-                    else if (parts.length === 3) formattedTime = `${parts[0]}h${parts[1]}m${parts[2]}s`;
-                    
-                    const p = val.split(":").map(Number);
-                    if (p.length === 2) setCurrentStartSeconds(p[0]*60 + p[1]);
-                    else if (p.length === 3) setCurrentStartSeconds(p[0]*3600 + p[1]*60 + p[2]);
-                  } else {
-                    let h=0, m=0, s=0;
-                    const hM = val.match(/(\d+)h/);
-                    const mM = val.match(/(\d+)m/);
-                    const sM = val.match(/(\d+)s/);
-                    if (hM) h = parseInt(hM[1]);
-                    if (mM) m = parseInt(mM[1]);
-                    if (sM) s = parseInt(sM[1]);
-                    setCurrentStartSeconds(h*3600 + m*60 + s);
+          {devShowJump && (
+            <div className="mt-4 flex flex-col md:flex-row items-start md:items-center gap-3 bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
+              <span className="text-sm font-medium text-slate-300 whitespace-nowrap">⏳ Lompat ke Masa:</span>
+              <input 
+                type="text" 
+                placeholder="Cth: 12:30 atau 1m30s"
+                className="bg-black border border-slate-600 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 w-full md:w-48"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const val = e.currentTarget.value;
+                    if (!val) return;
+                    let formattedTime = val;
+                    if (val.includes(":")) {
+                      const parts = val.split(":");
+                      if (parts.length === 2) formattedTime = `${parts[0]}m${parts[1]}s`;
+                      else if (parts.length === 3) formattedTime = `${parts[0]}h${parts[1]}m${parts[2]}s`;
+                      
+                      const p = val.split(":").map(Number);
+                      if (p.length === 2) setCurrentStartSeconds(p[0]*60 + p[1]);
+                      else if (p.length === 3) setCurrentStartSeconds(p[0]*3600 + p[1]*60 + p[2]);
+                    } else {
+                      let h=0, m=0, s=0;
+                      const hM = val.match(/(\d+)h/);
+                      const mM = val.match(/(\d+)m/);
+                      const sM = val.match(/(\d+)s/);
+                      if (hM) h = parseInt(hM[1]);
+                      if (mM) m = parseInt(mM[1]);
+                      if (sM) s = parseInt(sM[1]);
+                      setCurrentStartSeconds(h*3600 + m*60 + s);
+                    }
+                    const baseUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
+                    const urlWithTime = `${baseUrl}?t=${formattedTime}`;
+                    setIframeSrc(urlWithTime);
                   }
-                  const baseUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
-                  const urlWithTime = `${baseUrl}?t=${formattedTime}`;
-                  setIframeSrc(urlWithTime);
-                }
-              }}
-            />
-            <span className="text-xs text-slate-400 italic">
-              (Taip masa dan tekan <strong>Enter</strong>. Video akan *reload* di minit tersebut. Ciri sementara.)
-            </span>
-          </div>
+                }}
+              />
+              <span className="text-xs text-slate-400 italic">
+                (Taip masa dan tekan <strong>Enter</strong>. Video akan *reload* di minit tersebut. Ciri sementara.)
+              </span>
+            </div>
+          )}
+
+          {/* DEVELOPER PANEL */}
+          {isDev && (
+            <div className="fixed bottom-4 left-4 z-50">
+              <button 
+                onClick={() => setDevPanelOpen(!devPanelOpen)}
+                className="bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-600/50 transition-all hover:scale-105 active:scale-95"
+              >
+                {devPanelOpen ? <X className="w-5 h-5 text-red-500" /> : <Settings className="w-5 h-5 text-sky-400" />}
+              </button>
+              
+              {devPanelOpen && (
+                <div className="absolute bottom-14 left-0 bg-slate-900 border border-slate-700/50 rounded-xl shadow-2xl p-4 w-64 space-y-4 animate-in slide-in-from-bottom-2 duration-200">
+                  <h3 className="text-sm font-bold text-sky-400 uppercase tracking-wider mb-2 border-b border-slate-800 pb-2">Developer Tools</h3>
+                  
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <span className="text-sm text-slate-300">Tunjuk Grid Koordinat</span>
+                    <input type="checkbox" checked={devShowGrid} onChange={(e) => setDevShowGrid(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                  </label>
+                  
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <span className="text-sm text-slate-300">Aktifkan Cermin Ghaib</span>
+                    <input type="checkbox" checked={devShowShields} onChange={(e) => setDevShowShields(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                  </label>
+                  
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <span className="text-sm text-slate-300">Pelindung Controller (PC)</span>
+                    <input type="checkbox" checked={devShowControllerShield} onChange={(e) => setDevShowControllerShield(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                  </label>
+
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <span className="text-sm text-slate-300">Tunjuk Kotak Lompat</span>
+                    <input type="checkbox" checked={devShowJump} onChange={(e) => setDevShowJump(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                  </label>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Video Header & Actions */}
           <div className="space-y-4">

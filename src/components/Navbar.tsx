@@ -50,6 +50,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onSearchChange) onSearchChange(e.target.value);
   };
 
+  const isDev = user?.email === "abdulhalimroslan@gmail.com";
+
   const navLinks = [
     { id: "home", label: "Laman Utama" },
     { id: "form4", label: "Tingkatan 4" },
@@ -58,6 +60,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: "mylist", label: "Senarai Saya" },
     { id: "experiments", label: "MyHomePhysics Lab" },
   ];
+
+  if (isDev) {
+    navLinks.push({ id: "analytics", label: "Analytic Board" });
+  }
 
   const handleNavClick = (id: string) => {
     if (id === "experiments") {

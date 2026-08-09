@@ -11,6 +11,7 @@ import { ContinueWatching } from "@/components/ContinueWatching";
 import { TopPicks } from "@/components/TopPicks";
 import { RevisionCollections } from "@/components/RevisionCollections";
 import { VideoPlayerView } from "@/components/VideoPlayerView";
+import { AnalyticBoard } from "@/components/AnalyticBoard";
 import { FormulaSheetModal } from "@/components/FormulaSheetModal";
 import { DictionaryModal } from "@/components/DictionaryModal";
 import { QuizModal } from "@/components/QuizModal";

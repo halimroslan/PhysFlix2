@@ -10,7 +10,8 @@ import {
   signOut,
   User
 } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, googleProvider, db } from "@/lib/firebase";
 
 interface AuthContextType {
   user: User | null;
@@ -30,8 +31,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      
+      if (currentUser) {
+        try {
+          const userRef = doc(db, "users", currentUser.uid);
+          await setDoc(userRef, {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName || currentUser.email?.split('@')[0] || "User",
+            photoURL: currentUser.photoURL || "",
+            lastLogin: serverTimestamp(),
+          }, { merge: true });
+        } catch (error) {
+          console.error("Failed to save user data to Firestore:", error);
+        }
+      }
+      
       setLoading(false);
     });
     return () => unsubscribe();

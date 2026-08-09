@@ -531,13 +531,20 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {showCover && (
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
                 {/* 
-                  This div represents the 'hole'. 
-                  It is transparent but casts a massive solid black shadow to cover the rest of the screen. 
-                  The border-radius ensures the hole perfectly matches the Google Drive play button.
+                  SVG Mask Overlay: 
+                  Creates a perfectly rounded hole punch for the Google Drive play button 
+                  without the performance lag of massive box-shadows on mobile WebKit.
                 */}
-                <div 
-                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_2000px_#0a0a0a]"
-                ></div>
+                <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <mask id="hole">
+                      <rect width="100%" height="100%" fill="white" />
+                      {/* Hole for the play button: 72x52, perfectly centered */}
+                      <rect x="50%" y="50%" width="72" height="52" rx="12" ry="12" fill="black" transform="translate(-36, -26)" />
+                    </mask>
+                  </defs>
+                  <rect width="100%" height="100%" fill="#0a0a0a" mask="url(#hole)" />
+                </svg>
 
                 {/* Additional UI elements (Logo, text) placed around the hole */}
                 <div className="absolute top-10 left-0 right-0 flex flex-col items-center">

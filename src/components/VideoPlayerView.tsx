@@ -200,7 +200,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     if (!showCover) {
       showTimer = setTimeout(() => {
         setShowMobileTip(true);
-        hideTimer = setTimeout(() => setShowMobileTip(false), 50000); // Hide after 50 seconds of showing
+        hideTimer = setTimeout(() => setShowMobileTip(false), 15000); // Hide after 15 seconds of showing
       }, 4000); // Wait 4 seconds before showing
     } else {
       setShowMobileTip(false);
@@ -491,7 +491,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 className="absolute md:hidden z-[130] pointer-events-none flex flex-col items-center justify-center animate-in fade-in zoom-in duration-500" 
                 style={{ top: '34.6%', left: '90%', transform: 'translate(-50%, -50%)' }}
               >
-                <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/20 shadow-2xl mb-0.5 whitespace-nowrap">
+                <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/20 shadow-2xl mb-0.5 whitespace-nowrap transform -translate-x-16">
                   <p className="text-[10px] font-bold text-white leading-tight animate-pulse">
                     Klik di sini untuk cerahkan video
                   </p>

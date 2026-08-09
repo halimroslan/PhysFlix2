@@ -612,7 +612,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   left: '60%',      // Col 10 start
                   top: '84.615%',   // Row W start
                   width: '20%',     // Col 10 to 12 (3 cols)
-                  height: '3.846%'  // 1 row
+                  height: '7.692%'  // Span 2 rows (W and X)
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

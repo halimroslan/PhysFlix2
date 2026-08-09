@@ -675,7 +675,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 {/* Highly compatible inline-styled Hole Punch (Bypasses Tailwind JIT/Caching issues) */}
                 <div 
                   className="w-[72px] h-[52px] rounded-[12px] z-30"
-                  style={{ boxShadow: '0 0 0 9999px #0a0a0a' }}
+                  style={{ 
+                    boxShadow: '0 0 0 9999px #0a0a0a',
+                    transform: 'translateZ(0)',
+                    WebkitTransform: 'translateZ(0)' 
+                  }}
                 ></div>
 
                 {/* Additional UI elements (Logo, text) placed around the hole EXACTLY like old repo */}

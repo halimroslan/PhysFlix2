@@ -194,13 +194,22 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   // Manage mobile interaction tip
   useEffect(() => {
+    let showTimer: NodeJS.Timeout;
+    let hideTimer: NodeJS.Timeout;
+    
     if (!showCover) {
-      setShowMobileTip(true);
-      const tipTimer = setTimeout(() => setShowMobileTip(false), 8000);
-      return () => clearTimeout(tipTimer);
+      showTimer = setTimeout(() => {
+        setShowMobileTip(true);
+        hideTimer = setTimeout(() => setShowMobileTip(false), 6000); // Hide after 6 seconds of showing
+      }, 4000); // Wait 4 seconds before showing
     } else {
       setShowMobileTip(false);
     }
+    
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
   }, [showCover]);
 
   // Manage end cover timer based on playback state (showCover)
@@ -483,19 +492,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 style={{ top: '34.6%', left: '90%', transform: 'translate(-50%, -50%)' }}
               >
                 <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/20 shadow-2xl mb-0.5 whitespace-nowrap">
-                  <p className="text-[10px] font-bold text-white leading-tight">
+                  <p className="text-[10px] font-bold text-white leading-tight animate-pulse">
                     Klik di sini
                   </p>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white animate-bounce my-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500 animate-bounce mt-1 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
-                <div className="relative flex items-center justify-center">
-                  <div className="absolute w-8 h-8 bg-red-500/50 rounded-full animate-ping"></div>
-                  <div className="w-5 h-5 bg-red-600 rounded-full border border-white shadow-xl flex items-center justify-center">
-                    <span className="text-[10px] font-bold text-white font-mono leading-none">P</span>
-                  </div>
-                </div>
               </div>
             )}
 

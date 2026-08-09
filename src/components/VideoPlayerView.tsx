@@ -453,7 +453,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
             <div 
-              className={`absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0 ${devShowShields ? 'bg-red-500/30' : 'bg-transparent'}`}
+              className={`absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0 ${isDev && devShowShields ? 'bg-red-500/30' : 'bg-transparent'}`}
               style={shieldStyle}
               title="Sila tonton tanpa skip"
             ></div>

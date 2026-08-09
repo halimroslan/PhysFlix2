@@ -762,11 +762,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Custom Initial Cover (Hole Punch) - unified for mobile & desktop */}
             {showCover && (
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
-                {/* Click blockers - prevents clicks outside hole on all devices */}
-                <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
-                <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
-                <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
-                <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
+                {/* Click blockers & Solid Fallback Cover - prevents clicks and acts as a solid visual fallback if box-shadow fails */}
+                <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] bg-[#0a0a0a] pointer-events-auto z-40"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] bg-[#0a0a0a] pointer-events-auto z-40"></div>
+                <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] bg-[#0a0a0a] pointer-events-auto z-40"></div>
+                <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] bg-[#0a0a0a] pointer-events-auto z-40"></div>
 
                 {/* Highly compatible inline-styled Hole Punch (Bypasses Tailwind JIT/Caching issues) */}
                 <div 

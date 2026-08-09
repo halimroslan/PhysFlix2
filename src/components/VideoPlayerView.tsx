@@ -662,20 +662,20 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
                 {/* Original Shadow-based Hole Punch (From old repo) */}
                 <div 
-                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_9999px_#0a0a0a] z-30"
+                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_9999px_#0a0a0a] z-30 bg-white"
                 ></div>
 
-                {/* Logo and title */}
-                <div className="absolute top-6 md:top-10 left-0 right-0 flex flex-col items-center">
+                {/* Additional UI elements (Logo, text) placed around the hole EXACTLY like old repo */}
+                <div className="absolute top-10 left-0 right-0 flex flex-col items-center z-40">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-10 md:h-16 w-auto object-contain mb-3 md:mb-4 opacity-90" />
-                  <span className="text-white/80 text-xs md:text-xl font-black font-mono tracking-widest text-center uppercase px-4">
+                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
+                  <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
                     {currentLesson.titleBm}
                   </span>
                 </div>
                 
-                <div className="absolute bottom-12 md:bottom-16 left-0 right-0 flex justify-center">
-                  <span className="text-red-500/80 text-xs md:text-base font-bold tracking-wide animate-pulse">
+                <div className="absolute bottom-16 left-0 right-0 flex justify-center z-40">
+                  <span className="text-red-500/80 text-sm md:text-base font-bold tracking-wide animate-pulse">
                     ↑ Klik butang Play di atas ↑
                   </span>
                 </div>

@@ -141,7 +141,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       
       setCurrentStartSeconds(startSecs); // Reset timer tracking
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
-      setIframeSrc(`${driveUrl}?t=${startParam}`); // Auto start based on lesson
+      setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0`); // Auto start based on lesson, disable CC
     }
   }, [currentLesson]);
 
@@ -408,7 +408,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               title={currentLesson.titleBm}
             ></iframe>
 
-            {/* Temporary Touch Guard - REMOVED, was counterproductive */}
+            {/* Mobile Bottom Controls Shield - Blocks CC, Gear, Fullscreen buttons on Drive player */}
+            <div className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black/95 md:hidden" style={{ height: '15%' }}></div>
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
             <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
@@ -607,7 +608,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     setShowCover(true); // Reset the hole punch cover
                     setCurrentStartSeconds(startSecs); // Reset timer
                     const driveUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
-                    setIframeSrc(`${driveUrl}?t=${startParam}`); // Restart video at correct min
+                    setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0`); // Restart video at correct min
                   }}
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2"
                 >
@@ -653,7 +654,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       setCurrentStartSeconds(h*3600 + m*60 + s);
                     }
                     const baseUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
-                    const urlWithTime = `${baseUrl}?t=${formattedTime}`;
+                    const urlWithTime = `${baseUrl}?t=${formattedTime}&cc_load_policy=0`;
                     setIframeSrc(urlWithTime);
                   }
                 }}

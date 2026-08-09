@@ -560,7 +560,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 style={{ transform: 'rotate(-27deg)' }}
               >
                 <div 
-                  className="absolute flex items-center justify-center opacity-25"
+                  className="absolute flex items-center justify-center opacity-40 bg-slate-900 rounded-2xl border border-slate-700"
                   style={{
                     left: '6.666%',   // Col 2 start (1 col before)
                     top: '30.769%',   // Row I start (8 rows before)

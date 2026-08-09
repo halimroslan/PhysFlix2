@@ -136,8 +136,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
       coverMountedAt.current = Date.now(); // Reset cover mount timestamp
-      
-      const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "2.2b Gerakan linear";
+      const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "2.2b Gerakan linear" || currentLesson.titleBm === "1.1 Daya Paduan";
       const startSecs = is15MinStart ? 900 : 600;
       const startParam = is15MinStart ? "15m" : "10m";
       
@@ -145,6 +144,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
       setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0&cc=0`); // Auto start based on lesson, disable CC
     }
+    
+    // Auto-scroll screen to top (useful for mobile when selecting a video from the playlist below)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentLesson]);
 
   // Detect clicks on the iframe when it gains focus
@@ -605,7 +607,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 
                 <button
                   onClick={() => {
-                    const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "2.2b Gerakan linear";
+                    const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "2.2b Gerakan linear" || currentLesson.titleBm === "1.1 Daya Paduan";
                     const startSecs = is15MinStart ? 900 : 600;
                     const startParam = is15MinStart ? "15m" : "10m";
 

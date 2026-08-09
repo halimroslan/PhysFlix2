@@ -656,17 +656,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
                 <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
 
-                {/* SVG Mask Overlay - instant render on all devices */}
-                <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <mask id="hole">
-                      <rect width="100%" height="100%" fill="white" />
-                      {/* Hole for the play button: 72x52, perfectly centered */}
-                      <rect x="50%" y="50%" width="72" height="52" rx="12" ry="12" fill="black" transform="translate(-36, -26)" />
-                    </mask>
-                  </defs>
-                  <rect width="100%" height="100%" fill="#0a0a0a" mask="url(#hole)" />
-                </svg>
+                {/* Original Shadow-based Hole Punch (From old repo) */}
+                <div 
+                  className="w-[72px] h-[52px] rounded-[12px] shadow-[0_0_0_9999px_#0a0a0a] z-30"
+                ></div>
 
                 {/* Logo and title */}
                 <div className="absolute top-6 md:top-10 left-0 right-0 flex flex-col items-center">

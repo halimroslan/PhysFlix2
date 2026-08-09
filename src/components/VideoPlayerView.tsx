@@ -130,6 +130,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const [showCover, setShowCover] = useState(true);
   const [showEndCover, setShowEndCover] = useState(false);
   const [currentStartSeconds, setCurrentStartSeconds] = useState(600);
+  const [showMobileTip, setShowMobileTip] = useState(false);
 
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
@@ -183,6 +184,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       window.removeEventListener("blur", handleBlur);
     };
   }, []);
+
+  // Manage mobile interaction tip
+  useEffect(() => {
+    if (!showCover) {
+      setShowMobileTip(true);
+      const tipTimer = setTimeout(() => setShowMobileTip(false), 8000);
+      return () => clearTimeout(tipTimer);
+    } else {
+      setShowMobileTip(false);
+    }
+  }, [showCover]);
 
   // Manage end cover timer based on playback state (showCover)
   useEffect(() => {
@@ -449,6 +461,26 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Top-Left Shield - Blocks Google Drive Title Link (Solid black on mobile to hide menu) */}
             <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
+
+            {/* Mobile Interaction Tip - Pulse and Rotate instruction */}
+            {showMobileTip && (
+              <div className="absolute left-2 md:hidden z-30 pointer-events-none flex flex-col items-center justify-center space-y-2 animate-in fade-in zoom-in duration-500" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute w-12 h-12 bg-white/20 rounded-full animate-ping"></div>
+                  <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 text-white shadow-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 animate-[spin_3s_linear_infinite]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                    </svg>
+                  </div>
+                </div>
+                <div className="bg-black/60 backdrop-blur-md px-3 py-2 rounded-lg border border-white/20 shadow-2xl max-w-[120px] text-center">
+                  <p className="text-[10px] font-bold text-white leading-tight">
+                    Sentuh dan putarkan untuk paparan optimum
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Bottom Controller Shield (Solid Black) - Hides player controls completely on PC */}
             {devShowControllerShield && (

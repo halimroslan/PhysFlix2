@@ -149,7 +149,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }
     
     // Auto-scroll screen to top (useful for mobile when selecting a video from the playlist below)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const screenTimer = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+    
+    return () => clearTimeout(screenTimer);
   }, [currentLesson]);
 
   // Detect clicks on the iframe when it gains focus
@@ -237,7 +241,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       const scrollTimer = setTimeout(() => {
         const el = document.getElementById("current-playing-video");
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Scroll the item to the top of its container ('start')
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }, 100);
       return () => clearTimeout(scrollTimer);

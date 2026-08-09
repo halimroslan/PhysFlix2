@@ -529,7 +529,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Custom Initial Cover (Hole Punch for Drive Play Button) */}
             {showCover && (
-              <div className="absolute inset-0 z-30 overflow-hidden flex items-center justify-center">
+              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
                 {/* Click blockers: Prevent clicks anywhere except the 72x52 center hole */}
                 <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
                 <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>

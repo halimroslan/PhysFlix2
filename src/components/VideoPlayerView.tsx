@@ -224,14 +224,21 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   useEffect(() => {
     if (!showCover) {
       // Normal start is at 10m (600s), but can be changed by jump. We want to stop 5 mins (300s) before end.
-      const watchTimeSeconds = totalSeconds - currentStartSeconds - 300;
+      let watchTimeSeconds = totalSeconds - currentStartSeconds - 300;
+      
+      // If the jump start time is already within the last 5 minutes, 
+      // they explicitly jumped here, so let them watch the remainder of the video.
+      if (watchTimeSeconds <= 0 && totalSeconds > currentStartSeconds) {
+        watchTimeSeconds = totalSeconds - currentStartSeconds;
+      }
+      
       if (watchTimeSeconds > 0) {
         playTimerRef.current = setTimeout(() => {
           setShowEndCover(true);
           setIframeSrc(""); // Auto mute by destroying iframe
         }, watchTimeSeconds * 1000);
       } else if (totalSeconds > 0) {
-        // If video is short or jumped to end, block immediately
+        // If somehow they jumped past the very end
         setShowEndCover(true);
         setIframeSrc("");
       }

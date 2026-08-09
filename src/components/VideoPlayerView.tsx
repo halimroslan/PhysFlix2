@@ -343,6 +343,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Top-Left Shield - Blocks Google Drive Title Link (Solid black on mobile to hide menu) */}
             <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
 
+            {/* Bottom Controller Shield (Solid Black) - Hides player controls completely on PC */}
+            <div 
+              className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black hidden md:block"
+              style={{
+                height: isFullscreen ? '7.692%' : '11.538%',
+              }}
+            ></div>
+
             {/* TEMPORARY 15x26 GRID OVERLAY FOR PRECISE POSITIONING */}
             <div 
               className="absolute inset-0 z-50 pointer-events-none grid"

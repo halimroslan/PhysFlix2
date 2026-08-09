@@ -255,6 +255,8 @@ function MainDashboard() {
                 </div>
               )}
             </div>
+          ) : currentTab === "analytics" ? (
+            <AnalyticBoard />
           ) : currentTab === "topics" ? (
             <div className="space-y-10">
               <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">

@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onSearchChange) onSearchChange(e.target.value);
   };
 
-  const isDev = user?.email === "abdulhalimroslan@gmail.com";
+  const isDev = user?.email?.toLowerCase().trim() === "abdulhalimroslan@gmail.com";
 
   const navLinks = [
     { id: "home", label: "Laman Utama" },

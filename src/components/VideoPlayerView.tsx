@@ -563,6 +563,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               <img src="/PFlix.png" alt="PhysicsSPMFlix" className="h-4 md:h-6 w-auto object-contain" />
             </div>
 
+            {/* Conditional Tavis Censor Block for 2.6 Daya */}
+            {currentLesson.titleBm === "2.6 Daya" && (
+              <div 
+                className={`absolute left-0 z-20 pointer-events-auto cursor-default bg-black/95 border-r border-b border-white/5 w-[13.33%] ${
+                  isFullscreen
+                    ? "portrait:top-[23.08%] portrait:h-[7.69%] landscape:top-[11.54%] landscape:h-[7.69%]"
+                    : "portrait:top-[23.08%] portrait:h-[3.85%] landscape:top-[11.54%] landscape:h-[7.69%]"
+                }`}
+              ></div>
+            )}
+
             {/* Top-Left Shield - Blocks Google Drive Title Link (Solid black on mobile to hide menu) */}
             <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
 

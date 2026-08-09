@@ -150,7 +150,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       const is18MinStart = currentLesson.titleBm === "6.1a Reputan Radioaktif";
       const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "1.1 Daya Paduan";
       const is14m40sStart = currentLesson.titleBm === "4.4b Hukum Gas Ulangkaji";
-      const startSecs = is20MinStart ? 1200 : (is18MinStart ? 1080 : (is15MinStart ? 900 : (is14m40sStart ? 880 : 600)));
+      const is12m40sStart = currentLesson.titleBm === "6.1 Pembiasan Cahaya";
+      const startSecs = is20MinStart ? 1200 : (is18MinStart ? 1080 : (is15MinStart ? 900 : (is14m40sStart ? 880 : (is12m40sStart ? 760 : 600))));
       
       setCurrentStartSeconds(startSecs); // Reset timer tracking
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
@@ -808,8 +809,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     const is18MinStart = currentLesson.titleBm === "6.1a Reputan Radioaktif";
                     const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "1.1 Daya Paduan";
                     const is14m40sStart = currentLesson.titleBm === "4.4b Hukum Gas Ulangkaji";
-                    const startSecs = is20MinStart ? 1200 : (is18MinStart ? 1080 : (is15MinStart ? 900 : (is14m40sStart ? 880 : 600)));
-                    const startParam = is20MinStart ? "1200s" : (is18MinStart ? "1080s" : (is15MinStart ? "900s" : (is14m40sStart ? "880s" : "600s")));
+                    const is12m40sStart = currentLesson.titleBm === "6.1 Pembiasan Cahaya";
+                    const startSecs = is20MinStart ? 1200 : (is18MinStart ? 1080 : (is15MinStart ? 900 : (is14m40sStart ? 880 : (is12m40sStart ? 760 : 600))));
+                    const startParam = is20MinStart ? "1200s" : (is18MinStart ? "1080s" : (is15MinStart ? "900s" : (is14m40sStart ? "880s" : (is12m40sStart ? "760s" : "600s"))));
 
                     setShowEndCover(false);
                     setShowCover(true); // Reset the hole punch cover

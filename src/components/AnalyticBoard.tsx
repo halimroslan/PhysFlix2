@@ -23,6 +23,7 @@ export const AnalyticBoard: React.FC = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const [stats, setStats] = useState<VideoStat[]>([]);
   const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,10 +42,11 @@ export const AnalyticBoard: React.FC = () => {
           views: doc.data().views || 0
         })) as VideoStat[];
 
-        setUsers(usersData.sort((a, b) => b.lastLogin?.seconds - a.lastLogin?.seconds));
+        setUsers(usersData.sort((a, b) => (b.lastLogin?.seconds || 0) - (a.lastLogin?.seconds || 0)));
         setStats(statsData);
-      } catch (err) {
+      } catch (err: any) {
         console.error("Error fetching analytics:", err);
+        setErrorMsg(err.message || "Gagal memuatkan data dari Firebase.");
       } finally {
         setLoading(false);
       }
@@ -58,6 +60,19 @@ export const AnalyticBoard: React.FC = () => {
       <div className="flex items-center justify-center py-32 space-x-3 text-sky-400">
         <Loader2 className="w-8 h-8 animate-spin" />
         <span className="font-bold">Memuatkan data Analitik...</span>
+      </div>
+    );
+  }
+
+  if (errorMsg) {
+    return (
+      <div className="flex flex-col items-center justify-center py-32 space-y-4 text-red-400">
+        <Activity className="w-12 h-12 mb-2 opacity-50" />
+        <span className="font-bold text-xl">Ralat Firebase:</span>
+        <code className="bg-red-950/50 p-4 rounded text-sm text-red-300 max-w-2xl text-center">
+          {errorMsg}
+        </code>
+        <p className="text-sm text-slate-400">Pastikan Firestore Security Rules membenarkan bacaan 'users'.</p>
       </div>
     );
   }

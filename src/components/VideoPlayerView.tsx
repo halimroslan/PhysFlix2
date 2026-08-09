@@ -299,6 +299,45 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           <ArrowLeft className="w-4 h-4 text-red-500" />
           <span>{t("backToHome")}</span>
         </button>
+
+        {isDev && (
+          <div className="relative">
+            <button 
+              onClick={() => setDevPanelOpen(!devPanelOpen)}
+              className="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-full border border-sky-600/50 transition-all hover:scale-105 active:scale-95"
+            >
+              {devPanelOpen ? <X className="w-4 h-4 text-red-500" /> : <Settings className="w-4 h-4 text-sky-400" />}
+              <span className="text-xs font-bold text-sky-400">Dev Panel</span>
+            </button>
+            
+            {devPanelOpen && (
+              <div className="absolute top-12 left-0 z-50 bg-slate-900 border border-slate-700/50 rounded-xl shadow-2xl p-4 w-64 space-y-4 animate-in fade-in duration-200">
+                <h3 className="text-sm font-bold text-sky-400 uppercase tracking-wider mb-2 border-b border-slate-800 pb-2">Developer Tools</h3>
+                
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-sm text-slate-300">Tunjuk Grid Koordinat</span>
+                  <input type="checkbox" checked={devShowGrid} onChange={(e) => setDevShowGrid(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                </label>
+                
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-sm text-slate-300">Aktifkan Cermin Ghaib</span>
+                  <input type="checkbox" checked={devShowShields} onChange={(e) => setDevShowShields(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                </label>
+                
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-sm text-slate-300">Pelindung Controller (PC)</span>
+                  <input type="checkbox" checked={devShowControllerShield} onChange={(e) => setDevShowControllerShield(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                </label>
+
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-sm text-slate-300">Tunjuk Kotak Lompat</span>
+                  <input type="checkbox" checked={devShowJump} onChange={(e) => setDevShowJump(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
+                </label>
+              </div>
+            )}
+          </div>
+        )}
+
         {user?.email && (
           <span className="text-[10px] text-slate-500 opacity-30 select-all">{user.email}</span>
         )}
@@ -571,43 +610,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             </div>
           )}
 
-          {/* DEVELOPER PANEL */}
-          {isDev && (
-            <div className="fixed bottom-4 left-4 z-50">
-              <button 
-                onClick={() => setDevPanelOpen(!devPanelOpen)}
-                className="bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-600/50 transition-all hover:scale-105 active:scale-95"
-              >
-                {devPanelOpen ? <X className="w-5 h-5 text-red-500" /> : <Settings className="w-5 h-5 text-sky-400" />}
-              </button>
-              
-              {devPanelOpen && (
-                <div className="absolute bottom-14 left-0 bg-slate-900 border border-slate-700/50 rounded-xl shadow-2xl p-4 w-64 space-y-4 animate-in slide-in-from-bottom-2 duration-200">
-                  <h3 className="text-sm font-bold text-sky-400 uppercase tracking-wider mb-2 border-b border-slate-800 pb-2">Developer Tools</h3>
-                  
-                  <label className="flex items-center justify-between cursor-pointer">
-                    <span className="text-sm text-slate-300">Tunjuk Grid Koordinat</span>
-                    <input type="checkbox" checked={devShowGrid} onChange={(e) => setDevShowGrid(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
-                  </label>
-                  
-                  <label className="flex items-center justify-between cursor-pointer">
-                    <span className="text-sm text-slate-300">Aktifkan Cermin Ghaib</span>
-                    <input type="checkbox" checked={devShowShields} onChange={(e) => setDevShowShields(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
-                  </label>
-                  
-                  <label className="flex items-center justify-between cursor-pointer">
-                    <span className="text-sm text-slate-300">Pelindung Controller (PC)</span>
-                    <input type="checkbox" checked={devShowControllerShield} onChange={(e) => setDevShowControllerShield(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
-                  </label>
 
-                  <label className="flex items-center justify-between cursor-pointer">
-                    <span className="text-sm text-slate-300">Tunjuk Kotak Lompat</span>
-                    <input type="checkbox" checked={devShowJump} onChange={(e) => setDevShowJump(e.target.checked)} className="rounded text-sky-500 focus:ring-sky-500 bg-slate-800 border-slate-600" />
-                  </label>
-                </div>
-              )}
-            </div>
-          )}
 
           {/* Video Header & Actions */}
           <div className="space-y-4">

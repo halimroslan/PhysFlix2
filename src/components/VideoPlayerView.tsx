@@ -553,6 +553,27 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               }}
             ></iframe>
 
+            {/* Large Diagonal Watermark (27 degrees, Grid I2-N12) */}
+            <div className="absolute inset-0 z-[15] pointer-events-none flex items-center justify-center overflow-hidden">
+              <div 
+                className="w-[150%] h-[150%] absolute"
+                style={{ transform: 'rotate(-27deg)' }}
+              >
+                <div 
+                  className="absolute flex items-center justify-center opacity-25"
+                  style={{
+                    left: '6.666%',   // Col 2 start (1 col before)
+                    top: '30.769%',   // Row I start (8 rows before)
+                    width: '73.333%', // Span 11 cols (2 to 12)
+                    height: '23.076%' // Span 6 rows (I to N)
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="w-full h-full object-contain" />
+                </div>
+              </div>
+            </div>
+
             {/* Mobile Bottom Controls Shield - Blocks CC, Gear, Fullscreen buttons on Drive player */}
             <div className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black/95 md:hidden" style={{ height: '15%' }}></div>
 

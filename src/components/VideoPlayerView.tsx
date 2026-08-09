@@ -41,7 +41,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const { lang, t } = useLanguage();
   const { isBookmarked, toggleBookmark, addToHistory } = useUserActivity();
   const { user } = useAuth();
-  const isDev = user?.email?.toLowerCase().trim() === "abdulhalimroslan@gmail.com";
+  const email = user?.email?.toLowerCase() || "";
+  const isDev = email.includes("abdulhalimroslan") || email.includes("halimroslan");
 
   // Developer Toggles
   const [devShowGrid, setDevShowGrid] = useState(false);
@@ -298,6 +299,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           <ArrowLeft className="w-4 h-4 text-red-500" />
           <span>{t("backToHome")}</span>
         </button>
+        {user?.email && (
+          <span className="text-[10px] text-slate-500 opacity-30 select-all">{user.email}</span>
+        )}
 
         <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-400">
           <span className="flex items-center space-x-1 text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-800/50">

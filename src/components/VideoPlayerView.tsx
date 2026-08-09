@@ -415,7 +415,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             <div className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black/95 md:hidden" style={{ height: '15%' }}></div>
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
-            <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
+            {/* Grid coverage: Mobile Portrait=A13-E15, FS Portrait=A13-F15, Mobile Landscape=A14-D15, FS Landscape=keep current */}
+            <div 
+              className={`absolute top-0 right-0 z-20 flex items-center justify-center bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default border-l border-b border-white/5 ${
+                isFullscreen 
+                  ? 'portrait:w-[20%] portrait:h-[23.08%] landscape:w-16 landscape:h-16' 
+                  : 'portrait:w-[20%] portrait:h-[19.23%] landscape:w-[13.33%] landscape:h-[15.38%] md:landscape:w-16 md:landscape:h-16'
+              }`}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/PFlix.png" alt="PhysicsSPMFlix" className="h-4 md:h-6 w-auto object-contain" />
             </div>

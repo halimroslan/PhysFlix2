@@ -165,12 +165,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   }, [currentLesson]);
 
   // Detect clicks on the iframe when it gains focus
-  // Guard: ignore blur events within first 2 seconds (prevents auto-focus dismissal on mobile)
+  // Guard: ignore blur events within 1.5s of mount OR load (prevents auto-focus dismissal on mobile)
   useEffect(() => {
     const handleBlur = () => {
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
-          if (Date.now() - coverMountedAt.current < 2000) return;
+          if (Date.now() - coverMountedAt.current < 1500) {
+            // It's likely an auto-focus from Google Drive loading. Steal focus back.
+            window.focus();
+            return;
+          }
           setShowCover(false);
           
           // Auto-activate fullscreen on mobile
@@ -529,6 +533,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               className="absolute top-0 left-0 w-full h-full border-0 pointer-events-auto"
               allow="autoplay"
               title={currentLesson.titleBm}
+              onLoad={() => {
+                // Reset timer when iframe finishes loading to catch late auto-focuses
+                coverMountedAt.current = Date.now();
+              }}
             ></iframe>
 
             {/* Mobile Bottom Controls Shield - Blocks CC, Gear, Fullscreen buttons on Drive player */}

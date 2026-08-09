@@ -56,6 +56,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playTimerRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const coverMountedAt = useRef<number>(Date.now());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [shieldStyle, setShieldStyle] = useState({ bottom: '19.2%', height: '7.7%' });
   const [iframeSrc, setIframeSrc] = useState("");
@@ -134,6 +135,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
+      coverMountedAt.current = Date.now(); // Reset cover mount timestamp
       
       const isAsasGelombang = currentLesson.titleBm === "5.1 Asas Gelombang";
       const startSecs = isAsasGelombang ? 900 : 600;
@@ -145,13 +147,18 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }
   }, [currentLesson]);
 
-  // Detect clicks on the iframe when it gains focus
+  // Detect clicks on the iframe when it gains focus (DESKTOP ONLY)
+  // On mobile, the full cover uses its own onClick handler instead.
   useEffect(() => {
     const handleBlur = () => {
-      // Small timeout ensures document.activeElement has updated
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
-          setShowCover(false);
+          // Guard: ignore blur events within first 2 seconds (prevents auto-focus dismissal)
+          if (Date.now() - coverMountedAt.current < 2000) return;
+          // Only auto-dismiss on desktop (>=768px). Mobile uses its own onClick.
+          if (window.innerWidth >= 768) {
+            setShowCover(false);
+          }
         }
       }, 50);
     };

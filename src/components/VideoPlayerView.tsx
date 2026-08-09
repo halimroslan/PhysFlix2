@@ -418,7 +418,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer">
-                  <span className="text-sm text-slate-300">Watermark 42° (Hijau)</span>
+                  <span className="text-sm text-slate-300">Watermark 39° (Hijau)</span>
                   <input type="checkbox" checked={devShow45Watermark} onChange={(e) => setDevShow45Watermark(e.target.checked)} className="rounded text-green-500 focus:ring-green-500 bg-slate-800 border-slate-600" />
                 </label>
                 
@@ -593,13 +593,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               ></div>
             )}
 
-            {/* 42-Degree Rotated Green Grid Watermark (Dev Tools) */}
+            {/* 39-Degree Rotated Green Grid Watermark (Dev Tools) */}
             {devShow45Watermark && (
               <div className="absolute inset-0 z-[140] pointer-events-none flex items-center justify-center overflow-hidden">
                 <div 
                   className="w-[150%] h-[150%] grid" // Slightly larger to cover corners during rotation
                   style={{ 
-                    transform: 'rotate(-42deg)',
+                    transform: 'rotate(-39deg)',
                     gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
                     gridTemplateRows: 'repeat(26, minmax(0, 1fr))'
                   }}

@@ -47,6 +47,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   // Developer Toggles
   const [devShowGrid, setDevShowGrid] = useState(false);
   const [devShowFullScreenGrid, setDevShowFullScreenGrid] = useState(false);
+  const [devShow45Watermark, setDevShow45Watermark] = useState(false);
   const [devShowShields, setDevShowShields] = useState(true);
   const [devShowControllerShield, setDevShowControllerShield] = useState(true);
   const [devShowJump, setDevShowJump] = useState(false);
@@ -415,6 +416,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <span className="text-sm text-slate-300">Tunjuk Grid Skrin Penuh (Biru)</span>
                   <input type="checkbox" checked={devShowFullScreenGrid} onChange={(e) => setDevShowFullScreenGrid(e.target.checked)} className="rounded text-blue-500 focus:ring-blue-500 bg-slate-800 border-slate-600" />
                 </label>
+
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-sm text-slate-300">Watermark 45° (Hijau)</span>
+                  <input type="checkbox" checked={devShow45Watermark} onChange={(e) => setDevShow45Watermark(e.target.checked)} className="rounded text-green-500 focus:ring-green-500 bg-slate-800 border-slate-600" />
+                </label>
                 
                 <label className="flex items-center justify-between cursor-pointer">
                   <span className="text-sm text-slate-300">Aktifkan Cermin Ghaib</span>
@@ -585,6 +591,31 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   height: isFullscreen ? '7.692%' : '11.538%',
                 }}
               ></div>
+            )}
+
+            {/* 45-Degree Rotated Green Grid Watermark (Dev Tools) */}
+            {devShow45Watermark && (
+              <div className="absolute inset-0 z-[140] pointer-events-none flex items-center justify-center overflow-hidden">
+                <div 
+                  className="w-full h-[46.15%] grid transform -rotate-45"
+                  style={{ 
+                    gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
+                    gridTemplateRows: 'repeat(12, minmax(0, 1fr))'
+                  }}
+                >
+                  {Array.from({ length: 15 * 12 }).map((_, i) => {
+                    const col = i % 15;
+                    const row = Math.floor(i / 15);
+                    const letter = String.fromCharCode(65 + row); // A-L
+                    const number = col + 1; // 1-15
+                    return (
+                      <div key={i} className="border border-green-500/40 flex items-center justify-center bg-green-500/20">
+                        <span className="text-green-300 font-mono text-[8px] md:text-xs font-bold bg-black/60 px-0.5 rounded">{letter}{number}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             )}
 
             {/* TEMPORARY 15x26 GRID OVERLAY FOR PRECISE POSITIONING */}

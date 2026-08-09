@@ -114,11 +114,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   const [showCover, setShowCover] = useState(true);
   const [showEndCover, setShowEndCover] = useState(false);
+  const [currentStartSeconds, setCurrentStartSeconds] = useState(600);
 
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
+      setCurrentStartSeconds(600); // Reset timer tracking
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
       setIframeSrc(`${driveUrl}?t=10m`); // Auto start at min 10 for testing
     }
@@ -143,15 +145,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   // Manage end cover timer based on playback state (showCover)
   useEffect(() => {
     if (!showCover) {
-      // Normal start is at 10m (600s). We want to stop 5 mins (300s) before end.
-      const watchTimeSeconds = totalSeconds - 600 - 300;
+      // Normal start is at 10m (600s), but can be changed by jump. We want to stop 5 mins (300s) before end.
+      const watchTimeSeconds = totalSeconds - currentStartSeconds - 300;
       if (watchTimeSeconds > 0) {
         playTimerRef.current = setTimeout(() => {
           setShowEndCover(true);
           setIframeSrc(""); // Auto mute by destroying iframe
         }, watchTimeSeconds * 1000);
       } else if (totalSeconds > 0) {
-        // If video is short, block immediately
+        // If video is short or jumped to end, block immediately
         setShowEndCover(true);
         setIframeSrc("");
       }
@@ -162,7 +164,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     return () => {
       if (playTimerRef.current) clearTimeout(playTimerRef.current);
     };
-  }, [showCover, totalSeconds]);
+  }, [showCover, totalSeconds, currentStartSeconds]);
 
   const [activeTab, setActiveTab] = useState<"overview" | "notes" | "qa">("overview");
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools">("playlist");
@@ -475,6 +477,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   onClick={() => {
                     setShowEndCover(false);
                     setShowCover(true); // Reset the hole punch cover
+                    setCurrentStartSeconds(600); // Reset timer
                     const driveUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
                     setIframeSrc(`${driveUrl}?t=10m`); // Restart video at min 10
                   }}
@@ -506,6 +509,19 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     const parts = val.split(":");
                     if (parts.length === 2) formattedTime = `${parts[0]}m${parts[1]}s`;
                     else if (parts.length === 3) formattedTime = `${parts[0]}h${parts[1]}m${parts[2]}s`;
+                    
+                    const p = val.split(":").map(Number);
+                    if (p.length === 2) setCurrentStartSeconds(p[0]*60 + p[1]);
+                    else if (p.length === 3) setCurrentStartSeconds(p[0]*3600 + p[1]*60 + p[2]);
+                  } else {
+                    let h=0, m=0, s=0;
+                    const hM = val.match(/(\d+)h/);
+                    const mM = val.match(/(\d+)m/);
+                    const sM = val.match(/(\d+)s/);
+                    if (hM) h = parseInt(hM[1]);
+                    if (mM) m = parseInt(mM[1]);
+                    if (sM) s = parseInt(sM[1]);
+                    setCurrentStartSeconds(h*3600 + m*60 + s);
                   }
                   const baseUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
                   const urlWithTime = `${baseUrl}?t=${formattedTime}`;

@@ -46,17 +46,9 @@ export const ContinueWatching: React.FC<ContinueWatchingProps> = ({ lessons, onP
                 <Play className="w-4 h-4 fill-white ml-0.5" />
               </div>
 
-              {/* Time Remaining Badge */}
+              {/* Duration Badge */}
               <div className="absolute bottom-2 right-2 px-2 py-0.5 text-[10px] font-bold text-white bg-black/75 rounded backdrop-blur-sm border border-white/10">
-                {item.duration} {t("left")}
-              </div>
-
-              {/* Progress bar */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-800">
-                <div
-                  className="h-full bg-red-600"
-                  style={{ width: `${(idx + 2) * 18}%` }}
-                ></div>
+                {item.duration}
               </div>
             </div>
 

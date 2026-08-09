@@ -675,8 +675,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
                 <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
 
-                {/* Highly compatible Border-based Hole Punch (fixes Safari/iOS box-shadow bugs) */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[72px] h-[52px] rounded-[12px] border-[4000px] border-[#0a0a0a] box-content z-30"></div>
+                {/* Highly compatible inline-styled Hole Punch (Bypasses Tailwind JIT/Caching issues) */}
+                <div 
+                  className="w-[72px] h-[52px] rounded-[12px] z-30"
+                  style={{ boxShadow: '0 0 0 9999px #0a0a0a' }}
+                ></div>
 
                 {/* Additional UI elements (Logo, text) placed around the hole EXACTLY like old repo */}
                 <div className="absolute top-10 left-0 right-0 flex flex-col items-center z-40">

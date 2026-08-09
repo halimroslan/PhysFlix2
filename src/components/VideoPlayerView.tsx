@@ -147,18 +147,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }
   }, [currentLesson]);
 
-  // Detect clicks on the iframe when it gains focus (DESKTOP ONLY)
-  // On mobile, the full cover uses its own onClick handler instead.
+  // Detect clicks on the iframe when it gains focus
+  // Guard: ignore blur events within first 2 seconds (prevents auto-focus dismissal on mobile)
   useEffect(() => {
     const handleBlur = () => {
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
-          // Guard: ignore blur events within first 2 seconds (prevents auto-focus dismissal)
           if (Date.now() - coverMountedAt.current < 2000) return;
-          // Only auto-dismiss on desktop (>=768px). Mobile uses its own onClick.
-          if (window.innerWidth >= 768) {
-            setShowCover(false);
-          }
+          setShowCover(false);
         }
       }, 50);
     };
@@ -535,65 +531,42 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             </>
           )}
 
-            {/* Custom Initial Cover */}
+            {/* Custom Initial Cover (Hole Punch) - unified for mobile & desktop */}
             {showCover && (
-              <>
-                {/* MOBILE: Full opaque cover with custom play button - avoids Drive overlay issue */}
-                <div 
-                  className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center md:hidden pointer-events-auto cursor-pointer"
-                  onClick={() => setShowCover(false)}
-                >
+              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
+                {/* Click blockers: DESKTOP ONLY - prevents clicks outside hole on PC */}
+                <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40 hidden md:block"></div>
+                <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40 hidden md:block"></div>
+                <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40 hidden md:block"></div>
+
+                {/* SVG Mask Overlay - instant render on all devices */}
+                <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <mask id="hole">
+                      <rect width="100%" height="100%" fill="white" />
+                      {/* Hole for the play button: 72x52, perfectly centered */}
+                      <rect x="50%" y="50%" width="72" height="52" rx="12" ry="12" fill="black" transform="translate(-36, -26)" />
+                    </mask>
+                  </defs>
+                  <rect width="100%" height="100%" fill="#0a0a0a" mask="url(#hole)" />
+                </svg>
+
+                {/* Logo and title */}
+                <div className="absolute top-6 md:top-10 left-0 right-0 flex flex-col items-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-10 w-auto object-contain mb-3 opacity-90" />
-                  <span className="text-white/80 text-sm font-black font-mono tracking-widest text-center uppercase mb-6 px-4">
+                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-10 md:h-16 w-auto object-contain mb-3 md:mb-4 opacity-90" />
+                  <span className="text-white/80 text-xs md:text-xl font-black font-mono tracking-widest text-center uppercase px-4">
                     {currentLesson.titleBm}
                   </span>
-                  {/* Custom Play Icon */}
-                  <div className="w-16 h-16 rounded-full border-2 border-white/40 flex items-center justify-center mb-4 hover:border-white/80 transition-colors">
-                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <span className="text-red-500/80 text-xs font-bold tracking-wide animate-pulse">
-                    Tekan untuk mula menonton
+                </div>
+                
+                <div className="absolute bottom-12 md:bottom-16 left-0 right-0 flex justify-center">
+                  <span className="text-red-500/80 text-xs md:text-base font-bold tracking-wide animate-pulse">
+                    ↑ Klik butang Play di atas ↑
                   </span>
                 </div>
-
-                {/* DESKTOP: Hole punch approach - works perfectly on desktop */}
-                <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden items-center justify-center hidden md:flex">
-                  {/* Click blockers: Prevent clicks anywhere except the 72x52 center hole */}
-                  <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
-                  <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
-                  <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
-                  <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
-
-                  {/* SVG Mask Overlay */}
-                  <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <mask id="hole">
-                        <rect width="100%" height="100%" fill="white" />
-                        <rect x="50%" y="50%" width="72" height="52" rx="12" ry="12" fill="black" transform="translate(-36, -26)" />
-                      </mask>
-                    </defs>
-                    <rect width="100%" height="100%" fill="#0a0a0a" mask="url(#hole)" />
-                  </svg>
-
-                  {/* Additional UI elements (Logo, text) placed around the hole */}
-                  <div className="absolute top-10 left-0 right-0 flex flex-col items-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 w-auto object-contain mb-4 opacity-90" />
-                    <span className="text-white/80 text-xl font-black font-mono tracking-widest text-center uppercase">
-                      {currentLesson.titleBm}
-                    </span>
-                  </div>
-                  
-                  <div className="absolute bottom-16 left-0 right-0 flex justify-center">
-                    <span className="text-red-500/80 text-base font-bold tracking-wide animate-pulse">
-                      ↑ Klik butang Play di atas ↑
-                    </span>
-                  </div>
-                </div>
-              </>
+              </div>
             )}
 
             {/* Full Screen End Cover (Last 5 Minutes) */}

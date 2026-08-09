@@ -604,6 +604,22 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               ></div>
             )}
 
+            {/* Conditional PHYSFLIX Cover for 5.6b Interferens Gelombang */}
+            {currentLesson.titleBm === "5.6b Interferens Gelombang" && (
+              <div 
+                className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[2px] md:rounded-md shadow-lg border border-white/10 pointer-events-none"
+                style={{
+                  left: '60%',      // Col 10 start
+                  top: '84.615%',   // Row W start
+                  width: '20%',     // Col 10 to 12 (3 cols)
+                  height: '3.846%'  // 1 row
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-[60%] w-auto object-contain opacity-80" />
+              </div>
+            )}
+
             {/* Top-Left Shield - Blocks Google Drive Title Link (Solid black on mobile to hide menu) */}
             <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
 

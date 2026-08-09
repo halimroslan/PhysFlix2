@@ -134,9 +134,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
       setShowCover(true); // Reset cover when lesson changes
-      setCurrentStartSeconds(600); // Reset timer tracking
+      
+      const isAsasGelombang = currentLesson.titleBm === "5.1 Asas Gelombang";
+      const startSecs = isAsasGelombang ? 900 : 600;
+      const startParam = isAsasGelombang ? "15m" : "10m";
+      
+      setCurrentStartSeconds(startSecs); // Reset timer tracking
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
-      setIframeSrc(`${driveUrl}?t=10m`); // Auto start at min 10 for testing
+      setIframeSrc(`${driveUrl}?t=${startParam}`); // Auto start based on lesson
     }
   }, [currentLesson]);
 
@@ -562,11 +567,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 
                 <button
                   onClick={() => {
+                    const isAsasGelombang = currentLesson.titleBm === "5.1 Asas Gelombang";
+                    const startSecs = isAsasGelombang ? 900 : 600;
+                    const startParam = isAsasGelombang ? "15m" : "10m";
+
                     setShowEndCover(false);
                     setShowCover(true); // Reset the hole punch cover
-                    setCurrentStartSeconds(600); // Reset timer
+                    setCurrentStartSeconds(startSecs); // Reset timer
                     const driveUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
-                    setIframeSrc(`${driveUrl}?t=10m`); // Restart video at min 10
+                    setIframeSrc(`${driveUrl}?t=${startParam}`); // Restart video at correct min
                   }}
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2"
                 >

@@ -149,32 +149,29 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       const is18MinStart = currentLesson.titleBm === "6.1a Reputan Radioaktif";
       const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "1.1 Daya Paduan";
       const startSecs = is20MinStart ? 1200 : (is18MinStart ? 1080 : (is15MinStart ? 900 : 600));
-      const startParam = is20MinStart ? "20m" : (is18MinStart ? "18m" : (is15MinStart ? "15m" : "10m"));
       
       setCurrentStartSeconds(startSecs); // Reset timer tracking
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
-      setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0&cc=0`); // Auto start based on lesson, disable CC
+      setIframeSrc(`${driveUrl}?t=${startSecs}s`); // Auto start based on lesson in seconds, no extra params
     }
     
-    // Auto-scroll screen to top (useful for mobile when selecting a video from the playlist below)
+    // Auto-scroll screen to video player (useful for mobile when selecting a video)
     const screenTimer = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.innerWidth < 768 && containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }, 100);
     
     return () => clearTimeout(screenTimer);
   }, [currentLesson]);
 
   // Detect clicks on the iframe when it gains focus
-  // Guard: ignore blur events within 1.5s of mount OR load (prevents auto-focus dismissal on mobile)
   useEffect(() => {
     const handleBlur = () => {
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
-          if (Date.now() - coverMountedAt.current < 1500) {
-            // It's likely an auto-focus from Google Drive loading. Steal focus back.
-            window.focus();
-            return;
-          }
           setShowCover(false);
           
           // Auto-activate fullscreen on mobile

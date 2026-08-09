@@ -200,7 +200,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     if (!showCover) {
       showTimer = setTimeout(() => {
         setShowMobileTip(true);
-        hideTimer = setTimeout(() => setShowMobileTip(false), 6000); // Hide after 6 seconds of showing
+        hideTimer = setTimeout(() => setShowMobileTip(false), 50000); // Hide after 50 seconds of showing
       }, 4000); // Wait 4 seconds before showing
     } else {
       setShowMobileTip(false);
@@ -493,7 +493,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               >
                 <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/20 shadow-2xl mb-0.5 whitespace-nowrap">
                   <p className="text-[10px] font-bold text-white leading-tight animate-pulse">
-                    Klik di sini
+                    Klik di sini untuk cerahkan video
                   </p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500 animate-bounce mt-1 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">

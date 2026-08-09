@@ -229,6 +229,20 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const [saved, setSaved] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState<string | null>(null);
 
+  // Auto-scroll to currently playing video in playlist
+  useEffect(() => {
+    if (sidebarTab === "playlist") {
+      // Small timeout to ensure DOM is updated
+      const scrollTimer = setTimeout(() => {
+        const el = document.getElementById("current-playing-video");
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+      return () => clearTimeout(scrollTimer);
+    }
+  }, [sidebarTab, currentLesson.id]);
+
   // Helper to generate a stable, realistic number of likes based on video ID
   const getBaseLikes = (id: string) => {
     let hash = 0;
@@ -1007,6 +1021,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     return (
                       <div
                         key={lesson.id}
+                        id={isCurrent ? "current-playing-video" : undefined}
                         onClick={() => onSelectLesson(lesson)}
                         className={`group cursor-pointer p-3 rounded-2xl border transition flex items-center space-x-3 ${
                           isCurrent

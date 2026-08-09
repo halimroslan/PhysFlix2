@@ -128,7 +128,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   const [showCover, setShowCover] = useState(true);
   const [showEndCover, setShowEndCover] = useState(false);
-  const [showTouchGuard, setShowTouchGuard] = useState(false);
   const [currentStartSeconds, setCurrentStartSeconds] = useState(600);
 
   useEffect(() => {
@@ -153,9 +152,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
           setShowCover(false);
-          // Activate touch guard to prevent accidental touches that trigger Drive overlay
-          setShowTouchGuard(true);
-          setTimeout(() => setShowTouchGuard(false), 6000);
         }
       }, 50);
     };
@@ -412,10 +408,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               title={currentLesson.titleBm}
             ></iframe>
 
-            {/* Temporary Touch Guard - Absorbs all touches for 6s after play to let Drive overlay auto-dismiss */}
-            {showTouchGuard && (
-              <div className="absolute inset-0 z-[45] pointer-events-auto md:hidden" />
-            )}
+            {/* Temporary Touch Guard - REMOVED, was counterproductive */}
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
             <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">
@@ -534,46 +527,65 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             </>
           )}
 
-            {/* Custom Initial Cover (Hole Punch for Drive Play Button) */}
+            {/* Custom Initial Cover */}
             {showCover && (
-              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden flex items-center justify-center">
-                {/* Click blockers: Prevent clicks anywhere except the 72x52 center hole */}
-                <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
-                <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
-                <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
-                <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
-
-                {/* 
-                  SVG Mask Overlay: 
-                  Creates a perfectly rounded hole punch for the Google Drive play button 
-                  without the performance lag of massive box-shadows on mobile WebKit.
-                */}
-                <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <mask id="hole">
-                      <rect width="100%" height="100%" fill="white" />
-                      {/* Hole for the play button: 72x52, perfectly centered */}
-                      <rect x="50%" y="50%" width="72" height="52" rx="12" ry="12" fill="black" transform="translate(-36, -26)" />
-                    </mask>
-                  </defs>
-                  <rect width="100%" height="100%" fill="#0a0a0a" mask="url(#hole)" />
-                </svg>
-
-                {/* Additional UI elements (Logo, text) placed around the hole */}
-                <div className="absolute top-10 left-0 right-0 flex flex-col items-center">
+              <>
+                {/* MOBILE: Full opaque cover with custom play button - avoids Drive overlay issue */}
+                <div 
+                  className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center md:hidden pointer-events-auto cursor-pointer"
+                  onClick={() => setShowCover(false)}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-12 md:h-16 w-auto object-contain mb-4 opacity-90" />
-                  <span className="text-white/80 text-sm md:text-xl font-black font-mono tracking-widest text-center uppercase">
+                  <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-10 w-auto object-contain mb-3 opacity-90" />
+                  <span className="text-white/80 text-sm font-black font-mono tracking-widest text-center uppercase mb-6 px-4">
                     {currentLesson.titleBm}
                   </span>
-                </div>
-                
-                <div className="absolute bottom-16 left-0 right-0 flex justify-center">
-                  <span className="text-red-500/80 text-sm md:text-base font-bold tracking-wide animate-pulse">
-                    ↑ Klik butang Play di atas ↑
+                  {/* Custom Play Icon */}
+                  <div className="w-16 h-16 rounded-full border-2 border-white/40 flex items-center justify-center mb-4 hover:border-white/80 transition-colors">
+                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <span className="text-red-500/80 text-xs font-bold tracking-wide animate-pulse">
+                    Tekan untuk mula menonton
                   </span>
                 </div>
-              </div>
+
+                {/* DESKTOP: Hole punch approach - works perfectly on desktop */}
+                <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden items-center justify-center hidden md:flex">
+                  {/* Click blockers: Prevent clicks anywhere except the 72x52 center hole */}
+                  <div className="absolute top-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-[calc(50%-26px)] pointer-events-auto z-40"></div>
+                  <div className="absolute top-[calc(50%-26px)] left-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
+                  <div className="absolute top-[calc(50%-26px)] right-0 w-[calc(50%-36px)] h-[52px] pointer-events-auto z-40"></div>
+
+                  {/* SVG Mask Overlay */}
+                  <svg className="absolute inset-0 w-full h-full z-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <mask id="hole">
+                        <rect width="100%" height="100%" fill="white" />
+                        <rect x="50%" y="50%" width="72" height="52" rx="12" ry="12" fill="black" transform="translate(-36, -26)" />
+                      </mask>
+                    </defs>
+                    <rect width="100%" height="100%" fill="#0a0a0a" mask="url(#hole)" />
+                  </svg>
+
+                  {/* Additional UI elements (Logo, text) placed around the hole */}
+                  <div className="absolute top-10 left-0 right-0 flex flex-col items-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-16 w-auto object-contain mb-4 opacity-90" />
+                    <span className="text-white/80 text-xl font-black font-mono tracking-widest text-center uppercase">
+                      {currentLesson.titleBm}
+                    </span>
+                  </div>
+                  
+                  <div className="absolute bottom-16 left-0 right-0 flex justify-center">
+                    <span className="text-red-500/80 text-base font-bold tracking-wide animate-pulse">
+                      ↑ Klik butang Play di atas ↑
+                    </span>
+                  </div>
+                </div>
+              </>
             )}
 
             {/* Full Screen End Cover (Last 5 Minutes) */}

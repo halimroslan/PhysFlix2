@@ -137,13 +137,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       setShowCover(true); // Reset cover when lesson changes
       coverMountedAt.current = Date.now(); // Reset cover mount timestamp
       
-      const isAsasGelombang = currentLesson.titleBm === "5.1 Asas Gelombang";
-      const startSecs = isAsasGelombang ? 900 : 600;
-      const startParam = isAsasGelombang ? "15m" : "10m";
+      const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "2.2b Gerakan linear";
+      const startSecs = is15MinStart ? 900 : 600;
+      const startParam = is15MinStart ? "15m" : "10m";
       
       setCurrentStartSeconds(startSecs); // Reset timer tracking
       const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
-      setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0`); // Auto start based on lesson, disable CC
+      setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0&cc=0`); // Auto start based on lesson, disable CC
     }
   }, [currentLesson]);
 
@@ -605,15 +605,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 
                 <button
                   onClick={() => {
-                    const isAsasGelombang = currentLesson.titleBm === "5.1 Asas Gelombang";
-                    const startSecs = isAsasGelombang ? 900 : 600;
-                    const startParam = isAsasGelombang ? "15m" : "10m";
+                    const is15MinStart = currentLesson.titleBm === "5.1 Asas Gelombang" || currentLesson.titleBm === "2.2b Gerakan linear";
+                    const startSecs = is15MinStart ? 900 : 600;
+                    const startParam = is15MinStart ? "15m" : "10m";
 
                     setShowEndCover(false);
                     setShowCover(true); // Reset the hole punch cover
                     setCurrentStartSeconds(startSecs); // Reset timer
                     const driveUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
-                    setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0`); // Restart video at correct min
+                    setIframeSrc(`${driveUrl}?t=${startParam}&cc_load_policy=0&cc=0`); // Restart video at correct min
                   }}
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2"
                 >
@@ -659,7 +659,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       setCurrentStartSeconds(h*3600 + m*60 + s);
                     }
                     const baseUrl = `https://drive.google.com/file/d/${rawDriveId}/preview`;
-                    const urlWithTime = `${baseUrl}?t=${formattedTime}&cc_load_policy=0`;
+                    const urlWithTime = `${baseUrl}?t=${formattedTime}&cc_load_policy=0&cc=0`;
                     setIframeSrc(urlWithTime);
                   }
                 }}

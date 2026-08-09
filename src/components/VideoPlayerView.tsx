@@ -418,7 +418,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer">
-                  <span className="text-sm text-slate-300">Watermark 45° (Hijau)</span>
+                  <span className="text-sm text-slate-300">Watermark 42° (Hijau)</span>
                   <input type="checkbox" checked={devShow45Watermark} onChange={(e) => setDevShow45Watermark(e.target.checked)} className="rounded text-green-500 focus:ring-green-500 bg-slate-800 border-slate-600" />
                 </label>
                 
@@ -593,20 +593,21 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               ></div>
             )}
 
-            {/* 45-Degree Rotated Green Grid Watermark (Dev Tools) */}
+            {/* 42-Degree Rotated Green Grid Watermark (Dev Tools) */}
             {devShow45Watermark && (
               <div className="absolute inset-0 z-[140] pointer-events-none flex items-center justify-center overflow-hidden">
                 <div 
-                  className="w-full h-[46.15%] grid transform -rotate-45"
+                  className="w-[150%] h-[150%] grid" // Slightly larger to cover corners during rotation
                   style={{ 
+                    transform: 'rotate(-42deg)',
                     gridTemplateColumns: 'repeat(15, minmax(0, 1fr))',
-                    gridTemplateRows: 'repeat(12, minmax(0, 1fr))'
+                    gridTemplateRows: 'repeat(26, minmax(0, 1fr))'
                   }}
                 >
-                  {Array.from({ length: 15 * 12 }).map((_, i) => {
+                  {Array.from({ length: 15 * 26 }).map((_, i) => {
                     const col = i % 15;
                     const row = Math.floor(i / 15);
-                    const letter = String.fromCharCode(65 + row); // A-L
+                    const letter = String.fromCharCode(65 + row); // A-Z
                     const number = col + 1; // 1-15
                     return (
                       <div key={i} className="border border-green-500/40 flex items-center justify-center bg-green-500/20">

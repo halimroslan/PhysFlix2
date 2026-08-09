@@ -410,15 +410,26 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           >
             {/* Mobile Fullscreen Back Button */}
             {isFullscreen && (
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsFullscreen(false);
-                }}
-                className="absolute top-4 left-4 z-[110] bg-black/60 hover:bg-black/80 text-white p-3 rounded-full md:hidden flex items-center justify-center border border-white/20 shadow-xl"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </button>
+              <>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsFullscreen(false);
+                  }}
+                  className="absolute top-4 left-4 z-[110] bg-black/60 hover:bg-black/80 text-white p-3 rounded-full md:hidden flex items-center justify-center border border-white/20 shadow-xl"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                </button>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDevShowGrid(!devShowGrid);
+                  }}
+                  className="absolute top-4 right-4 z-[110] bg-blue-600/80 hover:bg-blue-600 text-white px-3 py-2 rounded-lg md:hidden flex items-center justify-center border border-white/20 shadow-xl text-xs font-bold"
+                >
+                  Grid
+                </button>
+              </>
             )}
 
             {/* Inner Container - ALWAYS maintains 16:9 aspect ratio and scales to fit */}

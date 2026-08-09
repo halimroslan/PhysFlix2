@@ -35,18 +35,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(currentUser);
       
       if (currentUser) {
-        try {
-          const userRef = doc(db, "users", currentUser.uid);
-          await setDoc(userRef, {
-            uid: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName || currentUser.email?.split('@')[0] || "User",
-            photoURL: currentUser.photoURL || "",
-            lastLogin: serverTimestamp(),
-          }, { merge: true });
-        } catch (error) {
+        const userRef = doc(db, "users", currentUser.uid);
+        setDoc(userRef, {
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName || currentUser.email?.split('@')[0] || "User",
+          photoURL: currentUser.photoURL || "",
+          lastLogin: serverTimestamp(),
+        }, { merge: true }).catch(error => {
           console.error("Failed to save user data to Firestore:", error);
-        }
+        });
       }
       
       setLoading(false);

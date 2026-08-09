@@ -132,11 +132,18 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const [showEndCover, setShowEndCover] = useState(false);
   const [currentStartSeconds, setCurrentStartSeconds] = useState(600);
   const [showMobileTip, setShowMobileTip] = useState(false);
+  const [prevLessonId, setPrevLessonId] = useState(currentLesson?.id);
+
+  // Derived state to INSTANTLY reset covers when lesson changes (prevents flash of background)
+  if (currentLesson && currentLesson.id !== prevLessonId) {
+    setPrevLessonId(currentLesson.id);
+    setShowCover(true);
+    setShowEndCover(false);
+  }
 
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
-      setShowCover(true); // Reset cover when lesson changes
       coverMountedAt.current = Date.now(); // Reset cover mount timestamp
       const is20MinStart = currentLesson.titleBm === "2.2b Graf Gerakan Linear & 2.3 Jatuh Bebas Ulangkaji";
       const is18MinStart = currentLesson.titleBm === "6.1a Reputan Radioaktif";

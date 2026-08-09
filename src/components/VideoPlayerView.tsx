@@ -147,6 +147,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
           setShowCover(false);
+          // Auto-fullscreen on mobile when playing
+          if (window.innerWidth < 768) {
+            setIsFullscreen(true);
+          }
         }
       }, 50);
     };
@@ -297,8 +301,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-[#121622] hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white transition"
         >
           <ArrowLeft className="w-4 h-4 text-red-500" />
-          <span>{t("backToHome")}</span>
+          <span className="font-bold text-slate-200">Back</span>
         </button>
+
+
 
         {isDev && (
           <div className="relative">
@@ -366,6 +372,19 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               isFullscreen ? "fixed inset-0 z-[100] h-[100dvh] w-screen rounded-none" : "relative w-full border border-slate-800 rounded-xl overflow-hidden aspect-[4/3] md:aspect-video"
             }`}
           >
+            {/* Mobile Fullscreen Back Button */}
+            {isFullscreen && (
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsFullscreen(false);
+                }}
+                className="absolute top-4 left-4 z-[110] bg-black/60 hover:bg-black/80 text-white p-3 rounded-full md:hidden flex items-center justify-center border border-white/20 shadow-xl"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+            )}
+
             {/* Inner Container - ALWAYS maintains 16:9 aspect ratio and scales to fit */}
             <div 
               className="relative group select-none overflow-hidden bg-black w-full h-full flex items-center justify-center"
@@ -433,13 +452,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             )}
 
             {/* Bottom-Center Invisible Shield - Blocks Timeline Scrubbing (Fast Forward/Rewind) */}
-            {devShowShields && (
-              <div 
-                className="absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed bg-red-500/30 max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0"
-                style={shieldStyle}
-                title="Sila tonton tanpa skip"
-              ></div>
-            )}
+            <div 
+              className={`absolute left-[2%] right-[2%] z-30 pointer-events-auto cursor-not-allowed max-md:landscape:!top-0 max-md:landscape:!bottom-auto max-md:landscape:!h-[11.5%] max-md:landscape:!left-0 max-md:landscape:!right-0 ${devShowShields ? 'bg-red-500/30' : 'bg-transparent'}`}
+              style={shieldStyle}
+              title="Sila tonton tanpa skip"
+            ></div>
 
             {/* Permanent Protectors for 'Tavis' Logo */}
             {devShowShields && (

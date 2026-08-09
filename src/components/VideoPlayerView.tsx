@@ -128,6 +128,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   const [showCover, setShowCover] = useState(true);
   const [showEndCover, setShowEndCover] = useState(false);
+  const [showTouchGuard, setShowTouchGuard] = useState(false);
   const [currentStartSeconds, setCurrentStartSeconds] = useState(600);
 
   useEffect(() => {
@@ -152,6 +153,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       setTimeout(() => {
         if (document.activeElement === iframeRef.current) {
           setShowCover(false);
+          // Activate touch guard to prevent accidental touches that trigger Drive overlay
+          setShowTouchGuard(true);
+          setTimeout(() => setShowTouchGuard(false), 6000);
         }
       }, 50);
     };
@@ -408,7 +412,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               title={currentLesson.titleBm}
             ></iframe>
 
-
+            {/* Temporary Touch Guard - Absorbs all touches for 6s after play to let Drive overlay auto-dismiss */}
+            {showTouchGuard && (
+              <div className="absolute inset-0 z-[45] pointer-events-auto md:hidden" />
+            )}
 
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
             <div className="absolute top-0 right-0 z-20 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default shadow-bl-xl border-l border-b border-white/5">

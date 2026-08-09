@@ -258,11 +258,15 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       // Small timeout to ensure DOM is updated
       const scrollTimer = setTimeout(() => {
         const el = document.getElementById("current-playing-video");
-        if (el) {
-          // Scroll the item to the top of its container ('start')
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const container = document.getElementById("playlist-container");
+        if (el && container) {
+          // Scroll only the container, not the entire page window
+          container.scrollTo({
+            top: el.offsetTop - container.offsetTop - 20, // 20px padding
+            behavior: 'smooth'
+          });
         }
-      }, 100);
+      }, 200); // Slightly longer timeout to allow page-level scroll to take precedence
       return () => clearTimeout(scrollTimer);
     }
   }, [sidebarTab, currentLesson.id]);
@@ -1037,7 +1041,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <span className="text-[10px] text-slate-500 font-bold">{t("hide")}</span>
                 </div>
 
-                <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+                <div id="playlist-container" className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                   {allVideoLessons.map((lesson, idx) => {
                     const isCurrent = lesson.id === currentLesson.id;
                     return (

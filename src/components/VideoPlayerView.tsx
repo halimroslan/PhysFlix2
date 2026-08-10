@@ -622,6 +622,22 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               </div>
             )}
 
+            {/* Conditional 2nd PHYSFLIX Cover for 2.6 Prinsip Bernoulli */}
+            {currentLesson.titleBm === "2.6 Prinsip Bernoulli" && (
+              <div 
+                className="absolute z-20 flex items-center justify-center bg-[#0a0a0a] rounded-[2px] md:rounded-md shadow-lg border border-white/10 pointer-events-none"
+                style={{
+                  left: '20%',      // Col 4 start
+                  top: '34.615%',   // Row J start
+                  width: '60%',     // Col 4 to 12 (9 cols)
+                  height: '15.384%' // Span 4 rows (J to M)
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix" className="h-full w-auto object-contain p-1 opacity-75" />
+              </div>
+            )}
+
             {/* Top-Left Shield - Blocks Google Drive Title Link (Solid black on mobile to hide menu) */}
             <div className="absolute top-0 left-0 z-20 w-[80%] h-10 md:h-16 pointer-events-auto cursor-default bg-black md:bg-transparent"></div>
 

@@ -45,7 +45,7 @@ export const rawForm4Videos = [
     chapterNum: 1,
     chapterBm: "Pengukuran",
     chapterDlp: "Measurement",
-    duration: "18:45",
+    duration: "1:07:05",
     keyConceptsBm: ["Kuantiti Terbitan", "Kuantiti Skalar", "Kuantiti Vektor", "Kuantiti Asas", "Unit SI"],
     keyConceptsDlp: ["Kuantiti Terbitan", "Kuantiti Skalar", "Kuantiti Vektor", "Kuantiti Asas", "Unit SI"],
   },

@@ -565,10 +565,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 <div 
                   className="absolute flex items-center justify-center"
                   style={{
-                    left: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '5%' : '6.666%',   
-                    top: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '15.384%' : '30.769%',   // E2 for Bernoulli, I2 for others
-                    width: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '90%' : '73.333%', 
-                    height: '23.076%' // Span 6 rows
+                    left: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '13.333%' : '6.666%',   // Col 3 for Bernoulli, Col 2 for others
+                    top: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '7.692%' : '30.769%',    // Row C for Bernoulli, Row I for others
+                    width: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '86.666%' : '73.333%', // 13 cols for Bernoulli, 11 cols for others
+                    height: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '57.692%' : '23.076%' // 15 rows for Bernoulli, 6 rows for others
                   }}
                 >
                   <div className={`bg-slate-900 rounded-2xl opacity-40 scale-[0.95] h-full flex items-center justify-center ${currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? 'p-5 md:p-8' : 'p-3 md:p-5'}`}>

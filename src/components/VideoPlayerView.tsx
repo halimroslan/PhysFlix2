@@ -95,9 +95,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
         if (entry.contentRect.height >= 600) {
-          setShieldStyle({ bottom: '7.7%', height: '7.7%' }); // W-X
+          setShieldStyle({ bottom: '3.8%', height: '11.6%' }); // V-X extended down
         } else {
-          setShieldStyle({ bottom: '19.2%', height: '7.7%' }); // T-U
+          setShieldStyle({ bottom: '15.3%', height: '11.6%' }); // S-U extended down
         }
       }
     });

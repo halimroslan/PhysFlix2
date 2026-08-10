@@ -566,9 +566,9 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   className="absolute flex items-center justify-center"
                   style={{
                     left: '6.666%',   // Col 2 start (1 col before)
-                    top: '30.769%',   // Row I start (8 rows before)
+                    top: '15.384%',   // Row E start (4 rows before)
                     width: '73.333%', // Span 11 cols (2 to 12)
-                    height: '23.076%' // Span 6 rows (I to N)
+                    height: '23.076%' // Span 6 rows (E to J)
                   }}
                 >
                   <div className="bg-slate-900 rounded-2xl p-3 md:p-5 opacity-40 scale-[0.95] h-full flex items-center justify-center">

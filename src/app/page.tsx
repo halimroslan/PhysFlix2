@@ -12,6 +12,7 @@ import { TopPicks } from "@/components/TopPicks";
 import { RevisionCollections } from "@/components/RevisionCollections";
 import { VideoPlayerView } from "@/components/VideoPlayerView";
 import { AnalyticBoard } from "@/components/AnalyticBoard";
+import { ScoreBoardView } from "@/components/ScoreBoardView";
 import { FormulaSheetModal } from "@/components/FormulaSheetModal";
 import { DictionaryModal } from "@/components/DictionaryModal";
 import { QuizModal } from "@/components/QuizModal";
@@ -257,6 +258,8 @@ function MainDashboard() {
             </div>
           ) : currentTab === "analytics" ? (
             <AnalyticBoard />
+          ) : currentTab === "scoreboard" ? (
+            <ScoreBoardView />
           ) : currentTab === "topics" ? (
             <div className="space-y-10">
               <div className="flex items-center space-x-3 border-b border-slate-800 pb-4">

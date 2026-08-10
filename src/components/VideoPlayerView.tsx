@@ -39,7 +39,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   onSelectLesson
 }) => {
   const { lang, t } = useLanguage();
-  const { isBookmarked, toggleBookmark, addToHistory } = useUserActivity();
+  const { isBookmarked, toggleBookmark, addToHistory, updateVideoProgress, incrementRepeat } = useUserActivity();
   const { user } = useAuth();
   const email = user?.email?.toLowerCase() || "";
   const isDev = email.includes("abdulhalimroslan") || email.includes("halimroslan");
@@ -59,6 +59,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const playTimerRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const coverMountedAt = useRef<number>(Date.now());
+  const videoOpenedAt = useRef<number>(Date.now());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [shieldStyle, setShieldStyle] = useState({ bottom: '19.2%', height: '7.7%' });
@@ -150,6 +151,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   useEffect(() => {
     if (currentLesson && currentLesson.id) {
       addToHistory(currentLesson.id);
+      incrementRepeat(currentLesson.id);
+      videoOpenedAt.current = Date.now();
       coverMountedAt.current = Date.now(); // Reset cover mount timestamp
       const is20MinStart = currentLesson.titleBm === "2.2b Graf Gerakan Linear & 2.3 Jatuh Bebas Ulangkaji";
       const is18MinStart = currentLesson.titleBm === "6.1a Reputan Radioaktif";
@@ -228,6 +231,21 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       clearTimeout(hideTimer);
     };
   }, [showCover]);
+
+  // Track and update video progress on unmount or when currentLesson changes
+  useEffect(() => {
+    return () => {
+      if (currentLesson && currentLesson.id) {
+        const timeSpent = Math.floor((Date.now() - videoOpenedAt.current) / 1000);
+        const parts = currentLesson.duration.split(":");
+        let durationInSeconds = 600; // fallback 10 mins
+        if (parts.length === 2) {
+          durationInSeconds = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        }
+        updateVideoProgress(currentLesson.id, timeSpent, durationInSeconds);
+      }
+    };
+  }, [currentLesson, updateVideoProgress]);
 
   // Manage end cover timer based on playback state (showCover)
   useEffect(() => {

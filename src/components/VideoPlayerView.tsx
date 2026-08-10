@@ -603,7 +603,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
             {/* Grid coverage: Mobile Portrait=A13-E15, FS Portrait=A13-F15, Mobile Landscape=A14-D15, FS Landscape=keep current */}
             <div 
-              className="absolute top-0 right-0 z-20 flex items-center justify-center bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default border-l border-b border-white/5 w-[72px] h-[72px] md:w-[84px] md:h-[84px]"
+              className="absolute top-0 right-0 z-20 flex items-center justify-center bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default border-l border-b border-white/5 w-12 h-12 md:w-14 md:h-14"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/PFlix.png" alt="PhysicsSPMFlix" className="h-4 md:h-6 w-auto object-contain" />

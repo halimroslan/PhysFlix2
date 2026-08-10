@@ -588,7 +588,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       height: '15.384%' // Span 4 rows (J to M)
                     }}
                   >
-                    <div className="bg-slate-900 rounded-2xl p-3 md:p-5 opacity-40 scale-[0.95] h-full flex items-center justify-center">
+                    <div className="bg-slate-900 rounded-2xl p-3 md:p-5 opacity-40 scale-150 h-full flex items-center justify-center">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="h-full w-auto object-contain" />
                     </div>

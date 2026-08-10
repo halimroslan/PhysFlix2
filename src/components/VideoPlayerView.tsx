@@ -250,11 +250,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   // Manage end cover timer based on playback state (showCover)
   useEffect(() => {
     if (!showCover) {
-      // Normal start is at 10m (600s), but can be changed by jump. We want to stop 5 mins (300s) before end.
-      let watchTimeSeconds = totalSeconds - currentStartSeconds - 300;
+      // Calculate time remaining from the start point to the end of the video.
+      let watchTimeSeconds = totalSeconds - currentStartSeconds;
       
-      // If the jump start time is already within the last 5 minutes, 
-      // they explicitly jumped here, so let them watch the remainder of the video.
+      // If the user jumps past the normal start point, adjust the watch time to simply be the time remaining
+      // from their jump point to the very end of the video.
       if (watchTimeSeconds <= 0 && totalSeconds > currentStartSeconds) {
         watchTimeSeconds = totalSeconds - currentStartSeconds;
       }

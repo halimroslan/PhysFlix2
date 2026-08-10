@@ -60,8 +60,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const coverMountedAt = useRef<number>(Date.now());
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [shieldStyle, setShieldStyle] = useState({ bottom: '19.2%', height: '7.7%' });
   const [iframeSrc, setIframeSrc] = useState("");
+
+  useEffect(() => {
+    setIsMobileDevice(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+  }, []);
 
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
@@ -598,11 +603,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             </div>
 
             {/* Mobile Landscape Fullscreen Controller Shields (Red Grid Based) */}
-            {isFullscreen && (
+            {isFullscreen && isMobileDevice && (
               <>
                 {/* Block 1: P10-S15 */}
                 <div 
-                  className="absolute z-20 pointer-events-auto cursor-default bg-[#0a0a0a] hidden max-md:landscape:block"
+                  className="absolute z-20 pointer-events-auto cursor-default bg-[#0a0a0a] hidden landscape:block"
                   style={{
                     left: '60%',      // Col 10 start
                     top: '57.692%',   // Row P start
@@ -612,7 +617,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 ></div>
                 {/* Block 2: V8-Z12 */}
                 <div 
-                  className="absolute z-20 pointer-events-auto cursor-default bg-[#0a0a0a] hidden max-md:landscape:block"
+                  className="absolute z-20 pointer-events-auto cursor-default bg-[#0a0a0a] hidden landscape:block"
                   style={{
                     left: '46.666%',  // Col 8 start
                     top: '80.769%',   // Row V start

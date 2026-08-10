@@ -565,13 +565,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 <div 
                   className="absolute flex items-center justify-center"
                   style={{
-                    left: '6.666%',   // Col 2 start
+                    left: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '5%' : '6.666%',   
                     top: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '15.384%' : '30.769%',   // E2 for Bernoulli, I2 for others
-                    width: '73.333%', // Span 11 cols (2 to 12)
+                    width: currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? '90%' : '73.333%', 
                     height: '23.076%' // Span 6 rows
                   }}
                 >
-                  <div className="bg-slate-900 rounded-2xl p-3 md:p-5 opacity-40 scale-[0.95] h-full flex items-center justify-center">
+                  <div className={`bg-slate-900 rounded-2xl opacity-40 scale-[0.95] h-full flex items-center justify-center ${currentLesson.titleBm === "2.6 Prinsip Bernoulli" ? 'p-5 md:p-8' : 'p-3 md:p-5'}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/PHYSFLIX.png" alt="PhysicsSPMFlix Watermark" className="h-full w-auto object-contain" />
                   </div>

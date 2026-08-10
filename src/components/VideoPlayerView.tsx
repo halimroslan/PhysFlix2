@@ -603,10 +603,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {/* Custom Top Right Brand Watermark - Blocks Google Drive Popout Button */}
             {/* Grid coverage: Mobile Portrait=A13-E15, FS Portrait=A13-F15, Mobile Landscape=A14-D15, FS Landscape=keep current */}
             <div 
-              className={`absolute z-20 flex items-center justify-center bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default border-l border-b border-white/5 ${
+              className={`absolute top-0 right-0 z-20 flex items-center justify-center bg-black/90 rounded-bl-2xl pointer-events-auto cursor-default border-l border-b border-white/5 ${
                 isFullscreen 
-                  ? 'portrait:w-[25%] portrait:h-[28%] portrait:top-8 portrait:right-4 landscape:top-0 landscape:right-0 landscape:w-16 landscape:h-16' 
-                  : 'top-0 right-0 portrait:w-[20%] portrait:h-[19.23%] landscape:w-[13.33%] landscape:h-[15.38%] md:landscape:w-16 md:landscape:h-16'
+                  ? 'portrait:w-[26%] portrait:h-[30%] landscape:w-16 landscape:h-16' 
+                  : 'portrait:w-[20%] portrait:h-[19.23%] landscape:w-[13.33%] landscape:h-[15.38%] md:landscape:w-16 md:landscape:h-16'
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

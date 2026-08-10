@@ -645,7 +645,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               <div 
                 className="absolute left-0 right-0 bottom-0 z-20 pointer-events-auto cursor-default bg-black hidden md:block"
                 style={{
-                  height: isFullscreen ? '7.692%' : '11.538%',
+                  height: isFullscreen ? '7.692%' : '15.38%',
                 }}
               ></div>
             )}

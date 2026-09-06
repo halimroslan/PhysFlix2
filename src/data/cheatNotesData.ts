@@ -21,6 +21,35 @@ export interface LessonCheatNote {
 }
 
 export const allLessonCheatNotes: Record<string, LessonCheatNote> = {
+  "jylD8xsEUkE": {
+    "lessonId": "jylD8xsEUkE",
+    "titleBm": "1.1 Kuantiti Fizik",
+    "titleDlp": "1.1 Physical Quantities",
+    "chapterBm": "Pengukuran",
+    "chapterDlp": "Measurement",
+    "form": 4,
+    "dskpStandard": "SK 1.1 Kuantiti Fizik",
+    "summaryPointsBm": [
+      "Kuantiti fizik ialah kuantiti yang boleh diukur. Terbahagi kepada 7 Kuantiti Asas: Panjang (m), Jisim (kg), Masa (s), Suhu termodinamik (K), Arus elektrik (A), Keamatan berluminositi (cd), dan Kuantiti bahan (mol).",
+      "Kuantiti Terbitan ialah kuantiti fizik yang diterbitkan daripada gabungan kuantiti asas melalui pendaraban, pembahagian atau kedua-duanya (cth: Ketumpatan = kg m⁻³, Daya = kg m s⁻² atau N).",
+      "Kuantiti Skalar hanya mempunyai magnitud sahaja (cth: laju, jarak, jisim, masa, suhu, kerja, tenaga).",
+      "Kuantiti Vektor mempunyai magnitud dan arah (cth: sesaran, halaju, pecutan, daya, momentum, berat)."
+    ],
+    "summaryPointsDlp": [
+      "Physical quantities are measurable quantities. Divided into 7 Base Quantities: Length (m), Mass (kg), Time (s), Thermodynamic temperature (K), Electric current (A), Luminous intensity (cd), and Amount of substance (mol).",
+      "Derived Quantities are derived from base quantities via multiplication, division, or both (e.g., Density = kg m⁻³, Force = kg m s⁻² or N).",
+      "Scalar Quantities have magnitude only (e.g., speed, distance, mass, time, temperature, work, energy).",
+      "Vector Quantities have both magnitude and direction (e.g., displacement, velocity, acceleration, force, momentum, weight)."
+    ],
+    "spmTipsBm": [
+      "Wajib hafal 7 kuantiti asas beserta simbol dan unit S.I. piawai.",
+      "Soalan Kertas 1 SPM kerap menguji penukaran unit berimbuhan (Giga, Mega, Kilo, Desi, Senti, Mili, Mikro, Nano)."
+    ],
+    "spmTipsDlp": [
+      "Memorize all 7 base quantities along with standard S.I. units and symbols.",
+      "SPM Paper 1 frequently examines prefix conversions (Giga, Mega, Kilo, Deci, Centi, Milli, Micro, Nano)."
+    ]
+  },
   "HifOFbw3gDk": {
     "lessonId": "HifOFbw3gDk",
     "titleBm": "1.1 Kuantiti Fizik",

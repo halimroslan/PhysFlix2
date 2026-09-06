@@ -80,6 +80,45 @@
       ]
     }
   ],
+  "jylD8xsEUkE": [
+    {
+      "id": "qa-real-1-1-kuantiti-asas",
+      "videoId": "jylD8xsEUkE",
+      "authorName": "Nurul Izzah",
+      "authorRole": "pelajar",
+      "timestamp": "Baru sahaja",
+      "createdAt": 1787931000000,
+      "category": "Konsep",
+      "question": "Cikgu, apa beza kuantiti asas dengan kuantiti terbitan? Boleh beri analogi mudah nak ingat tak?",
+      "likes": 3,
+      "replies": [
+        {
+          "id": "reply-ai-1-1-kuantiti-asas",
+          "authorName": "Sir Halim",
+          "authorRole": "guru",
+          "isVerified": true,
+          "text": "Soalan asas yang sangat penting! Kuantiti asas ialah kuantiti fizik yang tak boleh diterbitkan daripada kuantiti fizik yang lain, macam panjang (m), jisim (kg), dan masa (s). Manakala kuantiti terbitan pula ialah gabungan kuantiti asas melalui darab atau bahagi, contohnya laju (panjang dibahagi masa) atau daya (F = ma).\n\nAwak boleh bayangkan kuantiti asas ni macam bahan mentah seperti telur dan tepung. Bila kita gaul dan masak, jadilah kek iaitu kuantiti terbitan. Faham kan awak, senang je nak skor bab 1 ni!",
+          "timestamp": "Baru sahaja",
+          "createdAt": 1787931001000,
+          "likes": 2,
+          "isAi": true,
+          "authorEmail": "ai@physflix.internal"
+        },
+        {
+          "id": "reply-1788491556625-gimoo",
+          "authorName": "Abdul Halim Roslan",
+          "authorRole": "guru",
+          "isVerified": true,
+          "authorEmail": "abdulhalimroslan@gmail.com",
+          "isAi": false,
+          "text": "Hi Nurul Izzah, antara cara utk mudah ingat sekurang-kurangnya 5 kuantiti asas ialah \"JiMPAS\" iaitu Jisim, Masa, Panjang, Arus, Suhu. Harap bermanfaat!",
+          "timestamp": "Baru sahaja",
+          "createdAt": 1788491556625,
+          "likes": 0
+        }
+      ]
+    }
+  ],
   "HifOFbw3gDk": [
     {
       "id": "qa-real-1-1-kuantiti-asas",

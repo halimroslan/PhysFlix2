@@ -40,8 +40,8 @@ export interface VideoLesson {
 
 export const rawForm4Videos = [
   {
-    "driveId": "HifOFbw3gDk",
-    "youtubeId": "HifOFbw3gDk",
+    "driveId": "jylD8xsEUkE",
+    "youtubeId": "jylD8xsEUkE",
     "week": "T4 M1",
     "weekNum": 1,
     "titleBm": "1.1 Kuantiti Fizik",
@@ -65,7 +65,7 @@ export const rawForm4Videos = [
       "Scalar Quantity",
       "Vector Quantity"
     ],
-    "thumbnailUrl": "/thumbnails/HifOFbw3gDk.webp",
+    "thumbnailUrl": "/thumbnails/jylD8xsEUkE.webp",
     "relatedFormulaIds": []
   },
   {

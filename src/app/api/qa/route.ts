@@ -55,26 +55,32 @@ function mergeStores(
 async function fetchSupabaseQuestions(videoId: string): Promise<QAItem[]> {
   if (!isSupabaseConfigured) return [];
   try {
-    const { data, error } = await supabase
-      .from("video_stats")
-      .select("id")
-      .like("id", `qa_q:${videoId}:%`);
+    const vids = videoId === "jylD8xsEUkE" ? ["jylD8xsEUkE", "HifOFbw3gDk"] : [videoId];
+    const allRows: any[] = [];
 
-    if (error || !data) {
-      console.warn("Supabase fetch warning:", error?.message);
-      return [];
+    for (const v of vids) {
+      const { data, error } = await supabase
+        .from("video_stats")
+        .select("id")
+        .like("id", `qa_q:${v}:%`);
+
+      if (!error && data) {
+        allRows.push(...data);
+      }
     }
 
     const items: QAItem[] = [];
-    for (const row of data) {
+    const seenIds = new Set<string>();
+
+    for (const row of allRows) {
       try {
-        const prefix = `qa_q:${videoId}:`;
-        const rest = row.id.substring(prefix.length);
-        const colonIdx = rest.indexOf(":");
-        if (colonIdx !== -1) {
-          const jsonStr = rest.substring(colonIdx + 1);
+        const parts = row.id.split(":");
+        if (parts.length >= 4) {
+          const jsonStr = row.id.substring(row.id.indexOf(":", row.id.indexOf(":", 5) + 1) + 1);
           const parsed = JSON.parse(jsonStr) as QAItem;
-          if (parsed && parsed.id) {
+          if (parsed && parsed.id && !seenIds.has(parsed.id)) {
+            seenIds.add(parsed.id);
+            parsed.videoId = videoId;
             items.push(parsed);
           }
         }
@@ -289,9 +295,13 @@ export async function GET(req: NextRequest) {
 
     // 1. Get baseline questions from bundled / local seed
     const store = loadStore();
-    const localBaseline = (store[videoId] || []).filter(
-      (item) =>
-        item.id &&
+    const fallbackVid = videoId === "jylD8xsEUkE" ? "HifOFbw3gDk" : undefined;
+    const rawLocal = [...(store[videoId] || []), ...(fallbackVid ? store[fallbackVid] || [] : [])];
+    const seenLocalIds = new Set<string>();
+    const localBaseline = rawLocal.filter((item) => {
+      if (!item.id || seenLocalIds.has(item.id)) return false;
+      seenLocalIds.add(item.id);
+      return (
         !item.id.startsWith("qa-gen-") &&
         !item.id.startsWith("qa-1-") &&
         !item.id.startsWith("qa-2-") &&
@@ -299,7 +309,8 @@ export async function GET(req: NextRequest) {
         !item.id.startsWith("qa-4-") &&
         !item.id.startsWith("qa-5-") &&
         !checkQuickAbusive(item.question).isAbusive
-    );
+      );
+    });
 
     // 2. Fetch live persistent questions from Supabase cloud database
     const cloudQuestions = await fetchSupabaseQuestions(videoId);

@@ -408,9 +408,9 @@ function MainDashboard() {
             </div>
           ) : (
             <>
-              {/* Hero Spotlight (Form 4 only) */}
+              {/* Hero Spotlight (Form 4 + Topik Pilihan Form 5) */}
               <HeroSpotlight
-                featuredLessons={form4VideoLessons}
+                featuredLessons={allVideoLessons}
                 onPlay={handlePlayLesson}
               />
               {/* Continue Watching Row */}

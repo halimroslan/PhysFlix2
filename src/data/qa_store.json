@@ -82,6 +82,31 @@
   ],
   "jylD8xsEUkE": [
     {
+      "id": "qa-real-1788479865103-zv3455",
+      "videoId": "jylD8xsEUkE",
+      "authorName": "GGGHJT DDDHT",
+      "authorRole": "pelajar",
+      "timestamp": "Baru sahaja",
+      "createdAt": 1788479865103,
+      "category": "Konsep",
+      "question": "cikgu, mcm inersia tu dikira kuantiti fizik ke?",
+      "likes": 0,
+      "replies": [
+        {
+          "id": "reply-1788479876660-hzkyo",
+          "authorName": "Sir Halim",
+          "authorRole": "guru",
+          "isVerified": true,
+          "text": "Soalan menarik awak ni! Sebenarnya, inersia bukanlah kuantiti fizik yang ada simbol dan unit tersendiri mcm jisim atau halaju. Inersia ni lebih kepada sifat atau kecenderungan sesuatu objek untuk kekal pada keadaan asalnya, sama ada kekal diam atau terus bergerak dgn halaju seragam, melainkan ada daya luar bertindak ke atasnya. Jadi dalam silibus Fizik SPM, inersia diklasifikasikan sebagai konsep atau sifat jisim, bukan kuantiti fizik yang boleh diukur terus.\n\nTapi awak ingat ni, walaupun inersia bukan kuantiti fizik, ia berkait rapat dgn jisim, dan jisim pula adalah kuantiti fizik asas yang ada simbol m dan unit kilogram (kg). Mcm tu lah, semakin besar jisim sesuatu objek, semakin besar kesan inersianya, jadi objek tu lebih sukar untuk diubah keadaan gerakannya. Faham kan awak?",
+          "timestamp": "Baru sahaja",
+          "createdAt": 1788479876660,
+          "likes": 0,
+          "isAi": true,
+          "authorEmail": "ai@physflix.internal"
+        }
+      ]
+    },
+    {
       "id": "qa-real-1-1-kuantiti-asas",
       "videoId": "jylD8xsEUkE",
       "authorName": "Nurul Izzah",
@@ -109,17 +134,42 @@
           "authorName": "Abdul Halim Roslan",
           "authorRole": "guru",
           "isVerified": true,
-          "authorEmail": "abdulhalimroslan@gmail.com",
-          "isAi": false,
           "text": "Hi Nurul Izzah, antara cara utk mudah ingat sekurang-kurangnya 5 kuantiti asas ialah \"JiMPAS\" iaitu Jisim, Masa, Panjang, Arus, Suhu. Harap bermanfaat!",
           "timestamp": "Baru sahaja",
           "createdAt": 1788491556625,
-          "likes": 0
+          "likes": 0,
+          "isAi": false,
+          "authorEmail": "abdulhalimroslan@gmail.com"
         }
       ]
     }
   ],
   "HifOFbw3gDk": [
+    {
+      "id": "qa-real-1788479865103-zv3455",
+      "videoId": "HifOFbw3gDk",
+      "authorName": "GGGHJT DDDHT",
+      "authorRole": "pelajar",
+      "timestamp": "Baru sahaja",
+      "createdAt": 1788479865103,
+      "category": "Konsep",
+      "question": "cikgu, mcm inersia tu dikira kuantiti fizik ke?",
+      "likes": 0,
+      "replies": [
+        {
+          "id": "reply-1788479876660-hzkyo",
+          "authorName": "Sir Halim",
+          "authorRole": "guru",
+          "isVerified": true,
+          "text": "Soalan menarik awak ni! Sebenarnya, inersia bukanlah kuantiti fizik yang ada simbol dan unit tersendiri mcm jisim atau halaju. Inersia ni lebih kepada sifat atau kecenderungan sesuatu objek untuk kekal pada keadaan asalnya, sama ada kekal diam atau terus bergerak dgn halaju seragam, melainkan ada daya luar bertindak ke atasnya. Jadi dalam silibus Fizik SPM, inersia diklasifikasikan sebagai konsep atau sifat jisim, bukan kuantiti fizik yang boleh diukur terus.\n\nTapi awak ingat ni, walaupun inersia bukan kuantiti fizik, ia berkait rapat dgn jisim, dan jisim pula adalah kuantiti fizik asas yang ada simbol m dan unit kilogram (kg). Mcm tu lah, semakin besar jisim sesuatu objek, semakin besar kesan inersianya, jadi objek tu lebih sukar untuk diubah keadaan gerakannya. Faham kan awak?",
+          "timestamp": "Baru sahaja",
+          "createdAt": 1788479876660,
+          "likes": 0,
+          "isAi": true,
+          "authorEmail": "ai@physflix.internal"
+        }
+      ]
+    },
     {
       "id": "qa-real-1-1-kuantiti-asas",
       "videoId": "HifOFbw3gDk",
@@ -148,12 +198,12 @@
           "authorName": "Abdul Halim Roslan",
           "authorRole": "guru",
           "isVerified": true,
-          "authorEmail": "abdulhalimroslan@gmail.com",
-          "isAi": false,
           "text": "Hi Nurul Izzah, antara cara utk mudah ingat sekurang-kurangnya 5 kuantiti asas ialah \"JiMPAS\" iaitu Jisim, Masa, Panjang, Arus, Suhu. Harap bermanfaat!",
           "timestamp": "Baru sahaja",
           "createdAt": 1788491556625,
-          "likes": 0
+          "likes": 0,
+          "isAi": false,
+          "authorEmail": "abdulhalimroslan@gmail.com"
         }
       ]
     }
@@ -168,7 +218,7 @@
       "createdAt": 1787932000000,
       "category": "Konsep",
       "question": "Cikgu, bila masa kita patut guna sesaran vs jarak? Selalu keliru terutamanya bila baca graf halaju-masa.",
-      "likes": 2,
+      "likes": 3,
       "replies": [
         {
           "id": "reply-ai-2-1-jarak-sesaran",
@@ -178,7 +228,7 @@
           "text": "Bagus soalan ni! Jarak ialah kuantiti skalar yang ukur jumlah panjang lintasan yang dilalui tanpa kira arah. Manakala sesaran ialah kuantiti vektor, iaitu jarak terpendek antara titik awal ke titik akhir mengikut garis lurus dengan mengambil kira arah.\n\nDalam graf halaju-masa (v-t), luas di bawah graf mewakili sesaran. Kalau graf berada di bawah paksi-t (halaju negatif), luas tu bernilai negatif dan menolak sesaran keseluruhan. Jadi kena peka dengan arah pergerakan objek ya awak!",
           "timestamp": "Baru sahaja",
           "createdAt": 1787932001000,
-          "likes": 3,
+          "likes": 5,
           "isAi": true,
           "authorEmail": "ai@physflix.internal"
         }
@@ -232,7 +282,7 @@
           "text": "Wah, ini soalan klasik SPM tentang haba pendam tentu! Bila cecair mendidih pada takat didihnya, tenaga haba yang diserap tidak digunakan untuk menaikkan suhu (tenaga kinetik zarah tak bertambah).\n\nSebaliknya, tenaga haba tu digunakan sepenuhnya untuk mengatasi daya tarikan antara zarah-zarah cecair supaya ia dapat bebas menjadi gas. Kita panggil ini haba pendam tentu pengewapan. Bila semua cecair dah bertukar jadi wap, barulah suhunya boleh naik semula. Faham kan konsep ni awak?",
           "timestamp": "Baru sahaja",
           "createdAt": 1787934001000,
-          "likes": 3,
+          "likes": 4,
           "isAi": true,
           "authorEmail": "ai@physflix.internal"
         }
@@ -262,6 +312,31 @@
           "likes": 2,
           "isAi": true,
           "authorEmail": "ai@physflix.internal"
+        }
+      ]
+    }
+  ],
+  "hsjQe4dnpl0": [
+    {
+      "id": "qa-real-1787927300415-orsfdg",
+      "videoId": "hsjQe4dnpl0",
+      "authorName": "Abdul Halim Roslan",
+      "authorRole": "pelajar",
+      "timestamp": "Baru sahaja",
+      "createdAt": 1787927300415,
+      "category": "Konsep",
+      "question": "cikgu akalau ada lebih daripada 2 jisim, 3/4 atau lebih, mcm mana kita nak kira daya graviti?",
+      "likes": 0,
+      "replies": [
+        {
+          "id": "reply-1787927313607-gctf0",
+          "authorName": "Sir Halim",
+          "authorRole": "guru",
+          "isVerified": true,
+          "text": "Soalan bagus awak! Kalau ada lebih drpd 2 jisim, kita guna konsep prinsip superposisi. Maksudnya, kita kira daya graviti antara setiap pasangan jisim secara berasingan dgn formula F = Gm₁m₂/r². Contohnya kalau ada 3 jisim A, B dan C, kita kira daya tarikan pada A drpd B dulu, pastu daya tarikan pada A drpd C, satu persatu.\n\nLepas tu, sebab daya ni kuantiti vektor, kita gabungkan semua daya tu ikut arah masing2 utk dapat daya paduan. Kalau arah dia sama, kita tambah, kalau bertentangan, kita tolak. Tapi jangan risau sangat, dlm SPM soalan biasanya melibatkan 2 jisim je, kadang2 3 jisim tapi sebaris jadi senang sikit nak urus. Yang penting awak faham konsep ni, setiap pasangan jisim memang tarik menarik antara satu sama lain walaupun ada jisim lain kat sekeliling.",
+          "timestamp": "Baru sahaja",
+          "createdAt": 1787927313607,
+          "likes": 0
         }
       ]
     }

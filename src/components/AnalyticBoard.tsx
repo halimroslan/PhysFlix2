@@ -5,6 +5,7 @@ import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { useAuth } from "@/context/AuthContext";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { allVideoLessons } from "@/data/physicsData";
+import { findLessonByVideoId } from "@/utils/videoResolution";
 import { QAItem, QAReply, isSuperadminReply } from "@/types/qa";
 import {
   Users,
@@ -182,9 +183,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
   };
 
   const getLessonInfo = (videoId: string) => {
-    const lesson = allVideoLessons.find(
-      (l) => l.id === videoId || l.youtubeId === videoId || l.driveId === videoId
-    );
+    const lesson = findLessonByVideoId(videoId);
     if (!lesson) {
       return {
         titleBm: `Topik Fizik (${videoId})`,
@@ -298,7 +297,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
   // Prepare chart data using actual video titles
   const chartData = stats
     .map((s) => {
-      const lesson = allVideoLessons.find((l) => l.id === s.id);
+      const lesson = findLessonByVideoId(s.id);
       const title = lesson ? lesson.titleBm : `Video ${s.id}`;
       return {
         id: s.id,
@@ -633,7 +632,10 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
                     </div>
 
                     <button
-                      onClick={() => onNavigateToQaReply?.(q.videoId, q.id)}
+                      onClick={() => {
+                        const targetVid = (lesson as any)?.id || q.videoId;
+                        onNavigateToQaReply?.(targetVid, q.id);
+                      }}
                       className="flex items-center space-x-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 hover:text-white border border-cyan-500/40 hover:border-cyan-400 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer group-hover:scale-[1.02]"
                     >
                       <Play className="w-3.5 h-3.5 fill-cyan-400 text-cyan-400" />

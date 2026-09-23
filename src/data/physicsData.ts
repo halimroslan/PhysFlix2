@@ -37,12 +37,14 @@ export interface VideoLesson {
     width?: string;
     height?: string;
   }[];
+  aliases?: string[];
 }
 
 export const rawForm4Videos = [
   {
     "driveId": "jylD8xsEUkE",
     "youtubeId": "jylD8xsEUkE",
+    "aliases": ["HifOFbw3gDk"],
     "week": "T4 M1",
     "weekNum": 1,
     "titleBm": "1.1 Kuantiti Fizik",

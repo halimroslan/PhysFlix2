@@ -269,19 +269,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     initialTab || (highlightQuestionId ? "qa" : "overview")
   );
 
-  // Auto-scroll and highlight target question from bell notification
-  useEffect(() => {
-    if (highlightQuestionId) {
-      setActiveTab("qa");
-      const scrollTimer = setTimeout(() => {
-        const el = document.getElementById(`qa-item-${highlightQuestionId}`);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      }, 400);
-      return () => clearTimeout(scrollTimer);
-    }
-  }, [highlightQuestionId]);
+
   const [sidebarTab, setSidebarTab] = useState<"playlist" | "tools" | "quiz">("playlist");
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -427,6 +415,26 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   const [isGeneratingAIAnswer, setIsGeneratingAIAnswer] = useState<{ [id: string]: boolean }>({});
   const [isCommentServiceDisabled, setIsCommentServiceDisabled] = useState(false);
+
+  // Auto-scroll, open reply form, and highlight target question from bell notification or analytics
+  useEffect(() => {
+    if (highlightQuestionId) {
+      setActiveTab("qa");
+      setActiveReplyId(highlightQuestionId);
+      let attempts = 0;
+      const tryScroll = () => {
+        const el = document.getElementById(`qa-item-${highlightQuestionId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else if (attempts < 10) {
+          attempts++;
+          setTimeout(tryScroll, 200);
+        }
+      };
+      const scrollTimer = setTimeout(tryScroll, 300);
+      return () => clearTimeout(scrollTimer);
+    }
+  }, [highlightQuestionId, qaList.length]);
 
   // userEmail and isSuperAdmin obtained from useAuth at component root
 
@@ -2037,7 +2045,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                           {isTargetHighlight && (
                             <div className="flex items-center gap-1.5 px-3 py-1 bg-cyan-950/90 border border-cyan-500/80 rounded-lg text-cyan-300 text-xs font-bold w-fit animate-pulse">
                               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                              <span>{lang === "bm" ? "Soalan Terpilih Dari Pemberitahuan Loceng" : "Selected from Bell Notification"}</span>
+                              <span>{lang === "bm" ? "Soalan Terpilih (Pemberitahuan / Analitik Guru)" : "Selected Question (Notification / Teacher Analytics)"}</span>
                             </div>
                           )}
                         {/* Question Header */}

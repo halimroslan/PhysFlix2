@@ -24,6 +24,7 @@ import {
   form5VideoLessons,
   VideoLesson
 } from "@/data/physicsData";
+import { findLessonByVideoId } from "@/utils/videoResolution";
 import { Play, BookOpen, Crown, X, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target, Lock } from "lucide-react";
 
 function MainDashboard() {
@@ -59,15 +60,22 @@ function MainDashboard() {
   }, [unlockPremium]);
 
   const handleNavigateToQaReply = (videoId: string, questionId: string) => {
-    const lesson = allVideoLessons.find(
-      (l) => l.id === videoId || l.youtubeId === videoId || l.driveId === videoId
-    );
+    const lesson = findLessonByVideoId(videoId);
     if (lesson) {
       setSelectedLesson(lesson);
       setHighlightQuestionId(questionId);
       setInitialPlayerTab("qa");
       setCurrentTab("playing");
       window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      console.warn("Could not resolve lesson for videoId:", videoId, "Falling back to first available lesson.");
+      if (allVideoLessons.length > 0) {
+        setSelectedLesson(allVideoLessons[0]);
+        setHighlightQuestionId(questionId);
+        setInitialPlayerTab("qa");
+        setCurrentTab("playing");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   };
 

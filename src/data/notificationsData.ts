@@ -2,7 +2,7 @@ export interface SystemNotification {
   id: string;
   titleBm: string;
   titleDlp: string;
-  category: "kamus" | "formula" | "cheatnote" | "general";
+  category: "kamus" | "formula" | "cheatnote" | "general" | "premium";
   badgeBm: string;
   badgeDlp: string;
   badgeColor: "emerald" | "cyan" | "amber" | "red" | "purple";
@@ -10,14 +10,32 @@ export interface SystemNotification {
   descriptionDlp: string;
   timestampBm: string;
   timestampDlp: string;
-  actionType: "openDict" | "openFormula" | "openCheatNote" | "none";
+  actionType: "openDict" | "openFormula" | "openCheatNote" | "openSubscribe" | "none";
   actionLabelBm?: string;
   actionLabelDlp?: string;
-  icon: "Book" | "Sigma" | "FileText" | "Sparkles" | "Bell";
+  icon: "Book" | "Sigma" | "FileText" | "Sparkles" | "Bell" | "Crown" | "Video";
   isImportant?: boolean;
 }
 
 export const initialNotifications: SystemNotification[] = [
+  {
+    id: "notif-t5-premium-launch",
+    titleBm: "Pengumuman: Video Fizik Tingkatan 5 SPM Kini Tersedia Secara Langganan!",
+    titleDlp: "Announcement: Form 5 SPM Physics Videos Now Available via Subscription!",
+    category: "premium",
+    badgeBm: "Tingkatan 5 SPM",
+    badgeDlp: "Form 5 SPM",
+    badgeColor: "amber",
+    descriptionBm: "Semua 29 modul video pengajaran lengkap Fizik Tingkatan 5 KSSM (Bab 1 Daya & Gerakan II hingga Bab 7 Fizik Nuklear) kini sedia diakses secara langganan tahunan melalui perbankan internet FPX ToyyibPay.",
+    descriptionDlp: "All 29 complete Form 5 KSSM Physics video modules (Chapter 1 Force & Motion II to Chapter 7 Nuclear Physics) are now available via annual subscription through ToyyibPay FPX online banking.",
+    timestampBm: "Pengumuman Baharu",
+    timestampDlp: "New Announcement",
+    actionType: "openSubscribe",
+    actionLabelBm: "Langgan / Buka Akses T5 Sekarang ↗",
+    actionLabelDlp: "Subscribe / Unlock Form 5 Now ↗",
+    icon: "Crown",
+    isImportant: true,
+  },
   {
     id: "notif-kamus-t4-t5",
     titleBm: "Kamus Fizik SPM (Definisi Keseluruhan T4 & T5)",

@@ -12,7 +12,8 @@ import {
   ExternalLink,
   ChevronRight,
   MessageSquare,
-  Trash2
+  Trash2,
+  Crown
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { initialNotifications, SystemNotification } from "@/data/notificationsData";
@@ -32,6 +33,7 @@ interface NotificationDropdownProps {
   onOpenDict?: () => void;
   onOpenFormula?: () => void;
   onOpenCheatNote?: () => void;
+  onOpenSubscribe?: () => void;
   onNavigateToQaReply?: (videoId: string, questionId: string) => void;
   onUnreadCountChange?: (count: number) => void;
 }
@@ -44,6 +46,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
   onOpenDict,
   onOpenFormula,
   onOpenCheatNote,
+  onOpenSubscribe,
   onNavigateToQaReply,
   onUnreadCountChange
 }) => {
@@ -146,6 +149,8 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
       onOpenFormula();
     } else if (notif.actionType === "openCheatNote" && onOpenCheatNote) {
       onOpenCheatNote();
+    } else if (notif.actionType === "openSubscribe" && onOpenSubscribe) {
+      onOpenSubscribe();
     }
   };
 
@@ -355,6 +360,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
                       {notif.icon === "Sigma" && <Sigma className="w-4 h-4 text-cyan-400" />}
                       {notif.icon === "FileText" && <FileText className="w-4 h-4 text-amber-400" />}
                       {notif.icon === "Sparkles" && <Sparkles className="w-4 h-4 text-purple-400" />}
+                      {notif.icon === "Crown" && <Crown className="w-4 h-4 text-amber-400 fill-amber-400/20" />}
                     </div>
                     <h4 className="text-xs sm:text-sm font-bold text-white leading-snug">
                       {lang === "bm" ? notif.titleBm : notif.titleDlp}

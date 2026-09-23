@@ -266,6 +266,7 @@ function MainDashboard() {
         onOpenDict={() => setIsDictOpen(true)}
         onOpenQuiz={() => setIsQuizOpen(true)}
         onOpenCalc={() => setIsCalcOpen(true)}
+        onOpenSubscribe={() => setIsCheckoutOpen(true)}
         onNavigateToQaReply={handleNavigateToQaReply}
       />
 

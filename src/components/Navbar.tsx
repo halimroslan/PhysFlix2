@@ -14,6 +14,7 @@ interface NavbarProps {
   onOpenDict?: () => void;
   onOpenQuiz?: () => void;
   onOpenCalc?: () => void;
+  onOpenSubscribe?: () => void;
   onNavigateToQaReply?: (videoId: string, questionId: string) => void;
 }
 
@@ -25,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenDict,
   onOpenQuiz,
   onOpenCalc,
+  onOpenSubscribe,
   onNavigateToQaReply
 }) => {
   const { lang, toggleLang, t } = useLanguage();
@@ -202,6 +204,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onOpenCheatNote={() => {
                 setIsNotificationsOpen(false);
                 if (onTabChange) onTabChange("home");
+              }}
+              onOpenSubscribe={() => {
+                setIsNotificationsOpen(false);
+                if (onOpenSubscribe) onOpenSubscribe();
               }}
               onNavigateToQaReply={(videoId, questionId) => {
                 setIsNotificationsOpen(false);

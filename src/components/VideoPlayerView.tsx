@@ -8,6 +8,7 @@ import {
   Share2,
   Bookmark,
   Maximize,
+  Minimize,
   Brain,
   Video,
   Sparkles,
@@ -204,7 +205,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       
       if (currentLesson.youtubeId) {
         const origin = typeof window !== "undefined" ? window.location.origin : "https://physflix.vercel.app";
-        setIframeSrc(`https://www.youtube.com/embed/${currentLesson.youtubeId}?enablejsapi=1&start=${startSecs}&rel=0&modestbranding=1&autoplay=1&controls=1&playsinline=1&iv_load_policy=3&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`);
+        setIframeSrc(`https://www.youtube.com/embed/${currentLesson.youtubeId}?enablejsapi=1&fs=0&start=${startSecs}&rel=0&modestbranding=1&autoplay=1&controls=1&playsinline=1&iv_load_policy=3&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`);
       } else if (currentLesson.driveId) {
         const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
         setIframeSrc(`${driveUrl}?t=${startSecs}s`);
@@ -1005,17 +1006,31 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
               isFullscreen ? "fixed inset-0 z-[100] h-[100dvh] w-screen rounded-none" : "relative w-full border border-slate-800 rounded-xl overflow-hidden aspect-[4/3] md:aspect-video"
             }`}
           >
-            {/* Mobile Fullscreen Back Button */}
+            {/* Fullscreen Navigation & Exit Buttons */}
             {isFullscreen && (
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleFullscreen();
-                }}
-                className="absolute top-4 left-4 z-[110] bg-black/60 hover:bg-black/80 text-white p-3 rounded-full md:hidden flex items-center justify-center border border-white/20 shadow-xl cursor-pointer"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </button>
+              <>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFullscreen();
+                  }}
+                  className="absolute top-4 left-4 z-[110] bg-black/60 hover:bg-black/80 text-white p-3 rounded-full md:hidden flex items-center justify-center border border-white/20 shadow-xl cursor-pointer"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                </button>
+
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFullscreen();
+                  }}
+                  className="absolute top-4 right-4 z-[110] bg-black/75 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl flex items-center space-x-2 border border-white/20 shadow-2xl cursor-pointer transition-all duration-200 backdrop-blur-md group"
+                  title="Keluar Skrin Penuh"
+                >
+                  <Minimize className="w-4 h-4 text-red-400 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-bold">{lang === "bm" ? "Keluar Skrin Penuh" : "Exit Fullscreen"}</span>
+                </button>
+              </>
             )}
 
             {/* Inner Container - 16:9 Aspect Ratio */}
@@ -1090,7 +1105,6 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     src={iframeSrc}
                     className="w-full h-full border-0 select-none"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
                     title={currentLesson.titleBm}
                   ></iframe>
 
@@ -1108,17 +1122,27 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     title={lang === "bm" ? "Kandungan Eksklusif PhysFlix (Pautan Luar Dinyahaktifkan)" : "PhysFlix Exclusive Content"}
                   />
 
-                  {/* 2. BOTTOM RIGHT LOGO SHIELD: Blocks YouTube Logo while keeping Fullscreen icon clickable */}
+                  {/* 2. FLOATING ACTION PILL SHIELD: Blocks Like, Dislike, Comments, Share, and More (...) toolbar in Fullscreen & Wide View */}
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
                       handleShieldClick();
                     }}
-                    className="absolute bottom-0 right-9 sm:right-11 w-22 sm:w-28 h-10 sm:h-12 z-20 cursor-default pointer-events-auto bg-transparent"
+                    className="absolute bottom-[44px] sm:bottom-[50px] md:bottom-[56px] right-1 sm:right-4 w-72 sm:w-84 md:w-96 h-12 sm:h-14 z-20 cursor-pointer pointer-events-auto bg-transparent"
+                    title={lang === "bm" ? "Pautan Kongsi Luar Dinyahaktifkan" : "External Share Disabled"}
+                  />
+
+                  {/* 3. BOTTOM RIGHT LOGO SHIELD: Blocks YouTube Logo at bottom right corner */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShieldClick();
+                    }}
+                    className="absolute bottom-0 right-0 w-24 sm:w-32 h-10 sm:h-12 z-20 cursor-default pointer-events-auto bg-transparent"
                     title="PhysFlix Protected Player"
                   />
 
-                  {/* 3. BOTTOM LEFT SHIELD: Blocks Share / Watch Later popups if video is paused */}
+                  {/* 4. BOTTOM LEFT SHIELD: Blocks Share / Watch Later popups if video is paused */}
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
@@ -1127,7 +1151,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     className="absolute bottom-1 left-2 w-28 h-12 z-20 cursor-pointer pointer-events-auto bg-transparent"
                   />
 
-                  {/* 4. FLOATING FEEDBACK BADGE WHEN CLICKED */}
+                  {/* 5. FLOATING FEEDBACK BADGE WHEN CLICKED */}
                   {showProtectedNotice && (
                     <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-full bg-slate-950/90 border border-red-500/50 text-white text-xs font-bold shadow-2xl flex items-center space-x-2 animate-in fade-in zoom-in-95 duration-200 backdrop-blur-md pointer-events-none">
                       <Lock className="w-3.5 h-3.5 text-red-400 shrink-0" />

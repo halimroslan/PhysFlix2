@@ -116,14 +116,20 @@ function MainDashboard() {
         onClick={() => handlePlayLesson(item)}
         className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800/90 hover:border-red-500/60 p-3.5 space-y-3 transition-all duration-300 shadow-xl flex flex-col justify-between hover:-translate-y-1 relative overflow-hidden"
       >
-        <div className={`w-full aspect-video rounded-xl bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center relative overflow-hidden shadow-inner`}>
+        <div className={`w-full aspect-video rounded-xl bg-gradient-to-br ${item.thumbnailBg} relative overflow-hidden shadow-inner`}>
           {item.thumbnailUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={item.thumbnailUrl}
               alt={lang === "bm" ? item.titleBm : item.titleDlp}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 block"
               loading="lazy"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src.includes('maxresdefault.jpg')) {
+                  target.src = target.src.replace('maxresdefault.jpg', 'mqdefault.jpg');
+                }
+              }}
             />
           ) : (
             <>
@@ -149,13 +155,15 @@ function MainDashboard() {
             </div>
           )}
 
-          {/* Play / Lock Button Overlay */}
-          <div className={`w-10 h-10 rounded-full ${item.form === 5 && !isSuperAdmin ? 'bg-amber-950/80 border-amber-500/50 group-hover:bg-amber-600' : 'bg-black/70 border-white/20 group-hover:bg-red-600'} border flex items-center justify-center text-white group-hover:scale-110 transition-all duration-300 shadow-2xl z-10 opacity-0 group-hover:opacity-100`}>
-            {item.form === 5 && !isSuperAdmin ? (
-              <Lock className="w-4 h-4 text-amber-300 fill-amber-300/20" />
-            ) : (
-              <Play className="w-4 h-4 fill-white ml-0.5" />
-            )}
+          {/* Play / Lock Button Overlay (Centered) */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+            <div className={`w-11 h-11 rounded-full ${item.form === 5 && !isSuperAdmin ? 'bg-amber-950/80 border-amber-500/50 group-hover:bg-amber-600' : 'bg-red-600/90 border-white/30 group-hover:bg-red-600 group-hover:scale-110'} border flex items-center justify-center text-white transition-all duration-300 shadow-2xl opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.6)]`}>
+              {item.form === 5 && !isSuperAdmin ? (
+                <Lock className="w-4 h-4 text-amber-300 fill-amber-300/20" />
+              ) : (
+                <Play className="w-5 h-5 fill-white text-white ml-0.5" />
+              )}
+            </div>
           </div>
 
           {/* Duration Badge */}

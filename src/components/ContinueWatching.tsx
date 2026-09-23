@@ -39,14 +39,20 @@ export const ContinueWatching: React.FC<ContinueWatchingProps> = ({ lessons, onP
             className="group cursor-pointer rounded-2xl bg-[#121622] border border-slate-800/80 hover:border-red-500/50 transition duration-300 overflow-hidden shadow-lg flex flex-col"
           >
             {/* Thumbnail Header */}
-            <div className={`relative w-full aspect-video bg-gradient-to-br ${item.thumbnailBg} flex items-center justify-center overflow-hidden`}>
+            <div className={`relative w-full aspect-video bg-gradient-to-br ${item.thumbnailBg} overflow-hidden`}>
               {item.thumbnailUrl ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={item.thumbnailUrl}
                   alt={item.titleBm}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 block"
                   loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (target.src.includes('maxresdefault.jpg')) {
+                      target.src = target.src.replace('maxresdefault.jpg', 'mqdefault.jpg');
+                    }
+                  }}
                 />
               ) : (
                 /* Physics grid artwork */
@@ -54,8 +60,10 @@ export const ContinueWatching: React.FC<ContinueWatchingProps> = ({ lessons, onP
               )}
 
               {/* Play Button Overlay */}
-              <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition duration-300 shadow-xl z-10 opacity-0 group-hover:opacity-100">
-                <Play className="w-4 h-4 fill-white ml-0.5" />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                <div className="w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition duration-300 shadow-xl opacity-0 group-hover:opacity-100">
+                  <Play className="w-4 h-4 fill-white ml-0.5" />
+                </div>
               </div>
 
               {/* Duration Badge */}

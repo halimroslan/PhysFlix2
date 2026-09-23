@@ -2319,8 +2319,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                             <img
                               src={lesson.thumbnailUrl}
                               alt={lesson.titleBm}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover block"
                               loading="lazy"
+                              onError={(e) => {
+                                const target = e.currentTarget;
+                                if (target.src.includes('maxresdefault.jpg')) {
+                                  target.src = target.src.replace('maxresdefault.jpg', 'mqdefault.jpg');
+                                }
+                              }}
                             />
                           ) : (
                             <span className="text-[10px] font-bold text-slate-400">{idx + 1}</span>

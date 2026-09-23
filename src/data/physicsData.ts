@@ -1112,7 +1112,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Force and Motion II",
     "duration": "51:08",
     "youtubeId": "OJBQJ3ZSLi0",
-    "thumbnailUrl": "https://img.youtube.com/vi/OJBQJ3ZSLi0/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/OJBQJ3ZSLi0/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Daya Paduan",
@@ -1140,7 +1140,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Force and Motion II",
     "duration": "57:29",
     "youtubeId": "goiFRALUbFk",
-    "thumbnailUrl": "https://img.youtube.com/vi/goiFRALUbFk/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/goiFRALUbFk/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Leraian Daya",
@@ -1170,7 +1170,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Force and Motion II",
     "duration": "59:50",
     "youtubeId": "1N6H3F9MxNY",
-    "thumbnailUrl": "https://img.youtube.com/vi/1N6H3F9MxNY/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/1N6H3F9MxNY/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Kekenyalan",
@@ -1204,7 +1204,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Pressure",
     "duration": "56:44",
     "youtubeId": "eHYyqw-JuPA",
-    "thumbnailUrl": "https://img.youtube.com/vi/eHYyqw-JuPA/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/eHYyqw-JuPA/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Tekanan atmosfera",
@@ -1237,7 +1237,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Pressure",
     "duration": "1:00:09",
     "youtubeId": "ak8wrDWz628",
-    "thumbnailUrl": "https://img.youtube.com/vi/ak8wrDWz628/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/ak8wrDWz628/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Manometer",
@@ -1268,7 +1268,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Pressure",
     "duration": "57:42",
     "youtubeId": "70UPEjlVl9Y",
-    "thumbnailUrl": "https://img.youtube.com/vi/70UPEjlVl9Y/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/70UPEjlVl9Y/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Prinsip Archimedes",
@@ -1298,7 +1298,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Pressure",
     "duration": "53:28",
     "youtubeId": "qbOMdYqJ76c",
-    "thumbnailUrl": "https://img.youtube.com/vi/qbOMdYqJ76c/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/qbOMdYqJ76c/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Prinsip Bernoulli",
@@ -1326,7 +1326,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electricity",
     "duration": "56:29",
     "youtubeId": "5SZ5FIJdobc",
-    "thumbnailUrl": "https://img.youtube.com/vi/5SZ5FIJdobc/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/5SZ5FIJdobc/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Medan Elektrik",
@@ -1358,7 +1358,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electricity",
     "duration": "1:10:19",
     "youtubeId": "pWWsFgU9-H4",
-    "thumbnailUrl": "https://img.youtube.com/vi/pWWsFgU9-H4/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/pWWsFgU9-H4/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Hukum Ohm",
@@ -1390,7 +1390,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electricity",
     "duration": "1:10:19",
     "youtubeId": "pWWsFgU9-H4",
-    "thumbnailUrl": "https://img.youtube.com/vi/pWWsFgU9-H4/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/pWWsFgU9-H4/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Kerintangan dawai",
@@ -1420,7 +1420,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electricity",
     "duration": "1:00:40",
     "youtubeId": "So04Qkj6UcY",
-    "thumbnailUrl": "https://img.youtube.com/vi/So04Qkj6UcY/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/So04Qkj6UcY/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Daya gerak elektrik (d.g.e.)",
@@ -1448,7 +1448,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electricity",
     "duration": "55:20",
     "youtubeId": "3gFfwX_kO1E",
-    "thumbnailUrl": "https://img.youtube.com/vi/3gFfwX_kO1E/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/3gFfwX_kO1E/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Tenaga elektrik",
@@ -1478,7 +1478,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electromagnetism",
     "duration": "55:58",
     "youtubeId": "SWpDdWWz694",
-    "thumbnailUrl": "https://img.youtube.com/vi/SWpDdWWz694/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/SWpDdWWz694/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Medan lastik",
@@ -1504,7 +1504,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electromagnetism",
     "duration": "58:44",
     "youtubeId": "eIXYPy4y1iw",
-    "thumbnailUrl": "https://img.youtube.com/vi/eIXYPy4y1iw/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/eIXYPy4y1iw/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Motor arus terus/ ulang-alik",
@@ -1530,7 +1530,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electromagnetism",
     "duration": "55:41",
     "youtubeId": "Z8c2bJ0iCCE",
-    "thumbnailUrl": "https://img.youtube.com/vi/Z8c2bJ0iCCE/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/Z8c2bJ0iCCE/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Aruhan elektromagnet",
@@ -1560,7 +1560,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electromagnetism",
     "duration": "59:42",
     "youtubeId": "Tdx-xIytvx0",
-    "thumbnailUrl": "https://img.youtube.com/vi/Tdx-xIytvx0/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/Tdx-xIytvx0/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Transformer injak naik",
@@ -1588,7 +1588,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electromagnetism",
     "duration": "57:02",
     "youtubeId": "Jn1W27ZHvGU",
-    "thumbnailUrl": "https://img.youtube.com/vi/Jn1W27ZHvGU/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/Jn1W27ZHvGU/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Kecekapan transformer",
@@ -1617,7 +1617,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electronics",
     "duration": "55:39",
     "youtubeId": "vYUJ_INFkL0",
-    "thumbnailUrl": "https://img.youtube.com/vi/vYUJ_INFkL0/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/vYUJ_INFkL0/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Pancaran termion",
@@ -1646,7 +1646,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electronics",
     "duration": "53:32",
     "youtubeId": "zc3ZJJdgzNk",
-    "thumbnailUrl": "https://img.youtube.com/vi/zc3ZJJdgzNk/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/zc3ZJJdgzNk/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Diod semikonduktor",
@@ -1678,7 +1678,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Electronics",
     "duration": "55:22",
     "youtubeId": "8Ij0pG4wcIg",
-    "thumbnailUrl": "https://img.youtube.com/vi/8Ij0pG4wcIg/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/8Ij0pG4wcIg/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Transistor npn/pnp",
@@ -1711,7 +1711,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Nuclear Physics",
     "duration": "50:58",
     "youtubeId": "egTaExkpdbs",
-    "thumbnailUrl": "https://img.youtube.com/vi/egTaExkpdbs/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/egTaExkpdbs/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Reputan alfa",
@@ -1737,7 +1737,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Nuclear Physics",
     "duration": "57:34",
     "youtubeId": "kvmkaV_z7b8",
-    "thumbnailUrl": "https://img.youtube.com/vi/kvmkaV_z7b8/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/kvmkaV_z7b8/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Separuh hayat",
@@ -1765,7 +1765,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Nuclear Physics",
     "duration": "57:24",
     "youtubeId": "zSEV0Fc6nbA",
-    "thumbnailUrl": "https://img.youtube.com/vi/zSEV0Fc6nbA/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/zSEV0Fc6nbA/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Pembelahan nukleus",
@@ -1796,7 +1796,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Nuclear Physics",
     "duration": "57:39",
     "youtubeId": "eIMR3w8zgXo",
-    "thumbnailUrl": "https://img.youtube.com/vi/eIMR3w8zgXo/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/eIMR3w8zgXo/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Pelakuran nukleus",
@@ -1825,7 +1825,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Quantum Physics",
     "duration": "58:44",
     "youtubeId": "Ps7VQetqxjE",
-    "thumbnailUrl": "https://img.youtube.com/vi/Ps7VQetqxjE/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/Ps7VQetqxjE/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Jasad hitam",
@@ -1855,7 +1855,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Quantum Physics",
     "duration": "58:08",
     "youtubeId": "f1WVnayam58",
-    "thumbnailUrl": "https://img.youtube.com/vi/f1WVnayam58/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/f1WVnayam58/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Duaan gelombang-zarah",
@@ -1885,7 +1885,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Quantum Physics",
     "duration": "55:14",
     "youtubeId": "IbKXC8a5LUU",
-    "thumbnailUrl": "https://img.youtube.com/vi/IbKXC8a5LUU/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/IbKXC8a5LUU/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Kesan fotoelektrik",
@@ -1914,7 +1914,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Quantum Physics",
     "duration": "58:46",
     "youtubeId": "nPDKutIaM8k",
-    "thumbnailUrl": "https://img.youtube.com/vi/nPDKutIaM8k/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/nPDKutIaM8k/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Persamaan fotoelektrik Einstein",
@@ -1943,7 +1943,7 @@ export const rawForm5Videos = [
     "chapterDlp": "Quantum Physics",
     "duration": "57:56",
     "youtubeId": "wiuGphZ5eGA",
-    "thumbnailUrl": "https://img.youtube.com/vi/wiuGphZ5eGA/hqdefault.jpg",
+    "thumbnailUrl": "https://img.youtube.com/vi/wiuGphZ5eGA/maxresdefault.jpg",
     "isPendingUpload": false,
     "keyConceptsBm": [
       "Voltan pemati",
@@ -2020,7 +2020,7 @@ export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) =>
   return {
     ...v,
     id: v.driveId,
-    thumbnailUrl: (v as any).thumbnailUrl || (v.youtubeId ? `https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg` : `/thumbnails/${v.driveId}.webp`),
+    thumbnailUrl: (v as any).thumbnailUrl || (v.youtubeId ? `https://img.youtube.com/vi/${v.youtubeId}/maxresdefault.jpg` : `/thumbnails/${v.driveId}.webp`),
     thumbnailBg: index % 5 === 0 ? "from-purple-900 via-indigo-950 to-slate-900" :
                  index % 5 === 1 ? "from-blue-950 via-slate-900 to-indigo-950" :
                  index % 5 === 2 ? "from-red-950 via-slate-900 to-amber-950" :

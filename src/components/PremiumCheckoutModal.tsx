@@ -7,7 +7,7 @@ import {
   CheckCircle2, 
   ShieldCheck, 
   Building2, 
-  QrCode, 
+ 
   ArrowRight, 
   Loader2, 
   Sparkles, 
@@ -67,9 +67,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
   const priceDisplay = isDev ? "RM 1.99" : "RM 30.00";
   const priceAmount = isDev ? "1.99" : "30";
   
-  const [paymentMethod, setPaymentMethod] = useState<"toyyibpay_fpx" | "duitnow">("toyyibpay_fpx");
   const [selectedBank, setSelectedBank] = useState<string>("MBB");
-  const [duitNowRef, setDuitNowRef] = useState<string>("");
   
   // Processing States
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -113,7 +111,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
     }
   };
 
-  // 2. Direct Instant Test / DuitNow Confirmation
+  // 2. Developer Instant Unlock Simulation
   const handleInstantUnlock = async () => {
     setIsProcessing(true);
     const newRef = `PFX-${Date.now().toString().slice(-6)}`;
@@ -259,116 +257,39 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
               </div>
             </div>
 
-            {/* Payment Method Selector */}
-            <div className="space-y-2">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-300 block">
-                {lang === "bm" ? "Kaedah Pembayaran:" : "Payment Method:"}
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("toyyibpay_fpx")}
-                  className={`p-3.5 rounded-2xl border transition-all duration-200 flex items-center space-x-3 cursor-pointer ${
-                    paymentMethod === "toyyibpay_fpx"
-                      ? "bg-amber-950/40 border-amber-500 text-white shadow-lg ring-1 ring-amber-500/40"
-                      : "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700"
-                  }`}
-                >
-                  <Building2 className={`w-5 h-5 ${paymentMethod === "toyyibpay_fpx" ? "text-amber-400" : "text-slate-400"}`} />
-                  <div className="text-left">
-                    <div className="text-xs font-extrabold text-white">FPX ToyyibPay</div>
-                    <div className="text-[10px] text-slate-400">Maybank, CIMB, Bank Islam dll.</div>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("duitnow")}
-                  className={`p-3.5 rounded-2xl border transition-all duration-200 flex items-center space-x-3 cursor-pointer ${
-                    paymentMethod === "duitnow"
-                      ? "bg-amber-950/40 border-amber-500 text-white shadow-lg ring-1 ring-amber-500/40"
-                      : "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700"
-                  }`}
-                >
-                  <QrCode className={`w-5 h-5 ${paymentMethod === "duitnow" ? "text-amber-400" : "text-slate-400"}`} />
-                  <div className="text-left">
-                    <div className="text-xs font-extrabold text-white">DuitNow QR</div>
-                    <div className="text-[10px] text-slate-400">Imbas e-Wallet / App Bank</div>
-                  </div>
-                </button>
-              </div>
-            </div>
-
             {/* FPX Banks Details */}
-            {paymentMethod === "toyyibpay_fpx" ? (
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-300">
-                    {lang === "bm" ? "Bank FPX Disokong Secara Langsung:" : "Supported Live FPX Banks:"}
-                  </span>
-                  <span className="text-[10px] text-amber-300 font-semibold flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>ToyyibPay Secured</span>
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-amber-400" />
+                  <span className="text-xs font-extrabold text-slate-200">
+                    {lang === "bm" ? "Perbankan Dalam Talian FPX (Semua Bank Utama Disokong):" : "FPX Online Banking (All Major Banks Supported):"}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
-                  {FPX_BANKS.map((bank) => (
-                    <div
-                      key={bank.id}
-                      className="p-2 rounded-xl bg-slate-950 border border-slate-800/80 text-center flex flex-col items-center justify-center space-y-0.5"
-                    >
-                      <span className="text-[11px] font-black text-slate-200">{bank.shortName}</span>
-                      <span className={`text-[8px] px-1 py-0.2 rounded border font-semibold ${bank.bgBadge}`}>
-                        {bank.id}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  {lang === "bm" 
-                    ? `Anda akan dialihkan terus ke portal FPX rasmi ToyyibPay untuk log masuk ke akaun bank pilihan anda dan melengkapkan pembayaran ${priceDisplay}${isDev ? " (Ujian Pembangun)" : ""}.`
-                    : `You will be redirected to the official ToyyibPay FPX portal to log in to your selected bank and complete the ${priceDisplay} payment${isDev ? " (Dev Test)" : ""}.`}
-                </p>
+                <span className="text-[10px] text-amber-300 font-semibold flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>ToyyibPay FPX</span>
+                </span>
               </div>
-            ) : (
-              /* DuitNow QR View */
-              <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
-                <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="w-28 h-28 rounded-2xl bg-white p-2 flex flex-col items-center justify-between shadow-xl shrink-0 border-2 border-rose-600">
-                    <div className="text-[8px] font-black text-rose-600 uppercase tracking-widest text-center">
-                      DuitNow QR
-                    </div>
-                    <svg viewBox="0 0 100 100" className="w-16 h-16 text-slate-950">
-                      <rect width="100" height="100" fill="white" />
-                      <path d="M10,10 h30 v30 h-30 z M15,15 v20 h20 v-20 z M20,20 h10 v10 h-10 z" fill="#0f172a" />
-                      <path d="M60,10 h30 v30 h-30 z M65,15 v20 h20 v-20 z M70,20 h10 v10 h-10 z" fill="#0f172a" />
-                      <path d="M10,60 h30 v30 h-30 z M15,65 v20 h20 v-20 z M20,70 h10 v10 h-10 z" fill="#0f172a" />
-                      <circle cx="50" cy="50" r="10" fill="#e11d48" />
-                      <path d="M46,46 L54,54 M46,54 L54,46" stroke="white" strokeWidth="2" />
-                    </svg>
-                    <span className="text-[7px] font-bold text-slate-700">Imbas Untuk Bayar</span>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
+                {FPX_BANKS.map((bank) => (
+                  <div
+                    key={bank.id}
+                    className="p-2 rounded-xl bg-slate-950 border border-slate-800/80 text-center flex flex-col items-center justify-center space-y-0.5"
+                  >
+                    <span className="text-[11px] font-black text-slate-200">{bank.shortName}</span>
+                    <span className={`text-[8px] px-1 py-0.2 rounded border font-semibold ${bank.bgBadge}`}>
+                      {bank.id}
+                    </span>
                   </div>
-
-                  <div className="space-y-1.5 text-xs text-slate-300">
-                    <div className="text-white font-extrabold text-sm flex items-center gap-1.5">
-                      <span>PhysFlix SPM (ahalimroslan@gmail.com)</span>
-                    </div>
-                    <p className="text-[11px] text-slate-400">
-                      Imbas kod QR menggunakan aplikasi perbankan (MAE, CIMB OCTO, Bank Islam, Touch &apos;n Go eWallet, GrabPay).
-                    </p>
-                    <div className="pt-1">
-                      <input
-                        type="text"
-                        value={duitNowRef}
-                        onChange={(e) => setDuitNowRef(e.target.value)}
-                        placeholder="Masukkan No Rujukan / Nama Anda"
-                        className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-400"
-                      />
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-            )}
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                {lang === "bm" 
+                  ? `Anda akan dialihkan terus ke portal rasmi ToyyibPay FPX untuk memilih bank kegemaran anda (Maybank, CIMB, Bank Islam dll.) dan melengkapkan pembayaran ${priceDisplay}${isDev ? " (Kadar Khas Ujian Pembangun)" : ""}.`
+                  : `You will be redirected to the official ToyyibPay FPX portal to select your bank (Maybank, CIMB, Bank Islam etc.) and complete the ${priceDisplay} payment${isDev ? " (Special Dev Test Rate)" : ""}.`}
+              </p>
+            </div>
 
             {/* Buyer Account Confirmation */}
             <div className="flex items-center justify-between text-xs px-3.5 py-2 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-400">
@@ -378,46 +299,25 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
 
             {/* Action Buttons */}
             <div className="space-y-2 pt-1">
-              {paymentMethod === "toyyibpay_fpx" ? (
-                <button
-                  type="button"
-                  onClick={handleToyyibPayCheckout}
-                  disabled={isProcessing}
-                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:via-amber-500 hover:to-yellow-400 text-slate-950 font-black text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:shadow-[0_0_50px_rgba(245,158,11,0.8)] active:scale-[0.98] flex items-center justify-center space-x-2.5 cursor-pointer ring-2 ring-amber-300/40 disabled:opacity-50"
-                >
-                  {isProcessing ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
-                      <span>{processingStep}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Zap className="w-5 h-5 fill-slate-950 text-slate-950" />
-                      <span>{lang === "bm" ? `Bayar ${priceDisplay} Melalui FPX ToyyibPay${isDev ? " (Ujian)" : ""}` : `Pay ${priceDisplay} via ToyyibPay FPX${isDev ? " (Dev Test)" : ""}`}</span>
-                      <ExternalLink className="w-4 h-4 text-slate-950" />
-                    </>
-                  )}
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleInstantUnlock}
-                  disabled={isProcessing}
-                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:via-amber-500 hover:to-yellow-400 text-slate-950 font-black text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:shadow-[0_0_50px_rgba(245,158,11,0.8)] active:scale-[0.98] flex items-center justify-center space-x-2.5 cursor-pointer ring-2 ring-amber-300/40 disabled:opacity-50"
-                >
-                  {isProcessing ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
-                      <span>{processingStep}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Check className="w-5 h-5 text-slate-950 stroke-[3]" />
-                      <span>{lang === "bm" ? "Sahkan Bayaran DuitNow & Buka Akses" : "Confirm DuitNow & Unlock Access"}</span>
-                    </>
-                  )}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={handleToyyibPayCheckout}
+                disabled={isProcessing}
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:via-amber-500 hover:to-yellow-400 text-slate-950 font-black text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:shadow-[0_0_50px_rgba(245,158,11,0.8)] active:scale-[0.98] flex items-center justify-center space-x-2.5 cursor-pointer ring-2 ring-amber-300/40 disabled:opacity-50"
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
+                    <span>{processingStep}</span>
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-5 h-5 fill-slate-950 text-slate-950" />
+                    <span>{lang === "bm" ? `Bayar ${priceDisplay} Melalui FPX ToyyibPay${isDev ? " (Ujian)" : ""}` : `Pay ${priceDisplay} via ToyyibPay FPX${isDev ? " (Dev Test)" : ""}`}</span>
+                    <ExternalLink className="w-4 h-4 text-slate-950" />
+                  </>
+                )}
+              </button>
 
               {/* Developer Test Mode Button */}
               <div className="pt-2 text-center">

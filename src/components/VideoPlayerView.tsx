@@ -1206,7 +1206,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     </button>
                     <p className="text-[11px] text-amber-300/90 font-semibold mt-2 text-center flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                      <span>{lang === "bm" ? "Buka Akses Segera (FPX Online Banking & DuitNow QR)" : "Instant Unlock (FPX Online Banking & DuitNow QR)"}</span>
+                      <span>{lang === "bm" ? "Buka Akses Segera (FPX Perbankan Internet Selamat)" : "Instant Unlock (Secure FPX Online Banking)"}</span>
                     </p>
                   </div>
 

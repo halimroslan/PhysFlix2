@@ -73,7 +73,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 }) => {
   const { lang, t } = useLanguage();
   const { isBookmarked, toggleBookmark, addToHistory, videoStats, updateResumeTime } = useUserActivity();
-  const { user } = useAuth();
+  const { user, isSuperAdmin, signInWithGoogle } = useAuth();
+  const userEmail = (user?.email || "").toLowerCase().trim();
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -203,7 +204,10 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       
       setCurrentStartSeconds(startSecs);
       
-      if (currentLesson.youtubeId) {
+      if (currentLesson.form === 5 && !isSuperAdmin) {
+        // Locked for normal users: do NOT request or leak YouTube embed URL
+        setIframeSrc("");
+      } else if (currentLesson.youtubeId) {
         const origin = typeof window !== "undefined" ? window.location.origin : "https://physflix.vercel.app";
         setIframeSrc(`https://www.youtube.com/embed/${currentLesson.youtubeId}?enablejsapi=1&fs=0&start=${startSecs}&rel=0&modestbranding=1&autoplay=1&controls=1&playsinline=1&iv_load_policy=3&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`);
       } else if (currentLesson.driveId) {
@@ -222,11 +226,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }, 100);
     
     return () => clearTimeout(screenTimer);
-  }, [currentLesson]);
+  }, [currentLesson, isSuperAdmin]);
 
   // Track and save video progress continuously for Auto-Resume
   useEffect(() => {
-    if (!currentLesson || !currentLesson.id || currentLesson.isPendingUpload) return;
+    if (!currentLesson || !currentLesson.id || currentLesson.isPendingUpload || (currentLesson.form === 5 && !isSuperAdmin)) return;
     
     let ticks = 0;
     const interval = setInterval(() => {
@@ -416,8 +420,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const [isGeneratingAIAnswer, setIsGeneratingAIAnswer] = useState<{ [id: string]: boolean }>({});
   const [isCommentServiceDisabled, setIsCommentServiceDisabled] = useState(false);
 
-  const userEmail = user?.email?.toLowerCase().trim() || "";
-  const isSuperAdmin = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com"].includes(userEmail);
+  // userEmail and isSuperAdmin obtained from useAuth at component root
 
   // Public Real-Time Q&A Synchronization with Lossless Merging & Auto-Healing
   const fetchPublicQA = useCallback(async () => {
@@ -999,6 +1002,25 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column - Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
+          {/* Developer Active Banner when watching Form 5 */}
+          {currentLesson.form === 5 && isSuperAdmin && (
+            <div className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-950/60 via-teal-950/50 to-slate-900 border border-emerald-500/40 flex items-center justify-between shadow-lg">
+              <div className="flex items-center space-x-2">
+                <span className="flex h-2.5 w-2.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-xs font-black text-emerald-300 tracking-wide flex items-center gap-1.5">
+                  <span>👑 MOD PEMBANGUN:</span>
+                  <span className="text-emerald-100 font-semibold">{lang === "bm" ? "Akses Video T5 Dibuka Penuh" : "Full F5 Video Access Unlocked"}</span>
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-emerald-400/80 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">
+                {userEmail}
+              </span>
+            </div>
+          )}
+
           {/* Video Outer Wrapper */}
           <div
             ref={containerRef}
@@ -1050,7 +1072,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                 maxHeight: '100%'
               }}
             >
-              {currentLesson.form === 5 || currentLesson.isPendingUpload || !currentLesson.youtubeId ? (
+              {!currentLesson.youtubeId || currentLesson.isPendingUpload ? (
                 <div className="absolute inset-0 z-30 bg-gradient-to-br from-[#0e1320] via-[#090c15] to-[#04060a] flex flex-col items-center justify-center p-6 text-center space-y-4 md:space-y-6">
                   {/* Subtle Grid / glow */}
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#ef4444_1px,transparent_1px)] [background-size:16px_16px]"></div>
@@ -1064,19 +1086,19 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <div className="relative z-10 space-y-2 max-w-xl px-2">
                     <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] md:text-xs font-black uppercase tracking-wider">
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>{lang === "bm" ? "Tingkatan 5 • Sedang Diproses" : "Form 5 • Processing"}</span>
+                      <span>{lang === "bm" ? "Sedang Diproses" : "Processing"}</span>
                     </div>
                     
                     <h2 className="text-base sm:text-xl md:text-2xl font-black text-white tracking-tight">
                       {lang === "bm" 
-                        ? "Video Pembelajaran Akan Dimuat Naik Dalam Masa Terdekat" 
-                        : "Lesson Video Will Be Uploaded Soon"}
+                        ? "Video Pembelajaran Sedang Disediakan" 
+                        : "Lesson Video Is Being Prepared"}
                     </h2>
                     
                     <p className="text-[11px] sm:text-xs md:text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
                       {lang === "bm"
-                        ? `Rakaman video pengajaran bagi topik "${currentLesson.titleBm}" sedang disediakan. Anda boleh membaca nota ringkas, menyemak DSKP atau mencuba kuiz "Uji Minda" di panel sebelah!`
-                        : `Video recording for "${currentLesson.titleDlp}" is being prepared. You can read summary notes, check DSKP or try the "Uji Minda" quiz on the side panel!`}
+                        ? `Rakaman video pengajaran bagi topik "${currentLesson.titleBm}" sedang dimuat naik. Anda boleh membaca nota ringkas, menyemak DSKP atau mencuba kuiz "Uji Minda" di panel sebelah!`
+                        : `Video recording for "${currentLesson.titleDlp}" is being uploaded. You can read summary notes, check DSKP or try the "Uji Minda" quiz on the side panel!`}
                     </p>
                   </div>
 
@@ -1095,6 +1117,80 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     >
                       <FileText className="w-4 h-4 text-emerald-400" />
                       <span>{lang === "bm" ? "Buka Nota Ringkas" : "Open Notes"}</span>
+                    </button>
+                  </div>
+                </div>
+              ) : currentLesson.form === 5 && !isSuperAdmin ? (
+                /* 🔒 Kandungan Eksklusif Tingkatan 5 (Terkunci) */
+                <div className="absolute inset-0 z-30 bg-gradient-to-br from-[#0c0f17] via-[#080b12] to-[#030408] flex flex-col items-center justify-center p-6 text-center space-y-4 md:space-y-5 select-none">
+                  {/* Ambient grid & radial glow */}
+                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                  <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                  {/* Golden Glowing Lock Card */}
+                  <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-3xl bg-gradient-to-b from-amber-500/20 to-red-600/20 border border-amber-500/40 flex items-center justify-center shadow-[0_0_50px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/20">
+                    <Lock className="w-8 h-8 md:w-10 md:h-10 text-amber-400 drop-shadow-[0_0_12px_rgba(245,158,11,0.6)]" />
+                  </div>
+
+                  {/* Pill Badge */}
+                  <div className="relative z-10 inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] md:text-xs font-black uppercase tracking-wider shadow-inner">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>{lang === "bm" ? "Kandungan Eksklusif • Tingkatan 5" : "Exclusive Content • Form 5"}</span>
+                  </div>
+
+                  {/* Text Details */}
+                  <div className="relative z-10 space-y-1.5 max-w-lg px-2">
+                    <h2 className="text-base sm:text-xl md:text-2xl font-black text-white tracking-tight">
+                      {lang === "bm" 
+                        ? "Video Modul Pembelajaran Ini Terkunci" 
+                        : "This Lesson Module Video Is Locked"}
+                    </h2>
+                    <p className="text-[11px] sm:text-xs md:text-sm text-slate-300/90 leading-relaxed max-w-md mx-auto">
+                      {lang === "bm"
+                        ? "Siri video Fizik Tingkatan 5 KSSM (29 modul lengkap) dikhaskan untuk langganan premium PhysFlix. Akses penuh buat masa ini dihadkan kepada akaun pembangun & guru penggubal."
+                        : "Form 5 KSSM Physics video series (29 complete modules) is reserved for PhysFlix premium subscription. Full access is currently restricted to developer & author accounts."}
+                    </p>
+                  </div>
+
+                  {/* Current Account / Login State */}
+                  <div className="relative z-10 pt-1">
+                    {user ? (
+                      <div className="flex flex-col sm:flex-row items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/80 border border-slate-700/60 text-xs text-slate-300 shadow-md">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                          <span>{lang === "bm" ? "Akaun Semasa:" : "Current Account:"}</span>
+                          <strong className="text-white font-mono">{user.email}</strong>
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-amber-300 border border-amber-500/30 font-bold">
+                          {lang === "bm" ? "Pengguna Biasa (Akses Terkunci)" : "Standard User (Locked)"}
+                        </span>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={signInWithGoogle}
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-bold text-xs shadow-xl shadow-red-950/80 flex items-center space-x-2 transition cursor-pointer active:scale-95"
+                      >
+                        <ShieldCheck className="w-4 h-4" />
+                        <span>{lang === "bm" ? "Log Masuk Akaun Pembangun (Google)" : "Sign In Developer Account (Google)"}</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Quick Interactive Study Links */}
+                  <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <button
+                      onClick={() => setActiveTab("notes")}
+                      className="px-4 py-2.5 rounded-xl bg-[#151b2a] hover:bg-slate-800 text-slate-200 text-xs font-bold transition border border-slate-700/80 flex items-center space-x-2 cursor-pointer active:scale-95 shadow-md"
+                    >
+                      <FileText className="w-4 h-4 text-emerald-400" />
+                      <span>{lang === "bm" ? "Buka Nota Ringkas Bab Ini" : "Open Chapter Notes"}</span>
+                    </button>
+                    <button
+                      onClick={() => setSidebarTab("quiz")}
+                      className="px-4 py-2.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 border border-purple-500/40 text-xs font-bold transition flex items-center space-x-2 cursor-pointer active:scale-95"
+                    >
+                      <Brain className="w-4 h-4 text-purple-400" />
+                      <span>{lang === "bm" ? "Cuba Kuiz Uji Minda" : "Try Quiz"}</span>
                     </button>
                   </div>
                 </div>
@@ -2238,9 +2334,17 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
                         {/* Title & Metadata */}
                         <div className="flex-1 overflow-hidden">
-                          <span className="text-[9px] font-bold text-red-400 block">
-                            {lesson.week}
-                          </span>
+                          <div className="flex items-center space-x-1.5">
+                            <span className="text-[9px] font-bold text-red-400 block">
+                              {lesson.week}
+                            </span>
+                            {lesson.form === 5 && !isSuperAdmin && (
+                              <span className="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[8px] font-black border border-amber-500/40 flex items-center gap-0.5">
+                                <Lock className="w-2 h-2" />
+                                <span>PREMIUM</span>
+                              </span>
+                            )}
+                          </div>
                           <h5
                             className={`text-xs font-bold truncate ${
                               isCurrent ? "text-red-400" : "text-slate-200 group-hover:text-white"

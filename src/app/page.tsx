@@ -23,11 +23,11 @@ import {
   form5VideoLessons,
   VideoLesson
 } from "@/data/physicsData";
-import { Play, BookOpen, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target } from "lucide-react";
+import { Play, BookOpen, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target, Lock } from "lucide-react";
 
 function MainDashboard() {
   const { lang } = useLanguage();
-  const { user, loading } = useAuth();
+  const { user, loading, isSuperAdmin } = useAuth();
   const { isBookmarked, watchHistory, videoStats } = useUserActivity();
   const [currentTab, setCurrentTab] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState<VideoLesson | null>(null);
@@ -70,7 +70,6 @@ function MainDashboard() {
   }
 
   const userEmail = user?.email?.toLowerCase().trim() || "";
-  const isSuperAdmin = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com"].includes(userEmail);
 
   // Filter lessons based on search
   const filteredLessons = allVideoLessons.filter((item) => {
@@ -142,9 +141,21 @@ function MainDashboard() {
             <span>T{item.form} • Bab {item.chapterNum}</span>
           </div>
 
-          {/* Play Button Overlay */}
-          <div className="w-10 h-10 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300 shadow-2xl z-10 opacity-0 group-hover:opacity-100">
-            <Play className="w-4 h-4 fill-white ml-0.5" />
+          {/* Premium Lock Badge for Form 5 */}
+          {item.form === 5 && !isSuperAdmin && (
+            <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[9px] font-black flex items-center space-x-1 shadow-lg backdrop-blur-md z-10">
+              <Lock className="w-2.5 h-2.5 text-amber-400" />
+              <span>PREMIUM</span>
+            </div>
+          )}
+
+          {/* Play / Lock Button Overlay */}
+          <div className={`w-10 h-10 rounded-full ${item.form === 5 && !isSuperAdmin ? 'bg-amber-950/80 border-amber-500/50 group-hover:bg-amber-600' : 'bg-black/70 border-white/20 group-hover:bg-red-600'} border flex items-center justify-center text-white group-hover:scale-110 transition-all duration-300 shadow-2xl z-10 opacity-0 group-hover:opacity-100`}>
+            {item.form === 5 && !isSuperAdmin ? (
+              <Lock className="w-4 h-4 text-amber-300 fill-amber-300/20" />
+            ) : (
+              <Play className="w-4 h-4 fill-white ml-0.5" />
+            )}
           </div>
 
           {/* Duration Badge */}
@@ -354,16 +365,34 @@ function MainDashboard() {
             </div>
           ) : currentTab === "form5" ? (
             <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-3">
                 <div>
                   <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
                     <GraduationCap className="w-6 h-6 text-red-500" />
                     {lang === "bm" ? "Fizik Tingkatan 5 (KSSM)" : "Form 5 SPM Physics (KSSM)"}
                   </h2>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {lang === "bm"
+                      ? "29 modul pengajaran lengkap SPM. Akses penuh buat masa ini dibuka untuk akaun pembangun & guru penggubal."
+                      : "29 complete SPM modules. Full access is currently unlocked for developer & author accounts."}
+                  </p>
                 </div>
-                <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
-                  {form5VideoLessons.length} Video Lengkap
-                </span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {!isSuperAdmin ? (
+                    <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
+                      <Lock className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{lang === "bm" ? "Akses Terhad (Pembangun Sahaja)" : "Restricted (Developer Only)"}</span>
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
+                      <span>👑</span>
+                      <span>{lang === "bm" ? "Mod Pembangun: Akses Penuh" : "Developer: Full Access"}</span>
+                    </span>
+                  )}
+                  <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
+                    {form5VideoLessons.length} Video Lengkap
+                  </span>
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {form5VideoLessons.map(renderVideoCard)}

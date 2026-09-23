@@ -4,6 +4,16 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 
+export const SUPERADMIN_EMAILS = [
+  "ahalimroslan@gmail.com",
+  "abdulhalimroslan@gmail.com",
+];
+
+export function isDeveloperAccount(email?: string | null): boolean {
+  if (!email) return false;
+  return SUPERADMIN_EMAILS.includes(email.toLowerCase().trim());
+}
+
 export interface AppUser {
   uid: string;
   id: string;
@@ -15,6 +25,7 @@ export interface AppUser {
 interface AuthContextType {
   user: AppUser | null;
   loading: boolean;
+  isSuperAdmin: boolean;
   signInWithGoogle: () => Promise<void>;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   signupWithEmail: (email: string, pass: string) => Promise<void>;
@@ -28,6 +39,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
+
+  const isSuperAdmin = !!user?.email && SUPERADMIN_EMAILS.includes(user.email.toLowerCase().trim());
 
   // Helper to map Supabase User to AppUser
   const mapSupabaseUser = (sbUser: SupabaseUser | null): AppUser | null => {
@@ -220,6 +233,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         user,
         loading,
+        isSuperAdmin,
         signInWithGoogle,
         loginWithEmail,
         signupWithEmail,

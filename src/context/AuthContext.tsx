@@ -26,6 +26,8 @@ interface AuthContextType {
   user: AppUser | null;
   loading: boolean;
   isSuperAdmin: boolean;
+  isPremium: boolean;
+  unlockPremium: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   signupWithEmail: (email: string, pass: string) => Promise<void>;
@@ -39,8 +41,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [isPremiumUnlocked, setIsPremiumUnlocked] = useState<boolean>(false);
 
   const isSuperAdmin = !!user?.email && SUPERADMIN_EMAILS.includes(user.email.toLowerCase().trim());
+  const isPremium = isSuperAdmin || isPremiumUnlocked;
+
+  // Check premium status on mount and when user changes
+  useEffect(() => {
+    const checkPremium = async () => {
+      try {
+        const localUnlocked = typeof window !== 'undefined' ? localStorage.getItem("physflix_user_is_premium") : null;
+        if (localUnlocked === "true") {
+          setIsPremiumUnlocked(true);
+          return;
+        }
+        if (isSupabaseConfigured && user?.id) {
+          const { data } = await supabase
+            .from("profiles")
+            .select("is_premium")
+            .eq("id", user.id)
+            .single();
+          if (data?.is_premium) {
+            setIsPremiumUnlocked(true);
+            localStorage.setItem("physflix_user_is_premium", "true");
+          }
+        }
+      } catch (e) {
+        // silent fallback
+      }
+    };
+    checkPremium();
+  }, [user]);
+
+  const unlockPremium = async () => {
+    setIsPremiumUnlocked(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("physflix_user_is_premium", "true");
+      if (user?.email) {
+        localStorage.setItem("physflix_premium_email", user.email);
+      }
+    }
+    if (isSupabaseConfigured && user?.id) {
+      try {
+        await supabase
+          .from("profiles")
+          .update({
+            is_premium: true,
+            premium_activated_at: new Date().toISOString(),
+          })
+          .eq("id", user.id);
+      } catch (e) {
+        console.warn("Could not sync premium to Supabase:", e);
+      }
+    }
+  };
 
   // Helper to map Supabase User to AppUser
   const mapSupabaseUser = (sbUser: SupabaseUser | null): AppUser | null => {
@@ -225,7 +279,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error("Sign-Out Error:", error);
     }
     setUser(null);
+    setIsPremiumUnlocked(false);
     localStorage.removeItem("physflix_local_user");
+    localStorage.removeItem("physflix_user_is_premium");
   };
 
   return (
@@ -234,6 +290,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         user,
         loading,
         isSuperAdmin,
+        isPremium,
+        unlockPremium,
         signInWithGoogle,
         loginWithEmail,
         signupWithEmail,

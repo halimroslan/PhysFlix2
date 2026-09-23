@@ -34,9 +34,12 @@ import {
   ShieldAlert,
   ShieldCheck,
   Loader2,
-  RefreshCw
+  RefreshCw,
+  Crown,
+  Zap
 } from "lucide-react";
 import QuizComponent from "./QuizComponent";
+import { PremiumCheckoutModal } from "@/components/PremiumCheckoutModal";
 import { useLanguage } from "@/context/LanguageContext";
 import { VideoLesson, allVideoLessons } from "@/data/physicsData";
 import { conceptDefinitions, conceptDefinitionsDlp } from "@/data/conceptDefinitions";
@@ -73,7 +76,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 }) => {
   const { lang, t } = useLanguage();
   const { isBookmarked, toggleBookmark, addToHistory, videoStats, updateResumeTime } = useUserActivity();
-  const { user, isSuperAdmin, signInWithGoogle } = useAuth();
+  const { user, isSuperAdmin, isPremium, signInWithGoogle } = useAuth();
   const userEmail = (user?.email || "").toLowerCase().trim();
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -84,6 +87,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   // Anti-Leaking Protection & Player State
   const [showProtectedNotice, setShowProtectedNotice] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const noticeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -204,7 +208,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       
       setCurrentStartSeconds(startSecs);
       
-      if (currentLesson.form === 5 && !isSuperAdmin) {
+      if (currentLesson.form === 5 && !isSuperAdmin && !isPremium) {
         // Locked for normal users: do NOT request or leak YouTube embed URL
         setIframeSrc("");
       } else if (currentLesson.youtubeId) {
@@ -226,11 +230,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }, 100);
     
     return () => clearTimeout(screenTimer);
-  }, [currentLesson, isSuperAdmin]);
+  }, [currentLesson, isSuperAdmin, isPremium]);
 
   // Track and save video progress continuously for Auto-Resume
   useEffect(() => {
-    if (!currentLesson || !currentLesson.id || currentLesson.isPendingUpload || (currentLesson.form === 5 && !isSuperAdmin)) return;
+    if (!currentLesson || !currentLesson.id || currentLesson.isPendingUpload || (currentLesson.form === 5 && !isSuperAdmin && !isPremium)) return;
     
     let ticks = 0;
     const interval = setInterval(() => {
@@ -1003,7 +1007,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
         {/* Left Column - Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
           {/* Developer Active Banner when watching Form 5 */}
-          {currentLesson.form === 5 && isSuperAdmin && (
+          {currentLesson.form === 5 && (isSuperAdmin || isPremium) && (
             <div className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-950/60 via-teal-950/50 to-slate-900 border border-emerald-500/40 flex items-center justify-between shadow-lg">
               <div className="flex items-center space-x-2">
                 <span className="flex h-2.5 w-2.5 relative">
@@ -1011,7 +1015,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                 </span>
                 <span className="text-xs font-black text-emerald-300 tracking-wide flex items-center gap-1.5">
-                  <span>👑 MOD PEMBANGUN:</span>
+                  <span>{isSuperAdmin ? '👑 MOD PEMBANGUN:' : '✨ AKSES PREMIUM:'}</span>
                   <span className="text-emerald-100 font-semibold">{lang === "bm" ? "Akses Video T5 Dibuka Penuh" : "Full F5 Video Access Unlocked"}</span>
                 </span>
               </div>
@@ -1120,7 +1124,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     </button>
                   </div>
                 </div>
-              ) : currentLesson.form === 5 && !isSuperAdmin ? (
+              ) : currentLesson.form === 5 && !isSuperAdmin && !isPremium ? (
                 /* 🔒 Kandungan Eksklusif Tingkatan 5 (Terkunci) */
                 <div className="absolute inset-0 z-30 bg-gradient-to-br from-[#0c0f17] via-[#080b12] to-[#030408] flex flex-col items-center justify-center p-6 text-center space-y-4 md:space-y-5 select-none">
                   {/* Ambient grid & radial glow */}
@@ -1149,6 +1153,24 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       {lang === "bm"
                         ? "Siri video Fizik Tingkatan 5 KSSM (29 modul lengkap) dikhaskan untuk langganan premium PhysFlix. Akses penuh buat masa ini dihadkan kepada akaun pembangun & guru penggubal."
                         : "Form 5 KSSM Physics video series (29 complete modules) is reserved for PhysFlix premium subscription. Full access is currently restricted to developer & author accounts."}
+                    </p>
+                  </div>
+
+                  {/* 👑 BUTANG BESAR "LANGGAN / SUBSCRIBE SEKARANG" */}
+                  <div className="relative z-10 w-full max-w-sm pt-2 flex flex-col items-center">
+                    <button
+                      onClick={() => setShowCheckoutModal(true)}
+                      className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:via-amber-500 hover:to-yellow-400 text-slate-950 font-black text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:shadow-[0_0_55px_rgba(245,158,11,0.8)] hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center space-x-2.5 cursor-pointer ring-2 ring-amber-300/40"
+                    >
+                      <Crown className="w-5 h-5 text-slate-950 fill-slate-950 animate-bounce" />
+                      <span className="tracking-wide">
+                        {lang === "bm" ? "LANGGAN / SUBSCRIBE SEKARANG" : "SUBSCRIBE TO PREMIUM NOW"}
+                      </span>
+                      <Zap className="w-4 h-4 text-slate-950 fill-slate-950" />
+                    </button>
+                    <p className="text-[11px] text-amber-300/90 font-semibold mt-2 text-center flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span>{lang === "bm" ? "Buka Akses Segera (FPX Online Banking & DuitNow QR)" : "Instant Unlock (FPX Online Banking & DuitNow QR)"}</span>
                     </p>
                   </div>
 
@@ -2372,7 +2394,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                             <span className="text-[9px] font-bold text-red-400 block">
                               {lesson.week}
                             </span>
-                            {lesson.form === 5 && !isSuperAdmin && (
+                            {lesson.form === 5 && !isSuperAdmin && !isPremium && (
                               <span className="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[8px] font-black border border-amber-500/40 flex items-center gap-0.5">
                                 <Lock className="w-2 h-2" />
                                 <span>PREMIUM</span>
@@ -2407,6 +2429,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
           </div>
         </div>
       </div>
+      {/* Premium Checkout Modal */}
+      <PremiumCheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        onSuccess={() => {
+          setShowCheckoutModal(false);
+        }}
+      />
     </div>
   );
 };

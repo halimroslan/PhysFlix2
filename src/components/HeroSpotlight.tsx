@@ -344,7 +344,7 @@ export function getLessonDescription(lesson: VideoLesson, lang: "bm" | "en" | st
 
 export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLessons }) => {
   const { lang, t } = useLanguage();
-  const { isSuperAdmin } = useAuth();
+  const { isSuperAdmin, isPremium } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
@@ -413,7 +413,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
   const config = CategoryConfig[categoryKey] || CategoryConfig.mechanics;
   const CategoryIcon = config.icon;
   const isForm5 = currentLesson.form === 5;
-  const isLockedForUser = isForm5 && !isSuperAdmin;
+  const isLockedForUser = isForm5 && !isSuperAdmin && !isPremium;
 
   return (
     <div

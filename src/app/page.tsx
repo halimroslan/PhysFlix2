@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { UserActivityProvider, useUserActivity } from "@/context/UserActivityContext";
@@ -24,11 +24,11 @@ import {
   form5VideoLessons,
   VideoLesson
 } from "@/data/physicsData";
-import { Play, BookOpen, Crown, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target, Lock } from "lucide-react";
+import { Play, BookOpen, Crown, X, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target, Lock } from "lucide-react";
 
 function MainDashboard() {
   const { lang } = useLanguage();
-  const { user, loading, isSuperAdmin, isPremium } = useAuth();
+  const { user, loading, isSuperAdmin, isPremium, unlockPremium } = useAuth();
   const { isBookmarked, watchHistory, videoStats } = useUserActivity();
   const [currentTab, setCurrentTab] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState<VideoLesson | null>(null);
@@ -42,6 +42,21 @@ function MainDashboard() {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isCalcOpen, setIsCalcOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [showPaymentSuccessToast, setShowPaymentSuccessToast] = useState(false);
+
+  // Check for successful payment callback from ToyyibPay
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("payment") === "success") {
+        if (unlockPremium) {
+          unlockPremium();
+        }
+        setShowPaymentSuccessToast(true);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+  }, [unlockPremium]);
 
   const handleNavigateToQaReply = (videoId: string, questionId: string) => {
     const lesson = allVideoLessons.find(
@@ -436,6 +451,30 @@ function MainDashboard() {
           )}
         </main>
       </div>
+
+      {/* Payment Success Toast */}
+      {showPaymentSuccessToast && (
+        <div className="fixed top-20 right-4 sm:right-6 z-[300] max-w-sm sm:max-w-md p-4 rounded-2xl bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 border border-emerald-500/60 shadow-[0_0_35px_rgba(16,185,129,0.4)] text-white flex items-start space-x-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0">
+            <Crown className="w-5 h-5 text-emerald-400 fill-emerald-400/20" />
+          </div>
+          <div className="flex-1 space-y-1">
+            <div className="text-xs font-black text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span>🎉</span>
+              <span>PEMBAYARAN FPX BERJAYA!</span>
+            </div>
+            <p className="text-xs text-slate-200">
+              Tahniah! Akaun anda kini dinaik taraf ke Akses Penuh Tingkatan 5 SPM (1 Tahun).
+            </p>
+          </div>
+          <button
+            onClick={() => setShowPaymentSuccessToast(false)}
+            className="p-1 text-slate-400 hover:text-white cursor-pointer"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Modals */}
       <FormulaSheetModal isOpen={isFormulaOpen} onClose={() => setIsFormulaOpen(false)} />

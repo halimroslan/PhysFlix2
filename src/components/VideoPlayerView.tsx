@@ -45,7 +45,7 @@ import { getLessonCheatNote } from "@/data/cheatNotesData";
 import { MathFormula } from "@/components/MathFormula";
 import { QAItem, QAReply, getLessonQAItems } from "@/data/qaDatabase";
 import { checkQuickAbusive } from "@/utils/moderation";
-import { deobfuscateId } from "@/utils/security";
+import { deobfuscateId, useDRMProtection } from "@/utils/security";
 import { useUserActivity } from "@/context/UserActivityContext";
 import { useAuth } from "@/context/AuthContext";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
@@ -79,6 +79,58 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
   const videoOpenedAt = useRef<number>(Date.now());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [iframeSrc, setIframeSrc] = useState("");
+
+  // Anti-Leaking Protection & Player State
+  const [showProtectedNotice, setShowProtectedNotice] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const noticeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Activate DRM Protection (disables right-click context menu & devtools shortcuts)
+  useDRMProtection();
+
+  // Listen to postMessage from YouTube iframe
+  useEffect(() => {
+    const handleWindowMessage = (e: MessageEvent) => {
+      try {
+        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        if (data && data.event === "infoDelivery" && data.info && typeof data.info.playerState !== "undefined") {
+          // 1 = PLAYING, 2 = PAUSED, 0 = ENDED
+          if (data.info.playerState === 1) setIsPlaying(true);
+          if (data.info.playerState === 2) setIsPlaying(false);
+        }
+      } catch (err) {}
+    };
+    window.addEventListener("message", handleWindowMessage);
+    return () => window.removeEventListener("message", handleWindowMessage);
+  }, []);
+
+  const sendPlayerCommand = (command: string, args: any[] = []) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: command,
+          args: args,
+        }),
+        "*"
+      );
+    }
+  };
+
+  const handleShieldClick = () => {
+    if (isPlaying) {
+      sendPlayerCommand("pauseVideo");
+      setIsPlaying(false);
+    } else {
+      sendPlayerCommand("playVideo");
+      setIsPlaying(true);
+    }
+    setShowProtectedNotice(true);
+    if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
+    noticeTimerRef.current = setTimeout(() => {
+      setShowProtectedNotice(false);
+    }, 2500);
+  };
 
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
@@ -151,7 +203,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       setCurrentStartSeconds(startSecs);
       
       if (currentLesson.youtubeId) {
-        setIframeSrc(`https://www.youtube.com/embed/${currentLesson.youtubeId}?start=${startSecs}&rel=0&modestbranding=1&autoplay=1&controls=1`);
+        const origin = typeof window !== "undefined" ? window.location.origin : "https://physflix.vercel.app";
+        setIframeSrc(`https://www.youtube.com/embed/${currentLesson.youtubeId}?enablejsapi=1&start=${startSecs}&rel=0&modestbranding=1&autoplay=1&controls=1&playsinline=1&iv_load_policy=3&origin=${encodeURIComponent(origin)}&widget_referrer=${encodeURIComponent(origin)}`);
       } else if (currentLesson.driveId) {
         const driveUrl = `https://drive.google.com/file/d/${deobfuscateId(currentLesson.driveId)}/preview`;
         setIframeSrc(`${driveUrl}?t=${startSecs}s`);
@@ -967,7 +1020,11 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
             {/* Inner Container - 16:9 Aspect Ratio */}
             <div 
-              className="relative overflow-hidden bg-black w-full h-full flex items-center justify-center"
+              className="relative overflow-hidden bg-black w-full h-full flex items-center justify-center select-none"
+              onContextMenu={(e) => {
+                e.preventDefault();
+                return false;
+              }}
               style={isFullscreen ? { 
                 aspectRatio: '16/9',
                 maxWidth: '177.778vh',
@@ -1027,14 +1084,61 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   </div>
                 </div>
               ) : (
-                <iframe
-                  ref={iframeRef}
-                  src={iframeSrc}
-                  className="w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  title={currentLesson.titleBm}
-                ></iframe>
+                <div className="relative w-full h-full select-none" onContextMenu={(e) => { e.preventDefault(); return false; }}>
+                  <iframe
+                    ref={iframeRef}
+                    src={iframeSrc}
+                    className="w-full h-full border-0 select-none"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    title={currentLesson.titleBm}
+                  ></iframe>
+
+                  {/* 1. TOP HEADER SHIELD: Blocks YouTube Channel Avatar, Video Title, and Share Link */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShieldClick();
+                    }}
+                    onDoubleClick={(e) => {
+                      e.stopPropagation();
+                      toggleFullscreen();
+                    }}
+                    className="absolute top-0 left-0 w-[78%] h-14 sm:h-16 md:h-20 z-20 cursor-pointer pointer-events-auto bg-transparent"
+                    title={lang === "bm" ? "Kandungan Eksklusif PhysFlix (Pautan Luar Dinyahaktifkan)" : "PhysFlix Exclusive Content"}
+                  />
+
+                  {/* 2. BOTTOM RIGHT LOGO SHIELD: Blocks YouTube Logo while keeping Fullscreen icon clickable */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShieldClick();
+                    }}
+                    className="absolute bottom-0 right-9 sm:right-11 w-22 sm:w-28 h-10 sm:h-12 z-20 cursor-default pointer-events-auto bg-transparent"
+                    title="PhysFlix Protected Player"
+                  />
+
+                  {/* 3. BOTTOM LEFT SHIELD: Blocks Share / Watch Later popups if video is paused */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShieldClick();
+                    }}
+                    className="absolute bottom-1 left-2 w-28 h-12 z-20 cursor-pointer pointer-events-auto bg-transparent"
+                  />
+
+                  {/* 4. FLOATING FEEDBACK BADGE WHEN CLICKED */}
+                  {showProtectedNotice && (
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-full bg-slate-950/90 border border-red-500/50 text-white text-xs font-bold shadow-2xl flex items-center space-x-2 animate-in fade-in zoom-in-95 duration-200 backdrop-blur-md pointer-events-none">
+                      <Lock className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                      <span>
+                        {lang === "bm" 
+                          ? "🔒 Kandungan Eksklusif PhysFlix • Pautan Luar Dinyahaktifkan" 
+                          : "🔒 PhysFlix Exclusive Content • External Links Disabled"}
+                      </span>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>

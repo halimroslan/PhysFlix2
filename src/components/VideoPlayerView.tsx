@@ -1367,20 +1367,48 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
             {activeTab === "overview" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* What You'll Learn */}
-                  <div className="p-5 rounded-2xl bg-[#111624] border border-slate-800 space-y-3">
-                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-amber-400" />
-                      {t("whatYoullLearn")}
-                    </h3>
-                    <ul className="space-y-2.5">
+                  {/* What You'll Learn (Aligned with DSKP SP) */}
+                  <div className="p-5 rounded-2xl bg-[#111624] border border-slate-800 space-y-3.5 shadow-lg">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-amber-400" />
+                        <span>{t("whatYoullLearn")}</span>
+                      </h3>
+                      <div className="flex items-center space-x-1.5">
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-black tracking-wide">
+                          DSKP KSSM
+                        </span>
+                        <span className="px-2 py-0.5 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10px] font-black tracking-wide">
+                          {lang === "bm" ? "STANDARD PEMBELAJARAN (SP)" : "LEARNING STANDARD (LS)"}
+                        </span>
+                      </div>
+                    </div>
+                    <ul className="space-y-3">
                       {(lang === "bm" ? currentLesson.learningPointsBm : currentLesson.learningPointsDlp).map(
-                        (point, i) => (
-                          <li key={i} className="flex items-start space-x-2 text-xs text-slate-300">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                            <span>{point}</span>
-                          </li>
-                        )
+                        (point, i) => {
+                          const isSP = point.startsWith("SP ") || point.startsWith("LS ");
+                          const colonIndex = point.indexOf(":");
+                          const spCode = isSP && colonIndex !== -1 ? point.substring(0, colonIndex).trim() : null;
+                          const spText = spCode ? point.substring(colonIndex + 1).trim() : point;
+
+                          return (
+                            <li key={i} className="flex items-start space-x-2.5 text-xs text-slate-200 leading-relaxed group">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                              <div className="flex-1">
+                                {spCode ? (
+                                  <>
+                                    <span className="inline-block px-1.5 py-0.5 mr-2 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] font-bold shadow-sm">
+                                      {spCode}
+                                    </span>
+                                    <span className="text-slate-200 group-hover:text-white transition-colors">{spText}</span>
+                                  </>
+                                ) : (
+                                  <span className="text-slate-200 group-hover:text-white transition-colors">{point}</span>
+                                )}
+                              </div>
+                            </li>
+                          );
+                        }
                       )}
                     </ul>
                   </div>

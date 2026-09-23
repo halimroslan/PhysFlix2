@@ -1,4 +1,5 @@
 import { dskpMappings } from './dskpData';
+import { dskpLearningPointsBm, dskpLearningPointsDlp } from './dskpLearningPoints';
 
 export interface VideoLesson {
   id: string;
@@ -2014,8 +2015,8 @@ const getRawId = (obfuscated: string) => {
 };
 
 export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) => {
-  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm, 4);
-  const learningDlp = generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
+  const learningBm = dskpLearningPointsBm[v.driveId] || dskpLearningPointsBm[v.titleBm] || generateLearningPointsBm(v.titleBm, v.keyConceptsBm, 4);
+  const learningDlp = dskpLearningPointsDlp[v.driveId] || dskpLearningPointsDlp[v.titleDlp] || generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
   
   return {
     ...v,
@@ -2055,8 +2056,8 @@ export const form4VideoLessons: VideoLesson[] = rawForm4Videos.map((v, index) =>
 });
 
 export const form5VideoLessons: VideoLesson[] = rawForm5Videos.map((v, index) => {
-  const learningBm = generateLearningPointsBm(v.titleBm, v.keyConceptsBm, 5);
-  const learningDlp = generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
+  const learningBm = dskpLearningPointsBm[v.driveId] || dskpLearningPointsBm[v.titleBm] || generateLearningPointsBm(v.titleBm, v.keyConceptsBm, 5);
+  const learningDlp = dskpLearningPointsDlp[v.driveId] || dskpLearningPointsDlp[v.titleDlp] || generateLearningPointsDlp(v.titleDlp, v.keyConceptsDlp);
 
   return {
     ...v,

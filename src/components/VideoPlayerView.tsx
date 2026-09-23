@@ -1161,95 +1161,53 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                   </div>
                 </div>
               ) : currentLesson.form === 5 && !hasAccessToForm5 ? (
-                /* 🔒 Kandungan Eksklusif Tingkatan 5 (Terkunci) */
-                <div className="absolute inset-0 z-30 bg-gradient-to-br from-[#0c0f17] via-[#080b12] to-[#030408] flex flex-col items-center justify-center p-6 text-center space-y-4 md:space-y-5 select-none">
-                  {/* Ambient grid & radial glow */}
-                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:20px_20px]"></div>
-                  <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                /* 🔒 Kandungan Eksklusif Tingkatan 5 (Terkunci - Minimalist & Zero Crop) */
+                <div className="absolute inset-0 z-30 bg-gradient-to-br from-[#0c0f17]/95 via-[#080b12]/95 to-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center select-none overflow-hidden">
+                  {/* Subtle Golden Glow */}
+                  <div className="absolute w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none -top-12"></div>
+                  <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
 
-                  {/* Golden Glowing Lock Card */}
-                  <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-3xl bg-gradient-to-b from-amber-500/20 to-red-600/20 border border-amber-500/40 flex items-center justify-center shadow-[0_0_50px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/20">
-                    <Lock className="w-8 h-8 md:w-10 md:h-10 text-amber-400 drop-shadow-[0_0_12px_rgba(245,158,11,0.6)]" />
-                  </div>
-
-                  {/* Pill Badge */}
-                  <div className="relative z-10 inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] md:text-xs font-black uppercase tracking-wider shadow-inner">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{lang === "bm" ? "Kandungan Eksklusif • Tingkatan 5" : "Exclusive Content • Form 5"}</span>
-                  </div>
-
-                  {/* Text Details */}
-                  <div className="relative z-10 space-y-1.5 max-w-lg px-2">
-                    <h2 className="text-base sm:text-xl md:text-2xl font-black text-white tracking-tight">
-                      {lang === "bm" 
-                        ? "Video Modul Pembelajaran Ini Terkunci" 
-                        : "This Lesson Module Video Is Locked"}
-                    </h2>
-                    <p className="text-[11px] sm:text-xs md:text-sm text-slate-300/90 leading-relaxed max-w-md mx-auto">
-                      {lang === "bm"
-                        ? "Siri video Fizik Tingkatan 5 KSSM (29 modul lengkap) dikhaskan untuk langganan premium PhysFlix. Akses penuh buat masa ini dihadkan kepada akaun pembangun & guru penggubal."
-                        : "Form 5 KSSM Physics video series (29 complete modules) is reserved for PhysFlix premium subscription. Full access is currently restricted to developer & author accounts."}
-                    </p>
-                  </div>
-
-                  {/* 👑 BUTANG BESAR "LANGGAN / SUBSCRIBE SEKARANG" */}
-                  <div className="relative z-10 w-full max-w-sm pt-2 flex flex-col items-center">
-                    <button
-                      onClick={() => setShowCheckoutModal(true)}
-                      className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:via-amber-500 hover:to-yellow-400 text-slate-950 font-black text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(245,158,11,0.5)] hover:shadow-[0_0_55px_rgba(245,158,11,0.8)] hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center space-x-2.5 cursor-pointer ring-2 ring-amber-300/40"
-                    >
-                      <Crown className="w-5 h-5 text-slate-950 fill-slate-950 animate-bounce" />
-                      <span className="tracking-wide">
-                        {lang === "bm" ? "LANGGAN / SUBSCRIBE SEKARANG" : "SUBSCRIBE TO PREMIUM NOW"}
+                  <div className="relative z-10 flex flex-col items-center justify-center max-w-sm w-full space-y-3 sm:space-y-4 my-auto">
+                    {/* Glowing Lock Badge */}
+                    <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+                      <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider">
+                        {lang === "bm" ? "Kandungan Premium • Tingkatan 5" : "Premium Content • Form 5"}
                       </span>
-                      <Zap className="w-4 h-4 text-slate-950 fill-slate-950" />
-                    </button>
-                    <p className="text-[11px] text-amber-300/90 font-semibold mt-2 text-center flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                      <span>{lang === "bm" ? "Buka Akses Segera (FPX Perbankan Internet Selamat)" : "Instant Unlock (Secure FPX Online Banking)"}</span>
+                    </div>
+
+                    {/* Minimalist Punchy Title */}
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-black text-white tracking-tight leading-snug">
+                      {lang === "bm" ? "Langgan untuk Tonton Video Ini" : "Subscribe to Watch This Video"}
+                    </h2>
+
+                    {/* 1-Line Subtitle */}
+                    <p className="text-xs sm:text-sm text-slate-300 font-medium">
+                      {lang === "bm"
+                        ? "Akses penuh 29 modul video Fizik SPM KSSM."
+                        : "Full access to 29 Form 5 SPM Physics video modules."}
                     </p>
-                  </div>
 
-                  {/* Current Account / Login State */}
-                  <div className="relative z-10 pt-1">
-                    {user ? (
-                      <div className="flex flex-col sm:flex-row items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/80 border border-slate-700/60 text-xs text-slate-300 shadow-md">
-                        <span className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                          <span>{lang === "bm" ? "Akaun Semasa:" : "Current Account:"}</span>
-                          <strong className="text-white font-mono">{user.email}</strong>
-                        </span>
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-amber-300 border border-amber-500/30 font-bold">
-                          {lang === "bm" ? "Pengguna Biasa (Akses Terkunci)" : "Standard User (Locked)"}
-                        </span>
-                      </div>
-                    ) : (
+                    {/* Sleek Golden CTA Button */}
+                    <div className="pt-1 w-full max-w-xs">
                       <button
-                        onClick={signInWithGoogle}
-                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-bold text-xs shadow-xl shadow-red-950/80 flex items-center space-x-2 transition cursor-pointer active:scale-95"
+                        type="button"
+                        onClick={() => setShowCheckoutModal(true)}
+                        className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:via-amber-300 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm transition-all duration-300 shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:shadow-[0_0_45px_rgba(245,158,11,0.7)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 cursor-pointer ring-1 ring-amber-300/50"
                       >
-                        <ShieldCheck className="w-4 h-4" />
-                        <span>{lang === "bm" ? "Log Masuk Akaun Pembangun (Google)" : "Sign In Developer Account (Google)"}</span>
+                        <Crown className="w-4 h-4 text-slate-950 fill-slate-950 shrink-0" />
+                        <span className="tracking-wide uppercase font-black">
+                          {lang === "bm" ? "Langgan Sekarang (FPX)" : "Subscribe Now (FPX)"}
+                        </span>
+                        <Zap className="w-3.5 h-3.5 text-slate-950 fill-slate-950 shrink-0" />
                       </button>
-                    )}
-                  </div>
 
-                  {/* Quick Interactive Study Links */}
-                  <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 pt-2">
-                    <button
-                      onClick={() => setActiveTab("notes")}
-                      className="px-4 py-2.5 rounded-xl bg-[#151b2a] hover:bg-slate-800 text-slate-200 text-xs font-bold transition border border-slate-700/80 flex items-center space-x-2 cursor-pointer active:scale-95 shadow-md"
-                    >
-                      <FileText className="w-4 h-4 text-emerald-400" />
-                      <span>{lang === "bm" ? "Buka Nota Ringkas Bab Ini" : "Open Chapter Notes"}</span>
-                    </button>
-                    <button
-                      onClick={() => setSidebarTab("quiz")}
-                      className="px-4 py-2.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 border border-purple-500/40 text-xs font-bold transition flex items-center space-x-2 cursor-pointer active:scale-95"
-                    >
-                      <Brain className="w-4 h-4 text-purple-400" />
-                      <span>{lang === "bm" ? "Cuba Kuiz Uji Minda" : "Try Quiz"}</span>
-                    </button>
+                      {/* Micro Hint */}
+                      <p className="text-[10px] text-slate-400 mt-2 flex items-center justify-center gap-1">
+                        <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
+                        <span>{lang === "bm" ? "FPX Perbankan Dalam Talian • Akses Serta-Merta" : "FPX Online Banking • Instant Unlock"}</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               ) : (

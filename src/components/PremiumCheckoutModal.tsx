@@ -47,6 +47,13 @@ const FPX_BANKS: BankOption[] = [
   { id: "AFFIN", name: "Affin Always", shortName: "Affin Bank", color: "#38bdf8", bgBadge: "bg-cyan-500/20 text-cyan-300 border-cyan-500/40" },
 ];
 
+
+export const DEV_TEST_EMAILS = [
+  "ahalimroslan@gmail.com",
+  "abdulhalimroslan@gmail.com",
+  "aimkmb@gmail.com"
+];
+
 export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
   isOpen,
   onClose,
@@ -54,6 +61,11 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
 }) => {
   const { user, unlockPremium } = useAuth();
   const { lang } = useLanguage();
+  
+  const userEmailClean = (user?.email || "").toLowerCase().trim();
+  const isDev = DEV_TEST_EMAILS.includes(userEmailClean);
+  const priceDisplay = isDev ? "RM 1.99" : "RM 30.00";
+  const priceAmount = isDev ? "1.99" : "30";
   
   const [paymentMethod, setPaymentMethod] = useState<"toyyibpay_fpx" | "duitnow">("toyyibpay_fpx");
   const [selectedBank, setSelectedBank] = useState<string>("MBB");
@@ -82,6 +94,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
           userId: user?.id || user?.uid || "",
           userEmail: user?.email || "pelajar@physflix.com",
           userName: user?.displayName || "Pelajar SPM Fizik",
+          isDevTest: isDev,
         }),
       });
 
@@ -231,13 +244,17 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
               </div>
 
               <div className="text-left sm:text-right shrink-0 border-t sm:border-t-0 sm:border-l border-slate-800 pt-3 sm:pt-0 sm:pl-5">
-                <span className="text-[11px] text-slate-400 line-through block">RM 80.00</span>
+                <span className="text-[11px] text-slate-400 line-through block">{isDev ? "RM 30.00" : "RM 80.00"}</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-3xl font-black text-amber-400">RM 30</span>
-                  <span className="text-xs text-slate-400 font-semibold">/ setahun</span>
+                  <span className="text-2xl sm:text-3xl font-black text-amber-400">RM {priceAmount}</span>
+                  <span className="text-xs text-slate-400 font-semibold">{isDev ? "/ ujian dev" : "/ setahun"}</span>
                 </div>
-                <span className="inline-block mt-1 px-2 py-0.5 text-[9px] font-black rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  JIMAT 62%
+                <span className={`inline-block mt-1 px-2 py-0.5 text-[9px] font-black rounded border ${
+                  isDev 
+                    ? "bg-amber-500/20 text-amber-300 border-amber-500/40" 
+                    : "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                }`}>
+                  {isDev ? "👑 KADAR UJIAN PEMBANGUN (RM 1.99)" : "JIMAT 62%"}
                 </span>
               </div>
             </div>
@@ -309,8 +326,8 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                 </div>
                 <p className="text-[11px] text-slate-400">
                   {lang === "bm" 
-                    ? "Anda akan dialihkan terus ke portal FPX rasmi ToyyibPay untuk log masuk ke akaun bank pilihan anda dan melengkapkan pembayaran RM 30.00."
-                    : "You will be redirected to the official ToyyibPay FPX portal to log in to your selected bank and complete the RM 30.00 payment."}
+                    ? `Anda akan dialihkan terus ke portal FPX rasmi ToyyibPay untuk log masuk ke akaun bank pilihan anda dan melengkapkan pembayaran ${priceDisplay}${isDev ? " (Ujian Pembangun)" : ""}.`
+                    : `You will be redirected to the official ToyyibPay FPX portal to log in to your selected bank and complete the ${priceDisplay} payment${isDev ? " (Dev Test)" : ""}.`}
                 </p>
               </div>
             ) : (
@@ -376,7 +393,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                   ) : (
                     <>
                       <Zap className="w-5 h-5 fill-slate-950 text-slate-950" />
-                      <span>{lang === "bm" ? "Bayar RM 30.00 Melalui FPX ToyyibPay" : "Pay RM 30.00 via ToyyibPay FPX"}</span>
+                      <span>{lang === "bm" ? `Bayar ${priceDisplay} Melalui FPX ToyyibPay${isDev ? " (Ujian)" : ""}` : `Pay ${priceDisplay} via ToyyibPay FPX${isDev ? " (Dev Test)" : ""}`}</span>
                       <ExternalLink className="w-4 h-4 text-slate-950" />
                     </>
                   )}

@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const DEV_TEST_EMAILS = [
+  "ahalimroslan@gmail.com",
+  "abdulhalimroslan@gmail.com",
+  "aimkmb@gmail.com"
+];
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { userId, userEmail, userName, userPhone } = body;
+    const { userId, userEmail, userName, userPhone, isDevTest } = body;
+
+    const emailClean = (userEmail || "").toLowerCase().trim();
+    const isDev = DEV_TEST_EMAILS.includes(emailClean) || isDevTest === true;
 
     const secret = process.env.TOYYIBPAY_SECRET_KEY || "j3eykoye-lkcf-af90-dwcv-t0ad5e9d5ys8";
     const category = process.env.TOYYIBPAY_CATEGORY_CODE || "41559qlh";
@@ -11,24 +20,31 @@ export async function POST(req: NextRequest) {
 
     // Determine host for redirect URLs
     const origin = req.nextUrl.origin || "https://physflix.vercel.app";
-    const orderId = `PFX-T5-${Date.now()}`;
+    const orderId = isDev ? `DEV-T5-${Date.now()}` : `PFX-T5-${Date.now()}`;
 
     const returnUrl = `${origin}/api/payment/toyyibpay/return?userId=${encodeURIComponent(userId || "")}&email=${encodeURIComponent(userEmail || "")}&orderId=${encodeURIComponent(orderId)}`;
     const callbackUrl = `${origin}/api/payment/toyyibpay/callback`;
 
+    // 199 cents (RM 1.99) for developer accounts, 3000 cents (RM 30.00) for public
+    const billAmountCents = isDev ? "199" : "3000";
+    const billName = isDev ? "PhysFlix T5 SPM (Ujian Dev)" : "PhysFlix T5 SPM (1 Tahun)";
+    const billDescription = isDev 
+      ? "Ujian Transaksi FPX Pembangun PhysFlix" 
+      : "Akses Penuh 29 Modul Video Fizik SPM Tingkatan 5";
+
     const formData = new URLSearchParams({
       userSecretKey: secret,
       categoryCode: category,
-      billName: "PhysFlix T5 SPM (1 Tahun)",
-      billDescription: "Akses Penuh 29 Modul Video Fizik SPM Tingkatan 5",
+      billName: billName,
+      billDescription: billDescription,
       billPriceSetting: "1",
       billPayorInfo: "1",
-      billAmount: "3000", // 3000 cents = RM 30.00
+      billAmount: billAmountCents,
       billReturnUrl: returnUrl,
       billCallbackUrl: callbackUrl,
       billExternalReferenceNo: orderId,
-      billTo: userName || "Pelajar Fizik SPM",
-      billEmail: userEmail || "pelajar@physflix.com",
+      billTo: userName || (isDev ? "Pembangun PhysFlix" : "Pelajar Fizik SPM"),
+      billEmail: userEmail || (isDev ? "ahalimroslan@gmail.com" : "pelajar@physflix.com"),
       billPhone: userPhone || "0123456789",
       billPaymentChannel: "0" // FPX
     });
@@ -61,7 +77,9 @@ export async function POST(req: NextRequest) {
         success: true,
         billCode,
         paymentUrl,
-        orderId
+        orderId,
+        amount: isDev ? "RM 1.99" : "RM 30.00",
+        isDev
       });
     }
 

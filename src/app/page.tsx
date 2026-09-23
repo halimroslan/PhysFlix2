@@ -403,6 +403,16 @@ function MainDashboard() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
+                  {isSuperAdmin && (
+                    <button
+                      type="button"
+                      onClick={() => setIsCheckoutOpen(true)}
+                      className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 text-xs font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-amber-500/25 active:scale-95 cursor-pointer ring-1 ring-amber-300/40"
+                    >
+                      <Crown className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
+                      <span>{lang === "bm" ? "Uji Bayaran FPX (RM 1.99)" : "Test FPX (RM 1.99)"}</span>
+                    </button>
+                  )}
                   {(!isSuperAdmin && !isPremium) ? (
                     <button
                       onClick={() => setIsCheckoutOpen(true)}

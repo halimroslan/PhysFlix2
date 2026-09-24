@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const { userId, userEmail, userName, userPhone, isDevTest } = body;
 
     const emailClean = (userEmail || "").toLowerCase().trim();
-    const isDev = DEV_TEST_EMAILS.includes(emailClean) || isDevTest === true;
+    const isDev = DEV_TEST_EMAILS.includes(emailClean);
 
     const secret = process.env.TOYYIBPAY_SECRET_KEY || "j3eykoye-lkcf-af90-dwcv-t0ad5e9d5ys8";
     const category = process.env.TOYYIBPAY_CATEGORY_CODE || "41559qlh";

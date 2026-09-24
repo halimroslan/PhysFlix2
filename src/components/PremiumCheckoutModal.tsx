@@ -320,17 +320,19 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                 )}
               </button>
 
-              {/* Developer Test Mode Button */}
-              <div className="pt-2 text-center">
-                <button
-                  type="button"
-                  onClick={handleInstantUnlock}
-                  disabled={isProcessing}
-                  className="text-[11px] text-amber-400/80 hover:text-amber-300 underline cursor-pointer"
-                >
-                  {lang === "bm" ? "⚡ Ujian Pembangun: Buka Kunci Serta-Merta (Simulasi)" : "⚡ Developer Test: Instant Unlock Simulation"}
-                </button>
-              </div>
+              {/* Developer Test Mode Button - STRICTLY FOR DEV ACCOUNTS ONLY */}
+              {isDev && (
+                <div className="pt-2 text-center">
+                  <button
+                    type="button"
+                    onClick={handleInstantUnlock}
+                    disabled={isProcessing}
+                    className="text-[11px] text-amber-400/80 hover:text-amber-300 underline cursor-pointer"
+                  >
+                    {lang === "bm" ? "⚡ Ujian Pembangun: Buka Kunci Serta-Merta (Simulasi)" : "⚡ Developer Test: Instant Unlock Simulation"}
+                  </button>
+                </div>
+              )}
 
               <p className="text-[10px] text-slate-400 text-center flex items-center justify-center gap-1">
                 <Lock className="w-3 h-3 text-slate-400" />

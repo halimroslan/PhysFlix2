@@ -1018,8 +1018,8 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column - Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Developer Active Banner when watching Form 5 */}
-          {currentLesson.form === 5 && (isSuperAdmin || isPremium) && (
+          {/* Developer Active Banner when watching Form 5 (SuperAdmin Only) */}
+          {currentLesson.form === 5 && isSuperAdmin && (
             <div className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-slate-900 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 shadow-lg">
               <div className="flex items-center space-x-2">
                 <span className="flex h-2.5 w-2.5 relative">

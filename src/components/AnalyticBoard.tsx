@@ -65,6 +65,7 @@ const SUPERADMIN_EMAILS = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com
 export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaReply }) => {
   const { user } = useAuth();
   const [users, setUsers] = useState<UserData[]>([]);
+  const [hasPremiumSchema, setHasPremiumSchema] = useState<boolean>(true);
   const [stats, setStats] = useState<VideoStat[]>([]);
   const [loading, setLoading] = useState(true);
   const [isResetting, setIsResetting] = useState(false);
@@ -84,15 +85,34 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
   const fetchData = async () => {
     try {
       if (isSupabaseConfigured) {
-        // Fetch Users from public.profiles
-        const { data: profilesData, error: profilesErr } = await supabase
+        // Fetch Users from public.profiles (Fault-Tolerant with Graceful Fallback)
+        let rawProfiles: any[] = [];
+
+        // Attempt 1: Fetch with full premium and phone columns
+        const { data: fullProfiles, error: fullErr } = await supabase
           .from("profiles")
           .select("id, email, display_name, last_login, is_premium, premium_expires_at, premium_activated_at, phone_number")
           .order("last_login", { ascending: false });
 
-        if (profilesErr) throw profilesErr;
+        if (fullErr) {
+          // If column is_premium does not exist in Supabase schema yet, fallback gracefully
+          console.warn("Supabase profiles query notice (falling back to basic schema):", fullErr.message);
+          setHasPremiumSchema(false);
 
-        const formattedUsers: UserData[] = (profilesData || []).map((p: any) => {
+          // Attempt 2: Fallback query without is_premium so dashboard NEVER crashes
+          const { data: basicProfiles, error: basicErr } = await supabase
+            .from("profiles")
+            .select("id, email, display_name, last_login")
+            .order("last_login", { ascending: false });
+
+          if (basicErr) throw basicErr;
+          rawProfiles = basicProfiles || [];
+        } else {
+          setHasPremiumSchema(true);
+          rawProfiles = fullProfiles || [];
+        }
+
+        const formattedUsers: UserData[] = rawProfiles.map((p: any) => {
           const hasExpired = p.premium_expires_at ? new Date(p.premium_expires_at) < new Date() : false;
           const isPremiumActive = Boolean(p.is_premium) && !hasExpired;
 
@@ -361,6 +381,27 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
           </button>
         </div>
       </div>
+
+      {!hasPremiumSchema && (
+        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>
+              <strong>Perhatian Pentadbir:</strong> Kolum <code className="bg-black/40 px-1 py-0.5 rounded font-mono text-amber-200">is_premium</code> belum ditambah pada jadual <code className="bg-black/40 px-1 py-0.5 rounded font-mono text-amber-200">profiles</code> di Supabase. Papan pemuka masih beroperasi seperti biasa. Sila jalankan skrip SQL migrasi untuk mengaktifkan pengiraan premium secara automatik.
+            </span>
+          </div>
+          <button
+            onClick={() => {
+              const sql = `ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_activated_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_expires_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_billcode TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_order_id TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS phone_number TEXT;`;
+              navigator.clipboard.writeText(sql);
+              alert("Skrip SQL telah disalin! Sila buka Supabase SQL Editor dan tekan Run.");
+            }}
+            className="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 font-bold text-xs shrink-0 cursor-pointer flex items-center gap-1.5 transition"
+          >
+            <span>Salin Skrip SQL</span>
+          </button>
+        </div>
+      )}
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const userEmail = user?.email?.toLowerCase().trim() || "";
-  const isSuperAdmin = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com"].includes(userEmail);
+  const isSuperAdmin = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com", "g-41192875@moe-dl.edu.my"].includes(userEmail);
 
   const navLinks = [
     { id: "home", label: "Laman Utama" },

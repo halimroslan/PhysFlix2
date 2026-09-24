@@ -51,6 +51,7 @@ const FPX_BANKS: BankOption[] = [
 export const DEV_TEST_EMAILS = [
   "ahalimroslan@gmail.com",
   "abdulhalimroslan@gmail.com",
+  "g-41192875@moe-dl.edu.my",
   "aimkmb@gmail.com"
 ];
 

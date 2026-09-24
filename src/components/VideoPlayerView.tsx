@@ -2142,7 +2142,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                             {item.replies.map((reply) => {
                               const isAITutor = reply.isAi || reply.id.startsWith("reply-ai-") || reply.id === "reply-1788479876660-hzkyo" || reply.authorEmail === "ai@physflix.internal" || reply.authorName.includes("AI Tutor");
                               const isSuperAdminUser = !isAITutor && (
-                                ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com"].includes((reply.authorEmail || "").toLowerCase().trim()) ||
+                                ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com", "g-41192875@moe-dl.edu.my"].includes((reply.authorEmail || "").toLowerCase().trim()) ||
                                 reply.authorName === "Abdul Halim Roslan" ||
                                 reply.authorName === "Sir Halim (Guru Fizik)"
                               );

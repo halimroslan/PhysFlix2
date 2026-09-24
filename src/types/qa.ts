@@ -1,6 +1,7 @@
 export const SUPERADMIN_EMAILS = [
   "ahalimroslan@gmail.com",
   "abdulhalimroslan@gmail.com",
+  "g-41192875@moe-dl.edu.my",
 ];
 
 export interface QAReply {

@@ -55,7 +55,7 @@ interface AnalyticBoardProps {
   onNavigateToQaReply?: (videoId: string, questionId: string) => void;
 }
 
-const SUPERADMIN_EMAILS = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com"];
+const SUPERADMIN_EMAILS = ["ahalimroslan@gmail.com", "abdulhalimroslan@gmail.com", "g-41192875@moe-dl.edu.my"];
 
 export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaReply }) => {
   const { user } = useAuth();

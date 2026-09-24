@@ -7,6 +7,7 @@ import { User as SupabaseUser } from "@supabase/supabase-js";
 export const SUPERADMIN_EMAILS = [
   "ahalimroslan@gmail.com",
   "abdulhalimroslan@gmail.com",
+  "g-41192875@moe-dl.edu.my",
 ];
 
 export function isDeveloperAccount(email?: string | null): boolean {

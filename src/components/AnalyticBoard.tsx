@@ -9,6 +9,7 @@ import { findLessonByVideoId } from "@/utils/videoResolution";
 import { QAItem, QAReply, isSuperadminReply } from "@/types/qa";
 import {
   Users,
+  Crown,
   Eye,
   Clock,
   Activity,
@@ -43,6 +44,10 @@ interface UserData {
   email: string;
   displayName: string;
   lastLogin: string;
+  isPremium?: boolean;
+  premiumExpiresAt?: string | null;
+  premiumActivatedAt?: string | null;
+  phone?: string;
 }
 
 interface VideoStat {
@@ -82,17 +87,26 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
         // Fetch Users from public.profiles
         const { data: profilesData, error: profilesErr } = await supabase
           .from("profiles")
-          .select("id, email, display_name, last_login")
+          .select("id, email, display_name, last_login, is_premium, premium_expires_at, premium_activated_at, phone_number")
           .order("last_login", { ascending: false });
 
         if (profilesErr) throw profilesErr;
 
-        const formattedUsers: UserData[] = (profilesData || []).map((p: any) => ({
-          uid: p.id,
-          email: p.email || "Tiada Emel",
-          displayName: p.display_name || p.email?.split("@")[0] || "Pelajar",
-          lastLogin: p.last_login ? new Date(p.last_login).toLocaleString("ms-MY") : "Tiada Rekod",
-        }));
+        const formattedUsers: UserData[] = (profilesData || []).map((p: any) => {
+          const hasExpired = p.premium_expires_at ? new Date(p.premium_expires_at) < new Date() : false;
+          const isPremiumActive = Boolean(p.is_premium) && !hasExpired;
+
+          return {
+            uid: p.id,
+            email: p.email || "Tiada Emel",
+            displayName: p.display_name || p.email?.split("@")[0] || "Pelajar",
+            lastLogin: p.last_login ? new Date(p.last_login).toLocaleString("ms-MY") : "Tiada Rekod",
+            isPremium: isPremiumActive,
+            premiumExpiresAt: p.premium_expires_at ? new Date(p.premium_expires_at).toLocaleDateString("ms-MY") : null,
+            premiumActivatedAt: p.premium_activated_at ? new Date(p.premium_activated_at).toLocaleDateString("ms-MY") : null,
+            phone: p.phone_number || "",
+          };
+        });
 
         // Fetch Video Stats from public.video_stats (excluding qa_ records)
         const { data: videoStatsData, error: statsErr } = await supabase
@@ -291,6 +305,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
   }
 
   const totalUsers = users.length;
+  const totalPremiumUsers = users.filter((u) => u.isPremium).length;
   const totalViews = stats.reduce((acc, curr) => acc + (curr.views || 0), 0);
   const totalLikes = stats.reduce((acc, curr) => acc + (curr.likes || 0), 0);
 
@@ -348,34 +363,53 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex items-center space-x-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex items-center space-x-4">
           <div className="p-3 bg-emerald-500/10 rounded-xl">
-            <Users className="w-8 h-8 text-emerald-400" />
+            <Users className="w-7 h-7 text-emerald-400" />
           </div>
           <div>
-            <p className="text-slate-400 text-sm font-semibold">Jumlah Murid Berdaftar</p>
-            <p className="text-3xl font-bold text-white">{totalUsers}</p>
-          </div>
-        </div>
-        
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex items-center space-x-4">
-          <div className="p-3 bg-cyan-500/10 rounded-xl">
-            <Eye className="w-8 h-8 text-cyan-400" />
-          </div>
-          <div>
-            <p className="text-slate-400 text-sm font-semibold">Jumlah Tontonan Sebenar (Views)</p>
-            <p className="text-3xl font-bold text-white">{totalViews}</p>
+            <p className="text-slate-400 text-xs sm:text-sm font-semibold">Jumlah Murid Berdaftar</p>
+            <div className="flex items-baseline space-x-2">
+              <p className="text-2xl sm:text-3xl font-bold text-white">{totalUsers}</p>
+              <span className="text-[10px] text-slate-500 font-medium">Semua Akaun</span>
+            </div>
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex items-center space-x-4">
-          <div className="p-3 bg-rose-500/10 rounded-xl">
-            <ThumbsUp className="w-8 h-8 text-rose-400" />
+        <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/40 p-5 rounded-2xl shadow-xl flex items-center space-x-4 relative overflow-hidden">
+          <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-500/10 rounded-full blur-xl pointer-events-none" />
+          <div className="p-3 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-400">
+            <Crown className="w-7 h-7 fill-amber-400/20" />
           </div>
           <div>
-            <p className="text-slate-400 text-sm font-semibold">Jumlah Suka Sebenar (Likes)</p>
-            <p className="text-3xl font-bold text-white">{totalLikes}</p>
+            <p className="text-amber-300 text-xs sm:text-sm font-bold">Jumlah Murid Berdaftar (Premium/ Subscription)</p>
+            <div className="flex items-baseline space-x-2">
+              <p className="text-2xl sm:text-3xl font-black text-amber-400">{totalPremiumUsers}</p>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/30">
+                Akses Aktif
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex items-center space-x-4">
+          <div className="p-3 bg-cyan-500/10 rounded-xl">
+            <Eye className="w-7 h-7 text-cyan-400" />
+          </div>
+          <div>
+            <p className="text-slate-400 text-xs sm:text-sm font-semibold">Jumlah Tontonan Sebenar (Views)</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{totalViews}</p>
+          </div>
+        </div>
+
+        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl flex items-center space-x-4">
+          <div className="p-3 bg-rose-500/10 rounded-xl">
+            <ThumbsUp className="w-7 h-7 text-rose-400" />
+          </div>
+          <div>
+            <p className="text-slate-400 text-xs sm:text-sm font-semibold">Jumlah Suka Sebenar (Likes)</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{totalLikes}</p>
           </div>
         </div>
       </div>
@@ -937,9 +971,20 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
 
       {/* 4. User Table Section */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
-        <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-          <h3 className="text-xl font-bold text-white">Senarai Pelajar Berdaftar (Supabase Profiles)</h3>
-          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold rounded-full">{users.length} Akaun</span>
+        <div className="p-6 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 className="text-xl font-bold text-white">Senarai Pelajar Berdaftar (Supabase Profiles)</h3>
+            <p className="text-xs text-slate-400 mt-0.5">Pemantauan akaun berdaftar mengikut status langganan.</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full flex items-center gap-1">
+              <Crown className="w-3 h-3 text-amber-400" />
+              <span>{totalPremiumUsers} Premium</span>
+            </span>
+            <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold rounded-full">
+              {users.length} Jumlah Akaun
+            </span>
+          </div>
         </div>
         
         <div className="overflow-x-auto">
@@ -947,6 +992,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
             <thead>
               <tr className="bg-slate-800/50 text-slate-300 text-sm">
                 <th className="p-4 font-semibold">Nama / Emel</th>
+                <th className="p-4 font-semibold">Status Langganan</th>
                 <th className="p-4 font-semibold">ID Pengguna (UUID)</th>
                 <th className="p-4 font-semibold text-right">Log Masuk Terakhir</th>
               </tr>
@@ -955,8 +1001,37 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
               {users.map((u, i) => (
                 <tr key={i} className="hover:bg-slate-800/30 transition text-sm">
                   <td className="p-4 text-white">
-                    <div className="font-semibold">{u.displayName}</div>
-                    <div className="text-slate-500 text-xs">{u.email}</div>
+                    <div className="font-semibold flex items-center gap-1.5">
+                      <span>{u.displayName}</span>
+                      {u.isPremium && (
+                        <span className="text-[10px] px-1.5 py-0.2 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full font-bold">
+                          PREMIUM
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-slate-500 text-xs flex items-center gap-2 mt-0.5">
+                      <span>{u.email}</span>
+                      {u.phone && (
+                        <span className="text-slate-400 font-mono">📱 {u.phone}</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    {u.isPremium ? (
+                      <div className="space-y-0.5">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                          <Crown className="w-3 h-3 text-amber-400" />
+                          <span>Premium Aktif</span>
+                        </span>
+                        {u.premiumExpiresAt && (
+                          <p className="text-[10px] text-slate-400">Tamat: {u.premiumExpiresAt}</p>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-800 text-slate-400">
+                        Akaun Asas (Free)
+                      </span>
+                    )}
                   </td>
                   <td className="p-4 text-slate-400 font-mono text-xs">{u.uid}</td>
                   <td className="p-4 text-slate-400 text-right">
@@ -969,7 +1044,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
               ))}
               {users.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="p-8 text-center text-slate-500 italic">Tiada data pelajar lagi. Sila log masuk untuk pendaftaran akaun.</td>
+                  <td colSpan={4} className="p-8 text-center text-slate-500 italic">Tiada data pelajar lagi. Sila log masuk untuk pendaftaran akaun.</td>
                 </tr>
               )}
             </tbody>

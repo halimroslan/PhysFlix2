@@ -1,20 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   X, 
   Crown, 
   CheckCircle2, 
   ShieldCheck, 
   Building2, 
- 
   ArrowRight, 
   Loader2, 
   Sparkles, 
   Lock, 
   Check, 
   Zap,
-  ExternalLink
+  ExternalLink,
+  User,
+  Phone,
+  Mail,
+  AlertCircle
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -47,7 +50,6 @@ const FPX_BANKS: BankOption[] = [
   { id: "AFFIN", name: "Affin Always", shortName: "Affin Bank", color: "#38bdf8", bgBadge: "bg-cyan-500/20 text-cyan-300 border-cyan-500/40" },
 ];
 
-
 export const DEV_TEST_EMAILS = [
   "ahalimroslan@gmail.com",
   "abdulhalimroslan@gmail.com",
@@ -70,6 +72,18 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
   
   const [selectedBank, setSelectedBank] = useState<string>("MBB");
   
+  // Mandatory Manual Inputs for Buyer/Student
+  const [fullName, setFullName] = useState<string>(user?.displayName || "");
+  const [phone, setPhone] = useState<string>("");
+  const [formErrors, setFormErrors] = useState<{ name?: string; phone?: string }>({});
+
+  // Sync initial full name if user profile updates
+  useEffect(() => {
+    if (user?.displayName && !fullName) {
+      setFullName(user.displayName);
+    }
+  }, [user?.displayName]);
+  
   // Processing States
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [processingStep, setProcessingStep] = useState<string>("");
@@ -80,19 +94,54 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
 
   const currentBank = FPX_BANKS.find(b => b.id === selectedBank) || FPX_BANKS[0];
 
+  // Client-side Validation for Mandatory Manual Inputs
+  const validateForm = () => {
+    const errors: { name?: string; phone?: string } = {};
+    const cleanName = fullName.trim();
+    const cleanPhone = phone.trim().replace(/[-\\s]/g, "");
+    const phoneDigits = cleanPhone.replace(/\\D/g, "");
+
+    if (!cleanName || cleanName.length < 3) {
+      errors.name = lang === "bm"
+        ? "Sila masukkan nama penuh anda (sekurang-kurangnya 3 huruf)."
+        : "Please enter your full name (at least 3 characters).";
+    }
+
+    if (!phoneDigits) {
+      errors.phone = lang === "bm"
+        ? "Sila masukkan nombor telefon / WhatsApp anda."
+        : "Please enter your phone / WhatsApp number.";
+    } else if (phoneDigits.length < 10 || !phoneDigits.startsWith("01")) {
+      errors.phone = lang === "bm"
+        ? "Nombor telefon tidak sah. Masukkan nombor telefon Malaysia yang sah (contoh: 0123456789 atau 01112345678)."
+        : "Invalid phone number. Please enter a valid Malaysian number (e.g. 0123456789).";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   // 1. Live ToyyibPay FPX Redirection
   const handleToyyibPayCheckout = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     setIsProcessing(true);
     setProcessingStep(lang === "bm" ? "Menghubungkan ke Gerbang FPX ToyyibPay..." : "Connecting to ToyyibPay FPX Gateway...");
 
     try {
+      const cleanName = fullName.trim();
+      const cleanPhone = phone.trim().replace(/[-\\s]/g, "").replace(/\\D/g, "");
+
       const res = await fetch("/api/payment/toyyibpay/create-bill", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: user?.id || user?.uid || "",
           userEmail: user?.email || "pelajar@physflix.com",
-          userName: user?.displayName || "Pelajar SPM Fizik",
+          userName: cleanName,
+          userPhone: cleanPhone,
           isDevTest: isDev,
         }),
       });
@@ -146,7 +195,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94, y: 15 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="relative w-full max-w-2xl rounded-3xl bg-[#0b0e17] border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.2)] p-5 sm:p-7 md:p-8 space-y-6 text-left my-auto overflow-hidden"
+        className="relative w-full max-w-2xl rounded-3xl bg-[#0b0e17] border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.2)] p-5 sm:p-7 md:p-8 space-y-5 text-left my-auto overflow-hidden"
       >
         {/* Ambient Top Glow */}
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -220,7 +269,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
           </motion.div>
         ) : (
           /* CHECKOUT INTERFACE */
-          <div className="space-y-5">
+          <div className="space-y-4">
             {/* Plan Card */}
             <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-inner">
               <div className="space-y-1">
@@ -258,6 +307,116 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
               </div>
             </div>
 
+            {/* MANDATORY BUYER / STUDENT MANUAL FORM */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+                    <User className="w-3.5 h-3.5 text-amber-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black text-slate-100 uppercase tracking-wider">
+                      {lang === "bm" ? "Maklumat Pelajar / Pembeli (Wajib Diisi Manual)" : "Student / Buyer Details (Mandatory Manual Input)"}
+                    </h4>
+                    <p className="text-[10px] text-slate-400">
+                      {lang === "bm" 
+                        ? "Nama dan nombor telefon ini akan dipaparkan pada resit rasmi ToyyibPay & pengaktifan sistem." 
+                        : "Name and phone will be linked to your official ToyyibPay invoice and activation."}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300">
+                  {lang === "bm" ? "WAJIB" : "REQUIRED"}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {/* Field 1: Full Name */}
+                <div className="space-y-1.5 text-left">
+                  <label className="text-[11px] font-bold text-slate-200 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{lang === "bm" ? "Nama Penuh Pelajar" : "Full Name"}</span>
+                      <span className="text-rose-400 font-black">*</span>
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => {
+                      setFullName(e.target.value);
+                      if (formErrors.name) {
+                        setFormErrors(prev => ({ ...prev, name: undefined }));
+                      }
+                    }}
+                    placeholder={lang === "bm" ? "cth: Muhammad Danish bin Roslan" : "e.g. Danish Roslan"}
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 text-xs text-white placeholder-slate-500 border transition-all outline-none focus:ring-1 ${
+                      formErrors.name
+                        ? "border-rose-500 focus:border-rose-400 focus:ring-rose-400/30 ring-1 ring-rose-500/30"
+                        : "border-slate-800 focus:border-amber-400 focus:ring-amber-400/20 hover:border-slate-700"
+                    }`}
+                  />
+                  {formErrors.name && (
+                    <p className="text-[10px] font-semibold text-rose-400 flex items-center gap-1 mt-1">
+                      <AlertCircle className="w-3 h-3 shrink-0" />
+                      <span>{formErrors.name}</span>
+                    </p>
+                  )}
+                </div>
+
+                {/* Field 2: Phone Number */}
+                <div className="space-y-1.5 text-left">
+                  <label className="text-[11px] font-bold text-slate-200 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Phone className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{lang === "bm" ? "Nombor Telefon / WhatsApp" : "Phone / WhatsApp"}</span>
+                      <span className="text-rose-400 font-black">*</span>
+                    </span>
+                  </label>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (formErrors.phone) {
+                        setFormErrors(prev => ({ ...prev, phone: undefined }));
+                      }
+                    }}
+                    placeholder={lang === "bm" ? "cth: 0123456789 atau 01112345678" : "e.g. 0123456789"}
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 text-xs text-white placeholder-slate-500 border transition-all outline-none focus:ring-1 ${
+                      formErrors.phone
+                        ? "border-rose-500 focus:border-rose-400 focus:ring-rose-400/30 ring-1 ring-rose-500/30"
+                        : "border-slate-800 focus:border-amber-400 focus:ring-amber-400/20 hover:border-slate-700"
+                    }`}
+                  />
+                  {formErrors.phone ? (
+                    <p className="text-[10px] font-semibold text-rose-400 flex items-center gap-1 mt-1">
+                      <AlertCircle className="w-3 h-3 shrink-0" />
+                      <span>{formErrors.phone}</span>
+                    </p>
+                  ) : (
+                    <p className="text-[10px] text-slate-500">
+                      {lang === "bm" ? "Format Malaysia: 10 - 11 digit nombor telefon aktif." : "Malaysian format: 10 - 11 active digits."}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Account Email Confirmation */}
+              <div className="flex items-center justify-between text-xs px-3.5 py-2 rounded-xl bg-slate-950/70 border border-slate-800/80 text-slate-400">
+                <div className="flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="text-[11px] font-medium">{lang === "bm" ? "Akaun Diaktifkan:" : "Activated Account:"}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-slate-200 font-mono text-[11px] font-bold">{user?.email || "pelajar@gmail.com"}</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
+                    {lang === "bm" ? "Akaun Berdaftar" : "Linked"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
             {/* FPX Banks Details */}
             <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3.5">
               <div className="flex items-center justify-between">
@@ -292,12 +451,6 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
               </p>
             </div>
 
-            {/* Buyer Account Confirmation */}
-            <div className="flex items-center justify-between text-xs px-3.5 py-2 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-400">
-              <span>{lang === "bm" ? "Akaun yang akan diaktifkan:" : "Account to activate:"}</span>
-              <strong className="text-slate-200 font-mono">{user?.email || "pelajar@gmail.com"}</strong>
-            </div>
-
             {/* Action Buttons */}
             <div className="space-y-2 pt-1">
               <button
@@ -314,7 +467,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                 ) : (
                   <>
                     <Zap className="w-5 h-5 fill-slate-950 text-slate-950" />
-                    <span>{lang === "bm" ? `Bayar ${priceDisplay} Melalui FPX ToyyibPay${isDev ? " (Ujian)" : ""}` : `Pay ${priceDisplay} via ToyyibPay FPX${isDev ? " (Dev Test)" : ""}`}</span>
+                    <span>{lang === "bm" ? `Sahkan Maklumat & Bayar ${priceDisplay} FPX${isDev ? " (Ujian)" : ""}` : `Confirm & Pay ${priceDisplay} via FPX${isDev ? " (Dev Test)" : ""}`}</span>
                     <ExternalLink className="w-4 h-4 text-slate-950" />
                   </>
                 )}

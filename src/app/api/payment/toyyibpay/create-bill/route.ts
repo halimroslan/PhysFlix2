@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 export const DEV_TEST_EMAILS = [
   "ahalimroslan@gmail.com",
@@ -14,6 +15,42 @@ export async function POST(req: NextRequest) {
 
     const emailClean = (userEmail || "").toLowerCase().trim();
     const isDev = DEV_TEST_EMAILS.includes(emailClean);
+
+    // Validation for User Name and Phone Number (Wajib diisi secara manual)
+    const cleanName = (userName || "").trim();
+    let rawPhone = (userPhone || "").toString().trim().replace(/[-\s]/g, "");
+    const phoneDigits = rawPhone.replace(/\D/g, "");
+
+    if (!cleanName || cleanName.length < 3) {
+      return NextResponse.json(
+        { error: "Sila masukkan nama penuh anda (sekurang-kurangnya 3 huruf)." },
+        { status: 400 }
+      );
+    }
+
+    if (!phoneDigits || phoneDigits.length < 10 || !phoneDigits.startsWith("01")) {
+      return NextResponse.json(
+        { error: "Sila masukkan nombor telefon yang sah (contoh: 0123456789 atau 01112345678)." },
+        { status: 400 }
+      );
+    }
+
+    const cleanPhone = phoneDigits;
+
+    // Save/update phone number and full name in Supabase profiles table if available
+    if (isSupabaseConfigured && userId) {
+      try {
+        await supabase
+          .from("profiles")
+          .update({
+            display_name: cleanName,
+            phone_number: cleanPhone,
+          })
+          .eq("id", userId);
+      } catch (err) {
+        console.warn("Could not save phone_number to profile:", err);
+      }
+    }
 
     const secret = process.env.TOYYIBPAY_SECRET_KEY || "j3eykoye-lkcf-af90-dwcv-t0ad5e9d5ys8";
     const category = process.env.TOYYIBPAY_CATEGORY_CODE || "41559qlh";
@@ -44,9 +81,9 @@ export async function POST(req: NextRequest) {
       billReturnUrl: returnUrl,
       billCallbackUrl: callbackUrl,
       billExternalReferenceNo: orderId,
-      billTo: userName || (isDev ? "Pembangun PhysFlix" : "Pelajar Fizik SPM"),
-      billEmail: userEmail || (isDev ? "ahalimroslan@gmail.com" : "pelajar@physflix.com"),
-      billPhone: userPhone || "0123456789",
+      billTo: cleanName,
+      billEmail: emailClean || "pelajar@physflix.com",
+      billPhone: cleanPhone,
       billPaymentChannel: "0" // FPX
     });
 

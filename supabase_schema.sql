@@ -24,6 +24,7 @@ ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_activated_at TIMEST
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_expires_at TIMESTAMPTZ;
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_billcode TEXT;
 ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_order_id TEXT;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS phone_number TEXT;
 
 -- 2. Jadual Aktiviti Pengguna (Bookmarks, Sejarah Tontonan, Video Stats & Auto-Resume)
 CREATE TABLE IF NOT EXISTS public.user_activity (

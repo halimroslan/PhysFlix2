@@ -46,24 +46,76 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const isSuperAdmin = !!user?.email && SUPERADMIN_EMAILS.includes(user.email.toLowerCase().trim());
   const isPremium = isSuperAdmin || isPremiumUnlocked;
 
-  // Check premium status on mount and when user changes
+  // Check premium status on mount and when user changes (enforces 1-year auto-expiry)
   useEffect(() => {
     const checkPremium = async () => {
       try {
         const localUnlocked = typeof window !== 'undefined' ? localStorage.getItem("physflix_user_is_premium") : null;
+        const localExpiresAt = typeof window !== 'undefined' ? localStorage.getItem("physflix_premium_expires_at") : null;
+
+        // 1. Check local storage cache with expiration validation
         if (localUnlocked === "true") {
-          setIsPremiumUnlocked(true);
-          return;
+          if (localExpiresAt) {
+            const expTime = new Date(localExpiresAt).getTime();
+            if (!isNaN(expTime) && expTime <= Date.now()) {
+              // Expired! Lock locally and clean up cache
+              localStorage.removeItem("physflix_user_is_premium");
+              localStorage.removeItem("physflix_premium_expires_at");
+              setIsPremiumUnlocked(false);
+            } else {
+              // Still valid within 1-year window
+              setIsPremiumUnlocked(true);
+              return;
+            }
+          } else {
+            // Legacy flag without timestamp - verify with Supabase below
+          }
         }
+
+        // 2. Authoritative check with Supabase database
         if (isSupabaseConfigured && user?.id) {
           const { data } = await supabase
             .from("profiles")
-            .select("is_premium")
+            .select("is_premium, premium_expires_at")
             .eq("id", user.id)
             .single();
+
           if (data?.is_premium) {
-            setIsPremiumUnlocked(true);
-            localStorage.setItem("physflix_user_is_premium", "true");
+            const expiryTime = data.premium_expires_at ? new Date(data.premium_expires_at).getTime() : NaN;
+            const isExpired = !isNaN(expiryTime) && expiryTime <= Date.now();
+
+            if (isExpired) {
+              // 1 year has elapsed! Auto-lock account and update Supabase
+              setIsPremiumUnlocked(false);
+              if (typeof window !== 'undefined') {
+                localStorage.removeItem("physflix_user_is_premium");
+                localStorage.removeItem("physflix_premium_expires_at");
+              }
+              try {
+                await supabase
+                  .from("profiles")
+                  .update({ is_premium: false })
+                  .eq("id", user.id);
+              } catch (dbSyncErr) {
+                console.warn("Could not mark expired premium in Supabase:", dbSyncErr);
+              }
+            } else {
+              // Active valid 1-year subscription
+              setIsPremiumUnlocked(true);
+              if (typeof window !== 'undefined') {
+                localStorage.setItem("physflix_user_is_premium", "true");
+                if (data.premium_expires_at) {
+                  localStorage.setItem("physflix_premium_expires_at", data.premium_expires_at);
+                }
+              }
+            }
+          } else {
+            // Not premium in Supabase database
+            setIsPremiumUnlocked(false);
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem("physflix_user_is_premium");
+              localStorage.removeItem("physflix_premium_expires_at");
+            }
           }
         }
       } catch (e) {
@@ -75,8 +127,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const unlockPremium = async () => {
     setIsPremiumUnlocked(true);
+    const now = new Date();
+    const oneYearLater = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+    const expiresAtIso = oneYearLater.toISOString();
+
     if (typeof window !== 'undefined') {
       localStorage.setItem("physflix_user_is_premium", "true");
+      localStorage.setItem("physflix_premium_expires_at", expiresAtIso);
       if (user?.email) {
         localStorage.setItem("physflix_premium_email", user.email);
       }
@@ -87,7 +144,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .from("profiles")
           .update({
             is_premium: true,
-            premium_activated_at: new Date().toISOString(),
+            premium_activated_at: now.toISOString(),
+            premium_expires_at: expiresAtIso,
           })
           .eq("id", user.id);
       } catch (e) {
@@ -282,6 +340,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsPremiumUnlocked(false);
     localStorage.removeItem("physflix_local_user");
     localStorage.removeItem("physflix_user_is_premium");
+    localStorage.removeItem("physflix_premium_expires_at");
   };
 
   return (

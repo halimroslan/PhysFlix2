@@ -9,9 +9,21 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   email TEXT,
   display_name TEXT,
   photo_url TEXT,
+  is_premium BOOLEAN DEFAULT false,
+  premium_activated_at TIMESTAMPTZ,
+  premium_expires_at TIMESTAMPTZ,
+  premium_billcode TEXT,
+  premium_order_id TEXT,
   last_login TIMESTAMPTZ DEFAULT now(),
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- Migration helpers if table already exists
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_activated_at TIMESTAMPTZ;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_expires_at TIMESTAMPTZ;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_billcode TEXT;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_order_id TEXT;
 
 -- 2. Jadual Aktiviti Pengguna (Bookmarks, Sejarah Tontonan, Video Stats & Auto-Resume)
 CREATE TABLE IF NOT EXISTS public.user_activity (

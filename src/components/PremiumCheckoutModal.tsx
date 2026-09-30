@@ -209,7 +209,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300">
-                  {lang === "bm" ? "FPX TOYYIBPAY RASMI" : "OFFICIAL TOYYIBPAY FPX"}
+                  {lang === "bm" ? "KUNCI AKSES TINGKATAN 5 • 1 TAHUN" : "FORM 5 ACCESS KEY • 1 YEAR"}
                 </span>
                 <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
@@ -217,7 +217,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                 </span>
               </div>
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight mt-0.5">
-                {lang === "bm" ? "Langgan Akses Penuh Tingkatan 5 SPM" : "Unlock Full Form 5 SPM Access"}
+                {lang === "bm" ? "Pembelian Kunci Akses Tingkatan 5 SPM" : "Purchase Form 5 SPM Access Key"}
               </h2>
             </div>
           </div>
@@ -280,6 +280,10 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                   Semua 29 Video Pengajaran Fizik T5 (Bab 1 - 7)
                 </h3>
                 <ul className="text-xs text-slate-300 space-y-1 pt-1">
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>{lang === "bm" ? "Kunci akses digital diaktifkan serta-merta ke akaun anda" : "Digital access key activated instantly to your account"}</span>
+                  </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                     <span>Akses penuh 365 hari mengikut DSKP Standard Pembelajaran (SP) KPM</span>
@@ -467,7 +471,7 @@ export const PremiumCheckoutModal: React.FC<PremiumCheckoutModalProps> = ({
                 ) : (
                   <>
                     <Zap className="w-5 h-5 fill-slate-950 text-slate-950" />
-                    <span>{lang === "bm" ? `Sahkan Maklumat & Bayar ${priceDisplay} FPX${isDev ? " (Ujian)" : ""}` : `Confirm & Pay ${priceDisplay} via FPX${isDev ? " (Dev Test)" : ""}`}</span>
+                    <span>{lang === "bm" ? `Beli Kunci Akses ${priceDisplay} via FPX${isDev ? " (Ujian)" : ""}` : `Buy Access Key ${priceDisplay} via FPX${isDev ? " (Dev Test)" : ""}`}</span>
                     <ExternalLink className="w-4 h-4 text-slate-950" />
                   </>
                 )}

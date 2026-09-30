@@ -114,6 +114,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }
   }, [currentLesson?.form, hasTrialStarted, isSuperAdmin, isPremium, startT5FreeTrial]);
 
+  // Cukup 6 bulan: Terus paparkan pop up pembelian key jika cuba tonton video T5
+  useEffect(() => {
+    if (currentLesson?.form === 5 && !hasAccessToForm5 && isTrialExpired) {
+      setShowCheckoutModal(true);
+    }
+  }, [currentLesson?.form, hasAccessToForm5, isTrialExpired]);
+
   // Activate DRM Protection (disables right-click context menu & devtools shortcuts)
   useDRMProtection();
 
@@ -1037,30 +1044,20 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column - Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Active 6-Month Free Trial Banner for Form 5 */}
+          {/* Active 6-Month Free Trial Banner for Form 5 (Clean & Unobtrusive) */}
           {currentLesson.form === 5 && isTrialActive && !isSuperAdmin && !isPremium && (
-            <div className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-slate-900 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 shadow-lg">
-              <div className="flex items-center space-x-2">
-                <span className="flex h-2.5 w-2.5 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            <div className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-slate-900 border border-emerald-500/40 flex items-center space-x-2 shadow-lg">
+              <span className="flex h-2.5 w-2.5 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span className="text-xs font-black text-emerald-300 tracking-wide flex items-center gap-1.5">
+                <Gift className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{lang === "bm" ? "PERCUBAAN PERCUMA 6 BULAN AKTIF:" : "6-MONTH FREE TRIAL ACTIVE:"}</span>
+                <span className="text-emerald-100 font-semibold">
+                  {lang === "bm" ? `Baki ${trialDaysLeft} hari percuma` : `${trialDaysLeft} days remaining`}
                 </span>
-                <span className="text-xs font-black text-emerald-300 tracking-wide flex items-center gap-1.5">
-                  <Gift className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{lang === "bm" ? "PERCUBAAN PERCUMA 6 BULAN AKTIF:" : "6-MONTH FREE TRIAL ACTIVE:"}</span>
-                  <span className="text-emerald-100 font-semibold">
-                    {lang === "bm" ? `Baki ${trialDaysLeft} hari percuma` : `${trialDaysLeft} days remaining`}
-                  </span>
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowCheckoutModal(true)}
-                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-amber-500/20 active:scale-95 cursor-pointer ring-1 ring-amber-300/40"
-              >
-                <Crown className="w-3.5 h-3.5 fill-slate-950" />
-                <span>{lang === "bm" ? "Dapatkan Akses Penuh (RM 1.99)" : "Get Lifetime Access (RM 1.99)"}</span>
-              </button>
+              </span>
             </div>
           )}
 
@@ -1235,16 +1232,16 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     {/* Minimalist Punchy Title */}
                     <h2 className="text-lg sm:text-xl md:text-2xl font-black text-white tracking-tight leading-snug">
                       {isTrialExpired
-                        ? (lang === "bm" ? "Langgan untuk Teruskan Akses Video Tingkatan 5" : "Subscribe to Continue Form 5 Video Access")
-                        : (lang === "bm" ? "Langgan untuk Tonton Video Ini" : "Subscribe to Watch This Video")}
+                        ? (lang === "bm" ? "Beli Kunci Akses untuk Teruskan Video Tingkatan 5" : "Purchase Access Key to Continue Form 5 Videos")
+                        : (lang === "bm" ? "Beli Kunci Akses untuk Tonton Video Ini" : "Purchase Access Key to Watch This Video")}
                     </h2>
 
                     {/* 1-Line Subtitle */}
                     <p className="text-xs sm:text-sm text-slate-300 font-medium">
                       {isTrialExpired
                         ? (lang === "bm"
-                            ? "Tempoh percubaan 6 bulan percuma anda telah berakhir. Langgan sekarang untuk akses tanpa had ke 29 modul video Fizik SPM."
-                            : "Your 6-month free trial has ended. Subscribe now to unlock unlimited access to all 29 Form 5 SPM Physics video modules.")
+                            ? "Tempoh percubaan 6 bulan percuma anda telah berakhir. Sila beli kunci akses rasmi untuk membuka semula semua 29 modul video Fizik SPM Tingkatan 5."
+                            : "Your 6-month free trial has ended. Please purchase an access key to unlock all 29 Form 5 SPM Physics video modules.")
                         : (lang === "bm"
                             ? "Akses penuh 29 modul video Fizik SPM KSSM."
                             : "Full access to 29 Form 5 SPM Physics video modules.")}
@@ -1259,7 +1256,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       >
                         <Crown className="w-4 h-4 text-slate-950 fill-slate-950 shrink-0" />
                         <span className="tracking-wide uppercase font-black">
-                          {lang === "bm" ? "Langgan Sekarang (FPX)" : "Subscribe Now (FPX)"}
+                          {lang === "bm" ? "Beli Kunci Akses Sekarang (FPX)" : "Buy Access Key Now (FPX)"}
                         </span>
                         <Zap className="w-3.5 h-3.5 text-slate-950 fill-slate-950 shrink-0" />
                       </button>
@@ -2411,7 +2408,13 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       <div
                         key={lesson.id}
                         id={isCurrent ? "current-playing-video" : undefined}
-                        onClick={() => onSelectLesson(lesson)}
+                        onClick={() => {
+                          if (lesson.form === 5 && !hasAccessToForm5) {
+                            setShowCheckoutModal(true);
+                            return;
+                          }
+                          onSelectLesson(lesson);
+                        }}
                         className={`group cursor-pointer p-3 rounded-2xl border transition flex items-center space-x-3 ${
                           isCurrent
                             ? "bg-red-950/40 border-red-600/80 ring-1 ring-red-500/40"

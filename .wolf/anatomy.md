@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-09-30T06:00:26.960Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-09-30T06:10:53.038Z
 > Files: 105 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
@@ -20,9 +20,9 @@
 - `obfuscate_ids.js` — Declares fs (~215 tok)
 - `package.json` — Node.js package manifest (~238 tok)
 - `postcss.config.mjs` — Declares config (~26 tok)
-- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~1528 tok)
+- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~1812 tok)
 - `README.md` — Project documentation (~363 tok)
-- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~457 tok)
+- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~517 tok)
 - `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1561 tok)
 - `tsconfig.json` — TypeScript configuration (~192 tok)
 
@@ -79,7 +79,7 @@
 
 - `globals.css` — Styles: 12 rules, 7 vars, 1 animations, 1 layers (~538 tok)
 - `layout.tsx` — geistSans (~378 tok)
-- `page.tsx` — MainDashboard — uses useState, useEffect (~8393 tok)
+- `page.tsx` — MainDashboard — uses useState, useEffect (~8338 tok)
 
 ## src/app/api/ai-answer/
 
@@ -116,18 +116,18 @@
 - `ContinueWatching.tsx` — ContinueWatching (~1383 tok)
 - `DictionaryModal.tsx` — DictionaryModal — uses useState, useMemo (~3488 tok)
 - `FormulaSheetModal.tsx` — FormulaSheetModal — uses useState, useMemo (~3697 tok)
-- `HeroSpotlight.tsx` — FEATURED_T5_DRIVE_IDS (~11799 tok)
+- `HeroSpotlight.tsx` — FEATURED_T5_DRIVE_IDS (~11820 tok)
 - `LoginPage.tsx` — LoginPage — renders form — uses useState (~4759 tok)
 - `MathFormula.tsx` — MathFormula — uses useMemo (~198 tok)
 - `Navbar.tsx` — Navbar — uses useState, useEffect (~3876 tok)
 - `NotificationDropdown.tsx` — STORAGE_KEY — uses useEffect (~5019 tok)
-- `PremiumCheckoutModal.tsx` — FPX_BANKS — uses useEffect (~7035 tok)
+- `PremiumCheckoutModal.tsx` — FPX_BANKS — uses useEffect (~7138 tok)
 - `QuizComponent.tsx` — The shape of our quiz data json (~2356 tok)
 - `QuizModal.tsx` — quizData — uses useState (~2250 tok)
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
 - `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2423 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
-- `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36120 tok)
+- `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36084 tok)
 
 ## src/context/
 

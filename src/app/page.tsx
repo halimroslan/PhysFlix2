@@ -123,18 +123,26 @@ function MainDashboard() {
   });
 
   const handlePlayLesson = async (lesson: VideoLesson) => {
-    // Start 6-month free trial automatically on 1st click on any Form 5 video!
-    if (lesson.form === 5 && !isSuperAdmin && !isPremium && !hasTrialStarted) {
-      const result = await startT5FreeTrial();
-      if (result.isNew) {
-        setShowTrialWelcomeToast({
-          show: true,
-          expiresAt: result.expiresAt.toLocaleDateString("ms-MY", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          }),
-        });
+    // Pengurusan Hak Akses & Percubaan Percuma 6 Bulan Tingkatan 5
+    if (lesson.form === 5 && !isSuperAdmin && !isPremium) {
+      if (isTrialExpired) {
+        // Cukup 6 bulan: TERUS LOCK SEMUA VIDEO T5 & PAPARKAN POP UP UTK PEMBELIAN KEY
+        setIsCheckoutOpen(true);
+        return;
+      }
+      if (!hasTrialStarted) {
+        // Start 6-month free trial automatically on 1st click on any Form 5 video!
+        const result = await startT5FreeTrial();
+        if (result.isNew) {
+          setShowTrialWelcomeToast({
+            show: true,
+            expiresAt: result.expiresAt.toLocaleDateString("ms-MY", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+          });
+        }
       }
     }
     setSelectedLesson(lesson);
@@ -215,7 +223,7 @@ function MainDashboard() {
             ) : (
               <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[9px] font-black flex items-center space-x-1 shadow-lg backdrop-blur-md z-10">
                 <Lock className="w-2.5 h-2.5 text-amber-400" />
-                <span>TRIAL TAMAT</span>
+                <span>TRIAL TAMAT • BELI KUNCI</span>
               </div>
             )
           )}
@@ -477,13 +485,7 @@ function MainDashboard() {
                         <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                         <span>{lang === "bm" ? `Trial 6 Bulan Aktif (${trialDaysLeft} hari)` : `6-Month Trial Active (${trialDaysLeft} days left)`}</span>
                       </span>
-                      <button
-                        onClick={() => setIsCheckoutOpen(true)}
-                        className="hidden sm:flex px-3 py-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold rounded-full items-center gap-1 transition cursor-pointer"
-                      >
-                        <Crown className="w-3 h-3 text-amber-400" />
-                        <span>{lang === "bm" ? "Naik Taraf (FPX)" : "Upgrade"}</span>
-                      </button>
+
                     </div>
                   ) : !hasTrialStarted ? (
                     <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-black rounded-full flex items-center gap-1.5 shadow-sm">
@@ -496,7 +498,7 @@ function MainDashboard() {
                       className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 text-xs font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-amber-500/25 active:scale-95 cursor-pointer"
                     >
                       <Crown className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
-                      <span>{lang === "bm" ? "Trial Tamat • Langgan FPX" : "Trial Expired • Subscribe"}</span>
+                      <span>{lang === "bm" ? "Trial 6 Bulan Tamat • Beli Kunci Akses" : "Trial Expired • Buy Access Key"}</span>
                     </button>
                   )}
                   <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">

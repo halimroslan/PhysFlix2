@@ -504,7 +504,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
           {isLockedForUser && (
             <span className="absolute top-2.5 left-2.5 px-2 py-0.5 text-[9px] font-black tracking-wide text-amber-300 bg-black/85 rounded backdrop-blur-md border border-amber-500/40 flex items-center gap-1 shadow-lg">
               <Lock className="w-2.5 h-2.5 text-amber-400" />
-              <span>{lang === "bm" ? "TRIAL TAMAT" : "TRIAL EXPIRED"}</span>
+              <span>{lang === "bm" ? "TRIAL TAMAT • BELI KUNCI" : "TRIAL EXPIRED • BUY KEY"}</span>
             </span>
           )}
           {!isLockedForUser && isForm5 && !isSuperAdmin && !isPremium && (
@@ -560,7 +560,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
           ) : (
             <span className="px-2.5 py-0.5 rounded bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[10px] font-black flex items-center space-x-1 shadow-sm backdrop-blur-md">
               <Lock className="w-3 h-3 text-amber-400" />
-              <span>{lang === "bm" ? "TRIAL TAMAT" : "TRIAL EXPIRED"}</span>
+              <span>{lang === "bm" ? "TRIAL TAMAT • BELI KUNCI" : "TRIAL EXPIRED • BUY KEY"}</span>
             </span>
           )
         )}
@@ -608,7 +608,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
                 )}
                 <span>
                   {isLockedForUser
-                    ? (lang === "bm" ? "Langgan Sekarang (FPX)" : "Subscribe Now (FPX)")
+                    ? (lang === "bm" ? "Beli Kunci Akses (FPX)" : "Buy Access Key (FPX)")
                     : isForm5 && !hasTrialStarted
                     ? (lang === "bm" ? "Mula Tonton (Percuma 6 Bulan)" : "Watch (6 Months Free)")
                     : isForm5 && isTrialActive
@@ -713,8 +713,8 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
                   <Lock className="w-4 h-4 text-amber-400 shrink-0" />
                   <span>
                     {lang === "bm"
-                      ? "Tempoh percubaan 6 bulan anda telah tamat. Sila langgan untuk terus mengakses modul Fizik SPM Tingkatan 5."
-                      : "Your 6-month free trial has expired. Please subscribe to continue accessing Form 5 SPM Physics modules."}
+                      ? "Tempoh percubaan percuma 6 bulan anda telah tamat. Sila beli kunci akses untuk membuka semula modul Fizik SPM Tingkatan 5."
+                      : "Your 6-month free trial has ended. Please purchase an access key to continue accessing Form 5 SPM Physics modules."}
                   </span>
                 </div>
               ) : isForm5 && !isSuperAdmin && !isPremium ? (
@@ -797,7 +797,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
                   )}
                   <span>
                     {isLockedForUser
-                      ? (lang === "bm" ? "Langgan Sekarang" : "Subscribe Now")
+                      ? (lang === "bm" ? "Beli Kunci Akses" : "Buy Access Key")
                       : isForm5 && !hasTrialStarted
                       ? (lang === "bm" ? "Mula Tonton (Percuma 6 Bulan)" : "Watch (6 Months Free)")
                       : isForm5 && isTrialActive

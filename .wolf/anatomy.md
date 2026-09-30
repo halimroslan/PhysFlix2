@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-09-30T06:10:53.038Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-09-30T06:28:31.261Z
 > Files: 105 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
@@ -127,7 +127,7 @@
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
 - `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2423 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
-- `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36084 tok)
+- `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36701 tok)
 
 ## src/context/
 

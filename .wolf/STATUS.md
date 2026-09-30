@@ -32,6 +32,13 @@ budget_tokens: 1000
 - Kad masa nyata *Jumlah Murid Berdaftar (Premium/ Subscription)* di `AnalyticBoard.tsx` dengan fallback toleran kegagalan.
 - **Percubaan Percuma 6 Bulan Tingkatan 5 (Form 5 Free Trial):** Ditukar automatik bermula klik tontonan pertama video T5 dengan sokongan localStorage + Supabase, lencana dinamik pada Hero & Video Cards, serta pemantauan analitik di AnalyticBoard.
 
+### Fasa 5: Kawalan DRM & Perlindungan Pemain Video
+- **Perlindungan Anti-Leaking YouTube Dwi-Lapisan (Form 5 & Form 4):**
+  - Kunci butang perkongsian (Share curved arrow & Watch Later) di bucu kiri bawah dengan interceptor klik dan lencana rasmi PhysFlix.
+  - Kunci butang pautan luar YouTube (`▶ YouTube`) di bucu kanan bawah sepenuhnya dengan interceptor klik dan lencana rasmi PhysFlix bagi menghalang sebarang routing ke YouTube.
+  - Sekatan palang atas penuh (100% lebar) bagi menyekat avatar saluran, tajuk video dan butang kongsi bucu kanan atas.
+  - Maklum balas visual automatik `🔒 Kandungan Eksklusif PhysFlix • Pautan Luar Dinyahaktifkan` setiap kali berlaku percubaan klik pada butang terhad.
+
 ### OpenWolf & Graft Integration
 - `openwolf init` dan `openwolf scan` selesai (104 fail diindeks).
 - Integrasi fail panduan dan memori projek di `.wolf/`.

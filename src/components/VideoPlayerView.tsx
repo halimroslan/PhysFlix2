@@ -1279,7 +1279,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     title={currentLesson.titleBm}
                   ></iframe>
 
-                  {/* 1. TOP HEADER SHIELD: Blocks YouTube Channel Avatar, Video Title, and Share Link */}
+                  {/* 1. TOP HEADER SHIELD: Blocks YouTube Channel Avatar, Video Title, and Top-Right Share Link */}
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
@@ -1289,7 +1289,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                       e.stopPropagation();
                       toggleFullscreen();
                     }}
-                    className="absolute top-0 left-0 w-[78%] h-14 sm:h-16 md:h-20 z-20 cursor-pointer pointer-events-auto bg-transparent"
+                    className="absolute top-0 left-0 w-full h-14 sm:h-16 md:h-20 z-20 cursor-pointer pointer-events-auto bg-transparent"
                     title={lang === "bm" ? "Kandungan Eksklusif PhysFlix (Pautan Luar Dinyahaktifkan)" : "PhysFlix Exclusive Content"}
                   />
 
@@ -1303,24 +1303,49 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     title={lang === "bm" ? "Pautan Kongsi Luar Dinyahaktifkan" : "External Share Disabled"}
                   />
 
-                  {/* 3. BOTTOM RIGHT LOGO SHIELD: Blocks YouTube Logo at bottom right corner */}
+                  {/* 3. BOTTOM RIGHT LOGO SHIELD: Blocks and Locks YouTube Logo (Zero Routing to YouTube) */}
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
                       handleShieldClick();
                     }}
-                    className="absolute bottom-0 right-0 w-24 sm:w-32 h-10 sm:h-12 z-20 cursor-default pointer-events-auto bg-transparent"
+                    className="absolute bottom-0 right-0 w-44 sm:w-56 md:w-64 h-14 sm:h-16 z-25 cursor-pointer pointer-events-auto bg-transparent"
                     title="PhysFlix Protected Player"
                   />
-
-                  {/* 4. BOTTOM LEFT SHIELD: Blocks Share / Watch Later popups if video is paused */}
+                  {/* Branded PhysFlix Lock Badge covering YouTube Logo at bottom right */}
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
                       handleShieldClick();
                     }}
-                    className="absolute bottom-1 left-2 w-28 h-12 z-20 cursor-pointer pointer-events-auto bg-transparent"
+                    className="absolute bottom-1.5 sm:bottom-2 right-1.5 sm:right-2 z-30 flex items-center justify-center bg-[#0a0a0a]/95 hover:bg-[#141414] rounded-lg px-2.5 py-1 sm:px-3 sm:py-1.5 border border-white/10 shadow-2xl pointer-events-auto cursor-pointer transition-all duration-150 backdrop-blur-md group"
+                    title={lang === "bm" ? "Kandungan Eksklusif PhysFlix • Pautan Luar Dinyahaktifkan" : "PhysFlix Exclusive Content • External Links Disabled"}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/PHYSFLIX.png" alt="PHYSFLIX" className="h-4 sm:h-5 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+                  </div>
+
+                  {/* 4. BOTTOM LEFT SHIELD: Blocks and Locks Share / Watch Later popups */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShieldClick();
+                    }}
+                    className="absolute bottom-0 left-0 w-44 sm:w-56 md:w-64 h-14 sm:h-16 z-25 cursor-pointer pointer-events-auto bg-transparent"
+                    title="PhysFlix Protected Player"
                   />
+                  {/* Branded PhysFlix Lock Badge covering Share & Watch Later buttons at bottom left */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShieldClick();
+                    }}
+                    className="absolute bottom-1.5 sm:bottom-2 left-1.5 sm:left-2 z-30 flex items-center justify-center bg-[#0a0a0a]/95 hover:bg-[#141414] rounded-lg px-2.5 py-1 sm:px-3 sm:py-1.5 border border-white/10 shadow-2xl pointer-events-auto cursor-pointer transition-all duration-150 backdrop-blur-md group"
+                    title={lang === "bm" ? "Kandungan Eksklusif PhysFlix • Perkongsian Dinyahaktifkan" : "PhysFlix Exclusive Content • Sharing Disabled"}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/PHYSFLIX.png" alt="PHYSFLIX" className="h-4 sm:h-5 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+                  </div>
 
                   {/* 5. FLOATING FEEDBACK BADGE WHEN CLICKED */}
                   {showProtectedNotice && (

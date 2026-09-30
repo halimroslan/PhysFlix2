@@ -2,7 +2,7 @@
 
 > **Status Semasa:** FASA 4 (Integrasi ToyyibPay FPX & Developer Analytic Board) ✅ SELESAI | FASA 5 (Ujian Aliran Penuh Pembayaran Live & Video Player Hardening) 🔄 SEDIA DIMULAKAN  
 > **Tarikh Kemas Kini Terakhir:** 2026-09-24  
-> **Direktori Utama Projek:** `/Users/halimroslan/Desktop/MyApp/physics-spm-flix`  
+> **Direktori Utama Projek:** `/Users/halimroslan/Desktop/Kod Sumber (Antigravity)/PhysFlix SPM`  
 > **Aplikasi Live (Vercel):** [https://physflix.vercel.app](https://physflix.vercel.app)  
 > **Pangkalan Data:** Supabase PostgreSQL (`yzurojadggyoxyxmmwof`)  
 > **GitHub Repos:** 
@@ -24,7 +24,7 @@ Platform penstriman video pengajaran Fizik SPM interaktif bertaraf premium ("Net
 | **Fasa 1** | **Seni Bina UI & Penstriman Asas** | ✅ Selesai | Tema Netflix Dark Cinematic, sistem tab T4/T5, pemain video HLS/MP4 responsif. |
 | **Fasa 2** | **Autentikasi Google & Profil Supabase** | ✅ Selesai | Log masuk akaun Google & DELIMa Moe-DL, jadual `profiles`, `user_activity`, pengesanan superadmin. |
 | **Fasa 3** | **Sistem Soal Jawab (Q&A) & AI Tutor** | ✅ Selesai | Integrasi OpenRouter/Gemini Flash, penapisan komen automatik, sokongan semakan guru. |
-| **Fasa 4** | **Gerbang Pembayaran ToyyibPay & Analytic Board** | ✅ Selesai | - Wajibkan input manual Nama Penuh & No Tel pada modal checkout.\n- Integrasi API ToyyibPay FPX (`create-bill`, `return`, `callback`).\n- Kad metrik *Jumlah Murid Berdaftar (Premium/ Subscription)* di Developer Analytic Board.\n- Migrasi kolum `profiles` di Supabase (`is_premium`, `premium_expires_at`, `phone_number`).\n- Mekanisme query fault-tolerant & binaan Vercel 100% lulus. |
+| **Fasa 4** | **Gerbang Pembayaran ToyyibPay & Analytic Board** | ✅ Selesai | - Wajibkan input manual Nama Penuh & No Tel pada modal checkout.\n- Integrasi API ToyyibPay FPX (`create-bill`, `return`, `callback`).\n- Kad metrik *Jumlah Murid Berdaftar (Premium/ Subscription)* di Developer Analytic Board.\n- Migrasi kolum `profiles` di Supabase (`is_premium`, `premium_expires_at`, `phone_number`, `trial_started_at`, `trial_expires_at`).\n- **Free Trial 6 Bulan T5:** Kandungan Tingkatan 5 ditukar kepada percubaan percuma 6 bulan automatik pada klik pertama video T5, dengan lencana dinamik Hero/Cards dan pemantauan masa nyata di Analytic Board.\n- Mekanisme query fault-tolerant 3-peringkat & binaan Vercel 100% lulus. |
 | **Fasa 5** | **Ujian Aliran Penuh Pembayaran Live & Video Player Hardening** | 🔄 Sedia Mula | Simulasi pembayaran RM30 FPX sebenar, pemantauan webhook callback ToyyibPay, kawalan kualiti penstriman video. |
 | **Fasa 6** | **Eksport Invois PDF & Pemberitahuan WhatsApp** | ⏳ Perancangan | Janaan resit rasmi secara automatik untuk simpanan murid/ibu bapa. |
 
@@ -38,7 +38,8 @@ Platform penstriman video pengajaran Fizik SPM interaktif bertaraf premium ("Net
 4. **Invariant 4 (Fault-Tolerant Analytics Queries):** Sebarang pertanyaan analitik pangkalan data mesti mempunyai fallback selamat supaya papan pemuka tidak pernah ranap jika terdapat perubahan skema.
 5. **Invariant 5 (Verified Developer Accounts Only for Simulations):** Butang pintas ujian pembangun (*instant unlock simulation*) hanya boleh dilihat dan digunakan oleh emel pembangun yang sah dalam `DEV_TEST_EMAILS`.
 6. **Invariant 6 (Automatic Tri-Repo Push):** Sebarang kemas kini produksi mesti ditolak (push) serentak ke ketiga-tiga remote git (`origin`, `physflix2-origin`, `old-origin`) untuk memastikan penyelarasan Vercel sempurna.
-7. **Invariant 7 (Mandatory Backup Protocol):** Salinan fail asal wajib disandarkan ke `/Users/halimroslan/NEW CIDS SUITES PRO/` sebelum sebarang pengubahsuaian fail dilakukan.
+7. **Invariant 7 (Mandatory Backup Protocol):** Salinan fail asal wajib disandarkan sebelum sebarang pengubahsuaian fail kritikal dilakukan.
+8. **Invariant 8 (Form 5 6-Month Free Trial Activation on First Play):** Mana-mana murid yang memainkan video Tingkatan 5 buat pertama kali mengaktifkan tempoh percubaan percuma 6 bulan (180 hari) secara automatik tanpa memerlukan kad kredit atau prabayaran. Akses disegerakkan ke localStorage dan Supabase profiles/user_activity, dan disekat semula secara automatik selepas 180 hari untuk mendorong langganan FPX.
 
 ---
 
@@ -54,6 +55,7 @@ Platform penstriman video pengajaran Fizik SPM interaktif bertaraf premium ("Net
 
 ## 5. 📝 Log Keputusan Teknikal (Mini-ADRs)
 - **2026-09-24 (Penyelesaian Kunci Read-Only ToyyibPay):** ToyyibPay mengunci medan nama & telefon sekiranya dihantar oleh API peniaga. Keputusan dibuat untuk mewajibkan pengguna menaip nama dan telefon sendiri di aplikasi PhysFlix sebelum diarahkan ke ToyyibPay, menggantikan data palsu terdahulu.
+- **2026-09-30 (Form 5 6-Month Free Trial on First Play):** Untuk meningkatkan penukaran pelajar dan penggunaan aktif modul SPM, semua modul Tingkatan 5 ditawarkan sebagai percubaan percuma 6 bulan (180 hari) bermula serta-merta pada klik pertama mana-mana video T5. Sistem menyimpan metadata tempoh percubaan secara berlapis (localStorage + Supabase video_stats JSONB + profiles table) dengan pertanyaan 3-peringkat toleran kegagalan bagi menyokong skema pangkalan data sedia ada.
 - **2026-09-24 (Graceful Fallback Analytic Board):** Bagi mengelakkan ranapan skrin merah sekiranya kolum `is_premium` belum wujud, `AnalyticBoard` melaksanakan dwi-pertanyaan (dual-attempt query) dengan fallback ke kolum asas dan butang salin skrip SQL 1-klik untuk pentadbir.
 
 ---

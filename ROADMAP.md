@@ -24,6 +24,7 @@
 - [x] Borang mandatori nama penuh & nombor telefon pelajar di tetingkap checkout.
 - [x] Penguatkuasaan tamat tempoh automatik 1 tahun (365 hari) bagi akaun premium.
 - [x] Pengasingan ketat mod ujian pembangun daripada akaun pelajar biasa.
+- [x] Modul Tingkatan 5 ditawarkan sebagai Percubaan Percuma 6 Bulan (180 hari) automatik pada klik pertama.
 
 ---
 
@@ -32,6 +33,7 @@
 - [x] Pengiraan masa nyata *Jumlah Murid Berdaftar (Premium/ Subscription)* (`totalPremiumUsers`).
 - [x] Kaunter tontonan sebenar (`views`) dan tanda suka (`likes`) dengan pencegahan ranapan.
 - [x] Jadual pemantauan profil lengkap dengan status langganan, nombor telefon, dan tarikh luput.
+- [x] Pemantauan status murid Trial Aktif dan baki hari percuma dalam jadual Analytic Board dengan pertanyaan toleran kegagalan.
 
 ---
 

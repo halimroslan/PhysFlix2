@@ -25,11 +25,24 @@ import {
   VideoLesson
 } from "@/data/physicsData";
 import { findLessonByVideoId } from "@/utils/videoResolution";
-import { Play, BookOpen, Crown, X, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target, Lock } from "lucide-react";
+import { Play, BookOpen, Crown, X, GraduationCap, Search, Loader2, Bookmark, ListVideo, Grid, Target, Lock, Gift } from "lucide-react";
 
 function MainDashboard() {
   const { lang } = useLanguage();
-  const { user, loading, isSuperAdmin, isPremium, unlockPremium } = useAuth();
+  const {
+    user,
+    loading,
+    isSuperAdmin,
+    isPremium,
+    unlockPremium,
+    isTrialActive,
+    hasTrialStarted,
+    isTrialExpired,
+    trialDaysLeft,
+    trialExpiresAt,
+    hasForm5Access,
+    startT5FreeTrial,
+  } = useAuth();
   const { isBookmarked, watchHistory, videoStats } = useUserActivity();
   const [currentTab, setCurrentTab] = useState("home");
   const [selectedLesson, setSelectedLesson] = useState<VideoLesson | null>(null);
@@ -44,6 +57,7 @@ function MainDashboard() {
   const [isCalcOpen, setIsCalcOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [showPaymentSuccessToast, setShowPaymentSuccessToast] = useState(false);
+  const [showTrialWelcomeToast, setShowTrialWelcomeToast] = useState<{ show: boolean; expiresAt: string }>({ show: false, expiresAt: "" });
 
   // Check for successful payment callback from ToyyibPay
   useEffect(() => {
@@ -108,7 +122,21 @@ function MainDashboard() {
     );
   });
 
-  const handlePlayLesson = (lesson: VideoLesson) => {
+  const handlePlayLesson = async (lesson: VideoLesson) => {
+    // Start 6-month free trial automatically on 1st click on any Form 5 video!
+    if (lesson.form === 5 && !isSuperAdmin && !isPremium && !hasTrialStarted) {
+      const result = await startT5FreeTrial();
+      if (result.isNew) {
+        setShowTrialWelcomeToast({
+          show: true,
+          expiresAt: result.expiresAt.toLocaleDateString("ms-MY", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }),
+        });
+      }
+    }
     setSelectedLesson(lesson);
     setCurrentTab("playing");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -172,18 +200,34 @@ function MainDashboard() {
             <span>T{item.form} • Bab {item.chapterNum}</span>
           </div>
 
-          {/* Premium Lock Badge for Form 5 */}
+          {/* Form 5 Access / Trial Badge */}
           {item.form === 5 && !isSuperAdmin && !isPremium && (
-            <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[9px] font-black flex items-center space-x-1 shadow-lg backdrop-blur-md z-10">
-              <Lock className="w-2.5 h-2.5 text-amber-400" />
-              <span>PREMIUM</span>
-            </div>
+            !hasTrialStarted ? (
+              <div className="absolute top-2 right-2 px-2.5 py-0.5 rounded-md bg-emerald-500/25 border border-emerald-500/60 text-emerald-300 text-[9px] font-black flex items-center space-x-1 shadow-lg backdrop-blur-md z-10 animate-pulse">
+                <Gift className="w-2.5 h-2.5 text-emerald-400" />
+                <span>6 BULAN PERCUMA</span>
+              </div>
+            ) : isTrialActive ? (
+              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-cyan-500/20 border border-cyan-500/50 text-cyan-300 text-[9px] font-black flex items-center space-x-1 shadow-lg backdrop-blur-md z-10">
+                <Sparkles className="w-2.5 h-2.5 text-cyan-400" />
+                <span>TRIAL • {trialDaysLeft} HARI</span>
+              </div>
+            ) : (
+              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[9px] font-black flex items-center space-x-1 shadow-lg backdrop-blur-md z-10">
+                <Lock className="w-2.5 h-2.5 text-amber-400" />
+                <span>TRIAL TAMAT</span>
+              </div>
+            )
           )}
 
           {/* Play / Lock Button Overlay (Centered) */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-            <div className={`w-11 h-11 rounded-full ${item.form === 5 && !isSuperAdmin && !isPremium ? 'bg-amber-950/80 border-amber-500/50 group-hover:bg-amber-600' : 'bg-red-600/90 border-white/30 group-hover:bg-red-600 group-hover:scale-110'} border flex items-center justify-center text-white transition-all duration-300 shadow-2xl opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.6)]`}>
-              {item.form === 5 && !isSuperAdmin && !isPremium ? (
+            <div className={`w-11 h-11 rounded-full ${
+              item.form === 5 && isTrialExpired && !isSuperAdmin && !isPremium
+                ? 'bg-amber-950/80 border-amber-500/50 group-hover:bg-amber-600'
+                : 'bg-red-600/90 border-white/30 group-hover:bg-red-600 group-hover:scale-110'
+            } border flex items-center justify-center text-white transition-all duration-300 shadow-2xl opacity-0 group-hover:opacity-100 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.6)]`}>
+              {item.form === 5 && isTrialExpired && !isSuperAdmin && !isPremium ? (
                 <Lock className="w-4 h-4 text-amber-300 fill-amber-300/20" />
               ) : (
                 <Play className="w-5 h-5 fill-white text-white ml-0.5" />
@@ -422,24 +466,38 @@ function MainDashboard() {
                       <span>{lang === "bm" ? "Uji Bayaran FPX (RM 1.99)" : "Test FPX (RM 1.99)"}</span>
                     </button>
                   )}
-                  {(!isSuperAdmin && !isPremium) ? (
+                  {isPremium ? (
+                    <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{lang === "bm" ? "Akses Premium Aktif" : "Premium Active"}</span>
+                    </span>
+                  ) : isTrialActive ? (
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
+                        <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>{lang === "bm" ? `Trial 6 Bulan Aktif (${trialDaysLeft} hari)` : `6-Month Trial Active (${trialDaysLeft} days left)`}</span>
+                      </span>
+                      <button
+                        onClick={() => setIsCheckoutOpen(true)}
+                        className="hidden sm:flex px-3 py-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold rounded-full items-center gap-1 transition cursor-pointer"
+                      >
+                        <Crown className="w-3 h-3 text-amber-400" />
+                        <span>{lang === "bm" ? "Naik Taraf (FPX)" : "Upgrade"}</span>
+                      </button>
+                    </div>
+                  ) : !hasTrialStarted ? (
+                    <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-black rounded-full flex items-center gap-1.5 shadow-sm">
+                      <Gift className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{lang === "bm" ? "🎁 Percuma 6 Bulan (Klik Mana-mana Video)" : "🎁 6 Months Free (Click Any Video)"}</span>
+                    </span>
+                  ) : (
                     <button
                       onClick={() => setIsCheckoutOpen(true)}
                       className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 text-xs font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-amber-500/25 active:scale-95 cursor-pointer"
                     >
                       <Crown className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
-                      <span>{lang === "bm" ? "Langgan Premium (FPX)" : "Subscribe Premium"}</span>
+                      <span>{lang === "bm" ? "Trial Tamat • Langgan FPX" : "Trial Expired • Subscribe"}</span>
                     </button>
-                  ) : isSuperAdmin ? (
-                    <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
-                      <span>👑</span>
-                      <span>{lang === "bm" ? "Mod Pembangun: Akses Penuh" : "Developer: Full Access"}</span>
-                    </span>
-                  ) : (
-                    <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>{lang === "bm" ? "Akses Premium Aktif" : "Premium Active"}</span>
-                    </span>
                   )}
                   <span className="px-3 py-1 bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-extrabold rounded-full">
                     {form5VideoLessons.length} Video Lengkap
@@ -488,6 +546,30 @@ function MainDashboard() {
           </div>
           <button
             onClick={() => setShowPaymentSuccessToast(false)}
+            className="p-1 text-slate-400 hover:text-white cursor-pointer"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Toast Notifikasi Pengaktifan Percubaan Percuma 6 Bulan */}
+      {showTrialWelcomeToast.show && (
+        <div className="fixed bottom-6 right-6 z-50 max-w-md bg-gradient-to-r from-emerald-950 via-slate-900 to-black border border-emerald-500/50 rounded-2xl p-4 sm:p-5 shadow-2xl backdrop-blur-md animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+            <Gift className="w-5 h-5" />
+          </div>
+          <div className="flex-1 space-y-1">
+            <div className="text-xs font-black text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span>🎉</span>
+              <span>PERCUBAAN PERCUMA 6 BULAN DIAKTIFKAN!</span>
+            </div>
+            <p className="text-xs text-slate-200 leading-relaxed">
+              Tahniah! Akses penuh ke semua 29 modul video Fizik SPM Tingkatan 5 kini percuma untuk anda sehingga <strong className="text-emerald-300">{showTrialWelcomeToast.expiresAt}</strong>.
+            </p>
+          </div>
+          <button
+            onClick={() => setShowTrialWelcomeToast({ show: false, expiresAt: "" })}
             className="p-1 text-slate-400 hover:text-white cursor-pointer"
           >
             <X className="w-4 h-4" />

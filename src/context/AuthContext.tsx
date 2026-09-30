@@ -29,6 +29,15 @@ interface AuthContextType {
   isSuperAdmin: boolean;
   isPremium: boolean;
   unlockPremium: () => Promise<void>;
+  // 6-Month Free Trial States & Handlers for Form 5
+  isTrialActive: boolean;
+  hasTrialStarted: boolean;
+  isTrialExpired: boolean;
+  trialStartedAt: Date | null;
+  trialExpiresAt: Date | null;
+  trialDaysLeft: number | null;
+  hasForm5Access: boolean;
+  startT5FreeTrial: () => Promise<{ success: boolean; expiresAt: Date; isNew: boolean }>;
   signInWithGoogle: () => Promise<void>;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   signupWithEmail: (email: string, pass: string) => Promise<void>;
@@ -44,8 +53,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [authError, setAuthError] = useState<string | null>(null);
   const [isPremiumUnlocked, setIsPremiumUnlocked] = useState<boolean>(false);
 
+  // Free Trial State
+  const [trialStartedAt, setTrialStartedAt] = useState<Date | null>(null);
+  const [trialExpiresAt, setTrialExpiresAt] = useState<Date | null>(null);
+  const [isTrialActive, setIsTrialActive] = useState<boolean>(false);
+
   const isSuperAdmin = !!user?.email && SUPERADMIN_EMAILS.includes(user.email.toLowerCase().trim());
   const isPremium = isSuperAdmin || isPremiumUnlocked;
+
+  const hasTrialStarted = !!trialStartedAt;
+  const isTrialExpired = hasTrialStarted && !isTrialActive;
+  const trialDaysLeft = trialExpiresAt
+    ? Math.max(0, Math.ceil((trialExpiresAt.getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+    : null;
+
+  // Form 5 Access: SuperAdmin, Paid Premium, OR Active 6-Month Free Trial
+  const hasForm5Access = isSuperAdmin || isPremium || isTrialActive;
 
   // Check premium status on mount and when user changes (enforces 1-year auto-expiry)
   useEffect(() => {
@@ -68,8 +91,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               setIsPremiumUnlocked(true);
               return;
             }
-          } else {
-            // Legacy flag without timestamp - verify with Supabase below
           }
         }
 
@@ -125,6 +146,164 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
     checkPremium();
   }, [user]);
+
+  // Check 6-Month Free Trial status on mount and when user changes
+  useEffect(() => {
+    const checkTrial = async () => {
+      try {
+        let storedStarted = typeof window !== 'undefined'
+          ? (user?.id ? localStorage.getItem(`physflix_t5_trial_${user.id}_started_at`) : null) || localStorage.getItem("physflix_t5_trial_started_at")
+          : null;
+        let storedExpires = typeof window !== 'undefined'
+          ? (user?.id ? localStorage.getItem(`physflix_t5_trial_${user.id}_expires_at`) : null) || localStorage.getItem("physflix_t5_trial_expires_at")
+          : null;
+
+        // Sync from Supabase if not found locally
+        if ((!storedStarted || !storedExpires) && isSupabaseConfigured && user?.id) {
+          // Attempt 1: Check user_activity.video_stats.t5_free_trial (JSONB, schema-safe)
+          try {
+            const { data: actData } = await supabase
+              .from("user_activity")
+              .select("video_stats")
+              .eq("user_id", user.id)
+              .single();
+
+            const t5Trial = actData?.video_stats?.t5_free_trial;
+            if (t5Trial?.started_at && t5Trial?.expires_at) {
+              storedStarted = t5Trial.started_at;
+              storedExpires = t5Trial.expires_at;
+            }
+          } catch (e) {}
+
+          // Attempt 2: Check profiles table if column exists
+          if (!storedStarted || !storedExpires) {
+            try {
+              const { data: profData } = await supabase
+                .from("profiles")
+                .select("trial_started_at, trial_expires_at")
+                .eq("id", user.id)
+                .single();
+
+              if (profData?.trial_started_at && profData?.trial_expires_at) {
+                storedStarted = profData.trial_started_at;
+                storedExpires = profData.trial_expires_at;
+              }
+            } catch (e) {}
+          }
+
+          if (storedStarted && storedExpires && typeof window !== 'undefined') {
+            if (user?.id) {
+              localStorage.setItem(`physflix_t5_trial_${user.id}_started_at`, storedStarted);
+              localStorage.setItem(`physflix_t5_trial_${user.id}_expires_at`, storedExpires);
+            }
+            localStorage.setItem("physflix_t5_trial_started_at", storedStarted);
+            localStorage.setItem("physflix_t5_trial_expires_at", storedExpires);
+          }
+        }
+
+        if (storedStarted && storedExpires) {
+          const startDate = new Date(storedStarted);
+          const expiryDate = new Date(storedExpires);
+          setTrialStartedAt(startDate);
+          setTrialExpiresAt(expiryDate);
+
+          if (expiryDate.getTime() > Date.now()) {
+            setIsTrialActive(true);
+          } else {
+            setIsTrialActive(false);
+          }
+        } else {
+          setTrialStartedAt(null);
+          setTrialExpiresAt(null);
+          setIsTrialActive(false);
+        }
+      } catch (e) {
+        // silent fallback
+      }
+    };
+
+    checkTrial();
+  }, [user]);
+
+  // Start 6-Month Free Trial for Form 5 on first video play
+  const startT5FreeTrial = async (): Promise<{ success: boolean; expiresAt: Date; isNew: boolean }> => {
+    // If already superadmin or paid premium
+    if (isSuperAdmin || isPremiumUnlocked) {
+      const farFuture = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+      return { success: true, expiresAt: farFuture, isNew: false };
+    }
+
+    // If trial is already active, return existing expiry
+    if (isTrialActive && trialExpiresAt) {
+      return { success: true, expiresAt: trialExpiresAt, isNew: false };
+    }
+
+    const now = new Date();
+    // 6 calendar months
+    const sixMonthsLater = new Date(now);
+    sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+
+    const startedIso = now.toISOString();
+    const expiresIso = sixMonthsLater.toISOString();
+
+    setTrialStartedAt(now);
+    setTrialExpiresAt(sixMonthsLater);
+    setIsTrialActive(true);
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("physflix_t5_trial_started_at", startedIso);
+      localStorage.setItem("physflix_t5_trial_expires_at", expiresIso);
+      if (user?.id) {
+        localStorage.setItem(`physflix_t5_trial_${user.id}_started_at`, startedIso);
+        localStorage.setItem(`physflix_t5_trial_${user.id}_expires_at`, expiresIso);
+      }
+    }
+
+    // Sync to Supabase
+    if (isSupabaseConfigured && user?.id) {
+      // 1. Sync to user_activity.video_stats (JSONB, 100% schema-tolerant)
+      try {
+        const { data: actData } = await supabase
+          .from("user_activity")
+          .select("video_stats")
+          .eq("user_id", user.id)
+          .single();
+
+        const currentStats = actData?.video_stats || {};
+        await supabase
+          .from("user_activity")
+          .upsert({
+            user_id: user.id,
+            video_stats: {
+              ...currentStats,
+              t5_free_trial: {
+                started_at: startedIso,
+                expires_at: expiresIso,
+                is_active: true,
+              },
+            },
+            updated_at: new Date().toISOString(),
+          }, { onConflict: "user_id" });
+      } catch (e) {
+        console.warn("Could not sync trial to user_activity:", e);
+      }
+
+      // 2. Also attempt updating profiles (if columns trial_started_at/trial_expires_at exist)
+      try {
+        await supabase
+          .from("profiles")
+          .update({
+            trial_started_at: startedIso,
+            trial_expires_at: expiresIso,
+          })
+          .eq("id", user.id);
+      } catch (profErr) {
+        // Safe fallback if column not yet migrated
+      }
+    }
+
+    return { success: true, expiresAt: sixMonthsLater, isNew: true };
+  };
 
   const unlockPremium = async () => {
     setIsPremiumUnlocked(true);
@@ -218,57 +397,68 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const appUser = mapSupabaseUser(session.user);
           setUser(appUser);
           if (event === "SIGNED_IN") {
-            await supabase.from("profiles").upsert({
-              id: session.user.id,
-              email: session.user.email,
-              display_name: appUser?.displayName,
-              photo_url: appUser?.photoURL,
-              last_login: new Date().toISOString(),
-            });
+            try {
+              await supabase.from("profiles").upsert({
+                id: session.user.id,
+                email: session.user.email,
+                display_name: appUser?.displayName,
+                photo_url: appUser?.photoURL,
+                last_login: new Date().toISOString(),
+              });
+            } catch (e) {}
           }
         } else if (event === "SIGNED_OUT") {
           setUser(null);
-          localStorage.removeItem("physflix_local_user");
+          setIsPremiumUnlocked(false);
+          setIsTrialActive(false);
+          setTrialStartedAt(null);
+          setTrialExpiresAt(null);
         }
-        setLoading(false);
       });
 
-      return () => subscription.unsubscribe();
+      return () => {
+        subscription.unsubscribe();
+      };
     }
   }, []);
 
   const signInWithGoogle = async () => {
-    setAuthError(null);
     try {
+      setAuthError(null);
       if (isSupabaseConfigured) {
+        const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/` : undefined;
         const { error } = await supabase.auth.signInWithOAuth({
           provider: "google",
           options: {
-            redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+            redirectTo,
+            queryParams: {
+              access_type: "offline",
+              prompt: "select_account",
+            },
           },
         });
         if (error) throw error;
       } else {
-        // Fallback for development without Supabase keys
+        // Fallback Mock Login
         const mockUser: AppUser = {
-          uid: "demo-google-user",
-          id: "demo-google-user",
-          email: "pelajar@moe-dl.edu.my",
-          displayName: "Pelajar SPM Fizik",
-          photoURL: "",
+          uid: "demo-user-123",
+          id: "demo-user-123",
+          email: "demo@physflix.edu.my",
+          displayName: "Pelajar Demo",
+          photoURL: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
         };
         setUser(mockUser);
         localStorage.setItem("physflix_local_user", JSON.stringify(mockUser));
       }
     } catch (error: any) {
-      console.error("Google Auth Error:", error);
+      console.error("Sign-In Error:", error);
       setAuthError(error.message || "Gagal log masuk dengan Google.");
     }
   };
 
   const loginWithEmail = async (email: string, pass: string) => {
-    setAuthError(null);
     try {
+      setAuthError(null);
       if (isSupabaseConfigured) {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
@@ -276,7 +466,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
         if (error) throw error;
         if (data.user) {
-          setUser(mapSupabaseUser(data.user));
+          const appUser = mapSupabaseUser(data.user);
+          setUser(appUser);
+          await supabase.from("profiles").upsert({
+            id: data.user.id,
+            email: data.user.email,
+            display_name: appUser?.displayName,
+            photo_url: appUser?.photoURL,
+            last_login: new Date().toISOString(),
+          });
         }
       } else {
         const mockUser: AppUser = {
@@ -296,21 +494,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signupWithEmail = async (email: string, pass: string) => {
-    setAuthError(null);
     try {
+      setAuthError(null);
       if (isSupabaseConfigured) {
         const { data, error } = await supabase.auth.signUp({
           email,
           password: pass,
-          options: {
-            data: {
-              display_name: email.split("@")[0],
-            },
-          },
         });
         if (error) throw error;
         if (data.user) {
-          setUser(mapSupabaseUser(data.user));
+          const appUser = mapSupabaseUser(data.user);
+          setUser(appUser);
+          await supabase.from("profiles").upsert({
+            id: data.user.id,
+            email: data.user.email,
+            display_name: appUser?.displayName,
+            photo_url: appUser?.photoURL,
+            last_login: new Date().toISOString(),
+          });
         }
       } else {
         const mockUser: AppUser = {
@@ -339,9 +540,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setUser(null);
     setIsPremiumUnlocked(false);
+    setIsTrialActive(false);
+    setTrialStartedAt(null);
+    setTrialExpiresAt(null);
     localStorage.removeItem("physflix_local_user");
     localStorage.removeItem("physflix_user_is_premium");
     localStorage.removeItem("physflix_premium_expires_at");
+    localStorage.removeItem("physflix_t5_trial_started_at");
+    localStorage.removeItem("physflix_t5_trial_expires_at");
   };
 
   return (
@@ -352,6 +558,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isSuperAdmin,
         isPremium,
         unlockPremium,
+        isTrialActive,
+        hasTrialStarted,
+        isTrialExpired,
+        trialStartedAt,
+        trialExpiresAt,
+        trialDaysLeft,
+        hasForm5Access,
+        startT5FreeTrial,
         signInWithGoogle,
         loginWithEmail,
         signupWithEmail,

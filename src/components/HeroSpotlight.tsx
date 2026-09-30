@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Play, Info, Sparkles, Compass, Waves, Flame, Zap, Atom, CheckCircle2, X, Lock } from "lucide-react";
+import { Play, Info, Sparkles, Compass, Waves, Flame, Zap, Atom, CheckCircle2, X, Lock, Gift, Crown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useAuth } from "@/context/AuthContext";
 import { VideoLesson } from "@/data/physicsData";
@@ -344,7 +344,15 @@ export function getLessonDescription(lesson: VideoLesson, lang: "bm" | "en" | st
 
 export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLessons }) => {
   const { lang, t } = useLanguage();
-  const { isSuperAdmin, isPremium } = useAuth();
+  const {
+    isSuperAdmin,
+    isPremium,
+    isTrialActive,
+    hasTrialStarted,
+    isTrialExpired,
+    trialDaysLeft,
+    hasForm5Access
+  } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
@@ -413,7 +421,7 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
   const config = CategoryConfig[categoryKey] || CategoryConfig.mechanics;
   const CategoryIcon = config.icon;
   const isForm5 = currentLesson.form === 5;
-  const isLockedForUser = isForm5 && !isSuperAdmin && !isPremium;
+  const isLockedForUser = isForm5 && isTrialExpired && !isSuperAdmin && !isPremium;
 
   return (
     <div
@@ -496,7 +504,13 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
           {isLockedForUser && (
             <span className="absolute top-2.5 left-2.5 px-2 py-0.5 text-[9px] font-black tracking-wide text-amber-300 bg-black/85 rounded backdrop-blur-md border border-amber-500/40 flex items-center gap-1 shadow-lg">
               <Lock className="w-2.5 h-2.5 text-amber-400" />
-              <span>PREMIUM</span>
+              <span>{lang === "bm" ? "TRIAL TAMAT" : "TRIAL EXPIRED"}</span>
+            </span>
+          )}
+          {!isLockedForUser && isForm5 && !isSuperAdmin && !isPremium && (
+            <span className="absolute top-2.5 left-2.5 px-2 py-0.5 text-[9px] font-black tracking-wide text-emerald-300 bg-black/85 rounded backdrop-blur-md border border-emerald-500/40 flex items-center gap-1 shadow-lg">
+              <Gift className="w-2.5 h-2.5 text-emerald-400" />
+              <span>{isTrialActive ? (lang === "bm" ? `TRIAL ${trialDaysLeft}H` : `TRIAL ${trialDaysLeft}D`) : (lang === "bm" ? "6 BLN PERCUMA" : "6 MOS FREE")}</span>
             </span>
           )}
           <span className="absolute bottom-2.5 right-2.5 px-2 py-0.5 text-[10px] font-bold text-white bg-black/80 rounded backdrop-blur-md border border-white/10">
@@ -528,10 +542,25 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
               <span>👑</span>
               <span>{lang === "bm" ? "MOD PEMBANGUN" : "DEV ACCESS"}</span>
             </span>
+          ) : isPremium ? (
+            <span className="px-2.5 py-0.5 rounded bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[10px] font-black flex items-center space-x-1 shadow-sm backdrop-blur-md">
+              <Crown className="w-3 h-3 text-amber-400" />
+              <span>PREMIUM</span>
+            </span>
+          ) : !hasTrialStarted ? (
+            <span className="px-2.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 text-[10px] font-black flex items-center space-x-1 shadow-sm backdrop-blur-md animate-pulse">
+              <Gift className="w-3 h-3 text-emerald-400" />
+              <span>{lang === "bm" ? "PERCUMA 6 BULAN" : "6 MONTHS FREE"}</span>
+            </span>
+          ) : isTrialActive ? (
+            <span className="px-2.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 text-[10px] font-black flex items-center space-x-1 shadow-sm backdrop-blur-md">
+              <Sparkles className="w-3 h-3 text-emerald-400" />
+              <span>{lang === "bm" ? `TRIAL • ${trialDaysLeft} HARI` : `TRIAL • ${trialDaysLeft} DAYS`}</span>
+            </span>
           ) : (
             <span className="px-2.5 py-0.5 rounded bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[10px] font-black flex items-center space-x-1 shadow-sm backdrop-blur-md">
               <Lock className="w-3 h-3 text-amber-400" />
-              <span>PREMIUM</span>
+              <span>{lang === "bm" ? "TRIAL TAMAT" : "TRIAL EXPIRED"}</span>
             </span>
           )
         )}
@@ -572,14 +601,18 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
               >
                 {isLockedForUser ? (
                   <Lock className="w-4 h-4 text-amber-200" />
+                ) : isForm5 && !hasTrialStarted ? (
+                  <Gift className="w-4 h-4 text-white" />
                 ) : (
                   <Play className="w-4 h-4 fill-white" />
                 )}
                 <span>
                   {isLockedForUser
-                    ? lang === "bm"
-                      ? "Tonton (Premium)"
-                      : "Watch (Premium)"
+                    ? (lang === "bm" ? "Langgan Sekarang (FPX)" : "Subscribe Now (FPX)")
+                    : isForm5 && !hasTrialStarted
+                    ? (lang === "bm" ? "Mula Tonton (Percuma 6 Bulan)" : "Watch (6 Months Free)")
+                    : isForm5 && isTrialActive
+                    ? (lang === "bm" ? `Tonton (Trial ${trialDaysLeft} Hari)` : `Watch (Trial ${trialDaysLeft} Days)`)
                     : t("playNow")}
                 </span>
               </button>
@@ -674,17 +707,30 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
                 </button>
               </div>
 
-              {/* Form 5 Premium Notice in Modal if locked */}
-              {isLockedForUser && (
+              {/* Form 5 Premium / Trial Notice in Modal */}
+              {isLockedForUser ? (
                 <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2.5 shadow-sm">
                   <Lock className="w-4 h-4 text-amber-400 shrink-0" />
                   <span>
                     {lang === "bm"
-                      ? "Modul Tingkatan 5 ini adalah kandungan premium eksklusif SPM PhysFlix."
-                      : "This Form 5 module is exclusive SPM PhysFlix premium content."}
+                      ? "Tempoh percubaan 6 bulan anda telah tamat. Sila langgan untuk terus mengakses modul Fizik SPM Tingkatan 5."
+                      : "Your 6-month free trial has expired. Please subscribe to continue accessing Form 5 SPM Physics modules."}
                   </span>
                 </div>
-              )}
+              ) : isForm5 && !isSuperAdmin && !isPremium ? (
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2.5 shadow-sm">
+                  <Gift className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>
+                    {isTrialActive
+                      ? (lang === "bm"
+                          ? `Percubaan percuma 6 bulan sedang aktif (${trialDaysLeft} hari lagi). Tekan Tonton untuk terus belajar!`
+                          : `6-month free trial is active (${trialDaysLeft} days left). Click Watch to continue learning!`)
+                      : (lang === "bm"
+                          ? "Kandungan Tingkatan 5 kini percuma selama 6 bulan! Tempoh percubaan akan bermula secara automatik apabila anda mula memainkan video ini."
+                          : "Form 5 content is now free for 6 months! Your trial will start automatically as soon as you start watching this video.")}
+                  </span>
+                </div>
+              ) : null}
 
               {/* Learning Points Checklist (With SP Badge Code) */}
               <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
@@ -744,14 +790,18 @@ export const HeroSpotlight: React.FC<HeroSpotlightProps> = ({ onPlay, featuredLe
                 >
                   {isLockedForUser ? (
                     <Lock className="w-3.5 h-3.5 text-amber-200" />
+                  ) : isForm5 && !hasTrialStarted ? (
+                    <Gift className="w-3.5 h-3.5 text-white" />
                   ) : (
                     <Play className="w-3.5 h-3.5 fill-white" />
                   )}
                   <span>
                     {isLockedForUser
-                      ? lang === "bm"
-                        ? "Tonton (Premium)"
-                        : "Watch (Premium)"
+                      ? (lang === "bm" ? "Langgan Sekarang" : "Subscribe Now")
+                      : isForm5 && !hasTrialStarted
+                      ? (lang === "bm" ? "Mula Tonton (Percuma 6 Bulan)" : "Watch (6 Months Free)")
+                      : isForm5 && isTrialActive
+                      ? (lang === "bm" ? `Tonton (Trial ${trialDaysLeft} Hari)` : `Watch (Trial ${trialDaysLeft} Days)`)
                       : t("playNow")}
                   </span>
                 </button>

@@ -48,6 +48,10 @@ interface UserData {
   premiumExpiresAt?: string | null;
   premiumActivatedAt?: string | null;
   phone?: string;
+  trialStartedAt?: string | null;
+  trialExpiresAt?: string | null;
+  isTrialActive?: boolean;
+  trialDaysLeft?: number;
 }
 
 interface VideoStat {
@@ -88,25 +92,34 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
         // Fetch Users from public.profiles (Fault-Tolerant with Graceful Fallback)
         let rawProfiles: any[] = [];
 
-        // Attempt 1: Fetch with full premium and phone columns
+        // Attempt 1: Fetch with full premium, trial, and phone columns
         const { data: fullProfiles, error: fullErr } = await supabase
           .from("profiles")
-          .select("id, email, display_name, last_login, is_premium, premium_expires_at, premium_activated_at, phone_number")
+          .select("id, email, display_name, last_login, is_premium, premium_expires_at, premium_activated_at, phone_number, trial_started_at, trial_expires_at")
           .order("last_login", { ascending: false });
 
         if (fullErr) {
-          // If column is_premium does not exist in Supabase schema yet, fallback gracefully
-          console.warn("Supabase profiles query notice (falling back to basic schema):", fullErr.message);
-          setHasPremiumSchema(false);
-
-          // Attempt 2: Fallback query without is_premium so dashboard NEVER crashes
-          const { data: basicProfiles, error: basicErr } = await supabase
+          // Attempt 2: Fallback without trial columns if not yet migrated
+          const { data: midProfiles, error: midErr } = await supabase
             .from("profiles")
-            .select("id, email, display_name, last_login")
+            .select("id, email, display_name, last_login, is_premium, premium_expires_at, premium_activated_at, phone_number")
             .order("last_login", { ascending: false });
 
-          if (basicErr) throw basicErr;
-          rawProfiles = basicProfiles || [];
+          if (midErr) {
+            // Attempt 3: Minimal fallback so dashboard NEVER crashes
+            console.warn("Supabase profiles query notice (falling back to basic schema):", midErr.message);
+            setHasPremiumSchema(false);
+            const { data: basicProfiles, error: basicErr } = await supabase
+              .from("profiles")
+              .select("id, email, display_name, last_login")
+              .order("last_login", { ascending: false });
+
+            if (basicErr) throw basicErr;
+            rawProfiles = basicProfiles || [];
+          } else {
+            setHasPremiumSchema(true);
+            rawProfiles = midProfiles || [];
+          }
         } else {
           setHasPremiumSchema(true);
           rawProfiles = fullProfiles || [];
@@ -115,6 +128,18 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
         const formattedUsers: UserData[] = rawProfiles.map((p: any) => {
           const hasExpired = p.premium_expires_at ? new Date(p.premium_expires_at) < new Date() : false;
           const isPremiumActive = Boolean(p.is_premium) && !hasExpired;
+
+          // Free trial calculations (6 months)
+          let isTrialActive = false;
+          let trialDaysLeft = 0;
+          if (p.trial_expires_at) {
+            const expTime = new Date(p.trial_expires_at).getTime();
+            const now = Date.now();
+            if (expTime > now) {
+              isTrialActive = true;
+              trialDaysLeft = Math.max(0, Math.ceil((expTime - now) / (1000 * 60 * 60 * 24)));
+            }
+          }
 
           return {
             uid: p.id,
@@ -125,6 +150,10 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
             premiumExpiresAt: p.premium_expires_at ? new Date(p.premium_expires_at).toLocaleDateString("ms-MY") : null,
             premiumActivatedAt: p.premium_activated_at ? new Date(p.premium_activated_at).toLocaleDateString("ms-MY") : null,
             phone: p.phone_number || "",
+            trialStartedAt: p.trial_started_at ? new Date(p.trial_started_at).toLocaleDateString("ms-MY") : null,
+            trialExpiresAt: p.trial_expires_at ? new Date(p.trial_expires_at).toLocaleDateString("ms-MY") : null,
+            isTrialActive,
+            trialDaysLeft,
           };
         });
 
@@ -392,7 +421,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
           </div>
           <button
             onClick={() => {
-              const sql = `ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_activated_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_expires_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_billcode TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_order_id TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS phone_number TEXT;`;
+              const sql = `ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_activated_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_expires_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_billcode TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS premium_order_id TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS phone_number TEXT;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS trial_started_at TIMESTAMPTZ;\nALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS trial_expires_at TIMESTAMPTZ;`;
               navigator.clipboard.writeText(sql);
               alert("Skrip SQL telah disalin! Sila buka Supabase SQL Editor dan tekan Run.");
             }}
@@ -1017,12 +1046,16 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
             <h3 className="text-xl font-bold text-white">Senarai Pelajar Berdaftar (Supabase Profiles)</h3>
             <p className="text-xs text-slate-400 mt-0.5">Pemantauan akaun berdaftar mengikut status langganan.</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="px-3 py-1 bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-bold rounded-full flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-emerald-400" />
+              <span>{users.filter(u => u.isTrialActive).length} Trial Aktif</span>
+            </span>
             <span className="px-3 py-1 bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full flex items-center gap-1">
               <Crown className="w-3 h-3 text-amber-400" />
               <span>{totalPremiumUsers} Premium</span>
             </span>
-            <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold rounded-full">
+            <span className="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-bold rounded-full">
               {users.length} Jumlah Akaun
             </span>
           </div>
@@ -1066,6 +1099,25 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
                         </span>
                         {u.premiumExpiresAt && (
                           <p className="text-[10px] text-slate-400">Tamat: {u.premiumExpiresAt}</p>
+                        )}
+                      </div>
+                    ) : u.isTrialActive ? (
+                      <div className="space-y-0.5">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                          <Sparkles className="w-3 h-3 text-emerald-400" />
+                          <span>Trial Aktif ({u.trialDaysLeft} hari)</span>
+                        </span>
+                        {u.trialExpiresAt && (
+                          <p className="text-[10px] text-slate-400">Tamat: {u.trialExpiresAt}</p>
+                        )}
+                      </div>
+                    ) : u.trialStartedAt ? (
+                      <div className="space-y-0.5">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700">
+                          <span>Trial Tamat</span>
+                        </span>
+                        {u.trialExpiresAt && (
+                          <p className="text-[10px] text-slate-500">Tamat: {u.trialExpiresAt}</p>
                         )}
                       </div>
                     ) : (

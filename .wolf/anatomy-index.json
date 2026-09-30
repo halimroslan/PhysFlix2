@@ -1,13 +1,13 @@
 {
   "version": 1,
   "meta": {
-    "lastScanned": "2026-09-29T11:44:11.829Z",
-    "fileCount": 104,
+    "lastScanned": "2026-09-30T06:00:26.960Z",
+    "fileCount": 105,
     "hits": 0,
     "misses": 0,
-    "renderedHash": "7ec4bf760be8546a840b5e5e07f48f1409966167975fdd280546411d8372ddd6",
-    "storeUpdatedAt": "2026-09-29T11:44:11.833Z",
-    "rootHash": "a3d1bdb025f7e8a2"
+    "renderedHash": "b3a954d62a90e81fc51d340d34edf68d88d34ec8e3e48b3b73c58b9d81daddc0",
+    "storeUpdatedAt": "2026-09-30T06:00:26.963Z",
+    "rootHash": "b45d6751b6e2075f"
   },
   "files": {
     ".gitignore": {
@@ -16,7 +16,17 @@
       "hash": "1d283158e5f55a81",
       "size": 569,
       "mtimeMs": 1790170213785.1626,
-      "updatedAt": "2026-09-29T11:44:10.660Z",
+      "updatedAt": "2026-09-30T06:00:25.841Z",
+      "source": "scan",
+      "importance": 0.3887
+    },
+    ".ignore": {
+      "description": "graft's cards are gitignored but should stay greppable: ripgrep reads",
+      "tokens": 48,
+      "hash": "5b345696ac9daf0b",
+      "size": 180,
+      "mtimeMs": 1790682567495.527,
+      "updatedAt": "2026-09-30T06:00:25.842Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -26,7 +36,7 @@
       "hash": "ddcde47f48c328b8",
       "size": 976,
       "mtimeMs": 1790681632814.7612,
-      "updatedAt": "2026-09-29T11:44:10.660Z",
+      "updatedAt": "2026-09-30T06:00:25.842Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -36,7 +46,7 @@
       "hash": "9e6a8ba918280be0",
       "size": 408,
       "mtimeMs": 1790681632801.6418,
-      "updatedAt": "2026-09-29T11:44:10.661Z",
+      "updatedAt": "2026-09-30T06:00:25.842Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -46,7 +56,7 @@
       "hash": "870f1adccecf3051",
       "size": 465,
       "mtimeMs": 1785851971193.9294,
-      "updatedAt": "2026-09-29T11:44:10.661Z",
+      "updatedAt": "2026-09-30T06:00:25.842Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -56,7 +66,7 @@
       "hash": "e401f79554a8d796",
       "size": 297,
       "mtimeMs": 1790681632815.0125,
-      "updatedAt": "2026-09-29T11:44:10.661Z",
+      "updatedAt": "2026-09-30T06:00:25.842Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -66,7 +76,7 @@
       "hash": "382954089f0f94d9",
       "size": 592,
       "mtimeMs": 1786242766077.3298,
-      "updatedAt": "2026-09-29T11:44:10.662Z",
+      "updatedAt": "2026-09-30T06:00:25.843Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -76,7 +86,7 @@
       "hash": "614bce25b089c3f1",
       "size": 133,
       "mtimeMs": 1785851971194.0771,
-      "updatedAt": "2026-09-29T11:44:10.662Z",
+      "updatedAt": "2026-09-30T06:00:25.843Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -86,7 +96,7 @@
       "hash": "a439724846150ac1",
       "size": 751,
       "mtimeMs": 1785856858813.2747,
-      "updatedAt": "2026-09-29T11:44:10.662Z",
+      "updatedAt": "2026-09-30T06:00:25.844Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -96,7 +106,7 @@
       "hash": "f1a8551e14c53cd0",
       "size": 832,
       "mtimeMs": 1787908759224.7402,
-      "updatedAt": "2026-09-29T11:44:10.662Z",
+      "updatedAt": "2026-09-30T06:00:25.844Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -106,7 +116,7 @@
       "hash": "dfac7ac2d86d326a",
       "size": 94,
       "mtimeMs": 1785851971194.3618,
-      "updatedAt": "2026-09-29T11:44:10.662Z",
+      "updatedAt": "2026-09-30T06:00:25.844Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -116,7 +126,7 @@
       "hash": "ba98750e88a972af",
       "size": 6144,
       "mtimeMs": 1790257112946.0876,
-      "updatedAt": "2026-09-29T11:44:10.662Z",
+      "updatedAt": "2026-09-30T06:00:25.844Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -126,7 +136,7 @@
       "hash": "5bd6c6b6605253ca",
       "size": 442,
       "mtimeMs": 1786151658155.306,
-      "updatedAt": "2026-09-29T11:44:10.663Z",
+      "updatedAt": "2026-09-30T06:00:25.845Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -136,7 +146,7 @@
       "hash": "0ed566acd3d7d59a",
       "size": 704844,
       "mtimeMs": 1787751881055.4507,
-      "updatedAt": "2026-09-29T11:44:10.686Z",
+      "updatedAt": "2026-09-30T06:00:25.868Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -146,7 +156,7 @@
       "hash": "92b2c499a04d324e",
       "size": 524054,
       "mtimeMs": 1787751871468.1062,
-      "updatedAt": "2026-09-29T11:44:10.700Z",
+      "updatedAt": "2026-09-30T06:00:25.882Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -156,7 +166,7 @@
       "hash": "cd99cdc8caad86bc",
       "size": 532584,
       "mtimeMs": 1787751894895.8113,
-      "updatedAt": "2026-09-29T11:44:10.714Z",
+      "updatedAt": "2026-09-30T06:00:25.896Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -166,7 +176,7 @@
       "hash": "00d387f314e7fb94",
       "size": 901402,
       "mtimeMs": 1787751894021.1362,
-      "updatedAt": "2026-09-29T11:44:10.738Z",
+      "updatedAt": "2026-09-30T06:00:25.919Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -176,7 +186,7 @@
       "hash": "203519281e78a2c4",
       "size": 532348,
       "mtimeMs": 1787751900266.462,
-      "updatedAt": "2026-09-29T11:44:10.752Z",
+      "updatedAt": "2026-09-30T06:00:25.933Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -186,7 +196,7 @@
       "hash": "113fc7fa2accdfd7",
       "size": 541682,
       "mtimeMs": 1787751870610.1038,
-      "updatedAt": "2026-09-29T11:44:10.766Z",
+      "updatedAt": "2026-09-30T06:00:25.947Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -196,7 +206,7 @@
       "hash": "4055983b7e2e3f99",
       "size": 590380,
       "mtimeMs": 1787751896719.2437,
-      "updatedAt": "2026-09-29T11:44:10.782Z",
+      "updatedAt": "2026-09-30T06:00:25.963Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -206,7 +216,7 @@
       "hash": "0e996472b615f6b3",
       "size": 502596,
       "mtimeMs": 1787751899380.6128,
-      "updatedAt": "2026-09-29T11:44:10.795Z",
+      "updatedAt": "2026-09-30T06:00:25.976Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -216,7 +226,7 @@
       "hash": "73328168f540daa5",
       "size": 666550,
       "mtimeMs": 1787751885566.5789,
-      "updatedAt": "2026-09-29T11:44:10.812Z",
+      "updatedAt": "2026-09-30T06:00:25.993Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -226,7 +236,7 @@
       "hash": "2115621aa72c6bcf",
       "size": 446490,
       "mtimeMs": 1787751897505.4065,
-      "updatedAt": "2026-09-29T11:44:10.825Z",
+      "updatedAt": "2026-09-30T06:00:26.005Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -236,7 +246,7 @@
       "hash": "fce25e04788f19ef",
       "size": 699460,
       "mtimeMs": 1787751883759.5676,
-      "updatedAt": "2026-09-29T11:44:10.843Z",
+      "updatedAt": "2026-09-30T06:00:26.024Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -246,7 +256,7 @@
       "hash": "85214613953dd10e",
       "size": 544772,
       "mtimeMs": 1787751895818.9067,
-      "updatedAt": "2026-09-29T11:44:10.857Z",
+      "updatedAt": "2026-09-30T06:00:26.038Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -256,7 +266,7 @@
       "hash": "181fe800b13e6114",
       "size": 468030,
       "mtimeMs": 1787751887207.3728,
-      "updatedAt": "2026-09-29T11:44:10.869Z",
+      "updatedAt": "2026-09-30T06:00:26.050Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -266,7 +276,7 @@
       "hash": "f2ba31dafdd22b31",
       "size": 448468,
       "mtimeMs": 1787751890275.333,
-      "updatedAt": "2026-09-29T11:44:10.881Z",
+      "updatedAt": "2026-09-30T06:00:26.062Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -276,7 +286,7 @@
       "hash": "4528a37901a63784",
       "size": 421098,
       "mtimeMs": 1787751882741.062,
-      "updatedAt": "2026-09-29T11:44:10.893Z",
+      "updatedAt": "2026-09-30T06:00:26.074Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -286,7 +296,7 @@
       "hash": "a0a20ef18764c64a",
       "size": 623838,
       "mtimeMs": 1787751874205.4634,
-      "updatedAt": "2026-09-29T11:44:10.910Z",
+      "updatedAt": "2026-09-30T06:00:26.090Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -296,7 +306,7 @@
       "hash": "c185e66c8d1d5343",
       "size": 543854,
       "mtimeMs": 1787751892004.1772,
-      "updatedAt": "2026-09-29T11:44:10.924Z",
+      "updatedAt": "2026-09-30T06:00:26.105Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -306,7 +316,7 @@
       "hash": "1439acacc38c3d98",
       "size": 374332,
       "mtimeMs": 1787751868802.8486,
-      "updatedAt": "2026-09-29T11:44:10.934Z",
+      "updatedAt": "2026-09-30T06:00:26.114Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -316,7 +326,7 @@
       "hash": "3ba95ef2bf0bcb95",
       "size": 795348,
       "mtimeMs": 1787751877110.6406,
-      "updatedAt": "2026-09-29T11:44:10.954Z",
+      "updatedAt": "2026-09-30T06:00:26.135Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -326,7 +336,7 @@
       "hash": "22d7425901170a76",
       "size": 604684,
       "mtimeMs": 1787751879043.5923,
-      "updatedAt": "2026-09-29T11:44:10.970Z",
+      "updatedAt": "2026-09-30T06:00:26.151Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -336,7 +346,7 @@
       "hash": "996a1167b0d449eb",
       "size": 492478,
       "mtimeMs": 1787751891122.314,
-      "updatedAt": "2026-09-29T11:44:10.983Z",
+      "updatedAt": "2026-09-30T06:00:26.164Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -346,7 +356,7 @@
       "hash": "1439acacc38c3d98",
       "size": 374332,
       "mtimeMs": 1788685786961.3706,
-      "updatedAt": "2026-09-29T11:44:10.995Z",
+      "updatedAt": "2026-09-30T06:00:26.176Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -356,7 +366,7 @@
       "hash": "887bea9c1add0d85",
       "size": 391636,
       "mtimeMs": 1787751872234.9048,
-      "updatedAt": "2026-09-29T11:44:11.006Z",
+      "updatedAt": "2026-09-30T06:00:26.186Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -366,7 +376,7 @@
       "hash": "525b0d738d11087d",
       "size": 573382,
       "mtimeMs": 1787751886396.0679,
-      "updatedAt": "2026-09-29T11:44:11.021Z",
+      "updatedAt": "2026-09-30T06:00:26.201Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -376,7 +386,7 @@
       "hash": "ec673720f91b09d9",
       "size": 972648,
       "mtimeMs": 1787751888494.4248,
-      "updatedAt": "2026-09-29T11:44:11.047Z",
+      "updatedAt": "2026-09-30T06:00:26.227Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -386,7 +396,7 @@
       "hash": "60cf437c94f9e84f",
       "size": 621698,
       "mtimeMs": 1787751875978.9824,
-      "updatedAt": "2026-09-29T11:44:11.063Z",
+      "updatedAt": "2026-09-30T06:00:26.243Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -396,7 +406,7 @@
       "hash": "cf082f98f731fd60",
       "size": 574180,
       "mtimeMs": 1787751869736.4768,
-      "updatedAt": "2026-09-29T11:44:11.078Z",
+      "updatedAt": "2026-09-30T06:00:26.258Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -406,7 +416,7 @@
       "hash": "f916bb5c69589c91",
       "size": 513256,
       "mtimeMs": 1787751884594.091,
-      "updatedAt": "2026-09-29T11:44:11.091Z",
+      "updatedAt": "2026-09-30T06:00:26.271Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -416,7 +426,7 @@
       "hash": "a68ac411ac2263db",
       "size": 522432,
       "mtimeMs": 1787751892881.8428,
-      "updatedAt": "2026-09-29T11:44:11.105Z",
+      "updatedAt": "2026-09-30T06:00:26.285Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -426,7 +436,7 @@
       "hash": "f5dc8d9feefdd4b7",
       "size": 472698,
       "mtimeMs": 1787751875049.7866,
-      "updatedAt": "2026-09-29T11:44:11.118Z",
+      "updatedAt": "2026-09-30T06:00:26.298Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -436,7 +446,7 @@
       "hash": "48c25b60f9ed97e7",
       "size": 563690,
       "mtimeMs": 1787752990132.954,
-      "updatedAt": "2026-09-29T11:44:11.132Z",
+      "updatedAt": "2026-09-30T06:00:26.313Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -446,7 +456,7 @@
       "hash": "f29d73185a555c67",
       "size": 561146,
       "mtimeMs": 1787751880025.6973,
-      "updatedAt": "2026-09-29T11:44:11.147Z",
+      "updatedAt": "2026-09-30T06:00:26.328Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -456,7 +466,7 @@
       "hash": "c9c64ed819dfa961",
       "size": 581416,
       "mtimeMs": 1787751900766.6157,
-      "updatedAt": "2026-09-29T11:44:11.162Z",
+      "updatedAt": "2026-09-30T06:00:26.343Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -466,7 +476,7 @@
       "hash": "cfb295700e3dc46e",
       "size": 642362,
       "mtimeMs": 1787751873238.9497,
-      "updatedAt": "2026-09-29T11:44:11.179Z",
+      "updatedAt": "2026-09-30T06:00:26.360Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -476,7 +486,7 @@
       "hash": "37300f7e180e2429",
       "size": 506864,
       "mtimeMs": 1787751878060.2742,
-      "updatedAt": "2026-09-29T11:44:11.193Z",
+      "updatedAt": "2026-09-30T06:00:26.373Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -486,7 +496,7 @@
       "hash": "1271f01d78b24f37",
       "size": 623554,
       "mtimeMs": 1787751881978.1707,
-      "updatedAt": "2026-09-29T11:44:11.210Z",
+      "updatedAt": "2026-09-30T06:00:26.389Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -496,7 +506,7 @@
       "hash": "326e179824cfaab5",
       "size": 652978,
       "mtimeMs": 1787751889477.7646,
-      "updatedAt": "2026-09-29T11:44:11.227Z",
+      "updatedAt": "2026-09-30T06:00:26.406Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -506,7 +516,7 @@
       "hash": "31c336f931c8d9a2",
       "size": 593490,
       "mtimeMs": 1787751898441.542,
-      "updatedAt": "2026-09-29T11:44:11.242Z",
+      "updatedAt": "2026-09-30T06:00:26.422Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -516,7 +526,7 @@
       "hash": "60b55ff7df79af72",
       "size": 1450,
       "mtimeMs": 1785851971193.5967,
-      "updatedAt": "2026-09-29T11:44:11.243Z",
+      "updatedAt": "2026-09-30T06:00:26.422Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -526,7 +536,7 @@
       "hash": "fb1dcacae0438cd8",
       "size": 1846,
       "mtimeMs": 1790257112946.4106,
-      "updatedAt": "2026-09-29T11:44:11.243Z",
+      "updatedAt": "2026-09-30T06:00:26.422Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -536,7 +546,7 @@
       "hash": "4d08d8fa5360b127",
       "size": 6054,
       "mtimeMs": 1787354991531.748,
-      "updatedAt": "2026-09-29T11:44:11.245Z",
+      "updatedAt": "2026-09-30T06:00:26.424Z",
       "source": "scan",
       "symbols": [
         {
@@ -556,7 +566,7 @@
       "hash": "129133c8fa06229d",
       "size": 12215,
       "mtimeMs": 1788406949323.052,
-      "updatedAt": "2026-09-29T11:44:11.246Z",
+      "updatedAt": "2026-09-30T06:00:26.425Z",
       "source": "scan",
       "symbols": [
         {
@@ -591,7 +601,7 @@
       "hash": "1f38c6873a32abed",
       "size": 4908,
       "mtimeMs": 1788404852145.678,
-      "updatedAt": "2026-09-29T11:44:11.246Z",
+      "updatedAt": "2026-09-30T06:00:26.426Z",
       "source": "scan",
       "symbols": [
         {
@@ -625,7 +635,7 @@
       "hash": "54d41cb88f18cc2e",
       "size": 8834,
       "mtimeMs": 1788404987484.8335,
-      "updatedAt": "2026-09-29T11:44:11.247Z",
+      "updatedAt": "2026-09-30T06:00:26.426Z",
       "source": "scan",
       "symbols": [
         {
@@ -653,7 +663,7 @@
       "hash": "f59016ca1751014a",
       "size": 1522,
       "mtimeMs": 1790177761922.122,
-      "updatedAt": "2026-09-29T11:44:11.247Z",
+      "updatedAt": "2026-09-30T06:00:26.426Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -663,7 +673,7 @@
       "hash": "f3670c842b4e55d7",
       "size": 4766,
       "mtimeMs": 1790223875625.1191,
-      "updatedAt": "2026-09-29T11:44:11.247Z",
+      "updatedAt": "2026-09-30T06:00:26.427Z",
       "source": "scan",
       "symbols": [
         {
@@ -683,7 +693,7 @@
       "hash": "dd24a7891485f239",
       "size": 2682,
       "mtimeMs": 1790177755736.346,
-      "updatedAt": "2026-09-29T11:44:11.248Z",
+      "updatedAt": "2026-09-30T06:00:26.427Z",
       "source": "scan",
       "symbols": [
         {
@@ -703,7 +713,7 @@
       "hash": "e798f908fa67ab3f",
       "size": 24631,
       "mtimeMs": 1790181023263.7522,
-      "updatedAt": "2026-09-29T11:44:11.248Z",
+      "updatedAt": "2026-09-30T06:00:26.428Z",
       "source": "scan",
       "symbols": [
         {
@@ -787,7 +797,7 @@
       "hash": "a98320cacee02096",
       "size": 1883,
       "mtimeMs": 1787908774346.326,
-      "updatedAt": "2026-09-29T11:44:11.248Z",
+      "updatedAt": "2026-09-30T06:00:26.428Z",
       "source": "scan",
       "importance": 0.7191
     },
@@ -797,7 +807,7 @@
       "hash": "9a503ea27883a8b3",
       "size": 1322,
       "mtimeMs": 1786620588185.6223,
-      "updatedAt": "2026-09-29T11:44:11.249Z",
+      "updatedAt": "2026-09-30T06:00:26.428Z",
       "source": "scan",
       "imports": [
         "src/app/globals.css"
@@ -806,25 +816,25 @@
     },
     "src/app/page.tsx": {
       "description": "MainDashboard — uses useState, useEffect",
-      "tokens": 7163,
-      "hash": "6ba9b8d7030fcb61",
-      "size": 25076,
-      "mtimeMs": 1790180842898.735,
-      "updatedAt": "2026-09-29T11:44:11.249Z",
+      "tokens": 8393,
+      "hash": "8f7730b7f5b9ae30",
+      "size": 29390,
+      "mtimeMs": 1790747725203.8865,
+      "updatedAt": "2026-09-30T06:00:26.429Z",
       "source": "scan",
       "symbols": [
         {
           "name": "MainDashboard",
           "kind": "fn",
           "startLine": 30,
-          "endLine": 506,
-          "tokens": 6673
+          "endLine": 588,
+          "tokens": 7901
         },
         {
           "name": "Home",
           "kind": "fn",
-          "startLine": 508,
-          "endLine": 518,
+          "startLine": 590,
+          "endLine": 600,
           "tokens": 66
         }
       ],
@@ -834,40 +844,40 @@
     },
     "src/components/AnalyticBoard.tsx": {
       "description": "SUPERADMIN_EMAILS — renders chart — uses useState, useEffect",
-      "tokens": 15380,
-      "hash": "8bf085ff4bf50288",
-      "size": 53854,
-      "mtimeMs": 1790225579984.6746,
-      "updatedAt": "2026-09-29T11:44:11.250Z",
+      "tokens": 16241,
+      "hash": "45153a273b407585",
+      "size": 56868,
+      "mtimeMs": 1790747941145.2727,
+      "updatedAt": "2026-09-30T06:00:26.430Z",
       "source": "scan",
       "symbols": [
         {
           "name": "UserData",
           "kind": "section",
           "startLine": 42,
-          "endLine": 51,
-          "tokens": 61
+          "endLine": 55,
+          "tokens": 96
         },
         {
           "name": "VideoStat",
           "kind": "section",
-          "startLine": 53,
-          "endLine": 57,
+          "startLine": 57,
+          "endLine": 61,
           "tokens": 21
         },
         {
           "name": "AnalyticBoardProps",
           "kind": "section",
-          "startLine": 59,
-          "endLine": 61,
+          "startLine": 63,
+          "endLine": 65,
           "tokens": 30
         },
         {
           "name": "AnalyticBoard",
           "kind": "fn",
-          "startLine": 65,
-          "endLine": 1097,
-          "tokens": 14991
+          "startLine": 69,
+          "endLine": 1149,
+          "tokens": 15818
         }
       ],
       "symbolSource": "ts",
@@ -880,7 +890,7 @@
       "hash": "c0d6deb0f8d8de5c",
       "size": 3150,
       "mtimeMs": 1785852089912.5554,
-      "updatedAt": "2026-09-29T11:44:11.251Z",
+      "updatedAt": "2026-09-30T06:00:26.430Z",
       "source": "scan",
       "symbols": [
         {
@@ -900,7 +910,7 @@
       "hash": "0d66c7d49b8c88f0",
       "size": 4843,
       "mtimeMs": 1790174520970.6772,
-      "updatedAt": "2026-09-29T11:44:11.251Z",
+      "updatedAt": "2026-09-30T06:00:26.430Z",
       "source": "scan",
       "symbols": [
         {
@@ -927,7 +937,7 @@
       "hash": "645391720f05edf3",
       "size": 12210,
       "mtimeMs": 1787907840781.2627,
-      "updatedAt": "2026-09-29T11:44:11.251Z",
+      "updatedAt": "2026-09-30T06:00:26.431Z",
       "source": "scan",
       "symbols": [
         {
@@ -948,7 +958,7 @@
       "hash": "38a752f70fb3d728",
       "size": 12938,
       "mtimeMs": 1787908811545.4548,
-      "updatedAt": "2026-09-29T11:44:11.251Z",
+      "updatedAt": "2026-09-30T06:00:26.431Z",
       "source": "scan",
       "symbols": [
         {
@@ -965,11 +975,11 @@
     },
     "src/components/HeroSpotlight.tsx": {
       "description": "FEATURED_T5_DRIVE_IDS",
-      "tokens": 10695,
-      "hash": "a5043627a292f7ee",
-      "size": 37464,
-      "mtimeMs": 1790176615757.8772,
-      "updatedAt": "2026-09-29T11:44:11.252Z",
+      "tokens": 11799,
+      "hash": "996ae895c6a6c177",
+      "size": 41331,
+      "mtimeMs": 1790747884899.65,
+      "updatedAt": "2026-09-30T06:00:26.432Z",
       "source": "scan",
       "symbols": [
         {
@@ -1004,8 +1014,8 @@
           "name": "HeroSpotlight",
           "kind": "fn",
           "startLine": 345,
-          "endLine": 765,
-          "tokens": 5644
+          "endLine": 815,
+          "tokens": 6744
         }
       ],
       "symbolSource": "ts",
@@ -1018,7 +1028,7 @@
       "hash": "37f8cba3d2d6646f",
       "size": 16655,
       "mtimeMs": 1790682221877.4219,
-      "updatedAt": "2026-09-29T11:44:11.252Z",
+      "updatedAt": "2026-09-30T06:00:26.432Z",
       "source": "scan",
       "symbols": [
         {
@@ -1039,7 +1049,7 @@
       "hash": "e50aabe936c517b0",
       "size": 690,
       "mtimeMs": 1787908788063.9014,
-      "updatedAt": "2026-09-29T11:44:11.253Z",
+      "updatedAt": "2026-09-30T06:00:26.432Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1049,7 +1059,7 @@
       "hash": "129e0562bcde2907",
       "size": 13564,
       "mtimeMs": 1790211849090.6348,
-      "updatedAt": "2026-09-29T11:44:11.253Z",
+      "updatedAt": "2026-09-30T06:00:26.432Z",
       "source": "scan",
       "symbols": [
         {
@@ -1073,7 +1083,7 @@
       "hash": "35eb1cf99a4e9ff5",
       "size": 17573,
       "mtimeMs": 1790179343330.6877,
-      "updatedAt": "2026-09-29T11:44:11.253Z",
+      "updatedAt": "2026-09-30T06:00:26.433Z",
       "source": "scan",
       "symbols": [
         {
@@ -1094,7 +1104,7 @@
       "hash": "5aa10b874c7a70d8",
       "size": 24628,
       "mtimeMs": 1790223899118.5847,
-      "updatedAt": "2026-09-29T11:44:11.254Z",
+      "updatedAt": "2026-09-30T06:00:26.433Z",
       "source": "scan",
       "symbols": [
         {
@@ -1122,7 +1132,7 @@
       "hash": "d09e054d8bcae860",
       "size": 8243,
       "mtimeMs": 1787355619522.903,
-      "updatedAt": "2026-09-29T11:44:11.254Z",
+      "updatedAt": "2026-09-30T06:00:26.433Z",
       "source": "scan",
       "symbols": [
         {
@@ -1167,7 +1177,7 @@
       "hash": "07b5a563e917f71c",
       "size": 7881,
       "mtimeMs": 1785852084606.1606,
-      "updatedAt": "2026-09-29T11:44:11.254Z",
+      "updatedAt": "2026-09-30T06:00:26.433Z",
       "source": "scan",
       "symbols": [
         {
@@ -1195,7 +1205,7 @@
       "hash": "75f481a57b936317",
       "size": 2808,
       "mtimeMs": 1785852109949.6125,
-      "updatedAt": "2026-09-29T11:44:11.254Z",
+      "updatedAt": "2026-09-30T06:00:26.434Z",
       "source": "scan",
       "symbols": [
         {
@@ -1215,7 +1225,7 @@
       "hash": "26b9388a281a344e",
       "size": 8479,
       "mtimeMs": 1786419775108.9001,
-      "updatedAt": "2026-09-29T11:44:11.254Z",
+      "updatedAt": "2026-09-30T06:00:26.434Z",
       "source": "scan",
       "symbols": [
         {
@@ -1241,7 +1251,7 @@
       "hash": "2d01a435912a3c81",
       "size": 19169,
       "mtimeMs": 1787756765402.1907,
-      "updatedAt": "2026-09-29T11:44:11.255Z",
+      "updatedAt": "2026-09-30T06:00:26.434Z",
       "source": "scan",
       "symbols": [
         {
@@ -1279,18 +1289,18 @@
     },
     "src/components/VideoPlayerView.tsx": {
       "description": "VideoPlayerView — uses useState, useEffect, useMemo",
-      "tokens": 34928,
-      "hash": "f4062dadaa1e789f",
-      "size": 122278,
-      "mtimeMs": 1790221757703.5886,
-      "updatedAt": "2026-09-29T11:44:11.256Z",
+      "tokens": 36120,
+      "hash": "2ff84d6dde50ab38",
+      "size": 126451,
+      "mtimeMs": 1790747858168.6453,
+      "updatedAt": "2026-09-30T06:00:26.435Z",
       "source": "scan",
       "symbols": [
         {
           "name": "VideoPlayerViewProps",
           "kind": "section",
-          "startLine": 62,
-          "endLine": 68,
+          "startLine": 63,
+          "endLine": 69,
           "tokens": 63
         }
       ],
@@ -1302,12 +1312,12 @@
       "importance": 0.3887
     },
     "src/context/AuthContext.tsx": {
-      "description": "SUPERADMIN_EMAILS — uses useState, useEffect, useContext",
-      "tokens": 3478,
-      "hash": "ded8f00a22c882f8",
-      "size": 12170,
-      "mtimeMs": 1790211849089.0576,
-      "updatedAt": "2026-09-29T11:44:11.257Z",
+      "description": "SUPERADMIN_EMAILS — uses useState, useEffect",
+      "tokens": 5709,
+      "hash": "07e4a1e10a7afe3c",
+      "size": 19981,
+      "mtimeMs": 1790747629969.513,
+      "updatedAt": "2026-09-30T06:00:26.436Z",
       "source": "scan",
       "symbols": [
         {
@@ -1328,21 +1338,21 @@
           "name": "AuthContextType",
           "kind": "section",
           "startLine": 26,
-          "endLine": 37,
-          "tokens": 112
+          "endLine": 46,
+          "tokens": 211
         },
         {
           "name": "AuthProvider",
           "kind": "fn",
-          "startLine": 41,
-          "endLine": 365,
-          "tokens": 3108
+          "startLine": 50,
+          "endLine": 579,
+          "tokens": 5241
         },
         {
           "name": "useAuth",
           "kind": "fn",
-          "startLine": 367,
-          "endLine": 373,
+          "startLine": 581,
+          "endLine": 587,
           "tokens": 53
         }
       ],
@@ -1356,7 +1366,7 @@
       "hash": "33c6ca201c4d9ab9",
       "size": 7024,
       "mtimeMs": 1787919038748.5032,
-      "updatedAt": "2026-09-29T11:44:11.257Z",
+      "updatedAt": "2026-09-30T06:00:26.436Z",
       "source": "scan",
       "symbols": [
         {
@@ -1398,7 +1408,7 @@
       "hash": "48578f2a71fd7fe3",
       "size": 8729,
       "mtimeMs": 1787818148164.283,
-      "updatedAt": "2026-09-29T11:44:11.257Z",
+      "updatedAt": "2026-09-30T06:00:26.436Z",
       "source": "scan",
       "symbols": [
         {
@@ -1450,7 +1460,7 @@
       "hash": "dcd3370f682a432c",
       "size": 115810,
       "mtimeMs": 1788685802279.1301,
-      "updatedAt": "2026-09-29T11:44:11.258Z",
+      "updatedAt": "2026-09-30T06:00:26.438Z",
       "source": "scan",
       "symbols": [
         {
@@ -1478,7 +1488,7 @@
       "hash": "1728fe0d8ebae628",
       "size": 83895,
       "mtimeMs": 1787911466613.6846,
-      "updatedAt": "2026-09-29T11:44:11.259Z",
+      "updatedAt": "2026-09-30T06:00:26.438Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1488,7 +1498,7 @@
       "hash": "906601b200de33f8",
       "size": 17802,
       "mtimeMs": 1785913351721.5562,
-      "updatedAt": "2026-09-29T11:44:11.260Z",
+      "updatedAt": "2026-09-30T06:00:26.439Z",
       "source": "scan",
       "importance": 0.6007
     },
@@ -1498,7 +1508,7 @@
       "hash": "a743a6636fc12659",
       "size": 55631,
       "mtimeMs": 1790175104122.087,
-      "updatedAt": "2026-09-29T11:44:11.260Z",
+      "updatedAt": "2026-09-30T06:00:26.439Z",
       "source": "scan",
       "importance": 0.6007
     },
@@ -1508,7 +1518,7 @@
       "hash": "2602a26ef81f96aa",
       "size": 67663,
       "mtimeMs": 1787908056360.2627,
-      "updatedAt": "2026-09-29T11:44:11.261Z",
+      "updatedAt": "2026-09-30T06:00:26.440Z",
       "source": "scan",
       "symbols": [
         {
@@ -1529,7 +1539,7 @@
       "hash": "959719fe45764b39",
       "size": 98238,
       "mtimeMs": 1787911371196.626,
-      "updatedAt": "2026-09-29T11:44:11.262Z",
+      "updatedAt": "2026-09-30T06:00:26.441Z",
       "source": "scan",
       "symbols": [
         {
@@ -1550,7 +1560,7 @@
       "hash": "99549cf1c8b0d3e4",
       "size": 4392,
       "mtimeMs": 1790179343330.0583,
-      "updatedAt": "2026-09-29T11:44:11.262Z",
+      "updatedAt": "2026-09-30T06:00:26.441Z",
       "source": "scan",
       "symbols": [
         {
@@ -1570,7 +1580,7 @@
       "hash": "928a1359b482a422",
       "size": 53558,
       "mtimeMs": 1790180813886.141,
-      "updatedAt": "2026-09-29T11:44:11.263Z",
+      "updatedAt": "2026-09-30T06:00:26.442Z",
       "source": "scan",
       "symbols": [
         {
@@ -1630,7 +1640,7 @@
       "hash": "d2186950520e1756",
       "size": 17890,
       "mtimeMs": 1790180967708.1072,
-      "updatedAt": "2026-09-29T11:44:11.263Z",
+      "updatedAt": "2026-09-30T06:00:26.442Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1640,7 +1650,7 @@
       "hash": "825ab85facf4a31c",
       "size": 956,
       "mtimeMs": 1788493025157.7563,
-      "updatedAt": "2026-09-29T11:44:11.263Z",
+      "updatedAt": "2026-09-30T06:00:26.442Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1650,7 +1660,7 @@
       "hash": "ac634ac121e36092",
       "size": 256344,
       "mtimeMs": 1787355004052.7996,
-      "updatedAt": "2026-09-29T11:44:11.264Z",
+      "updatedAt": "2026-09-30T06:00:26.443Z",
       "source": "scan",
       "importance": 1
     },
@@ -1660,7 +1670,7 @@
       "hash": "44136fa355b3678a",
       "size": 2,
       "mtimeMs": 1786176458130.8774,
-      "updatedAt": "2026-09-29T11:44:11.264Z",
+      "updatedAt": "2026-09-30T06:00:26.444Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1670,7 +1680,7 @@
       "hash": "131d10f2ae16d22d",
       "size": 1081,
       "mtimeMs": 1785909028105.315,
-      "updatedAt": "2026-09-29T11:44:11.265Z",
+      "updatedAt": "2026-09-30T06:00:26.444Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1680,7 +1690,7 @@
       "hash": "af1509883b225e66",
       "size": 646,
       "mtimeMs": 1787818842578.1729,
-      "updatedAt": "2026-09-29T11:44:11.265Z",
+      "updatedAt": "2026-09-30T06:00:26.444Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1690,7 +1700,7 @@
       "hash": "bbd71597268777fb",
       "size": 1807,
       "mtimeMs": 1790211849088.2332,
-      "updatedAt": "2026-09-29T11:44:11.265Z",
+      "updatedAt": "2026-09-30T06:00:26.444Z",
       "source": "scan",
       "symbols": [
         {
@@ -1731,7 +1741,7 @@
       "hash": "edff8b4ec217f7be",
       "size": 6395,
       "mtimeMs": 1787923487273.776,
-      "updatedAt": "2026-09-29T11:44:11.265Z",
+      "updatedAt": "2026-09-30T06:00:26.444Z",
       "source": "scan",
       "symbols": [
         {
@@ -1751,7 +1761,7 @@
       "hash": "a574346742e3b5fe",
       "size": 8004,
       "mtimeMs": 1788406067929.0903,
-      "updatedAt": "2026-09-29T11:44:11.265Z",
+      "updatedAt": "2026-09-30T06:00:26.445Z",
       "source": "scan",
       "symbols": [
         {
@@ -1842,7 +1852,7 @@
       "hash": "4ea64830646b7a34",
       "size": 1572,
       "mtimeMs": 1785853144849.4238,
-      "updatedAt": "2026-09-29T11:44:11.265Z",
+      "updatedAt": "2026-09-30T06:00:26.445Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1852,7 +1862,7 @@
       "hash": "2e6be3b173a91172",
       "size": 4220,
       "mtimeMs": 1790180800472.6768,
-      "updatedAt": "2026-09-29T11:44:11.266Z",
+      "updatedAt": "2026-09-30T06:00:26.445Z",
       "source": "scan",
       "symbols": [
         {
@@ -1889,11 +1899,11 @@
     },
     "supabase_schema.sql": {
       "description": "PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES",
-      "tokens": 1513,
-      "hash": "f5224c6a5d24a1be",
-      "size": 5295,
-      "mtimeMs": 1790223903830.7817,
-      "updatedAt": "2026-09-29T11:44:11.266Z",
+      "tokens": 1561,
+      "hash": "92e787584e1f43ec",
+      "size": 5461,
+      "mtimeMs": 1790747960870.725,
+      "updatedAt": "2026-09-30T06:00:26.445Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1903,7 +1913,7 @@
       "hash": "5c51df4c59f4510d",
       "size": 670,
       "mtimeMs": 1785851971196.3005,
-      "updatedAt": "2026-09-29T11:44:11.266Z",
+      "updatedAt": "2026-09-30T06:00:26.445Z",
       "source": "scan",
       "importance": 0.3887
     }

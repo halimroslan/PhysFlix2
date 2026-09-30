@@ -36,7 +36,8 @@ import {
   Loader2,
   RefreshCw,
   Crown,
-  Zap
+  Zap,
+  Gift
 } from "lucide-react";
 import QuizComponent from "./QuizComponent";
 import { PremiumCheckoutModal } from "@/components/PremiumCheckoutModal";
@@ -76,7 +77,18 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 }) => {
   const { lang, t } = useLanguage();
   const { isBookmarked, toggleBookmark, addToHistory, videoStats, updateResumeTime } = useUserActivity();
-  const { user, isSuperAdmin, isPremium, signInWithGoogle } = useAuth();
+  const {
+    user,
+    isSuperAdmin,
+    isPremium,
+    signInWithGoogle,
+    isTrialActive,
+    hasTrialStarted,
+    isTrialExpired,
+    trialDaysLeft,
+    hasForm5Access,
+    startT5FreeTrial
+  } = useAuth();
   const userEmail = (user?.email || "").toLowerCase().trim();
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -93,7 +105,14 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
 
   // Developer Lock Simulation for Testing Checkout
   const [devSimulateLocked, setDevSimulateLocked] = useState(false);
-  const hasAccessToForm5 = (isSuperAdmin || isPremium) && !devSimulateLocked;
+  const hasAccessToForm5 = (isSuperAdmin || isPremium || (hasTrialStarted ? isTrialActive : true)) && !devSimulateLocked;
+
+  // Auto-start 6-month Free Trial on first Form 5 video play
+  useEffect(() => {
+    if (currentLesson?.form === 5 && !hasTrialStarted && !isSuperAdmin && !isPremium) {
+      startT5FreeTrial();
+    }
+  }, [currentLesson?.form, hasTrialStarted, isSuperAdmin, isPremium, startT5FreeTrial]);
 
   // Activate DRM Protection (disables right-click context menu & devtools shortcuts)
   useDRMProtection();
@@ -234,7 +253,7 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
     }, 100);
     
     return () => clearTimeout(screenTimer);
-  }, [currentLesson, isSuperAdmin, isPremium, devSimulateLocked]);
+  }, [currentLesson, isSuperAdmin, isPremium, devSimulateLocked, isTrialActive, hasTrialStarted]);
 
   // Track and save video progress continuously for Auto-Resume
   useEffect(() => {
@@ -1018,6 +1037,33 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column - Video Player & Details */}
         <div className="lg:col-span-8 space-y-6">
+          {/* Active 6-Month Free Trial Banner for Form 5 */}
+          {currentLesson.form === 5 && isTrialActive && !isSuperAdmin && !isPremium && (
+            <div className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-slate-900 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 shadow-lg">
+              <div className="flex items-center space-x-2">
+                <span className="flex h-2.5 w-2.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-xs font-black text-emerald-300 tracking-wide flex items-center gap-1.5">
+                  <Gift className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{lang === "bm" ? "PERCUBAAN PERCUMA 6 BULAN AKTIF:" : "6-MONTH FREE TRIAL ACTIVE:"}</span>
+                  <span className="text-emerald-100 font-semibold">
+                    {lang === "bm" ? `Baki ${trialDaysLeft} hari percuma` : `${trialDaysLeft} days remaining`}
+                  </span>
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCheckoutModal(true)}
+                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-amber-500/20 active:scale-95 cursor-pointer ring-1 ring-amber-300/40"
+              >
+                <Crown className="w-3.5 h-3.5 fill-slate-950" />
+                <span>{lang === "bm" ? "Dapatkan Akses Penuh (RM 1.99)" : "Get Lifetime Access (RM 1.99)"}</span>
+              </button>
+            </div>
+          )}
+
           {/* Developer Active Banner when watching Form 5 (SuperAdmin Only) */}
           {currentLesson.form === 5 && isSuperAdmin && (
             <div className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-slate-900 border border-emerald-500/40 flex flex-wrap items-center justify-between gap-2 shadow-lg">
@@ -1180,20 +1226,28 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                     <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                       <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                       <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider">
-                        {lang === "bm" ? "Kandungan Premium • Tingkatan 5" : "Premium Content • Form 5"}
+                        {isTrialExpired
+                          ? (lang === "bm" ? "Percubaan Percuma 6 Bulan Telah Tamat" : "6-Month Free Trial Expired")
+                          : (lang === "bm" ? "Kandungan Premium • Tingkatan 5" : "Premium Content • Form 5")}
                       </span>
                     </div>
 
                     {/* Minimalist Punchy Title */}
                     <h2 className="text-lg sm:text-xl md:text-2xl font-black text-white tracking-tight leading-snug">
-                      {lang === "bm" ? "Langgan untuk Tonton Video Ini" : "Subscribe to Watch This Video"}
+                      {isTrialExpired
+                        ? (lang === "bm" ? "Langgan untuk Teruskan Akses Video Tingkatan 5" : "Subscribe to Continue Form 5 Video Access")
+                        : (lang === "bm" ? "Langgan untuk Tonton Video Ini" : "Subscribe to Watch This Video")}
                     </h2>
 
                     {/* 1-Line Subtitle */}
                     <p className="text-xs sm:text-sm text-slate-300 font-medium">
-                      {lang === "bm"
-                        ? "Akses penuh 29 modul video Fizik SPM KSSM."
-                        : "Full access to 29 Form 5 SPM Physics video modules."}
+                      {isTrialExpired
+                        ? (lang === "bm"
+                            ? "Tempoh percubaan 6 bulan percuma anda telah berakhir. Langgan sekarang untuk akses tanpa had ke 29 modul video Fizik SPM."
+                            : "Your 6-month free trial has ended. Subscribe now to unlock unlimited access to all 29 Form 5 SPM Physics video modules.")
+                        : (lang === "bm"
+                            ? "Akses penuh 29 modul video Fizik SPM KSSM."
+                            : "Full access to 29 Form 5 SPM Physics video modules.")}
                     </p>
 
                     {/* Sleek Golden CTA Button */}
@@ -2396,11 +2450,23 @@ export const VideoPlayerView: React.FC<VideoPlayerViewProps> = ({
                             <span className="text-[9px] font-bold text-red-400 block">
                               {lesson.week}
                             </span>
-                            {lesson.form === 5 && !hasAccessToForm5 && (
-                              <span className="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[8px] font-black border border-amber-500/40 flex items-center gap-0.5">
-                                <Lock className="w-2 h-2" />
-                                <span>PREMIUM</span>
-                              </span>
+                            {lesson.form === 5 && (
+                              !hasAccessToForm5 ? (
+                                <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[8px] font-black border border-amber-500/40 flex items-center gap-0.5">
+                                  <Lock className="w-2 h-2" />
+                                  <span>{isTrialExpired ? (lang === "bm" ? "TAMAT" : "EXPIRED") : "PREMIUM"}</span>
+                                </span>
+                              ) : !hasTrialStarted ? (
+                                <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[8px] font-black border border-emerald-500/40 flex items-center gap-0.5">
+                                  <Gift className="w-2 h-2" />
+                                  <span>6 BLN PERCUMA</span>
+                                </span>
+                              ) : isTrialActive && !isSuperAdmin && !isPremium ? (
+                                <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[8px] font-black border border-emerald-500/40 flex items-center gap-0.5">
+                                  <Sparkles className="w-2 h-2" />
+                                  <span>{trialDaysLeft}H</span>
+                                </span>
+                              ) : null
                             )}
                           </div>
                           <h5

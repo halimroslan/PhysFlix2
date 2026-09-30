@@ -6,7 +6,7 @@ budget_tokens: 1000
 
 > Single source of truth for resuming work. Read this FIRST when starting a session.
 > Update this file at the end of every work phase so the next `/clear` resumes in 1 read.
-> Last updated: 2026-09-29
+> Last updated: 2026-09-30
 
 ---
 
@@ -30,6 +30,7 @@ budget_tokens: 1000
 - Integrasi penuh API ToyyibPay FPX (`create-bill`, `return`, `callback`).
 - Penguatkuasaan tamat tempoh automatik 1 tahun (365 hari) akaun premium.
 - Kad masa nyata *Jumlah Murid Berdaftar (Premium/ Subscription)* di `AnalyticBoard.tsx` dengan fallback toleran kegagalan.
+- **Percubaan Percuma 6 Bulan Tingkatan 5 (Form 5 Free Trial):** Ditukar automatik bermula klik tontonan pertama video T5 dengan sokongan localStorage + Supabase, lencana dinamik pada Hero & Video Cards, serta pemantauan analitik di AnalyticBoard.
 
 ### OpenWolf & Graft Integration
 - `openwolf init` dan `openwolf scan` selesai (104 fail diindeks).

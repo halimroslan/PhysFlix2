@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-09-29T11:44:11.829Z
-> Files: 104 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-09-30T06:00:26.960Z
+> Files: 105 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -10,6 +10,7 @@
 ## ./
 
 - `.gitignore` — Git ignore rules (~152 tok)
+- `.ignore` — graft's cards are gitignored but should stay greppable: ripgrep reads (~48 tok)
 - `AGENTS.md` — This is NOT the Next.js you know (~243 tok)
 - `CLAUDE.md` — OpenWolf (~102 tok)
 - `eslint.config.mjs` — ESLint flat configuration (~124 tok)
@@ -22,7 +23,7 @@
 - `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~1528 tok)
 - `README.md` — Project documentation (~363 tok)
 - `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~457 tok)
-- `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1513 tok)
+- `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1561 tok)
 - `tsconfig.json` — TypeScript configuration (~192 tok)
 
 ## public/
@@ -78,7 +79,7 @@
 
 - `globals.css` — Styles: 12 rules, 7 vars, 1 animations, 1 layers (~538 tok)
 - `layout.tsx` — geistSans (~378 tok)
-- `page.tsx` — MainDashboard — uses useState, useEffect (~7163 tok)
+- `page.tsx` — MainDashboard — uses useState, useEffect (~8393 tok)
 
 ## src/app/api/ai-answer/
 
@@ -110,12 +111,12 @@
 
 ## src/components/
 
-- `AnalyticBoard.tsx` — SUPERADMIN_EMAILS — renders chart — uses useState, useEffect (~15380 tok)
+- `AnalyticBoard.tsx` — SUPERADMIN_EMAILS — renders chart — uses useState, useEffect (~16241 tok)
 - `CalculatorModal.tsx` — CalculatorModal — uses useState (~899 tok)
 - `ContinueWatching.tsx` — ContinueWatching (~1383 tok)
 - `DictionaryModal.tsx` — DictionaryModal — uses useState, useMemo (~3488 tok)
 - `FormulaSheetModal.tsx` — FormulaSheetModal — uses useState, useMemo (~3697 tok)
-- `HeroSpotlight.tsx` — FEATURED_T5_DRIVE_IDS (~10695 tok)
+- `HeroSpotlight.tsx` — FEATURED_T5_DRIVE_IDS (~11799 tok)
 - `LoginPage.tsx` — LoginPage — renders form — uses useState (~4759 tok)
 - `MathFormula.tsx` — MathFormula — uses useMemo (~198 tok)
 - `Navbar.tsx` — Navbar — uses useState, useEffect (~3876 tok)
@@ -126,11 +127,11 @@
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
 - `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2423 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
-- `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~34928 tok)
+- `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36120 tok)
 
 ## src/context/
 
-- `AuthContext.tsx` — SUPERADMIN_EMAILS — uses useState, useEffect, useContext (~3478 tok)
+- `AuthContext.tsx` — SUPERADMIN_EMAILS — uses useState, useEffect (~5709 tok)
 - `LanguageContext.tsx` — translations — uses useContext (~2007 tok)
 - `UserActivityContext.tsx` — UserActivityContext — uses useRef, useEffect, useContext (~2494 tok)
 

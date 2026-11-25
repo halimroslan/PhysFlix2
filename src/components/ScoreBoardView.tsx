@@ -1,5 +1,6 @@
 "use client";
 
+import { ReportSubmissionCard } from "./ReportSubmissionCard";
 import React, { useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { form4VideoLessons, form5VideoLessons, VideoLesson } from "../data/physicsData";
@@ -87,7 +88,8 @@ export const ScoreBoardView = ({ onPlayLesson }: { onPlayLesson: (lesson: VideoL
           {lang === "bm" ? "Kembali ke Skor Utama" : "Back to Main Score"}
         </button>
         
-        <div className="mb-8">
+        <div className="mb-8 flex flex-col items-start justify-between gap-6 lg:flex-row">
+          <div>
           <h2 className="text-3xl font-black text-white">
             {lang === "bm" ? `Statistik Video Tingkatan ${selectedForm}` : `Form ${selectedForm} Video Statistics`}
           </h2>
@@ -96,6 +98,8 @@ export const ScoreBoardView = ({ onPlayLesson }: { onPlayLesson: (lesson: VideoL
               ? "Paparan pecahan bagi setiap peratusan video yang ditonton serta jumlah ulangan."
               : "Breakdown of each video's completion percentage and total repeats."}
           </p>
+          </div>
+          <ReportSubmissionCard key={selectedForm} scope={String(selectedForm) as "4" | "5"} />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
@@ -165,7 +169,8 @@ export const ScoreBoardView = ({ onPlayLesson }: { onPlayLesson: (lesson: VideoL
     <div className="w-full">
       {!selectedForm ? (
         <div className="animate-in fade-in zoom-in-95 duration-500 py-10">
-          <div className="flex flex-col items-center mb-12 text-center px-4">
+          <div className="mb-12 flex flex-col items-start justify-between gap-6 px-4 lg:flex-row">
+            <div>
             <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-rose-600 tracking-tight">
               {lang === "bm" ? "Papan Skor" : "Score Board"}
             </h2>
@@ -174,6 +179,8 @@ export const ScoreBoardView = ({ onPlayLesson }: { onPlayLesson: (lesson: VideoL
                 ? "Jejaki kemajuan pembelajaran anda untuk keseluruhan subjek Fizik SPM. Klik pada carta untuk melihat analisis terperinci." 
                 : "Track your learning progress for the entire SPM Physics subject. Click on a chart to view detailed analytics."}
             </p>
+            </div>
+            <ReportSubmissionCard scope="all" />
           </div>
           
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 px-4">

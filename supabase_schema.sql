@@ -128,3 +128,6 @@ DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- Teacher mode, quiz persistence and school report RLS/RPCs:
+-- After this base schema, apply supabase/migrations/202611250001_teacher_reports.sql.

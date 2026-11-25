@@ -1,4 +1,62 @@
 {
   "version": 1,
-  "bugs": []
+  "bugs": [
+    {
+      "id": "teacher-report-quiz-sync",
+      "timestamp": "2026-11-25T11:25:48",
+      "error_message": "Remote hydration could overwrite newer cached quiz results; failed reads could enable destructive writes.",
+      "file": "src/context/UserActivityContext.tsx",
+      "root_cause": "Unconditional remote snapshot replacement and throttle dropped latest update.",
+      "fix": "Timestamp-aware quiz reconciliation, debounce with cancellation, no remote writes after failed hydration; migration-safe fallback.",
+      "tags": [
+        "quiz",
+        "data-loss",
+        "sync"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T11:25:48"
+    },
+    {
+      "id": "teacher-report-validation",
+      "timestamp": "2026-11-25T11:25:48",
+      "error_message": "JSON null form could pass SQL validation via three-valued logic.",
+      "file": "supabase/migrations/202611250001_teacher_reports.sql",
+      "root_cause": "Missing explicit JSON type check.",
+      "fix": "Require numeric form; local PostgreSQL-compatible execution verifies null rejection and RLS.",
+      "tags": [
+        "sql",
+        "validation"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T11:25:48"
+    },
+    {
+      "id": "teacher-ui-check",
+      "timestamp": "2026-11-25T11:25:48",
+      "error_message": "Profile menu click immediately closed menu after mouseenter; general quiz retained prior completed attempt.",
+      "file": "src/components/Navbar.tsx; src/components/QuizModal.tsx",
+      "root_cause": "Hover and click competed for dropdown state; modal mounted while closed.",
+      "fix": "Native accessible account menu button; quiz modal mounted only while open.",
+      "tags": [
+        "ui",
+        "quiz"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T11:25:48"
+    },
+    {
+      "id": "teacher-lint-effects",
+      "timestamp": "2026-11-25T11:25:48",
+      "error_message": "react-hooks/set-state-in-effect in new report card and dashboard.",
+      "file": "src/components/ReportSubmissionCard.tsx; src/components/TeacherDashboard.tsx",
+      "root_cause": "Synchronous effect state updates while restoring form and scheduling fetch.",
+      "fix": "Lazy form state initialization; cancellable fetch scheduling. Targeted ESLint passes.",
+      "tags": [
+        "eslint",
+        "react"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T11:25:48"
+    }
+  ]
 }

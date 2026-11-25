@@ -64,3 +64,13 @@ Platform penstriman video pengajaran Fizik SPM interaktif bertaraf premium ("Net
 - [ ] Lakukan ujian transaksi sebenar (Live RM30.00 FPX Test) melalui akaun murid bukan pembangun.
 - [ ] Pantau kemasukan data sebenar nombor telefon dan tarikh tamat tempoh dalam jadual `profiles` di Supabase.
 - [ ] Semak paparan status langganan pada kad analitik Developer Board selepas transaksi pertama selesai.
+
+## 7. Mod Guru & Penghantaran Kemajuan (2026-11-25)
+- Menu gambar profil → Tukar ke Mod Guru → nama penuh, nama sekolah dan kod sekolah unik.
+- Dashboard Guru muncul selepas MyHomePhysics Lab untuk akaun guru. Kod terikat kepada akaun; tidak memberikan hak pembangun/premium.
+- Papan Skor dan Statistik Video T4/T5: kad di kanan tajuk menerima kod sekolah, nama penuh dan kelas. ID `PF-<UUID akaun>` kekal dan dijana daripada identiti log masuk.
+- Hantar menyimpan snapshot video/peratus tontonan dan keputusan kuiz lengkap terkini. Skop all/T4/T5 berasingan; hantar semula mengemas kini snapshot skop sama.
+- Guru melihat nama, kelas, ID unik, video/peratus dan kuiz/peratus. Laporan disusun terkini, 50 setiap halaman, dengan carian halaman dan muat semula.
+- SQL: `supabase/migrations/202611250001_teacher_reports.sql` selepas skema asas. Tambah `user_activity.quiz_results`, `teacher_accounts`, `school_reports` dan tiga RPC. Penulisan laporan/guru hanya melalui RPC; RLS mengehadkan bacaan kepada peserta laporan.
+- Semakan: `node --experimental-strip-types scripts/check-school-reports.mjs`, TypeScript, binaan produksi, ujian SQL sementara dan UI dengan Supabase olokan.
+- Aktivasi produksi memerlukan migrasi Supabase; akses pentadbir tidak tersedia dalam sesi pada masa pelaksanaan.

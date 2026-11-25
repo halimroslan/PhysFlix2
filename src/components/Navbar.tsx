@@ -1,5 +1,6 @@
 "use client";
 
+import { TeacherAccountModal, useTeacherAccount } from "./TeacherAccountModal";
 import React, { useState, useEffect } from "react";
 import { Search, Bell, LogOut, Menu, X, ChevronDown, Book, FileText, Target, Calculator } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -30,6 +31,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateToQaReply
 }) => {
   const { lang, toggleLang, t } = useLanguage();
+  const { account: teacherAccount, setAccount: setTeacherAccount } = useTeacherAccount();
+  const [teacherModalOpen, setTeacherModalOpen] = useState(false);
   const { user, logout } = useAuth();
   const [searchValue, setSearchValue] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -81,6 +84,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: "experiments", label: "MyHomePhysics Lab" },
   ];
 
+  if (teacherAccount) navLinks.push({ id: "teacher", label: "Dashboard Guru" });
+
   if (isSuperAdmin) {
     navLinks.push({ id: "analytics", label: "Analytic Board" });
   }
@@ -104,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center gap-6 md:gap-10">
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden text-white" 
+            className="xl:hidden text-white"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu className="w-6 h-6" />
@@ -121,12 +126,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm ml-4">
+          <nav className="hidden xl:flex items-center gap-1 text-xs ml-2">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`px-4 py-1.5 rounded-full transition-all duration-200 font-medium ${
+                className={`px-2 py-1.5 whitespace-nowrap rounded-full transition-all duration-200 font-medium ${
                   currentTab === link.id 
                     ? "bg-white/20 text-white font-semibold" 
                     : "text-gray-300 hover:bg-white/10 hover:text-white"
@@ -221,10 +226,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div 
             ref={dropdownRef}
             className="relative flex items-center gap-2 cursor-pointer group py-2"
-            onClick={() => setIsToolsDropdownOpen((prev) => !prev)}
-            onMouseEnter={() => setIsToolsDropdownOpen(true)}
-            onMouseLeave={() => setIsToolsDropdownOpen(false)}
           >
+            <button type="button" aria-label="Menu akaun" aria-expanded={isToolsDropdownOpen} onClick={() => setIsToolsDropdownOpen(value => !value)} className="flex items-center gap-2" onKeyDown={event => { if (event.key === "Escape") setIsToolsDropdownOpen(false); }}>
             {user?.photoURL ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
@@ -238,6 +241,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             )}
             <ChevronDown className={`w-4 h-4 text-white transition-transform duration-200 ${isToolsDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
 
             {/* Dropdown Menu with Seamless Hover Bridge */}
             {isToolsDropdownOpen && (
@@ -254,6 +258,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <p className="text-[11px] text-slate-400 truncate">{user?.email || ""}</p>
                   </div>
 
+                  <button type="button" onClick={() => { setTeacherModalOpen(true); setIsToolsDropdownOpen(false); }} className="rounded-lg px-3 py-2 text-left font-semibold text-red-300 hover:bg-slate-800">
+                    {teacherAccount ? "Profil Guru" : "Tukar ke Mod Guru"}
+                  </button>
                   <button 
                     onClick={() => { onOpenFormula?.(); setIsToolsDropdownOpen(false); }} 
                     className="flex items-center px-3 py-2 hover:bg-slate-800/80 hover:text-white rounded-lg transition text-left"
@@ -293,6 +300,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       </header>
+
+      {teacherModalOpen && <TeacherAccountModal account={teacherAccount} onClose={() => setTeacherModalOpen(false)} onSaved={setTeacherAccount} />}
 
       {/* Spacer so content doesn't hide under the fixed navbar */}
       <div className="h-20 md:h-24 bg-[#141414]"></div>

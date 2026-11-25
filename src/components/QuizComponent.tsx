@@ -1,3 +1,4 @@
+import { useUserActivity } from "@/context/UserActivityContext";
 import React, { useState } from "react";
 import quizDataRaw from "../data/quizData.json";
 import { CheckCircle, XCircle, ArrowRight, Brain } from "lucide-react";
@@ -31,6 +32,7 @@ interface QuizComponentProps {
 }
 
 export default function QuizComponent({ currentLesson }: QuizComponentProps) {
+  const { recordQuizResult } = useUserActivity();
   // Extract the standard kandungan title, e.g. "1.1 Kuantiti Fizik"
   const skKey = currentLesson.titleBm;
   const questions = quizData[skKey] || [];
@@ -111,6 +113,7 @@ export default function QuizComponent({ currentLesson }: QuizComponentProps) {
       setSelectedOption(null);
       setShowAnswer(false);
     } else {
+      recordQuizResult(currentLesson.id, score, questions.length);
       setIsFinished(true);
     }
   };

@@ -1,13 +1,13 @@
 {
   "version": 1,
   "meta": {
-    "lastScanned": "2026-09-30T06:49:18.587Z",
-    "fileCount": 105,
+    "lastScanned": "2026-11-25T03:28:08.459Z",
+    "fileCount": 111,
     "hits": 0,
     "misses": 0,
-    "renderedHash": "69b1895f7761be8b498763aec504a35b7c74fe54dcd75ed561afca31c40323a6",
-    "storeUpdatedAt": "2026-09-30T06:49:18.591Z",
-    "rootHash": "83efadbab944316f"
+    "renderedHash": "e36579f8015506abd3f446d7825742155d5469e419b3ea54092b97584a5643a6",
+    "storeUpdatedAt": "2026-11-25T03:28:08.465Z",
+    "rootHash": "3585c965f8537027"
   },
   "files": {
     ".gitignore": {
@@ -16,7 +16,7 @@
       "hash": "1d283158e5f55a81",
       "size": 569,
       "mtimeMs": 1790170213785.1626,
-      "updatedAt": "2026-09-30T06:49:17.544Z",
+      "updatedAt": "2026-11-25T03:28:07.408Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -26,7 +26,7 @@
       "hash": "5b345696ac9daf0b",
       "size": 180,
       "mtimeMs": 1790682567495.527,
-      "updatedAt": "2026-09-30T06:49:17.545Z",
+      "updatedAt": "2026-11-25T03:28:07.409Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -36,7 +36,7 @@
       "hash": "ddcde47f48c328b8",
       "size": 976,
       "mtimeMs": 1790681632814.7612,
-      "updatedAt": "2026-09-30T06:49:17.545Z",
+      "updatedAt": "2026-11-25T03:28:07.409Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -46,7 +46,7 @@
       "hash": "9e6a8ba918280be0",
       "size": 408,
       "mtimeMs": 1790681632801.6418,
-      "updatedAt": "2026-09-30T06:49:17.545Z",
+      "updatedAt": "2026-11-25T03:28:07.409Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -56,7 +56,7 @@
       "hash": "870f1adccecf3051",
       "size": 465,
       "mtimeMs": 1785851971193.9294,
-      "updatedAt": "2026-09-30T06:49:17.545Z",
+      "updatedAt": "2026-11-25T03:28:07.410Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -66,7 +66,7 @@
       "hash": "e401f79554a8d796",
       "size": 297,
       "mtimeMs": 1790681632815.0125,
-      "updatedAt": "2026-09-30T06:49:17.545Z",
+      "updatedAt": "2026-11-25T03:28:07.410Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -76,7 +76,7 @@
       "hash": "382954089f0f94d9",
       "size": 592,
       "mtimeMs": 1786242766077.3298,
-      "updatedAt": "2026-09-30T06:49:17.546Z",
+      "updatedAt": "2026-11-25T03:28:07.411Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -86,7 +86,7 @@
       "hash": "614bce25b089c3f1",
       "size": 133,
       "mtimeMs": 1785851971194.0771,
-      "updatedAt": "2026-09-30T06:49:17.546Z",
+      "updatedAt": "2026-11-25T03:28:07.411Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -96,7 +96,7 @@
       "hash": "a439724846150ac1",
       "size": 751,
       "mtimeMs": 1785856858813.2747,
-      "updatedAt": "2026-09-30T06:49:17.546Z",
+      "updatedAt": "2026-11-25T03:28:07.411Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -106,7 +106,7 @@
       "hash": "f1a8551e14c53cd0",
       "size": 832,
       "mtimeMs": 1787908759224.7402,
-      "updatedAt": "2026-09-30T06:49:17.546Z",
+      "updatedAt": "2026-11-25T03:28:07.412Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -116,17 +116,17 @@
       "hash": "dfac7ac2d86d326a",
       "size": 94,
       "mtimeMs": 1785851971194.3618,
-      "updatedAt": "2026-09-30T06:49:17.546Z",
+      "updatedAt": "2026-11-25T03:28:07.412Z",
       "source": "scan",
       "importance": 0.3887
     },
     "PROJECT_FLOW.md": {
       "description": "🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM",
-      "tokens": 1812,
-      "hash": "c2a9a20b9a5c77ad",
-      "size": 7282,
-      "mtimeMs": 1790748146860.3423,
-      "updatedAt": "2026-09-30T06:49:17.547Z",
+      "tokens": 2136,
+      "hash": "63fc26db5bb9d145",
+      "size": 8579,
+      "mtimeMs": 1795577148698.7583,
+      "updatedAt": "2026-11-25T03:28:07.412Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -136,7 +136,7 @@
       "hash": "5bd6c6b6605253ca",
       "size": 442,
       "mtimeMs": 1786151658155.306,
-      "updatedAt": "2026-09-30T06:49:17.547Z",
+      "updatedAt": "2026-11-25T03:28:07.413Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -146,7 +146,7 @@
       "hash": "0ed566acd3d7d59a",
       "size": 704844,
       "mtimeMs": 1787751881055.4507,
-      "updatedAt": "2026-09-30T06:49:17.570Z",
+      "updatedAt": "2026-11-25T03:28:07.436Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -156,7 +156,7 @@
       "hash": "92b2c499a04d324e",
       "size": 524054,
       "mtimeMs": 1787751871468.1062,
-      "updatedAt": "2026-09-30T06:49:17.584Z",
+      "updatedAt": "2026-11-25T03:28:07.449Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -166,7 +166,7 @@
       "hash": "cd99cdc8caad86bc",
       "size": 532584,
       "mtimeMs": 1787751894895.8113,
-      "updatedAt": "2026-09-30T06:49:17.598Z",
+      "updatedAt": "2026-11-25T03:28:07.463Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -176,7 +176,7 @@
       "hash": "00d387f314e7fb94",
       "size": 901402,
       "mtimeMs": 1787751894021.1362,
-      "updatedAt": "2026-09-30T06:49:17.622Z",
+      "updatedAt": "2026-11-25T03:28:07.487Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -186,7 +186,7 @@
       "hash": "203519281e78a2c4",
       "size": 532348,
       "mtimeMs": 1787751900266.462,
-      "updatedAt": "2026-09-30T06:49:17.636Z",
+      "updatedAt": "2026-11-25T03:28:07.501Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -196,7 +196,7 @@
       "hash": "113fc7fa2accdfd7",
       "size": 541682,
       "mtimeMs": 1787751870610.1038,
-      "updatedAt": "2026-09-30T06:49:17.650Z",
+      "updatedAt": "2026-11-25T03:28:07.515Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -206,7 +206,7 @@
       "hash": "4055983b7e2e3f99",
       "size": 590380,
       "mtimeMs": 1787751896719.2437,
-      "updatedAt": "2026-09-30T06:49:17.666Z",
+      "updatedAt": "2026-11-25T03:28:07.531Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -216,7 +216,7 @@
       "hash": "0e996472b615f6b3",
       "size": 502596,
       "mtimeMs": 1787751899380.6128,
-      "updatedAt": "2026-09-30T06:49:17.679Z",
+      "updatedAt": "2026-11-25T03:28:07.544Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -226,7 +226,7 @@
       "hash": "73328168f540daa5",
       "size": 666550,
       "mtimeMs": 1787751885566.5789,
-      "updatedAt": "2026-09-30T06:49:17.697Z",
+      "updatedAt": "2026-11-25T03:28:07.561Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -236,7 +236,7 @@
       "hash": "2115621aa72c6bcf",
       "size": 446490,
       "mtimeMs": 1787751897505.4065,
-      "updatedAt": "2026-09-30T06:49:17.709Z",
+      "updatedAt": "2026-11-25T03:28:07.573Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -246,7 +246,7 @@
       "hash": "fce25e04788f19ef",
       "size": 699460,
       "mtimeMs": 1787751883759.5676,
-      "updatedAt": "2026-09-30T06:49:17.727Z",
+      "updatedAt": "2026-11-25T03:28:07.591Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -256,7 +256,7 @@
       "hash": "85214613953dd10e",
       "size": 544772,
       "mtimeMs": 1787751895818.9067,
-      "updatedAt": "2026-09-30T06:49:17.741Z",
+      "updatedAt": "2026-11-25T03:28:07.605Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -266,7 +266,7 @@
       "hash": "181fe800b13e6114",
       "size": 468030,
       "mtimeMs": 1787751887207.3728,
-      "updatedAt": "2026-09-30T06:49:17.754Z",
+      "updatedAt": "2026-11-25T03:28:07.618Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -276,7 +276,7 @@
       "hash": "f2ba31dafdd22b31",
       "size": 448468,
       "mtimeMs": 1787751890275.333,
-      "updatedAt": "2026-09-30T06:49:17.766Z",
+      "updatedAt": "2026-11-25T03:28:07.630Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -286,7 +286,7 @@
       "hash": "4528a37901a63784",
       "size": 421098,
       "mtimeMs": 1787751882741.062,
-      "updatedAt": "2026-09-30T06:49:17.778Z",
+      "updatedAt": "2026-11-25T03:28:07.641Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -296,7 +296,7 @@
       "hash": "a0a20ef18764c64a",
       "size": 623838,
       "mtimeMs": 1787751874205.4634,
-      "updatedAt": "2026-09-30T06:49:17.794Z",
+      "updatedAt": "2026-11-25T03:28:07.656Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -306,7 +306,7 @@
       "hash": "c185e66c8d1d5343",
       "size": 543854,
       "mtimeMs": 1787751892004.1772,
-      "updatedAt": "2026-09-30T06:49:17.808Z",
+      "updatedAt": "2026-11-25T03:28:07.671Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -316,7 +316,7 @@
       "hash": "1439acacc38c3d98",
       "size": 374332,
       "mtimeMs": 1787751868802.8486,
-      "updatedAt": "2026-09-30T06:49:17.818Z",
+      "updatedAt": "2026-11-25T03:28:07.681Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -326,7 +326,7 @@
       "hash": "3ba95ef2bf0bcb95",
       "size": 795348,
       "mtimeMs": 1787751877110.6406,
-      "updatedAt": "2026-09-30T06:49:17.839Z",
+      "updatedAt": "2026-11-25T03:28:07.701Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -336,7 +336,7 @@
       "hash": "22d7425901170a76",
       "size": 604684,
       "mtimeMs": 1787751879043.5923,
-      "updatedAt": "2026-09-30T06:49:17.855Z",
+      "updatedAt": "2026-11-25T03:28:07.717Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -346,7 +346,7 @@
       "hash": "996a1167b0d449eb",
       "size": 492478,
       "mtimeMs": 1787751891122.314,
-      "updatedAt": "2026-09-30T06:49:17.868Z",
+      "updatedAt": "2026-11-25T03:28:07.730Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -356,7 +356,7 @@
       "hash": "1439acacc38c3d98",
       "size": 374332,
       "mtimeMs": 1788685786961.3706,
-      "updatedAt": "2026-09-30T06:49:17.880Z",
+      "updatedAt": "2026-11-25T03:28:07.741Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -366,7 +366,7 @@
       "hash": "887bea9c1add0d85",
       "size": 391636,
       "mtimeMs": 1787751872234.9048,
-      "updatedAt": "2026-09-30T06:49:17.890Z",
+      "updatedAt": "2026-11-25T03:28:07.751Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -376,7 +376,7 @@
       "hash": "525b0d738d11087d",
       "size": 573382,
       "mtimeMs": 1787751886396.0679,
-      "updatedAt": "2026-09-30T06:49:17.906Z",
+      "updatedAt": "2026-11-25T03:28:07.766Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -386,7 +386,7 @@
       "hash": "ec673720f91b09d9",
       "size": 972648,
       "mtimeMs": 1787751888494.4248,
-      "updatedAt": "2026-09-30T06:49:17.931Z",
+      "updatedAt": "2026-11-25T03:28:07.791Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -396,7 +396,7 @@
       "hash": "60cf437c94f9e84f",
       "size": 621698,
       "mtimeMs": 1787751875978.9824,
-      "updatedAt": "2026-09-30T06:49:17.947Z",
+      "updatedAt": "2026-11-25T03:28:07.806Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -406,7 +406,7 @@
       "hash": "cf082f98f731fd60",
       "size": 574180,
       "mtimeMs": 1787751869736.4768,
-      "updatedAt": "2026-09-30T06:49:17.962Z",
+      "updatedAt": "2026-11-25T03:28:07.821Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -416,7 +416,7 @@
       "hash": "f916bb5c69589c91",
       "size": 513256,
       "mtimeMs": 1787751884594.091,
-      "updatedAt": "2026-09-30T06:49:17.975Z",
+      "updatedAt": "2026-11-25T03:28:07.834Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -426,7 +426,7 @@
       "hash": "a68ac411ac2263db",
       "size": 522432,
       "mtimeMs": 1787751892881.8428,
-      "updatedAt": "2026-09-30T06:49:17.989Z",
+      "updatedAt": "2026-11-25T03:28:07.848Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -436,7 +436,7 @@
       "hash": "f5dc8d9feefdd4b7",
       "size": 472698,
       "mtimeMs": 1787751875049.7866,
-      "updatedAt": "2026-09-30T06:49:18.001Z",
+      "updatedAt": "2026-11-25T03:28:07.859Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -446,7 +446,7 @@
       "hash": "48c25b60f9ed97e7",
       "size": 563690,
       "mtimeMs": 1787752990132.954,
-      "updatedAt": "2026-09-30T06:49:18.016Z",
+      "updatedAt": "2026-11-25T03:28:07.874Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -456,7 +456,7 @@
       "hash": "f29d73185a555c67",
       "size": 561146,
       "mtimeMs": 1787751880025.6973,
-      "updatedAt": "2026-09-30T06:49:18.031Z",
+      "updatedAt": "2026-11-25T03:28:07.889Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -466,7 +466,7 @@
       "hash": "c9c64ed819dfa961",
       "size": 581416,
       "mtimeMs": 1787751900766.6157,
-      "updatedAt": "2026-09-30T06:49:18.046Z",
+      "updatedAt": "2026-11-25T03:28:07.904Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -476,7 +476,7 @@
       "hash": "cfb295700e3dc46e",
       "size": 642362,
       "mtimeMs": 1787751873238.9497,
-      "updatedAt": "2026-09-30T06:49:18.062Z",
+      "updatedAt": "2026-11-25T03:28:07.920Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -486,7 +486,7 @@
       "hash": "37300f7e180e2429",
       "size": 506864,
       "mtimeMs": 1787751878060.2742,
-      "updatedAt": "2026-09-30T06:49:18.076Z",
+      "updatedAt": "2026-11-25T03:28:07.933Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -496,7 +496,7 @@
       "hash": "1271f01d78b24f37",
       "size": 623554,
       "mtimeMs": 1787751881978.1707,
-      "updatedAt": "2026-09-30T06:49:18.092Z",
+      "updatedAt": "2026-11-25T03:28:07.949Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -506,7 +506,7 @@
       "hash": "326e179824cfaab5",
       "size": 652978,
       "mtimeMs": 1787751889477.7646,
-      "updatedAt": "2026-09-30T06:49:18.109Z",
+      "updatedAt": "2026-11-25T03:28:07.966Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -516,7 +516,7 @@
       "hash": "31c336f931c8d9a2",
       "size": 593490,
       "mtimeMs": 1787751898441.542,
-      "updatedAt": "2026-09-30T06:49:18.125Z",
+      "updatedAt": "2026-11-25T03:28:07.982Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -526,18 +526,31 @@
       "hash": "60b55ff7df79af72",
       "size": 1450,
       "mtimeMs": 1785851971193.5967,
-      "updatedAt": "2026-09-30T06:49:18.125Z",
+      "updatedAt": "2026-11-25T03:28:07.983Z",
       "source": "scan",
       "importance": 0.3887
     },
     "ROADMAP.md": {
       "description": "🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM",
-      "tokens": 517,
-      "hash": "c0384eae26bd9432",
-      "size": 2084,
-      "mtimeMs": 1790748152843.266,
-      "updatedAt": "2026-09-30T06:49:18.125Z",
+      "tokens": 644,
+      "hash": "ff8f85c682413bb5",
+      "size": 2591,
+      "mtimeMs": 1795577148699.3623,
+      "updatedAt": "2026-11-25T03:28:07.983Z",
       "source": "scan",
+      "importance": 0.3887
+    },
+    "scripts/check-school-reports.mjs": {
+      "description": "Run: node --experimental-strip-types scripts/check-school-reports.mjs",
+      "tokens": 588,
+      "hash": "a96195b76f8b3bf3",
+      "size": 2205,
+      "mtimeMs": 1795576917642.1675,
+      "updatedAt": "2026-11-25T03:28:07.984Z",
+      "source": "scan",
+      "imports": [
+        "src/lib/schoolReports.ts"
+      ],
       "importance": 0.3887
     },
     "scripts/parseQuiz.js": {
@@ -546,7 +559,7 @@
       "hash": "4d08d8fa5360b127",
       "size": 6054,
       "mtimeMs": 1787354991531.748,
-      "updatedAt": "2026-09-30T06:49:18.127Z",
+      "updatedAt": "2026-11-25T03:28:07.985Z",
       "source": "scan",
       "symbols": [
         {
@@ -566,7 +579,7 @@
       "hash": "129133c8fa06229d",
       "size": 12215,
       "mtimeMs": 1788406949323.052,
-      "updatedAt": "2026-09-30T06:49:18.128Z",
+      "updatedAt": "2026-11-25T03:28:07.986Z",
       "source": "scan",
       "symbols": [
         {
@@ -601,7 +614,7 @@
       "hash": "1f38c6873a32abed",
       "size": 4908,
       "mtimeMs": 1788404852145.678,
-      "updatedAt": "2026-09-30T06:49:18.129Z",
+      "updatedAt": "2026-11-25T03:28:07.986Z",
       "source": "scan",
       "symbols": [
         {
@@ -635,7 +648,7 @@
       "hash": "54d41cb88f18cc2e",
       "size": 8834,
       "mtimeMs": 1788404987484.8335,
-      "updatedAt": "2026-09-30T06:49:18.129Z",
+      "updatedAt": "2026-11-25T03:28:07.987Z",
       "source": "scan",
       "symbols": [
         {
@@ -663,7 +676,7 @@
       "hash": "f59016ca1751014a",
       "size": 1522,
       "mtimeMs": 1790177761922.122,
-      "updatedAt": "2026-09-30T06:49:18.129Z",
+      "updatedAt": "2026-11-25T03:28:07.988Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -673,7 +686,7 @@
       "hash": "f3670c842b4e55d7",
       "size": 4766,
       "mtimeMs": 1790223875625.1191,
-      "updatedAt": "2026-09-30T06:49:18.130Z",
+      "updatedAt": "2026-11-25T03:28:07.988Z",
       "source": "scan",
       "symbols": [
         {
@@ -693,7 +706,7 @@
       "hash": "dd24a7891485f239",
       "size": 2682,
       "mtimeMs": 1790177755736.346,
-      "updatedAt": "2026-09-30T06:49:18.130Z",
+      "updatedAt": "2026-11-25T03:28:07.988Z",
       "source": "scan",
       "symbols": [
         {
@@ -713,7 +726,7 @@
       "hash": "e798f908fa67ab3f",
       "size": 24631,
       "mtimeMs": 1790181023263.7522,
-      "updatedAt": "2026-09-30T06:49:18.130Z",
+      "updatedAt": "2026-11-25T03:28:07.989Z",
       "source": "scan",
       "symbols": [
         {
@@ -797,7 +810,7 @@
       "hash": "a98320cacee02096",
       "size": 1883,
       "mtimeMs": 1787908774346.326,
-      "updatedAt": "2026-09-30T06:49:18.131Z",
+      "updatedAt": "2026-11-25T03:28:07.990Z",
       "source": "scan",
       "importance": 0.7191
     },
@@ -807,7 +820,7 @@
       "hash": "9a503ea27883a8b3",
       "size": 1322,
       "mtimeMs": 1786620588185.6223,
-      "updatedAt": "2026-09-30T06:49:18.131Z",
+      "updatedAt": "2026-11-25T03:28:07.990Z",
       "source": "scan",
       "imports": [
         "src/app/globals.css"
@@ -816,25 +829,25 @@
     },
     "src/app/page.tsx": {
       "description": "MainDashboard — uses useState, useEffect",
-      "tokens": 8338,
-      "hash": "c18b65aedc785d83",
-      "size": 29199,
-      "mtimeMs": 1790748562962.7756,
-      "updatedAt": "2026-09-30T06:49:18.132Z",
+      "tokens": 8379,
+      "hash": "f13339700be4fb0d",
+      "size": 29344,
+      "mtimeMs": 1795576917641.4768,
+      "updatedAt": "2026-11-25T03:28:07.991Z",
       "source": "scan",
       "symbols": [
         {
           "name": "MainDashboard",
           "kind": "fn",
-          "startLine": 30,
-          "endLine": 590,
-          "tokens": 7846
+          "startLine": 31,
+          "endLine": 593,
+          "tokens": 7869
         },
         {
           "name": "Home",
           "kind": "fn",
-          "startLine": 592,
-          "endLine": 602,
+          "startLine": 595,
+          "endLine": 605,
           "tokens": 66
         }
       ],
@@ -848,7 +861,7 @@
       "hash": "45153a273b407585",
       "size": 56868,
       "mtimeMs": 1790747941145.2727,
-      "updatedAt": "2026-09-30T06:49:18.133Z",
+      "updatedAt": "2026-11-25T03:28:07.992Z",
       "source": "scan",
       "symbols": [
         {
@@ -890,7 +903,7 @@
       "hash": "c0d6deb0f8d8de5c",
       "size": 3150,
       "mtimeMs": 1785852089912.5554,
-      "updatedAt": "2026-09-30T06:49:18.133Z",
+      "updatedAt": "2026-11-25T03:28:07.993Z",
       "source": "scan",
       "symbols": [
         {
@@ -910,7 +923,7 @@
       "hash": "0d66c7d49b8c88f0",
       "size": 4843,
       "mtimeMs": 1790174520970.6772,
-      "updatedAt": "2026-09-30T06:49:18.133Z",
+      "updatedAt": "2026-11-25T03:28:07.993Z",
       "source": "scan",
       "symbols": [
         {
@@ -937,7 +950,7 @@
       "hash": "645391720f05edf3",
       "size": 12210,
       "mtimeMs": 1787907840781.2627,
-      "updatedAt": "2026-09-30T06:49:18.134Z",
+      "updatedAt": "2026-11-25T03:28:07.993Z",
       "source": "scan",
       "symbols": [
         {
@@ -958,7 +971,7 @@
       "hash": "38a752f70fb3d728",
       "size": 12938,
       "mtimeMs": 1787908811545.4548,
-      "updatedAt": "2026-09-30T06:49:18.134Z",
+      "updatedAt": "2026-11-25T03:28:07.994Z",
       "source": "scan",
       "symbols": [
         {
@@ -979,7 +992,7 @@
       "hash": "b4317a0753d0c653",
       "size": 41414,
       "mtimeMs": 1790748591145.8276,
-      "updatedAt": "2026-09-30T06:49:18.134Z",
+      "updatedAt": "2026-11-25T03:28:07.995Z",
       "source": "scan",
       "symbols": [
         {
@@ -1028,7 +1041,7 @@
       "hash": "37f8cba3d2d6646f",
       "size": 16655,
       "mtimeMs": 1790682221877.4219,
-      "updatedAt": "2026-09-30T06:49:18.135Z",
+      "updatedAt": "2026-11-25T03:28:07.995Z",
       "source": "scan",
       "symbols": [
         {
@@ -1049,30 +1062,31 @@
       "hash": "e50aabe936c517b0",
       "size": 690,
       "mtimeMs": 1787908788063.9014,
-      "updatedAt": "2026-09-30T06:49:18.135Z",
+      "updatedAt": "2026-11-25T03:28:07.995Z",
       "source": "scan",
       "importance": 0.3887
     },
     "src/components/Navbar.tsx": {
       "description": "Navbar — uses useState, useEffect",
-      "tokens": 3876,
-      "hash": "129e0562bcde2907",
-      "size": 13564,
-      "mtimeMs": 1790211849090.6348,
-      "updatedAt": "2026-09-30T06:49:18.135Z",
+      "tokens": 4129,
+      "hash": "5045cc41a5dc5b50",
+      "size": 14451,
+      "mtimeMs": 1795577091328.3962,
+      "updatedAt": "2026-11-25T03:28:07.996Z",
       "source": "scan",
       "symbols": [
         {
           "name": "NavbarProps",
           "kind": "section",
-          "startLine": 9,
-          "endLine": 19,
+          "startLine": 10,
+          "endLine": 20,
           "tokens": 98
         }
       ],
       "symbolSource": "ts",
       "skeleton": "interface NavbarProps {",
       "imports": [
+        "src/components/TeacherAccountModal.tsx",
         "src/components/NotificationDropdown.tsx"
       ],
       "importance": 0.3887
@@ -1083,7 +1097,7 @@
       "hash": "35eb1cf99a4e9ff5",
       "size": 17573,
       "mtimeMs": 1790179343330.6877,
-      "updatedAt": "2026-09-30T06:49:18.135Z",
+      "updatedAt": "2026-11-25T03:28:07.996Z",
       "source": "scan",
       "symbols": [
         {
@@ -1096,7 +1110,7 @@
       ],
       "symbolSource": "ts",
       "skeleton": "interface NotificationDropdownProps {",
-      "importance": 0.7191
+      "importance": 0.5539
     },
     "src/components/PremiumCheckoutModal.tsx": {
       "description": "FPX_BANKS — uses useEffect",
@@ -1104,7 +1118,7 @@
       "hash": "8deb3c7965c40d63",
       "size": 24992,
       "mtimeMs": 1790748604077.0977,
-      "updatedAt": "2026-09-30T06:49:18.136Z",
+      "updatedAt": "2026-11-25T03:28:07.997Z",
       "source": "scan",
       "symbols": [
         {
@@ -1128,40 +1142,40 @@
     },
     "src/components/QuizComponent.tsx": {
       "description": "The shape of our quiz data json",
-      "tokens": 2356,
-      "hash": "d09e054d8bcae860",
-      "size": 8243,
-      "mtimeMs": 1787355619522.903,
-      "updatedAt": "2026-09-30T06:49:18.136Z",
+      "tokens": 2408,
+      "hash": "d692cefdc5881fc8",
+      "size": 8425,
+      "mtimeMs": 1795576740993.7102,
+      "updatedAt": "2026-11-25T03:28:07.997Z",
       "source": "scan",
       "symbols": [
         {
           "name": "QuizQuestion",
           "kind": "section",
-          "startLine": 6,
-          "endLine": 17,
+          "startLine": 7,
+          "endLine": 18,
           "tokens": 62
         },
         {
           "name": "QuizDataMap",
           "kind": "section",
-          "startLine": 19,
-          "endLine": 21,
+          "startLine": 20,
+          "endLine": 22,
           "tokens": 16
         },
         {
           "name": "QuizComponentProps",
           "kind": "section",
-          "startLine": 25,
-          "endLine": 31,
+          "startLine": 26,
+          "endLine": 32,
           "tokens": 32
         },
         {
           "name": "QuizComponent",
           "kind": "fn",
-          "startLine": 33,
-          "endLine": 219,
-          "tokens": 2175
+          "startLine": 34,
+          "endLine": 222,
+          "tokens": 2208
         }
       ],
       "symbolSource": "ts",
@@ -1173,31 +1187,51 @@
     },
     "src/components/QuizModal.tsx": {
       "description": "quizData — uses useState",
-      "tokens": 2250,
-      "hash": "07b5a563e917f71c",
-      "size": 7881,
-      "mtimeMs": 1785852084606.1606,
-      "updatedAt": "2026-09-30T06:49:18.136Z",
+      "tokens": 2316,
+      "hash": "02fee3410a57db0e",
+      "size": 8111,
+      "mtimeMs": 1795576740999.8877,
+      "updatedAt": "2026-11-25T03:28:07.997Z",
       "source": "scan",
       "symbols": [
         {
           "name": "QuizQuestion",
           "kind": "section",
-          "startLine": 7,
-          "endLine": 16,
+          "startLine": 8,
+          "endLine": 17,
           "tokens": 58
         },
         {
           "name": "QuizModal",
           "kind": "fn",
-          "startLine": 51,
-          "endLine": 185,
-          "tokens": 1618
+          "startLine": 52,
+          "endLine": 188,
+          "tokens": 1665
         }
       ],
       "symbolSource": "ts",
       "skeleton": "interface QuizQuestion {\nexport const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {",
       "importance": 0.3887
+    },
+    "src/components/ReportSubmissionCard.tsx": {
+      "description": "ReportSubmissionCard — renders form — uses useState",
+      "tokens": 1473,
+      "hash": "f17f2fe35e40c7d6",
+      "size": 5165,
+      "mtimeMs": 1795576804111.0703,
+      "updatedAt": "2026-11-25T03:28:07.998Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "ReportSubmissionCard",
+          "kind": "fn",
+          "startLine": 11,
+          "endLine": 77,
+          "tokens": 1360
+        }
+      ],
+      "symbolSource": "ts",
+      "importance": 0.4713
     },
     "src/components/RevisionCollections.tsx": {
       "description": "RevisionCollections",
@@ -1205,7 +1239,7 @@
       "hash": "75f481a57b936317",
       "size": 2808,
       "mtimeMs": 1785852109949.6125,
-      "updatedAt": "2026-09-30T06:49:18.136Z",
+      "updatedAt": "2026-11-25T03:28:07.998Z",
       "source": "scan",
       "symbols": [
         {
@@ -1221,27 +1255,78 @@
     },
     "src/components/ScoreBoardView.tsx": {
       "description": "ScoreBoardView — renders chart",
-      "tokens": 2423,
-      "hash": "26b9388a281a344e",
-      "size": 8479,
-      "mtimeMs": 1786419775108.9001,
-      "updatedAt": "2026-09-30T06:49:18.137Z",
+      "tokens": 2526,
+      "hash": "2a00632ca9e1751c",
+      "size": 8838,
+      "mtimeMs": 1795576741000.781,
+      "updatedAt": "2026-11-25T03:28:07.998Z",
       "source": "scan",
       "symbols": [
         {
           "name": "ScoreBoardView",
           "kind": "fn",
-          "startLine": 10,
-          "endLine": 189,
-          "tokens": 2311
+          "startLine": 11,
+          "endLine": 196,
+          "tokens": 2396
         }
       ],
       "symbolSource": "ts",
       "skeleton": "export const ScoreBoardView = ({ onPlayLesson }: { onPlayLesson: (lesson: VideoLesson) => void }) => {",
       "imports": [
+        "src/components/ReportSubmissionCard.tsx",
         "src/data/physicsData.ts",
         "src/context/UserActivityContext.tsx",
         "src/context/LanguageContext.tsx"
+      ],
+      "importance": 0.3887
+    },
+    "src/components/TeacherAccountModal.tsx": {
+      "description": "TeacherAccountModal — renders form, modal — uses useState, useEffect",
+      "tokens": 1181,
+      "hash": "741592a330e854bf",
+      "size": 4135,
+      "mtimeMs": 1795576740991.2153,
+      "updatedAt": "2026-11-25T03:28:07.998Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "TeacherAccountModal",
+          "kind": "fn",
+          "startLine": 9,
+          "endLine": 60,
+          "tokens": 908
+        },
+        {
+          "name": "useTeacherAccount",
+          "kind": "fn",
+          "startLine": 62,
+          "endLine": 79,
+          "tokens": 193
+        }
+      ],
+      "symbolSource": "ts",
+      "importance": 0.8844
+    },
+    "src/components/TeacherDashboard.tsx": {
+      "description": "TeacherDashboard — uses useState, useCallback, useEffect",
+      "tokens": 1970,
+      "hash": "befc76fb032c053d",
+      "size": 6904,
+      "mtimeMs": 1795576847211.976,
+      "updatedAt": "2026-11-25T03:28:07.999Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "TeacherDashboard",
+          "kind": "fn",
+          "startLine": 9,
+          "endLine": 98,
+          "tokens": 1881
+        }
+      ],
+      "symbolSource": "ts",
+      "imports": [
+        "src/components/TeacherAccountModal.tsx"
       ],
       "importance": 0.3887
     },
@@ -1251,7 +1336,7 @@
       "hash": "2d01a435912a3c81",
       "size": 19169,
       "mtimeMs": 1787756765402.1907,
-      "updatedAt": "2026-09-30T06:49:18.137Z",
+      "updatedAt": "2026-11-25T03:28:07.999Z",
       "source": "scan",
       "symbols": [
         {
@@ -1293,7 +1378,7 @@
       "hash": "78fedf58360f0175",
       "size": 126673,
       "mtimeMs": 1790750900106.917,
-      "updatedAt": "2026-09-30T06:49:18.138Z",
+      "updatedAt": "2026-11-25T03:28:08.001Z",
       "source": "scan",
       "symbols": [
         {
@@ -1317,7 +1402,7 @@
       "hash": "07e4a1e10a7afe3c",
       "size": 19981,
       "mtimeMs": 1790747629969.513,
-      "updatedAt": "2026-09-30T06:49:18.139Z",
+      "updatedAt": "2026-11-25T03:28:08.002Z",
       "source": "scan",
       "symbols": [
         {
@@ -1358,7 +1443,7 @@
       ],
       "symbolSource": "ts",
       "skeleton": "export function isDeveloperAccount(email?: string | null): boolean {\nexport interface AppUser {\ninterface AuthContextType {\nexport const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {\nexport const useAuth = () => {",
-      "importance": 0.8128
+      "importance": 0.7894
     },
     "src/context/LanguageContext.tsx": {
       "description": "translations — uses useContext",
@@ -1366,7 +1451,7 @@
       "hash": "33c6ca201c4d9ab9",
       "size": 7024,
       "mtimeMs": 1787919038748.5032,
-      "updatedAt": "2026-09-30T06:49:18.139Z",
+      "updatedAt": "2026-11-25T03:28:08.002Z",
       "source": "scan",
       "symbols": [
         {
@@ -1400,50 +1485,50 @@
       ],
       "symbolSource": "ts",
       "skeleton": "export type Language = \"bm\" | \"dlp\";\ninterface LanguageContextType {\nexport const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {\nexport const useLanguage = () => {",
-      "importance": 0.4989
+      "importance": 0.4713
     },
     "src/context/UserActivityContext.tsx": {
-      "description": "UserActivityContext — uses useRef, useEffect, useContext",
-      "tokens": 2494,
-      "hash": "48578f2a71fd7fe3",
-      "size": 8729,
-      "mtimeMs": 1787818148164.283,
-      "updatedAt": "2026-09-30T06:49:18.139Z",
+      "description": "UserActivityContext — uses useState, useRef, useEffect, useContext",
+      "tokens": 3159,
+      "hash": "1332d99d32992b6d",
+      "size": 11055,
+      "mtimeMs": 1795577233060.532,
+      "updatedAt": "2026-11-25T03:28:08.003Z",
       "source": "scan",
       "symbols": [
         {
           "name": "VideoStat",
           "kind": "section",
-          "startLine": 7,
-          "endLine": 13,
+          "startLine": 9,
+          "endLine": 15,
           "tokens": 50
         },
         {
           "name": "VideoStatsMap",
           "kind": "section",
-          "startLine": 15,
-          "endLine": 17,
+          "startLine": 17,
+          "endLine": 19,
           "tokens": 19
         },
         {
           "name": "UserActivityContextType",
           "kind": "section",
-          "startLine": 19,
-          "endLine": 29,
-          "tokens": 149
+          "startLine": 21,
+          "endLine": 34,
+          "tokens": 190
         },
         {
           "name": "UserActivityProvider",
           "kind": "fn",
-          "startLine": 33,
-          "endLine": 262,
-          "tokens": 2124
+          "startLine": 38,
+          "endLine": 303,
+          "tokens": 2726
         },
         {
           "name": "useUserActivity",
           "kind": "fn",
-          "startLine": 264,
-          "endLine": 270,
+          "startLine": 305,
+          "endLine": 311,
           "tokens": 66
         }
       ],
@@ -1452,7 +1537,7 @@
       "imports": [
         "src/context/AuthContext.tsx"
       ],
-      "importance": 0.4989
+      "importance": 0.4713
     },
     "src/data/cheatNotesData.ts": {
       "description": "RINGKASAN NOTA FIZIK SPM KSSM",
@@ -1460,7 +1545,7 @@
       "hash": "dcd3370f682a432c",
       "size": 115810,
       "mtimeMs": 1788685802279.1301,
-      "updatedAt": "2026-09-30T06:49:18.140Z",
+      "updatedAt": "2026-11-25T03:28:08.004Z",
       "source": "scan",
       "symbols": [
         {
@@ -1488,7 +1573,7 @@
       "hash": "1728fe0d8ebae628",
       "size": 83895,
       "mtimeMs": 1787911466613.6846,
-      "updatedAt": "2026-09-30T06:49:18.141Z",
+      "updatedAt": "2026-11-25T03:28:08.006Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1498,9 +1583,9 @@
       "hash": "906601b200de33f8",
       "size": 17802,
       "mtimeMs": 1785913351721.5562,
-      "updatedAt": "2026-09-30T06:49:18.141Z",
+      "updatedAt": "2026-11-25T03:28:08.006Z",
       "source": "scan",
-      "importance": 0.6007
+      "importance": 0.589
     },
     "src/data/dskpLearningPoints.ts": {
       "description": "Dokumen Standard Kurikulum dan Pentaksiran (DSKP) Fizik KSSM",
@@ -1508,9 +1593,9 @@
       "hash": "a743a6636fc12659",
       "size": 55631,
       "mtimeMs": 1790175104122.087,
-      "updatedAt": "2026-09-30T06:49:18.142Z",
+      "updatedAt": "2026-11-25T03:28:08.007Z",
       "source": "scan",
-      "importance": 0.6007
+      "importance": 0.589
     },
     "src/data/formulaData.ts": {
       "description": "HELAIAN FORMULA FIZIK SPM (KSSM)",
@@ -1518,7 +1603,7 @@
       "hash": "2602a26ef81f96aa",
       "size": 67663,
       "mtimeMs": 1787908056360.2627,
-      "updatedAt": "2026-09-30T06:49:18.143Z",
+      "updatedAt": "2026-11-25T03:28:08.009Z",
       "source": "scan",
       "symbols": [
         {
@@ -1539,7 +1624,7 @@
       "hash": "959719fe45764b39",
       "size": 98238,
       "mtimeMs": 1787911371196.626,
-      "updatedAt": "2026-09-30T06:49:18.144Z",
+      "updatedAt": "2026-11-25T03:28:08.011Z",
       "source": "scan",
       "symbols": [
         {
@@ -1560,7 +1645,7 @@
       "hash": "99549cf1c8b0d3e4",
       "size": 4392,
       "mtimeMs": 1790179343330.0583,
-      "updatedAt": "2026-09-30T06:49:18.144Z",
+      "updatedAt": "2026-11-25T03:28:08.011Z",
       "source": "scan",
       "symbols": [
         {
@@ -1580,7 +1665,7 @@
       "hash": "928a1359b482a422",
       "size": 53558,
       "mtimeMs": 1790180813886.141,
-      "updatedAt": "2026-09-30T06:49:18.145Z",
+      "updatedAt": "2026-11-25T03:28:08.012Z",
       "source": "scan",
       "symbols": [
         {
@@ -1632,7 +1717,7 @@
         "src/data/dskpData.ts",
         "src/data/dskpLearningPoints.ts"
       ],
-      "importance": 0.4989
+      "importance": 0.4713
     },
     "src/data/qa_store.json": {
       "description": "",
@@ -1640,7 +1725,7 @@
       "hash": "d2186950520e1756",
       "size": 17890,
       "mtimeMs": 1790180967708.1072,
-      "updatedAt": "2026-09-30T06:49:18.145Z",
+      "updatedAt": "2026-11-25T03:28:08.012Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1650,7 +1735,7 @@
       "hash": "825ab85facf4a31c",
       "size": 956,
       "mtimeMs": 1788493025157.7563,
-      "updatedAt": "2026-09-30T06:49:18.145Z",
+      "updatedAt": "2026-11-25T03:28:08.013Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1660,7 +1745,7 @@
       "hash": "ac634ac121e36092",
       "size": 256344,
       "mtimeMs": 1787355004052.7996,
-      "updatedAt": "2026-09-30T06:49:18.146Z",
+      "updatedAt": "2026-11-25T03:28:08.015Z",
       "source": "scan",
       "importance": 1
     },
@@ -1670,7 +1755,7 @@
       "hash": "44136fa355b3678a",
       "size": 2,
       "mtimeMs": 1786176458130.8774,
-      "updatedAt": "2026-09-30T06:49:18.146Z",
+      "updatedAt": "2026-11-25T03:28:08.015Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1680,9 +1765,78 @@
       "hash": "131d10f2ae16d22d",
       "size": 1081,
       "mtimeMs": 1785909028105.315,
-      "updatedAt": "2026-09-30T06:49:18.146Z",
+      "updatedAt": "2026-11-25T03:28:08.015Z",
       "source": "scan",
       "importance": 0.3887
+    },
+    "src/lib/schoolReports.ts": {
+      "description": "Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 5 more",
+      "tokens": 716,
+      "hash": "3eb03e5092918bd0",
+      "size": 2503,
+      "mtimeMs": 1795576917640.549,
+      "updatedAt": "2026-11-25T03:28:08.016Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "QuizResult",
+          "kind": "section",
+          "startLine": 4,
+          "endLine": 9,
+          "tokens": 33
+        },
+        {
+          "name": "TeacherAccount",
+          "kind": "section",
+          "startLine": 10,
+          "endLine": 15,
+          "tokens": 35
+        },
+        {
+          "name": "ReportVideo",
+          "kind": "section",
+          "startLine": 16,
+          "endLine": 22,
+          "tokens": 40
+        },
+        {
+          "name": "SchoolReport",
+          "kind": "section",
+          "startLine": 23,
+          "endLine": 32,
+          "tokens": 66
+        },
+        {
+          "name": "studentCode",
+          "kind": "fn",
+          "startLine": 35,
+          "endLine": 35,
+          "tokens": 20
+        },
+        {
+          "name": "reportVideos",
+          "kind": "fn",
+          "startLine": 37,
+          "endLine": 46,
+          "tokens": 149
+        },
+        {
+          "name": "mergeQuizResults",
+          "kind": "fn",
+          "startLine": 48,
+          "endLine": 60,
+          "tokens": 196
+        },
+        {
+          "name": "reportError",
+          "kind": "fn",
+          "startLine": 62,
+          "endLine": 68,
+          "tokens": 123
+        }
+      ],
+      "symbolSource": "ts",
+      "importance": 0.7191
     },
     "src/lib/supabase.ts": {
       "description": "Exports isSupabaseConfigured, supabase",
@@ -1690,7 +1844,7 @@
       "hash": "af1509883b225e66",
       "size": 646,
       "mtimeMs": 1787818842578.1729,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.016Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1700,7 +1854,7 @@
       "hash": "bbd71597268777fb",
       "size": 1807,
       "mtimeMs": 1790211849088.2332,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.016Z",
       "source": "scan",
       "symbols": [
         {
@@ -1741,7 +1895,7 @@
       "hash": "edff8b4ec217f7be",
       "size": 6395,
       "mtimeMs": 1787923487273.776,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.016Z",
       "source": "scan",
       "symbols": [
         {
@@ -1761,7 +1915,7 @@
       "hash": "a574346742e3b5fe",
       "size": 8004,
       "mtimeMs": 1788406067929.0903,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.017Z",
       "source": "scan",
       "symbols": [
         {
@@ -1852,7 +2006,7 @@
       "hash": "4ea64830646b7a34",
       "size": 1572,
       "mtimeMs": 1785853144849.4238,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.017Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1862,7 +2016,7 @@
       "hash": "2e6be3b173a91172",
       "size": 4220,
       "mtimeMs": 1790180800472.6768,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.017Z",
       "source": "scan",
       "symbols": [
         {
@@ -1897,13 +2051,23 @@
       "symbolSource": "ts",
       "importance": 0.3887
     },
+    "supabase/migrations/202611250001_teacher_reports.sql": {
+      "description": "Self-service teacher mode; codes route explicit student report submissions.",
+      "tokens": 1854,
+      "hash": "ed7c074293c94430",
+      "size": 6489,
+      "mtimeMs": 1795576917641.8486,
+      "updatedAt": "2026-11-25T03:28:08.018Z",
+      "source": "scan",
+      "importance": 0.3887
+    },
     "supabase_schema.sql": {
       "description": "PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES",
-      "tokens": 1561,
-      "hash": "92e787584e1f43ec",
-      "size": 5461,
-      "mtimeMs": 1790747960870.725,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "tokens": 1604,
+      "hash": "4ab5ad47864e8b15",
+      "size": 5611,
+      "mtimeMs": 1795577148698.1462,
+      "updatedAt": "2026-11-25T03:28:08.018Z",
       "source": "scan",
       "importance": 0.3887
     },
@@ -1913,7 +2077,7 @@
       "hash": "5c51df4c59f4510d",
       "size": 670,
       "mtimeMs": 1785851971196.3005,
-      "updatedAt": "2026-09-30T06:49:18.147Z",
+      "updatedAt": "2026-11-25T03:28:08.018Z",
       "source": "scan",
       "importance": 0.3887
     }

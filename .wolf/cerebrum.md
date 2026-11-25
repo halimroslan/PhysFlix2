@@ -37,3 +37,11 @@ budget_tokens: 2000
 - **2026-09-29 (Pelaksanaan Kotak Persetujuan Pengumpulan Data)**: Meletakkan kotak semakan persetujuan interaktif yang memperincikan pengumpulan E-mel, Data Video Paling Banyak Ditonton, dan Data Komen pada kedua-dua paparan (Hero Landing & Modal Log Masuk E-mel).
 - **2026-09-24 (Penyelesaian Kunci Read-Only ToyyibPay):** Wajibkan pengguna menaip nama dan telefon sendiri di aplikasi PhysFlix sebelum diarahkan ke ToyyibPay.
 - **2026-09-24 (Graceful Fallback Analytic Board):** Laksana dwi-pertanyaan (dual-attempt query) dengan fallback ke kolum asas dan butang salin skrip SQL 1-klik.
+
+## 2026-11-25 — Teacher progress reporting
+- Maker requires school code + student full name + class before Send; teacher dashboard must display stable unique student ID, video completion and quiz percentages.
+- School codes are unique per teacher account. Self-service teacher mode binds ownership to auth.uid(); it does not confer superadmin or premium privileges.
+- Reports are explicit snapshots, unique per student/teacher/scope (all/T4/T5). Resubmission updates that scope; RLS grants access only to submitting student and recipient teacher.
+- Never overwrite newer offline quiz results during hydration; compare completedAt. Failed remote reads must not permit destructive upserts. Existing activity sync must work before migration.
+- Correct production Vercel project is `physflix` in `abdulhalimroslan-3945s-projects`, linked to PhysFlix4/main. Previous local `.vercel` project was stale.
+- No new application dependencies. Use native dialog, Supabase RPC/constraints/RLS, native progress indicators.

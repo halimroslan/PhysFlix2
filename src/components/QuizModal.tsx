@@ -1,5 +1,6 @@
 "use client";
 
+import { useUserActivity } from "@/context/UserActivityContext";
 import React, { useState } from "react";
 import { X, CheckCircle2, AlertCircle, HelpCircle, Award } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -49,6 +50,7 @@ const quizData: QuizQuestion[] = [
 ];
 
 export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  const { recordQuizResult } = useUserActivity();
   const { lang } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -172,7 +174,8 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
             </button>
           ) : (
             <button
-              onClick={onClose}
+              onClick={() => { recordQuizResult("general", score, quizData.length); onClose(); }}
+              disabled={selectedOption === null}
               className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition"
             >
               {lang === "bm" ? "Selesai Kuiz" : "Complete Quiz"}

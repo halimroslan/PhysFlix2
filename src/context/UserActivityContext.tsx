@@ -4,6 +4,8 @@ import React, { createContext, useContext, useState, useEffect, useRef } from "r
 import { useAuth } from "./AuthContext";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
+import { mergeQuizResults, type QuizResult } from "@/lib/schoolReports";
+
 export interface VideoStat {
   totalTimeWatched: number;
   repeats: number;
@@ -20,6 +22,9 @@ interface UserActivityContextType {
   bookmarks: string[];
   watchHistory: string[];
   videoStats: VideoStatsMap;
+  quizResults: Record<string, QuizResult>;
+  activityLoading: boolean;
+  recordQuizResult: (id: string, correct: number, total: number) => void;
   toggleBookmark: (driveId: string) => void;
   addToHistory: (driveId: string) => void;
   isBookmarked: (driveId: string) => boolean;
@@ -32,12 +37,16 @@ const UserActivityContext = createContext<UserActivityContextType | undefined>(u
 
 export const UserActivityProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
+  const userId = user?.id;
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [watchHistory, setWatchHistory] = useState<string[]>([]);
   const [videoStats, setVideoStats] = useState<VideoStatsMap>({});
   
-  const isUpdatingSupabase = useRef(false);
+  const [quizResults, setQuizResults] = useState<Record<string, QuizResult>>({});
+  const [activityLoading, setActivityLoading] = useState(true);
+
   const dataLoadedFromRemote = useRef(false);
+  const hydratedUserId = useRef<string | null>(null);
 
   // Helper to clean stats
   const sanitizeVideoStats = (stats: any): VideoStatsMap => {
@@ -58,9 +67,16 @@ export const UserActivityProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Load from LocalStorage for instantaneous UI, then fetch from Supabase
   useEffect(() => {
-    if (user) {
+    let cancelled = false;
+    hydratedUserId.current = null;
+    if (userId) {
       dataLoadedFromRemote.current = false;
-      const userKey = user.uid || user.id;
+      setActivityLoading(true);
+      setBookmarks([]);
+      setWatchHistory([]);
+      setVideoStats({});
+      setQuizResults({});
+      const userKey = userId;
 
       // 1. Quick load from localStorage cache
       const storedBookmarks = localStorage.getItem(`bookmarks_${userKey}`);
@@ -78,31 +94,43 @@ export const UserActivityProvider: React.FC<{ children: React.ReactNode }> = ({ 
         try { setVideoStats(sanitizeVideoStats(JSON.parse(storedStats))); } catch (e) {}
       }
 
+      let cachedQuizzes: Record<string, QuizResult> = {};
+      try { cachedQuizzes = mergeQuizResults(JSON.parse(localStorage.getItem(`quizResults_${userKey}`) || "{}"), {}); } catch {}
+      setQuizResults(cachedQuizzes);
+
       // 2. Supabase Sync
       const fetchFromSupabase = async () => {
         if (!isSupabaseConfigured) {
           dataLoadedFromRemote.current = true;
+          hydratedUserId.current = userKey;
+          setActivityLoading(false);
           return;
         }
 
         try {
           const { data, error } = await supabase
             .from("user_activity")
-            .select("bookmarks, watch_history, video_stats")
+            .select("*")
             .eq("user_id", userKey)
             .maybeSingle();
 
+          if (cancelled) return;
           if (error) {
             console.warn("Supabase fetch error, using local data:", error);
           } else if (data) {
             if (Array.isArray(data.bookmarks)) setBookmarks(data.bookmarks);
             if (Array.isArray(data.watch_history)) setWatchHistory(data.watch_history);
+            setQuizResults(previous => mergeQuizResults(previous, data.quiz_results || {}));
             if (data.video_stats) setVideoStats(sanitizeVideoStats(data.video_stats));
           }
+          dataLoadedFromRemote.current = !error;
         } catch (err) {
           console.warn("Error fetching Supabase activity:", err);
         } finally {
-          dataLoadedFromRemote.current = true;
+          if (!cancelled) {
+            hydratedUserId.current = userKey;
+            setActivityLoading(false);
+          }
         }
       };
 
@@ -111,44 +139,54 @@ export const UserActivityProvider: React.FC<{ children: React.ReactNode }> = ({ 
       setBookmarks([]);
       setWatchHistory([]);
       setVideoStats({});
+      setQuizResults({});
+      setActivityLoading(false);
       dataLoadedFromRemote.current = false;
     }
-  }, [user]);
+    return () => { cancelled = true; };
+  }, [userId]);
 
   // Save to LocalStorage & Supabase whenever they change
   useEffect(() => {
-    if (user && dataLoadedFromRemote.current) {
+    if (user && !activityLoading && hydratedUserId.current === user.id) {
       const userKey = user.uid || user.id;
 
       localStorage.setItem(`bookmarks_${userKey}`, JSON.stringify(bookmarks));
       localStorage.setItem(`history_${userKey}`, JSON.stringify(watchHistory));
       localStorage.setItem(`videoStats_${userKey}`, JSON.stringify(videoStats));
+      localStorage.setItem(`quizResults_${userKey}`, JSON.stringify(quizResults));
       
-      // Update Supabase
-      const syncToSupabase = async () => {
-        if (!isSupabaseConfigured || isUpdatingSupabase.current) return;
-        
-        isUpdatingSupabase.current = true;
+      if (!dataLoadedFromRemote.current) return;
+
+      // Debounce writes without dropping the latest quiz/progress update.
+      const controller = new AbortController();
+      const timer = setTimeout(async () => {
+        if (!isSupabaseConfigured) return;
+        const activity = {
+          user_id: userKey, bookmarks, watch_history: watchHistory,
+          video_stats: videoStats, updated_at: new Date().toISOString(),
+        };
         try {
-          await supabase.from("user_activity").upsert({
-            user_id: userKey,
-            bookmarks,
-            watch_history: watchHistory,
-            video_stats: videoStats,
-            updated_at: new Date().toISOString(),
-          }, { onConflict: "user_id" });
+          let { error } = await supabase.from("user_activity")
+            .upsert({ ...activity, quiz_results: quizResults }, { onConflict: "user_id" })
+            .abortSignal(controller.signal);
+          // Preserve existing progress sync while the teacher migration is pending.
+          if (error && ["42703", "PGRST204"].includes(error.code)) {
+            ({ error } = await supabase.from("user_activity").upsert(activity, { onConflict: "user_id" }).abortSignal(controller.signal));
+          }
+          if (error && !controller.signal.aborted) console.error("Error syncing Supabase activity:", error.message);
         } catch (error) {
-          console.error("Error syncing to Supabase:", error);
-        } finally {
-          setTimeout(() => {
-            isUpdatingSupabase.current = false;
-          }, 300);
+          if (!controller.signal.aborted) console.error("Error syncing Supabase activity:", error);
         }
-      };
-      
-      syncToSupabase();
+      }, 400);
+      return () => { clearTimeout(timer); controller.abort(); };
     }
-  }, [bookmarks, watchHistory, videoStats, user]);
+  }, [bookmarks, watchHistory, videoStats, quizResults, activityLoading, user]);
+
+  const recordQuizResult = (id: string, correct: number, total: number) => {
+    if (!Number.isInteger(correct) || !Number.isInteger(total) || total < 1 || correct < 0 || correct > total) return;
+    setQuizResults(previous => ({ ...previous, [id]: { correct, total, percentage: Math.round(correct / total * 100), completedAt: Date.now() } }));
+  };
 
   const toggleBookmark = (driveId: string) => {
     setBookmarks((prev) => {
@@ -248,6 +286,9 @@ export const UserActivityProvider: React.FC<{ children: React.ReactNode }> = ({ 
         bookmarks,
         watchHistory,
         videoStats,
+        quizResults,
+        activityLoading,
+        recordQuizResult,
         toggleBookmark,
         addToHistory,
         isBookmarked,

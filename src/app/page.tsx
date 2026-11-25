@@ -12,6 +12,7 @@ import { TopPicks } from "@/components/TopPicks";
 import { VideoPlayerView } from "@/components/VideoPlayerView";
 import { PremiumCheckoutModal } from "@/components/PremiumCheckoutModal";
 import { AnalyticBoard } from "@/components/AnalyticBoard";
+import { TeacherDashboard } from "@/components/TeacherDashboard";
 import { ScoreBoardView } from "@/components/ScoreBoardView";
 import { FormulaSheetModal } from "@/components/FormulaSheetModal";
 import { DictionaryModal } from "@/components/DictionaryModal";
@@ -411,6 +412,8 @@ function MainDashboard() {
             </div>
           ) : currentTab === "analytics" && isSuperAdmin ? (
             <AnalyticBoard onNavigateToQaReply={handleNavigateToQaReply} />
+          ) : currentTab === "teacher" ? (
+            <TeacherDashboard />
           ) : currentTab === "scoreboard" ? (
             <ScoreBoardView onPlayLesson={handlePlayLesson} />
           ) : currentTab === "topics" ? (
@@ -582,7 +585,7 @@ function MainDashboard() {
       {/* Modals */}
       <FormulaSheetModal isOpen={isFormulaOpen} onClose={() => setIsFormulaOpen(false)} />
       <DictionaryModal isOpen={isDictOpen} onClose={() => setIsDictOpen(false)} />
-      <QuizModal isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
+      {isQuizOpen && <QuizModal isOpen onClose={() => setIsQuizOpen(false)} />}
       <CalculatorModal isOpen={isCalcOpen} onClose={() => setIsCalcOpen(false)} />
       <PremiumCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </div>

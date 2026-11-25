@@ -41,3 +41,13 @@
 - [ ] Ujian transaksi langsung (end-to-end live payment flow).
 - [ ] Pengoptimuman penimbalan video HLS & CDN cache.
 - [ ] Modul janaan resit invois PDF muat turun bagi setiap pembelian FPX.
+
+---
+
+### Milestone 6: Mod Guru & Laporan Kemajuan Sekolah
+- [x] Kad laporan di Papan Skor, Statistik Video T4 dan T5.
+- [x] Kod sekolah, nama penuh, kelas dan ID unik pelajar.
+- [x] Profil guru dengan kod unik; Dashboard Guru selepas MyHomePhysics Lab.
+- [x] Snapshot video/peratus tontonan dan kuiz/peratus markah, penghantaran semula.
+- [x] Migrasi SQL, RLS, simpanan keputusan kuiz serta ujian tempatan.
+- [ ] Jalankan migrasi pada Supabase produksi dan sahkan aliran dengan akaun guru/pelajar sebenar.

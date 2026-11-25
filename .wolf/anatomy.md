@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-09-30T06:49:18.587Z
-> Files: 105 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T03:28:08.459Z
+> Files: 111 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -20,10 +20,10 @@
 - `obfuscate_ids.js` — Declares fs (~215 tok)
 - `package.json` — Node.js package manifest (~238 tok)
 - `postcss.config.mjs` — Declares config (~26 tok)
-- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~1812 tok)
+- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~2136 tok)
 - `README.md` — Project documentation (~363 tok)
-- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~517 tok)
-- `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1561 tok)
+- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~644 tok)
+- `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1604 tok)
 - `tsconfig.json` — TypeScript configuration (~192 tok)
 
 ## public/
@@ -73,13 +73,14 @@
 
 ## scripts/
 
+- `check-school-reports.mjs` — Run: node --experimental-strip-types scripts/check-school-reports.mjs (~588 tok)
 - `parseQuiz.js` — fs: saveImage (~1729 tok)
 
 ## src/app/
 
 - `globals.css` — Styles: 12 rules, 7 vars, 1 animations, 1 layers (~538 tok)
 - `layout.tsx` — geistSans (~378 tok)
-- `page.tsx` — MainDashboard — uses useState, useEffect (~8338 tok)
+- `page.tsx` — MainDashboard — uses useState, useEffect (~8379 tok)
 
 ## src/app/api/ai-answer/
 
@@ -119,13 +120,16 @@
 - `HeroSpotlight.tsx` — FEATURED_T5_DRIVE_IDS (~11820 tok)
 - `LoginPage.tsx` — LoginPage — renders form — uses useState (~4759 tok)
 - `MathFormula.tsx` — MathFormula — uses useMemo (~198 tok)
-- `Navbar.tsx` — Navbar — uses useState, useEffect (~3876 tok)
+- `Navbar.tsx` — Navbar — uses useState, useEffect (~4129 tok)
 - `NotificationDropdown.tsx` — STORAGE_KEY — uses useEffect (~5019 tok)
 - `PremiumCheckoutModal.tsx` — FPX_BANKS — uses useEffect (~7138 tok)
-- `QuizComponent.tsx` — The shape of our quiz data json (~2356 tok)
-- `QuizModal.tsx` — quizData — uses useState (~2250 tok)
+- `QuizComponent.tsx` — The shape of our quiz data json (~2408 tok)
+- `QuizModal.tsx` — quizData — uses useState (~2316 tok)
+- `ReportSubmissionCard.tsx` — ReportSubmissionCard — renders form — uses useState (~1473 tok)
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
-- `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2423 tok)
+- `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2526 tok)
+- `TeacherAccountModal.tsx` — TeacherAccountModal — renders form, modal — uses useState, useEffect (~1181 tok)
+- `TeacherDashboard.tsx` — TeacherDashboard — uses useState, useCallback, useEffect (~1970 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
 - `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36181 tok)
 
@@ -133,7 +137,7 @@
 
 - `AuthContext.tsx` — SUPERADMIN_EMAILS — uses useState, useEffect (~5709 tok)
 - `LanguageContext.tsx` — translations — uses useContext (~2007 tok)
-- `UserActivityContext.tsx` — UserActivityContext — uses useRef, useEffect, useContext (~2494 tok)
+- `UserActivityContext.tsx` — UserActivityContext — uses useState, useRef, useEffect, useContext (~3159 tok)
 
 ## src/data/
 
@@ -153,6 +157,7 @@
 ## src/lib/
 
 - `firebase.ts` — Exports auth, googleProvider, db (~309 tok)
+- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 5 more (~716 tok)
 - `supabase.ts` — Exports isSupabaseConfigured, supabase (~185 tok)
 
 ## src/types/
@@ -165,3 +170,7 @@
 - `notificationStore.ts` — Notification Store for AI Tutor (Sir Halim) Replies & User Questions (~2287 tok)
 - `security.ts` — Exports obfuscateId, deobfuscateId, useDRMProtection (~450 tok)
 - `videoResolution.ts` — Universal Video ID Aliases Dictionary. (~1206 tok)
+
+## supabase/migrations/
+
+- `202611250001_teacher_reports.sql` — Self-service teacher mode; codes route explicit student report submissions. (~1854 tok)

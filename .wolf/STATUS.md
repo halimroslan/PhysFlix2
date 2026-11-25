@@ -42,4 +42,4 @@ Acceptance:
 - Pending/rejected teacher cannot receive reports, resolve school code, or read teacher reports.
 - Verification passed: Next production build, TypeScript, focused ESLint, existing report checks, runnable PGlite approval suite, mocked UI reject/resubmit/approve and desktop/mobile report design.
 - Production Supabase migration still blocked: CLI has no access token; neither migration confirmed applied. Deployment does not activate database workflow.
-- Shipping this update: GitHub/Vercel commands follow this checkpoint; previous release remains documented above.
+- Release `dca5a85` pushed to origin/physflix2-origin/old-origin. Production deployment `dpl_5w5swjACfawKHctK2kSdjdX5hg2r` is READY at https://physflix.vercel.app; HTTP 200 verified. Database activation remains blocked by missing Supabase credentials.

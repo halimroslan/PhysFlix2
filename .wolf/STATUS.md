@@ -40,4 +40,4 @@ Acceptance:
 ## Additional Developer — 2026-11-25
 - Added `ahalimroslan@gmail.com` alongside existing developer to teacher-request UI and database approver allowlist. Both auth accounts confirmed verified in production.
 - Migration `202611250003_second_developer.sql` applied atomically with migration history and schema reload; verified auth.users identity remains mandatory. Other superadmins receive no new permission.
-- School-report checks, PGlite approval/RLS suite, focused ESLint and production build passed. Production permission checks passed for all existing auth identities, with spoofed JWT email rejected and anonymous execution disabled. Application deployment pending verification.
+- School-report checks, PGlite approval/RLS suite, focused ESLint and production build passed. Production permission checks passed for all existing auth identities, with spoofed JWT email rejected and anonymous execution disabled. Application commit `29d5912` pushed to all three remotes; Vercel production deployment `dpl_7n19t7pA2aZxLBgXPrfA25DCQbfp` READY at https://physflix.vercel.app.

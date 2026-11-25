@@ -30,6 +30,7 @@ Acceptance:
 - Production Supabase migration NOT applied: CLI lacks access token/database credentials. Async request for `supabase login` sent; no credential response received. Local SQL/UI tests do not prove production integration.
 - Correct production Vercel project: `physflix`, scope `abdulhalimroslan-3945s-projects`, project `prj_ApcZeuoQx0J4lo5L2GQ29fZNCsX6`, https://physflix.vercel.app. Local `.vercel` re-linked from stale project.
 - GitHub remotes: `origin` PhysFlix4, `physflix2-origin` PhysFlix2, `old-origin` PhysicsSPMFlix; branch main.
-- Git push / Vercel production deployment: pending final shipping commands for this checkpoint.
+- Release `6a0f3c5` pushed to all three GitHub remotes. Vercel production deployment `dpl_A5poKuAm5ftJnMHjKXKMSkxCGuh8` is READY at https://physflix.vercel.app; public endpoint returned HTTP 200.
+- Follow-up normalizes composite RPC response (array or object), verified by build/TypeScript/ESLint and mocked browser test.
 - Full legacy lint has existing violations in page/context; focused new modules pass. No new application dependencies.
 - Teacher mode self-service; grants no premium/superadmin permissions. School code is unique per teacher account; reports are student-submitted progress snapshots, not independently certified exam results.

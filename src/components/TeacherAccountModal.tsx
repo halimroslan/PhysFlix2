@@ -28,7 +28,9 @@ export function TeacherAccountModal({ account, onClose, onSaved }: {
         p_school_code: String(form.get('schoolCode')).trim().toUpperCase(),
       });
       if (error) throw error;
-      onSaved(data);
+      const saved = Array.isArray(data) ? data[0] : data;
+      if (!saved?.user_id) throw new Error('Profil guru gagal disimpan. Cuba lagi.');
+      onSaved(saved);
       onClose();
     } catch (error) { setError(reportError(error as Error)); }
     finally { setBusy(false); }

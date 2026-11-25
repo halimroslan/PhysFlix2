@@ -45,3 +45,5 @@ budget_tokens: 2000
 - Never overwrite newer offline quiz results during hydration; compare completedAt. Failed remote reads must not permit destructive upserts. Existing activity sync must work before migration.
 - Correct production Vercel project is `physflix` in `abdulhalimroslan-3945s-projects`, linked to PhysFlix4/main. Previous local `.vercel` project was stale.
 - No new application dependencies. Use native dialog, Supabase RPC/constraints/RLS, native progress indicators.
+- Supabase composite RPC responses can be arrays or objects; normalize registration return before storing teacher state. Account menu is a native button to support keyboard and avoid hover/click competition.
+- Cache persistence must be gated by hydrated account ID, not only loading state; functional quiz hydration preserves answers completed while SELECT is pending.

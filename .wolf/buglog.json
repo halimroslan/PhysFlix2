@@ -57,6 +57,21 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-11-25T11:25:48"
+    },
+    {
+      "id": "teacher-report-account-cache",
+      "timestamp": "2026-11-25T11:31:24",
+      "error_message": "Account switch could write previous state into next account cache; pending hydration could discard just-completed quiz.",
+      "file": "src/context/UserActivityContext.tsx",
+      "root_cause": "Queued loading state lagged effect execution; hydration merged captured cache.",
+      "fix": "Hydrated account ID ref gates cache writes; functional state update merges current quiz results. Agency re-review found no remaining code release blocker.",
+      "tags": [
+        "auth",
+        "cache",
+        "race"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T11:31:24"
     }
   ]
 }

@@ -34,8 +34,8 @@ export interface SchoolReport {
   submitted_at: string;
 }
 
-export const TEACHER_APPROVER_EMAIL = 'abdulhalimroslan@gmail.com';
-export const canReviewTeacherRequests = (email?: string | null) => email?.trim().toLowerCase() === TEACHER_APPROVER_EMAIL;
+export const TEACHER_APPROVER_EMAILS = ['abdulhalimroslan@gmail.com', 'ahalimroslan@gmail.com'];
+export const canReviewTeacherRequests = (email?: string | null) => TEACHER_APPROVER_EMAILS.includes(email?.trim().toLowerCase() || '');
 export const isApprovedTeacher = (account: TeacherAccount | null) => account?.approval_status === 'approved';
 
 export const schoolCodePattern = /^[A-Z0-9][A-Z0-9-]{2,19}$/;

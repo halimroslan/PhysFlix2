@@ -4,7 +4,7 @@ Last updated: 2026-11-25
 
 ## ✅ Done
 - Teacher requests from account menu: full name, school name and permanent unique school code; pending/approved/rejected lifecycle.
-- Only verified `abdulhalimroslan@gmail.com` can approve/reject via **Permohonan Akaun Guru** in Analytic Board; other superadmin accounts cannot review.
+- Only verified `abdulhalimroslan@gmail.com` and `ahalimroslan@gmail.com` can approve/reject via **Permohonan Akaun Guru** in Analytic Board; other superadmin accounts cannot review.
 - Dashboard Guru shown after MyHomePhysics Lab only after approval. Teacher can check status; rejected requests can resubmit. Changed approved name/school requires reapproval.
 - Minimal expandable report cards in Score Board and T4/T5 statistics retain school code, full name, class, stable PF-UUID, consent and explicit Send.
 - Teacher dashboard reports are collapsed by default. Clicking student name/header expands or collapses video/quiz progress; name, class, ID, scope and timestamp remain visible. Native details/summary supports Enter/Space and mobile. Separate snapshots by all/T4/T5; resubmission updates same scope.
@@ -20,7 +20,7 @@ Monitor first real teacher request and student report through the live UI.
 
 Acceptance:
 1. Teacher submits actual name/school/code and sees pending status.
-2. Developer logs in as `abdulhalimroslan@gmail.com`, opens Analytic Board → Permohonan Akaun Guru, reviews and approves/rejects.
+2. Developer logs in as `abdulhalimroslan@gmail.com` or `ahalimroslan@gmail.com`, opens Analytic Board → Permohonan Akaun Guru, reviews and approves/rejects.
 3. Approved teacher sees dashboard; student sends name/class/ID/video/quiz statistics using school code.
 4. Monitor first live submissions; no further migration/deployment required for activation.
 
@@ -36,3 +36,8 @@ Acceptance:
 ## Dashboard collapse update
 - Student report disclosure implemented with native details/summary; no JS state or dependencies.
 - Production build, focused ESLint and mocked desktop/mobile browser checks passed (default closed, click open/close, Enter/Space, independent reports, video/quiz values).
+
+## Additional Developer — 2026-11-25
+- Added `ahalimroslan@gmail.com` alongside existing developer to teacher-request UI and database approver allowlist. Both auth accounts confirmed verified in production.
+- Migration `202611250003_second_developer.sql` applied atomically with migration history and schema reload; verified auth.users identity remains mandatory. Other superadmins receive no new permission.
+- School-report checks, PGlite approval/RLS suite, focused ESLint and production build passed. Production permission checks passed for all existing auth identities, with spoofed JWT email rejected and anonymous execution disabled. Application deployment pending verification.

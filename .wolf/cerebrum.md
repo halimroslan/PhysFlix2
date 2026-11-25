@@ -49,7 +49,7 @@ budget_tokens: 2000
 - Cache persistence must be gated by hydrated account ID, not only loading state; functional quiz hydration preserves answers completed while SELECT is pending.
 
 ## Teacher approval correction — 2026-11-25
-- Maker alone approves/rejects teacher requests using verified `auth.users.email = abdulhalimroslan@gmail.com`. Other SUPERADMIN_EMAILS do not get teacher-review permissions. Never trust client role, profiles or user metadata for approval.
+- Maker approves/rejects teacher requests using verified `auth.users.email` matching `abdulhalimroslan@gmail.com` or `ahalimroslan@gmail.com` (second developer explicitly authorized on 2026-11-25). Other SUPERADMIN_EMAILS do not get teacher-review permissions. Never trust client role, profiles or user metadata for approval.
 - Pending/rejected accounts cannot receive reports or read teacher reports. Legacy self-service accounts become pending after migration. Editing approved name/school requires new approval; unchanged saves preserve approval.
 - `review_teacher_request` compares original requested timestamp to reject stale reviews; report delivery locks approved teacher row against concurrent edits.
 - Report submission card should be compact, minimalist and expandable using native details/summary; retain name, class, full stable ID and consent text.
@@ -60,3 +60,5 @@ budget_tokens: 2000
 - Both migrations were combined into one transaction, so self-service teacher mode was never exposed between steps. Production role-based smoke checks passed and all fixture writes were rolled back.
 
 - Teacher dashboard student reports must start collapsed; teacher clicks student name to reveal progress. Use native details/summary, retain name/class/stable ID in header.
+
+- Both verified developer emails now approve teacher requests: `abdulhalimroslan@gmail.com`, `ahalimroslan@gmail.com`. Keep client allowlist and database is_teacher_approver() aligned; add new migrations instead of rewriting applied ones.

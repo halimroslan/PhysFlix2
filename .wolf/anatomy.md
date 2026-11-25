@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T05:52:29.414Z
-> Files: 114 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T06:05:20.745Z
+> Files: 115 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -73,8 +73,8 @@
 
 ## scripts/
 
-- `check-school-reports.mjs` — Run: node --experimental-strip-types scripts/check-school-reports.mjs (~743 tok)
-- `check-teacher-approval.mjs` — Run: npm exec --yes --package=@electric-sql/pglite@0.6.0 -- node scripts/check-teacher-approval.mjs (~1790 tok)
+- `check-school-reports.mjs` — Run: node --experimental-strip-types scripts/check-school-reports.mjs (~778 tok)
+- `check-teacher-approval.mjs` — Run: npm exec --yes --package=@electric-sql/pglite@0.6.0 -- node scripts/check-teacher-approval.mjs (~1941 tok)
 - `parseQuiz.js` — fs: saveImage (~1729 tok)
 
 ## src/app/
@@ -159,7 +159,7 @@
 ## src/lib/
 
 - `firebase.ts` — Exports auth, googleProvider, db (~309 tok)
-- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 8 more (~833 tok)
+- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 8 more (~845 tok)
 - `supabase.ts` — Exports isSupabaseConfigured, supabase (~185 tok)
 
 ## src/types/
@@ -177,3 +177,4 @@
 
 - `202611250001_teacher_reports.sql` — Self-service teacher mode; codes route explicit student report submissions. (~1854 tok)
 - `202611250002_teacher_approval.sql` — Teacher mode requires approval by the project's named developer. (~1294 tok)
+- `202611250003_second_developer.sql` — Both verified developer accounts may review teacher requests. (~160 tok)

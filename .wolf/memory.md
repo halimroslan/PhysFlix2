@@ -31,3 +31,5 @@ description: chronological action log per session, consolidated weekly
 | 2026-11-25 12:02 MYT | Confirmed Supabase login; backed up schema; applied school reporting + teacher approval migrations atomically; production role/RLS/report tests passed and rolled back; anonymous RPC access correctly denied | production Supabase, STATUS.md, cerebrum.md | production approval ACTIVE | not measured |
 
 | 2026-11-25 13:52 MYT | Teacher dashboard reports now default collapsed; name/header toggles progress; build/lint and browser click/keyboard/mobile checks passed | TeacherDashboard.tsx | verified; shipping | not measured |
+
+| 14:10 | Added second verified Developer ahalimroslan@gmail.com; preserved existing Developer and other-role restrictions | schoolReports.ts, migration 202611250003, approval checks | Build/lint/local authorization checks passed; production migration applied, deployment verification pending | ~2754 saved via Graft |

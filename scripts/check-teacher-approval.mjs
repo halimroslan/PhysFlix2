@@ -19,10 +19,11 @@ const ids = {
   student: '33333333-3333-3333-3333-333333333333', otherAdmin: '44444444-4444-4444-4444-444444444444',
   stranger: '55555555-5555-5555-5555-555555555555', unverified: '66666666-6666-6666-6666-666666666666',
   legacy: '77777777-7777-7777-7777-777777777777',
+  secondDeveloper: '88888888-8888-8888-8888-888888888888', unverifiedSecond: '99999999-9999-9999-9999-999999999999',
 };
 for (const [kind, id] of Object.entries(ids)) {
-  const email = ['developer', 'unverified'].includes(kind) ? 'abdulhalimroslan@gmail.com' : kind === 'otherAdmin' ? 'ahalimroslan@gmail.com' : `${kind}@example.test`;
-  await db.query('INSERT INTO auth.users VALUES ($1,$2,$3)', [id, email, kind === 'unverified' ? null : new Date().toISOString()]);
+  const email = ['developer', 'unverified'].includes(kind) ? 'abdulhalimroslan@gmail.com' : ['secondDeveloper', 'unverifiedSecond'].includes(kind) ? 'ahalimroslan@gmail.com' : kind === 'otherAdmin' ? 'g-41192875@moe-dl.edu.my' : `${kind}@example.test`;
+  await db.query('INSERT INTO auth.users VALUES ($1,$2,$3)', [id, email, ['unverified', 'unverifiedSecond'].includes(kind) ? null : new Date().toISOString()]);
 }
 const login = async kind => db.exec(`SET ROLE authenticated; SET request.jwt.claim.sub = '${ids[kind]}'`);
 const register = (name = 'Guru Test', school = 'Sekolah Test', code = 'ABC1234') => db.query('SELECT * FROM public.register_teacher($1,$2,$3)', [name, school, code]);
@@ -36,6 +37,7 @@ await login('legacy');
 await register('Guru Lama', 'Sekolah Lama', 'OLD1234');
 await db.exec('RESET ROLE');
 await db.exec(readFileSync(new URL('../supabase/migrations/202611250002_teacher_approval.sql', import.meta.url), 'utf8'));
+await db.exec(readFileSync(new URL('../supabase/migrations/202611250003_second_developer.sql', import.meta.url), 'utf8'));
 await login('legacy');
 assert.equal((await account(ids.legacy)).approval_status, 'pending'); // No grandfathered self-approval.
 await login('teacher');
@@ -47,7 +49,7 @@ await assert.rejects(db.query("UPDATE public.teacher_accounts SET approval_statu
 await assert.rejects(review(true, request.requested_at));
 await login('student');
 await assert.rejects(submit()); // RPC cannot write reports for unapproved teacher.
-for (const kind of ['otherAdmin', 'stranger', 'unverified']) {
+for (const kind of ['otherAdmin', 'stranger', 'unverified', 'unverifiedSecond']) {
   await login(kind);
   await db.exec("SET request.jwt.claim.email = 'abdulhalimroslan@gmail.com'");
   assert.equal((await db.query('SELECT public.is_teacher_approver() AS allowed')).rows[0].allowed, false);
@@ -82,10 +84,12 @@ await login('student');
 assert.equal((await lookup()).rows.length, 0);
 await assert.rejects(submit());
 assert.equal((await db.query('SELECT * FROM public.school_reports')).rows.length, 1); // Own report retained.
-await login('developer');
+await login('secondDeveloper');
+assert.equal((await db.query('SELECT public.is_teacher_approver() AS allowed')).rows[0].allowed, true);
 await assert.rejects(review(true, approved.requested_at)); // Applicant changed data after review list loaded.
 await review(false, request.requested_at);
 assert.equal((await account(ids.teacher)).approval_status, 'rejected');
+assert.equal((await account(ids.teacher)).reviewed_by, ids.secondDeveloper);
 await login('teacher');
 await register('Guru Test', 'Sekolah Baru');
 request = await account(ids.teacher);
@@ -99,4 +103,4 @@ await assert.rejects(db.query('SELECT public.is_teacher_approver()'));
 await assert.rejects(lookup());
 await assert.rejects(review(true, request.requested_at));
 await db.close();
-console.log('Teacher approval checks passed: verified developer only, pending/rejected gates, RLS, approval/rejection/resubmission, stale-review protection, legacy accounts, report access.');
+console.log('Teacher approval checks passed: both verified developers only, pending/rejected gates, RLS, approval/rejection/resubmission, stale-review protection, legacy accounts, report access.');

@@ -53,3 +53,8 @@ budget_tokens: 2000
 - Pending/rejected accounts cannot receive reports or read teacher reports. Legacy self-service accounts become pending after migration. Editing approved name/school requires new approval; unchanged saves preserve approval.
 - `review_teacher_request` compares original requested timestamp to reject stale reviews; report delivery locks approved teacher row against concurrent edits.
 - Report submission card should be compact, minimalist and expandable using native details/summary; retain name, class, full stable ID and consent text.
+
+## Production activation — 2026-11-25
+- Supabase CLI v2.117 supports Management API SQL via `supabase db query --linked --project-ref <ref> --file <sql>`. Both --linked and --project-ref are required together; login suffices without DB password. Never print tokens.
+- Teacher/report migrations 202611250001 and 202611250002 are now APPLIED to production and tracked in supabase_migrations.schema_migrations. Do not rerun the raw non-idempotent CREATE statements.
+- Both migrations were combined into one transaction, so self-service teacher mode was never exposed between steps. Production role-based smoke checks passed and all fixture writes were rolled back.

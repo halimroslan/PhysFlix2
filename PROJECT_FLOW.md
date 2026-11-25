@@ -73,12 +73,17 @@ Platform penstriman video pengajaran Fizik SPM interaktif bertaraf premium ("Net
 - Guru melihat nama, kelas, ID unik, video/peratus dan kuiz/peratus. Laporan disusun terkini, 50 setiap halaman, dengan carian halaman dan muat semula.
 - SQL: `supabase/migrations/202611250001_teacher_reports.sql` selepas skema asas. Tambah `user_activity.quiz_results`, `teacher_accounts`, `school_reports` dan tiga RPC. Penulisan laporan/guru hanya melalui RPC; RLS mengehadkan bacaan kepada peserta laporan.
 - Semakan: `node --experimental-strip-types scripts/check-school-reports.mjs`, TypeScript, binaan produksi, ujian SQL sementara dan UI dengan Supabase olokan.
-- Aktivasi produksi memerlukan migrasi Supabase; akses pentadbir tidak tersedia dalam sesi pada masa pelaksanaan.
+- Aktivasi produksi selesai pada 2026-11-25: kedua-dua migrasi telah dijalankan dan ujian peranan/RLS pada produksi lulus.
 
 ### Kelulusan Akaun Guru
 - Hanya pembangun `abdulhalimroslan@gmail.com` yang e-melnya disahkan boleh menilai permohonan melalui kad **Permohonan Akaun Guru** dalam Analytic Board. Kad memaparkan permohonan menunggu, nama penuh, sekolah, kod, ID akaun, tarikh serta butang Luluskan/Tolak.
 - Akaun superadmin lain tidak mendapat hak kelulusan. SQL mengesahkan identiti melalui `auth.users`, bukan profil atau metadata pelanggan.
 - Status pending/approved/rejected. Guru boleh menyemak status dan menghantar semula permohonan ditolak; perubahan nama/sekolah selepas lulus memerlukan semakan semula.
 - Kod belum lulus tidak boleh menerima laporan; RLS menyekat akses laporan guru belum lulus. Semakan permohonan yang berubah ditolak untuk mengelakkan kelulusan maklumat lapuk.
-- Migrasi: jalankan `202611250001_teacher_reports.sql`, kemudian `202611250002_teacher_approval.sql`. Kedua-duanya masih memerlukan akses Supabase produksi.
+- Migrasi `202611250001_teacher_reports.sql` dan `202611250002_teacher_approval.sql` telah diterapkan secara atomik pada Supabase produksi dan direkodkan dalam sejarah migrasi. Jangan jalankan semula skrip CREATE mentah.
 - Ujian kelulusan: `npm exec --yes --package=@electric-sql/pglite@0.6.0 -- node scripts/check-teacher-approval.mjs`.
+
+### Pengesahan Produksi
+- Akaun pembangun abdulhalimroslan@gmail.com disahkan dalam auth.users.
+- Ujian transaksi produksi dengan peranan authenticated membuktikan permohonan, Lulus/Tolak, penghantaran semula, laporan video/kuiz, semakan lapuk dan pengasingan RLS. Semua rekod ujian dibatalkan melalui ROLLBACK.
+- Endpoint RPC kini tersedia; capaian tanpa log masuk ditolak dengan 401/42501. Aktivasi DB tidak memerlukan deploy semula Vercel.

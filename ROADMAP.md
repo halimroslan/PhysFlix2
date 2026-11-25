@@ -50,8 +50,8 @@
 - [x] Permohonan guru dengan kod unik; Dashboard Guru selepas MyHomePhysics Lab hanya selepas diluluskan.
 - [x] Snapshot video/peratus tontonan dan kuiz/peratus markah, penghantaran semula.
 - [x] Migrasi SQL, RLS, simpanan keputusan kuiz serta ujian tempatan.
-- [ ] Jalankan migrasi pada Supabase produksi dan sahkan aliran dengan akaun guru/pelajar sebenar.
+- [x] Jalankan migrasi pada Supabase produksi dan sahkan aliran menggunakan peranan auth guru/pelajar serta pembangun dalam transaksi ujian yang dibatalkan.
 - [x] Kad Permohonan Akaun Guru dalam Analytic Board; hanya pembangun abdulhalimroslan@gmail.com boleh Luluskan/Tolak.
 - [x] Status pending/approved/rejected, semakan status, penghantaran semula dan semakan semula perubahan profil.
 - [x] Kad laporan minimal dengan details/summary; ujian kelulusan SQL dan UI desktop/mudah alih.
-- [ ] Aktifkan kedua-dua migrasi sekolah/guru pada Supabase produksi.
+- [x] Aktifkan kedua-dua migrasi sekolah/guru pada Supabase produksi.

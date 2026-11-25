@@ -87,6 +87,21 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-11-25T11:45:05"
+    },
+    {
+      "id": "supabase-management-query-flags",
+      "timestamp": "2026-11-25T12:02:40",
+      "error_message": "--project-ref only applies when targeting the linked project; use it with --linked",
+      "file": "Supabase CLI invocation",
+      "root_cause": "Native db query requires --linked to select Management API even when --project-ref is supplied.",
+      "fix": "Use supabase db query --linked --project-ref yzurojadggyoxyxmmwof. Production migration and role-based checks then succeeded.",
+      "tags": [
+        "supabase",
+        "cli",
+        "activation"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T12:02:40"
     }
   ]
 }

@@ -4,9 +4,9 @@ Last updated: 2026-11-25
 
 ## ✅ Done
 - Existing streaming, Google/DELIMa login, premium/trial, Q&A and payment behavior retained.
-- Teacher mode registration from account menu: full name, school name, unique permanent school code bound to authenticated account.
-- Dashboard Guru after MyHomePhysics Lab, shown only for registered teacher accounts.
-- Report cards next to titles on Score Board, Statistik Video Tingkatan 4 and Tingkatan 5.
+- Teacher account requests from account menu: full name, school name and unique permanent school code, pending developer approval.
+- Dashboard Guru after MyHomePhysics Lab, shown only for approved teacher accounts.
+- Minimal expandable report cards next to titles on Score Board, Statistik Video Tingkatan 4 and Tingkatan 5.
 - Student submits school code, full name and class; stable `PF-<account UUID>` displayed in form/dashboard.
 - Teacher dashboard lists student names, classes, unique IDs, video completion, quiz marks and submission timestamps; refresh, per-page search and pagination.
 - Explicit report snapshots by all/T4/T5; resubmission replaces same student's same teacher/scope report.
@@ -21,8 +21,8 @@ Last updated: 2026-11-25
 Activate production school reporting and verify real teacher/student accounts.
 
 Acceptance:
-1. Apply `supabase/migrations/202611250001_teacher_reports.sql` after base schema on project `yzurojadggyoxyxmmwof`.
-2. Real teacher registers unique school code; student sends all/T4/T5 report with name/class/ID.
+1. Apply `supabase/migrations/202611250001_teacher_reports.sql`, then `202611250002_teacher_approval.sql` after base schema on project `yzurojadggyoxyxmmwof`.
+2. Real teacher submits request; verified developer abdulhalimroslan@gmail.com approves from Analytic Board; student sends all/T4/T5 report with name/class/ID.
 3. Receiving teacher sees correct video and quiz percentages; another teacher cannot access report.
 4. Resubmission updates existing scope and completed quiz survives reload/device sync.
 
@@ -33,4 +33,13 @@ Acceptance:
 - Release `6a0f3c5` pushed to all three GitHub remotes. Vercel production deployment `dpl_A5poKuAm5ftJnMHjKXKMSkxCGuh8` is READY at https://physflix.vercel.app; public endpoint returned HTTP 200.
 - Follow-up normalizes composite RPC response (array or object), verified by build/TypeScript/ESLint and mocked browser test.
 - Full legacy lint has existing violations in page/context; focused new modules pass. No new application dependencies.
-- Teacher mode self-service; grants no premium/superadmin permissions. School code is unique per teacher account; reports are student-submitted progress snapshots, not independently certified exam results.
+- Teacher mode requires approval by verified abdulhalimroslan@gmail.com; no other superadmin has review rights. Grants no premium/superadmin permissions. School code is unique per teacher account; reports are student-submitted progress snapshots, not independently certified exam results.
+
+## Teacher approval update — 2026-11-25
+- Analytic Board contains **Permohonan Akaun Guru** card for exact developer email only: pending count, paginated request details, Luluskan/Tolak, refresh and action feedback. Accessible even if legacy analytics queries fail.
+- Database approval requires verified auth.users email; rejects client email spoof, alternate superadmin and anonymous callers. Approval matches request timestamp; report trigger locks approved teacher row.
+- New and legacy self-service accounts are pending; rejected requests can resubmit. Changed approved full name/school requires reapproval. Teacher can check status from account modal.
+- Pending/rejected teacher cannot receive reports, resolve school code, or read teacher reports.
+- Verification passed: Next production build, TypeScript, focused ESLint, existing report checks, runnable PGlite approval suite, mocked UI reject/resubmit/approve and desktop/mobile report design.
+- Production Supabase migration still blocked: CLI has no access token; neither migration confirmed applied. Deployment does not activate database workflow.
+- Shipping this update: GitHub/Vercel commands follow this checkpoint; previous release remains documented above.

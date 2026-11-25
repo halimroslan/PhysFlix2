@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T03:28:08.459Z
-> Files: 111 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T03:45:07.147Z
+> Files: 114 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -20,10 +20,10 @@
 - `obfuscate_ids.js` — Declares fs (~215 tok)
 - `package.json` — Node.js package manifest (~238 tok)
 - `postcss.config.mjs` — Declares config (~26 tok)
-- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~2136 tok)
+- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~2421 tok)
 - `README.md` — Project documentation (~363 tok)
-- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~644 tok)
-- `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1604 tok)
+- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~751 tok)
+- `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1626 tok)
 - `tsconfig.json` — TypeScript configuration (~192 tok)
 
 ## public/
@@ -73,7 +73,8 @@
 
 ## scripts/
 
-- `check-school-reports.mjs` — Run: node --experimental-strip-types scripts/check-school-reports.mjs (~588 tok)
+- `check-school-reports.mjs` — Run: node --experimental-strip-types scripts/check-school-reports.mjs (~743 tok)
+- `check-teacher-approval.mjs` — Run: npm exec --yes --package=@electric-sql/pglite@0.6.0 -- node scripts/check-teacher-approval.mjs (~1790 tok)
 - `parseQuiz.js` — fs: saveImage (~1729 tok)
 
 ## src/app/
@@ -112,7 +113,7 @@
 
 ## src/components/
 
-- `AnalyticBoard.tsx` — SUPERADMIN_EMAILS — renders chart — uses useState, useEffect (~16241 tok)
+- `AnalyticBoard.tsx` — SUPERADMIN_EMAILS — renders chart — uses useState, useEffect (~16289 tok)
 - `CalculatorModal.tsx` — CalculatorModal — uses useState (~899 tok)
 - `ContinueWatching.tsx` — ContinueWatching (~1383 tok)
 - `DictionaryModal.tsx` — DictionaryModal — uses useState, useMemo (~3488 tok)
@@ -120,16 +121,17 @@
 - `HeroSpotlight.tsx` — FEATURED_T5_DRIVE_IDS (~11820 tok)
 - `LoginPage.tsx` — LoginPage — renders form — uses useState (~4759 tok)
 - `MathFormula.tsx` — MathFormula — uses useMemo (~198 tok)
-- `Navbar.tsx` — Navbar — uses useState, useEffect (~4129 tok)
+- `Navbar.tsx` — Navbar — uses useState, useEffect (~4169 tok)
 - `NotificationDropdown.tsx` — STORAGE_KEY — uses useEffect (~5019 tok)
 - `PremiumCheckoutModal.tsx` — FPX_BANKS — uses useEffect (~7138 tok)
 - `QuizComponent.tsx` — The shape of our quiz data json (~2408 tok)
 - `QuizModal.tsx` — quizData — uses useState (~2316 tok)
-- `ReportSubmissionCard.tsx` — ReportSubmissionCard — renders form — uses useState (~1473 tok)
+- `ReportSubmissionCard.tsx` — ReportSubmissionCard — renders form — uses useState (~1490 tok)
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
 - `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2526 tok)
-- `TeacherAccountModal.tsx` — TeacherAccountModal — renders form, modal — uses useState, useEffect (~1181 tok)
-- `TeacherDashboard.tsx` — TeacherDashboard — uses useState, useCallback, useEffect (~1970 tok)
+- `TeacherAccountModal.tsx` — TeacherAccountModal — renders form, modal — uses useState, useEffect (~1619 tok)
+- `TeacherDashboard.tsx` — TeacherDashboard — uses useState, useCallback, useEffect (~2065 tok)
+- `TeacherRequestsCard.tsx` — TeacherRequestsCard — uses useState, useCallback, useEffect (~1659 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
 - `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36181 tok)
 
@@ -157,7 +159,7 @@
 ## src/lib/
 
 - `firebase.ts` — Exports auth, googleProvider, db (~309 tok)
-- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 5 more (~716 tok)
+- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 8 more (~833 tok)
 - `supabase.ts` — Exports isSupabaseConfigured, supabase (~185 tok)
 
 ## src/types/
@@ -174,3 +176,4 @@
 ## supabase/migrations/
 
 - `202611250001_teacher_reports.sql` — Self-service teacher mode; codes route explicit student report submissions. (~1854 tok)
+- `202611250002_teacher_approval.sql` — Teacher mode requires approval by the project's named developer. (~1294 tok)

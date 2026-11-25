@@ -1,5 +1,6 @@
 "use client";
 
+import { TeacherRequestsCard } from "./TeacherRequestsCard";
 import React, { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { useAuth } from "@/context/AuthContext";
@@ -342,6 +343,8 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
 
   if (errorMsg) {
     return (
+      <div className="space-y-6">
+      <TeacherRequestsCard />
       <div className="flex flex-col items-center justify-center py-32 space-y-4 text-red-400">
         <Activity className="w-12 h-12 mb-2 opacity-50" />
         <span className="font-bold text-xl">Ralat Supabase:</span>
@@ -349,6 +352,7 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
           {errorMsg}
         </code>
         <p className="text-sm text-slate-400">Pastikan RLS Policies pada jadual profiles & video_stats membenarkan bacaan.</p>
+      </div>
       </div>
     );
   }
@@ -431,6 +435,8 @@ export const AnalyticBoard: React.FC<AnalyticBoardProps> = ({ onNavigateToQaRepl
           </button>
         </div>
       )}
+
+      <TeacherRequestsCard />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

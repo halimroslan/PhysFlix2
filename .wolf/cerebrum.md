@@ -40,10 +40,16 @@ budget_tokens: 2000
 
 ## 2026-11-25 — Teacher progress reporting
 - Maker requires school code + student full name + class before Send; teacher dashboard must display stable unique student ID, video completion and quiz percentages.
-- School codes are unique per teacher account. Self-service teacher mode binds ownership to auth.uid(); it does not confer superadmin or premium privileges.
+- School codes are unique per teacher account. Teacher requests bind ownership to auth.uid(); developer approval is mandatory before teacher mode or report delivery. No superadmin/premium privileges are granted.
 - Reports are explicit snapshots, unique per student/teacher/scope (all/T4/T5). Resubmission updates that scope; RLS grants access only to submitting student and recipient teacher.
 - Never overwrite newer offline quiz results during hydration; compare completedAt. Failed remote reads must not permit destructive upserts. Existing activity sync must work before migration.
 - Correct production Vercel project is `physflix` in `abdulhalimroslan-3945s-projects`, linked to PhysFlix4/main. Previous local `.vercel` project was stale.
 - No new application dependencies. Use native dialog, Supabase RPC/constraints/RLS, native progress indicators.
 - Supabase composite RPC responses can be arrays or objects; normalize registration return before storing teacher state. Account menu is a native button to support keyboard and avoid hover/click competition.
 - Cache persistence must be gated by hydrated account ID, not only loading state; functional quiz hydration preserves answers completed while SELECT is pending.
+
+## Teacher approval correction — 2026-11-25
+- Maker alone approves/rejects teacher requests using verified `auth.users.email = abdulhalimroslan@gmail.com`. Other SUPERADMIN_EMAILS do not get teacher-review permissions. Never trust client role, profiles or user metadata for approval.
+- Pending/rejected accounts cannot receive reports or read teacher reports. Legacy self-service accounts become pending after migration. Editing approved name/school requires new approval; unchanged saves preserve approval.
+- `review_teacher_request` compares original requested timestamp to reject stale reviews; report delivery locks approved teacher row against concurrent edits.
+- Report submission card should be compact, minimalist and expandable using native details/summary; retain name, class, full stable ID and consent text.

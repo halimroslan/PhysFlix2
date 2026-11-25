@@ -1,6 +1,6 @@
 // Run: node --experimental-strip-types scripts/check-school-reports.mjs
 import assert from 'node:assert/strict';
-import { mergeQuizResults, reportVideos, schoolCodePattern, studentCode, reportError } from '../src/lib/schoolReports.ts';
+import { canReviewTeacherRequests, isApprovedTeacher, mergeQuizResults, reportVideos, schoolCodePattern, studentCode, reportError } from '../src/lib/schoolReports.ts';
 
 const lessons = [{ id: 't4', titleBm: 'Daya', form: 4 }, { id: 't5', titleBm: 'Elektrik', form: 5 }, { id: 'new', titleBm: 'Belum ditonton', form: 4 }];
 const stats = { t4: { completionPercentage: 129 }, t5: { completionPercentage: -2 } };
@@ -28,4 +28,12 @@ assert.equal(mergeQuizResults(local, remote).t4.percentage, 40);
 assert.equal(mergeQuizResults(local, {}).t4.percentage, 40);
 assert.equal(mergeQuizResults(remote, local).t4.percentage, 40);
 assert.deepEqual(mergeQuizResults({bad: {correct: 7, total: 5}}, {}), {});
+assert(canReviewTeacherRequests('abdulhalimroslan@gmail.com'));
+assert(canReviewTeacherRequests(' ABDULHALIMROSLAN@GMAIL.COM '));
+for (const email of [null, undefined, '', 'ahalimroslan@gmail.com', 'g-41192875@moe-dl.edu.my', 'student@example.test']) assert(!canReviewTeacherRequests(email));
+assert(!isApprovedTeacher(null));
+assert(!isApprovedTeacher({approval_status: 'pending'}));
+assert(!isApprovedTeacher({approval_status: 'rejected'}));
+assert(!isApprovedTeacher({}));
+assert(isApprovedTeacher({approval_status: 'approved'}));
 console.log('School report checks passed: filtering, percentages, quiz status, codes, stable IDs, migration errors.');

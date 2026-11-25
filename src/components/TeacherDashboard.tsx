@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { RefreshCw, GraduationCap } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useTeacherAccount } from './TeacherAccountModal';
-import { reportError, SchoolReport, studentCode } from '@/lib/schoolReports';
+import { isApprovedTeacher, reportError, SchoolReport, studentCode } from '@/lib/schoolReports';
 
 export function TeacherDashboard() {
   const { account, loading: accountLoading, error: accountError } = useTeacherAccount();
@@ -15,7 +15,7 @@ export function TeacherDashboard() {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const fetchReports = useCallback(async () => {
-    if (!account) return;
+    if (!account || !isApprovedTeacher(account)) return;
     try {
       setLoading(true);
       setError('');
@@ -35,6 +35,7 @@ export function TeacherDashboard() {
 
   if (accountLoading) return <p role="status" className="py-10 text-slate-400">Memuatkan akaun guru…</p>;
   if (!account) return <p role="alert" className="py-10 text-slate-400">{accountError || 'Aktifkan Mod Guru melalui menu gambar profil dahulu.'}</p>;
+  if (!isApprovedTeacher(account)) return <p role="status" className="py-10 text-slate-400">{account.approval_status === 'rejected' ? 'Permohonan akaun guru ditolak. Semak maklumat dan hantar semula melalui menu akaun.' : 'Permohonan akaun guru menunggu kelulusan pembangun.'}</p>;
   const visible = reports.filter(report => `${report.student_name} ${report.student_class} ${studentCode(report.student_id)}`.toLowerCase().includes(search.toLowerCase()));
 
   return (

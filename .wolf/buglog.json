@@ -72,6 +72,21 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-11-25T11:31:24"
+    },
+    {
+      "id": "teacher-approval-concurrency",
+      "timestamp": "2026-11-25T11:45:05",
+      "error_message": "Unversioned review could approve edited details; report delivery could race reapproval-triggering profile edit.",
+      "file": "supabase/migrations/202611250002_teacher_approval.sql",
+      "root_cause": "Review lacked request timestamp comparison and delivery did not lock approval row.",
+      "fix": "Require p_requested_at to match stored request; FOR SHARE lock serializes report delivery against FOR UPDATE registration. Verified by approval SQL suite and Agency review.",
+      "tags": [
+        "approval",
+        "auth",
+        "concurrency"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-25T11:45:05"
     }
   ]
 }

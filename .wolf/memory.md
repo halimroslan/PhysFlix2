@@ -25,3 +25,5 @@ description: chronological action log per session, consolidated weekly
 
 | 2026-11-25 11:31 MYT | Built teacher mode + school progress reports: code/name/class/stable ID, video and quiz percentages; local build, SQL/RLS and mocked desktop/mobile UI passed; production migration awaiting Supabase login, shipping pending | schoolReports.ts, teacher/report components, UserActivityContext, migration | implementation verified locally | not measured |
 | 2026-11-25 11:31 MYT | Tri-repo push 6a0f3c5 completed; Vercel production READY, HTTP 200; follow-up RPC array normalization verified; only production Supabase migration remains blocked by missing login | STATUS.md, TeacherAccountModal.tsx | shipped application; database activation pending | not measured |
+
+| 2026-11-25 11:45 MYT | Added exact verified developer approval, Analytic Board teacher-request card, pending/rejected access gates, status refresh, minimal report disclosure; build/SQL/UI checks passed; production migrations await Supabase login | teacher approval migration, TeacherRequestsCard, teacher/report UI | verified locally; shipping update | not measured |

@@ -47,7 +47,11 @@
 ### Milestone 6: Mod Guru & Laporan Kemajuan Sekolah
 - [x] Kad laporan di Papan Skor, Statistik Video T4 dan T5.
 - [x] Kod sekolah, nama penuh, kelas dan ID unik pelajar.
-- [x] Profil guru dengan kod unik; Dashboard Guru selepas MyHomePhysics Lab.
+- [x] Permohonan guru dengan kod unik; Dashboard Guru selepas MyHomePhysics Lab hanya selepas diluluskan.
 - [x] Snapshot video/peratus tontonan dan kuiz/peratus markah, penghantaran semula.
 - [x] Migrasi SQL, RLS, simpanan keputusan kuiz serta ujian tempatan.
 - [ ] Jalankan migrasi pada Supabase produksi dan sahkan aliran dengan akaun guru/pelajar sebenar.
+- [x] Kad Permohonan Akaun Guru dalam Analytic Board; hanya pembangun abdulhalimroslan@gmail.com boleh Luluskan/Tolak.
+- [x] Status pending/approved/rejected, semakan status, penghantaran semula dan semakan semula perubahan profil.
+- [x] Kad laporan minimal dengan details/summary; ujian kelulusan SQL dan UI desktop/mudah alih.
+- [ ] Aktifkan kedua-dua migrasi sekolah/guru pada Supabase produksi.

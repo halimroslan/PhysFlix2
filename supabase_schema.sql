@@ -130,4 +130,6 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- Teacher mode, quiz persistence and school report RLS/RPCs:
--- After this base schema, apply supabase/migrations/202611250001_teacher_reports.sql.
+-- After this base schema, apply migrations in order:
+-- supabase/migrations/202611250001_teacher_reports.sql
+-- supabase/migrations/202611250002_teacher_approval.sql

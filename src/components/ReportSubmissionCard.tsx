@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Send } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useUserActivity } from '@/context/UserActivityContext';
 import { allVideoLessons } from '@/data/physicsData';
@@ -51,27 +50,29 @@ export function ReportSubmissionCard({ scope }: { scope: 'all' | '4' | '5' }) {
   }
 
   return (
-    <section aria-label="Penghantaran laporan statistik" className="w-full rounded-2xl border border-red-500/25 bg-slate-900/80 p-5 text-left lg:w-96 lg:shrink-0">
-      <h3 className="flex items-center gap-2 font-bold text-white"><Send className="h-4 w-4 text-red-400" />Hantar Laporan Statistik</h3>
-      <p className="mt-1 text-xs text-slate-400">{scope === 'all' ? 'Semua tingkatan' : `Tingkatan ${scope}`} · Kongsi kemajuan video dan kuiz dengan guru melalui kod sekolah.</p>
-      <form onSubmit={send} className="mt-4 space-y-3">
+    <details aria-label="Penghantaran laporan statistik" className="w-full rounded-xl border border-white/15 text-left lg:w-80 lg:shrink-0">
+      <summary className="cursor-pointer rounded-xl px-4 py-3 text-sm font-medium text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400">
+        Hantar Laporan Statistik
+        <span className="mt-1 block text-xs font-normal text-slate-400">{scope === 'all' ? 'Semua tingkatan' : `Tingkatan ${scope}`} · Kongsi dengan guru</span>
+      </summary>
+      <form onSubmit={send} className="space-y-3 border-t border-white/10 p-4">
         <label className="block text-xs text-slate-300">Kod sekolah
-          <input required maxLength={20} value={code} onChange={e => { setCode(e.target.value.toUpperCase()); setMessage(''); }} placeholder="Kod daripada guru" className="mt-1 w-full rounded-lg border border-slate-600 bg-black/30 p-2.5 text-sm uppercase text-white" />
+          <input required maxLength={20} value={code} onChange={e => { setCode(e.target.value.toUpperCase()); setMessage(''); }} placeholder="Kod daripada guru" className="mt-1 w-full rounded-md border border-white/20 bg-transparent px-3 py-2 text-sm uppercase text-white" />
         </label>
         <div className="grid grid-cols-2 gap-3">
           <label className="block text-xs text-slate-300">Nama penuh
-            <input required minLength={3} maxLength={120} value={name} onChange={e => setName(e.target.value)} autoComplete="name" className="mt-1 w-full rounded-lg border border-slate-600 bg-black/30 p-2.5 text-sm text-white" />
+            <input required minLength={3} maxLength={120} value={name} onChange={e => setName(e.target.value)} autoComplete="name" className="mt-1 w-full rounded-md border border-white/20 bg-transparent px-3 py-2 text-sm text-white" />
           </label>
           <label className="block text-xs text-slate-300">Kelas
-            <input required maxLength={60} value={studentClass} onChange={e => setStudentClass(e.target.value)} placeholder="Contoh: 4 Amanah" className="mt-1 w-full rounded-lg border border-slate-600 bg-black/30 p-2.5 text-sm text-white" />
+            <input required maxLength={60} value={studentClass} onChange={e => setStudentClass(e.target.value)} placeholder="Contoh: 4 Amanah" className="mt-1 w-full rounded-md border border-white/20 bg-transparent px-3 py-2 text-sm text-white" />
           </label>
         </div>
         {user && <p className="break-all text-[11px] text-slate-400">ID unik pelajar: <span className="font-mono">{studentCode(user.id)}</span></p>}
         <p className="text-[11px] text-slate-400">Dengan menekan Hantar, anda berkongsi nama, kelas, ID dan statistik ini dengan guru pemilik kod. Kuiz belum dijawab ditanda “Belum dijawab”.</p>
-        <button disabled={busy || activityLoading || !user} className="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-red-500 disabled:opacity-50">{busy ? 'Menghantar…' : activityLoading ? 'Memuatkan kemajuan…' : 'Hantar'}</button>
+        <button disabled={busy || activityLoading || !user} className="w-full rounded-md bg-white px-4 py-2 text-sm font-medium text-slate-950 hover:bg-slate-200 disabled:opacity-50">{busy ? 'Menghantar…' : activityLoading ? 'Memuatkan kemajuan…' : 'Hantar'}</button>
         {error && <p role="alert" className="text-xs text-red-400">{error}</p>}
         {message && <p role="status" className="text-xs text-emerald-400">{message}</p>}
       </form>
-    </section>
+    </details>
   );
 }

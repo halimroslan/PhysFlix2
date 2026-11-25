@@ -12,6 +12,9 @@ export interface TeacherAccount {
   full_name: string;
   school_name: string;
   school_code: string;
+  approval_status: 'pending' | 'approved' | 'rejected';
+  created_at?: string;
+  reviewed_at?: string | null;
 }
 export interface ReportVideo {
   id: string;
@@ -30,6 +33,10 @@ export interface SchoolReport {
   general_quiz: QuizResult | null;
   submitted_at: string;
 }
+
+export const TEACHER_APPROVER_EMAIL = 'abdulhalimroslan@gmail.com';
+export const canReviewTeacherRequests = (email?: string | null) => email?.trim().toLowerCase() === TEACHER_APPROVER_EMAIL;
+export const isApprovedTeacher = (account: TeacherAccount | null) => account?.approval_status === 'approved';
 
 export const schoolCodePattern = /^[A-Z0-9][A-Z0-9-]{2,19}$/;
 export const studentCode = (id: string) => `PF-${id.toUpperCase()}`;

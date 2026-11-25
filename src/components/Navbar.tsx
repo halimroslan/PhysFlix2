@@ -1,5 +1,6 @@
 "use client";
 
+import { isApprovedTeacher } from "@/lib/schoolReports";
 import { TeacherAccountModal, useTeacherAccount } from "./TeacherAccountModal";
 import React, { useState, useEffect } from "react";
 import { Search, Bell, LogOut, Menu, X, ChevronDown, Book, FileText, Target, Calculator } from "lucide-react";
@@ -84,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: "experiments", label: "MyHomePhysics Lab" },
   ];
 
-  if (teacherAccount) navLinks.push({ id: "teacher", label: "Dashboard Guru" });
+  if (isApprovedTeacher(teacherAccount)) navLinks.push({ id: "teacher", label: "Dashboard Guru" });
 
   if (isSuperAdmin) {
     navLinks.push({ id: "analytics", label: "Analytic Board" });
@@ -259,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </div>
 
                   <button type="button" onClick={() => { setTeacherModalOpen(true); setIsToolsDropdownOpen(false); }} className="rounded-lg px-3 py-2 text-left font-semibold text-red-300 hover:bg-slate-800">
-                    {teacherAccount ? "Profil Guru" : "Tukar ke Mod Guru"}
+                    {teacherAccount ? isApprovedTeacher(teacherAccount) ? "Profil Guru" : "Status Permohonan Guru" : "Mohon Akaun Guru"}
                   </button>
                   <button 
                     onClick={() => { onOpenFormula?.(); setIsToolsDropdownOpen(false); }} 

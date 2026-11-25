@@ -58,3 +58,5 @@ budget_tokens: 2000
 - Supabase CLI v2.117 supports Management API SQL via `supabase db query --linked --project-ref <ref> --file <sql>`. Both --linked and --project-ref are required together; login suffices without DB password. Never print tokens.
 - Teacher/report migrations 202611250001 and 202611250002 are now APPLIED to production and tracked in supabase_migrations.schema_migrations. Do not rerun the raw non-idempotent CREATE statements.
 - Both migrations were combined into one transaction, so self-service teacher mode was never exposed between steps. Production role-based smoke checks passed and all fixture writes were rolled back.
+
+- Teacher dashboard student reports must start collapsed; teacher clicks student name to reveal progress. Use native details/summary, retain name/class/stable ID in header.

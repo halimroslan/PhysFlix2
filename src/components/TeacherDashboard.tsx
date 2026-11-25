@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { RefreshCw, GraduationCap } from 'lucide-react';
+import { RefreshCw, GraduationCap, ChevronDown } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useTeacherAccount } from './TeacherAccountModal';
 import { isApprovedTeacher, reportError, SchoolReport, studentCode } from '@/lib/schoolReports';
@@ -56,18 +56,18 @@ export function TeacherDashboard() {
       {error && <p role="alert" className="text-red-400">{error}</p>}
       {!loading && !error && visible.length === 0 && <p className="rounded-xl border border-slate-800 p-8 text-slate-400">{reports.length ? 'Tiada padanan pada halaman ini.' : 'Belum ada laporan. Kongsi kod sekolah dengan pelajar dan minta mereka tekan Hantar pada Papan Skor.'}</p>}
       {!error && visible.map(report => (
-        <article key={report.id} className="overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/60">
-          <div className="flex flex-wrap justify-between gap-3 border-b border-slate-800 p-5">
+        <details key={report.id} className="group overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/60">
+          <summary className="flex cursor-pointer list-none flex-wrap justify-between gap-3 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-400 [&::-webkit-details-marker]:hidden">
             <div>
-              <h2 className="text-lg font-bold">{report.student_name} <span className="ml-2 rounded bg-slate-800 px-2 py-1 text-sm font-medium">{report.student_class}</span></h2>
+              <h2 className="flex items-center gap-2 text-lg font-bold"><ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" />{report.student_name} <span className="ml-2 rounded bg-slate-800 px-2 py-1 text-sm font-medium">{report.student_class}</span></h2>
               <p className="mt-2 break-all font-mono text-xs text-slate-400">ID unik: {studentCode(report.student_id)}</p>
             </div>
             <div className="text-sm text-slate-400">
               <p className="font-semibold text-red-300">{report.scope === 'all' ? 'Semua tingkatan' : `Tingkatan ${report.scope}`}</p>
               <time dateTime={report.submitted_at}>{new Date(report.submitted_at).toLocaleString('ms-MY')}</time>
             </div>
-          </div>
-          <div className="grid gap-6 p-5 lg:grid-cols-2">
+          </summary>
+          <div className="grid gap-6 border-t border-slate-800 p-5 lg:grid-cols-2">
             <div>
               <h3 className="mb-3 font-bold">Senarai Video · Peratus Tontonan</h3>
               {report.videos.length === 0 && <p className="text-sm text-slate-400">Belum ada aktiviti video.</p>}
@@ -87,7 +87,7 @@ export function TeacherDashboard() {
               </ul>
             </div>
           </div>
-        </article>
+        </details>
       ))}
       <div className="flex items-center gap-4 text-sm">
         <button disabled={page === 0 || loading} onClick={() => setPage(value => value - 1)} className="rounded border border-slate-700 px-3 py-2 disabled:opacity-40">Sebelum</button>

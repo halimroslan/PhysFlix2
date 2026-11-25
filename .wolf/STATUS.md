@@ -7,7 +7,7 @@ Last updated: 2026-11-25
 - Only verified `abdulhalimroslan@gmail.com` can approve/reject via **Permohonan Akaun Guru** in Analytic Board; other superadmin accounts cannot review.
 - Dashboard Guru shown after MyHomePhysics Lab only after approval. Teacher can check status; rejected requests can resubmit. Changed approved name/school requires reapproval.
 - Minimal expandable report cards in Score Board and T4/T5 statistics retain school code, full name, class, stable PF-UUID, consent and explicit Send.
-- Teacher dashboard displays student name/class/ID, video completion, quiz marks and timestamps. Separate snapshots by all/T4/T5; resubmission updates same scope.
+- Teacher dashboard reports are collapsed by default. Clicking student name/header expands or collapses video/quiz progress; name, class, ID, scope and timestamp remain visible. Native details/summary supports Enter/Space and mobile. Separate snapshots by all/T4/T5; resubmission updates same scope.
 - Quiz results persist with timestamp reconciliation, account-isolated cache and safe remote sync.
 - Application release `dca5a85` pushed to all three remotes; Vercel production deployment `dpl_5w5swjACfawKHctK2kSdjdX5hg2r` READY at https://physflix.vercel.app. Documentation handoff `f72f372` also pushed.
 - **PRODUCTION DATABASE ACTIVE:** migrations `202611250001_teacher_reports.sql` and `202611250002_teacher_approval.sql` applied atomically to `yzurojadggyoxyxmmwof`, recorded in `supabase_migrations.schema_migrations`; PostgREST schema reload notified.
@@ -32,3 +32,7 @@ Acceptance:
 - Vercel project `physflix`, scope `abdulhalimroslan-3945s-projects`. DB-only activation needs no application redeploy.
 - Remotes: origin PhysFlix4, physflix2-origin PhysFlix2, old-origin PhysicsSPMFlix; main. Supabase local `.temp` cache ignored.
 - Existing legacy lint violations remain outside scope; no new application dependencies or product code changes this activation turn.
+
+## Dashboard collapse update
+- Student report disclosure implemented with native details/summary; no JS state or dependencies.
+- Production build, focused ESLint and mocked desktop/mobile browser checks passed (default closed, click open/close, Enter/Space, independent reports, video/quiz values).

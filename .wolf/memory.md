@@ -29,3 +29,5 @@ description: chronological action log per session, consolidated weekly
 | 2026-11-25 11:45 MYT | Added exact verified developer approval, Analytic Board teacher-request card, pending/rejected access gates, status refresh, minimal report disclosure; build/SQL/UI checks passed; production migrations await Supabase login | teacher approval migration, TeacherRequestsCard, teacher/report UI | dca5a85 pushed to three remotes; Vercel READY; production database activation pending | not measured |
 
 | 2026-11-25 12:02 MYT | Confirmed Supabase login; backed up schema; applied school reporting + teacher approval migrations atomically; production role/RLS/report tests passed and rolled back; anonymous RPC access correctly denied | production Supabase, STATUS.md, cerebrum.md | production approval ACTIVE | not measured |
+
+| 2026-11-25 13:52 MYT | Teacher dashboard reports now default collapsed; name/header toggles progress; build/lint and browser click/keyboard/mobile checks passed | TeacherDashboard.tsx | verified; shipping | not measured |

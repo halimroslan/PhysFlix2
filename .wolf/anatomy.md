@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T03:45:07.147Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T05:52:29.414Z
 > Files: 114 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
@@ -9,7 +9,7 @@
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~152 tok)
+- `.gitignore` — Git ignore rules (~164 tok)
 - `.ignore` — graft's cards are gitignored but should stay greppable: ripgrep reads (~48 tok)
 - `AGENTS.md` — This is NOT the Next.js you know (~243 tok)
 - `CLAUDE.md` — OpenWolf (~102 tok)
@@ -20,9 +20,9 @@
 - `obfuscate_ids.js` — Declares fs (~215 tok)
 - `package.json` — Node.js package manifest (~238 tok)
 - `postcss.config.mjs` — Declares config (~26 tok)
-- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~2421 tok)
+- `PROJECT_FLOW.md` — 🧭 PROJECT FLOW & LIVING ARCHITECTURE: PHYSFLIX SPM (~2550 tok)
 - `README.md` — Project documentation (~363 tok)
-- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~751 tok)
+- `ROADMAP.md` — 🗺️ ROADMAP & MILESTONES: PHYSFLIX SPM (~765 tok)
 - `supabase_schema.sql` — PHYSFLIX SUPABASE DATABASE SCHEMA & RLS POLICIES (~1626 tok)
 - `tsconfig.json` — TypeScript configuration (~192 tok)
 
@@ -130,7 +130,7 @@
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
 - `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2526 tok)
 - `TeacherAccountModal.tsx` — TeacherAccountModal — renders form, modal — uses useState, useEffect (~1619 tok)
-- `TeacherDashboard.tsx` — TeacherDashboard — uses useState, useCallback, useEffect (~2065 tok)
+- `TeacherDashboard.tsx` — TeacherDashboard — uses useState, useCallback, useEffect (~2161 tok)
 - `TeacherRequestsCard.tsx` — TeacherRequestsCard — uses useState, useCallback, useEffect (~1659 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
 - `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36181 tok)

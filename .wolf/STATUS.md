@@ -1,9 +1,9 @@
 # STATUS — PhysFlix SPM
 
-Last updated: 2026-11-25
+Last updated: 2026-11-28
 
 ## ✅ Done
-- Teacher requests from account menu: full name, school name and permanent unique school code; pending/approved/rejected lifecycle.
+- Teacher requests from account menu: full name, school name and unique school code with Developer-approved change requests; pending/approved/rejected lifecycle.
 - Only verified `abdulhalimroslan@gmail.com` and `ahalimroslan@gmail.com` can approve/reject via **Permohonan Akaun Guru** in Analytic Board; other superadmin accounts cannot review.
 - Dashboard Guru shown after MyHomePhysics Lab only after approval. Teacher can check status; rejected requests can resubmit. Changed approved name/school requires reapproval.
 - Minimal expandable report cards in Score Board and T4/T5 statistics retain school code, full name, class, stable PF-UUID, consent and explicit Send.
@@ -41,3 +41,10 @@ Acceptance:
 - Added `ahalimroslan@gmail.com` alongside existing developer to teacher-request UI and database approver allowlist. Both auth accounts confirmed verified in production.
 - Migration `202611250003_second_developer.sql` applied atomically with migration history and schema reload; verified auth.users identity remains mandatory. Other superadmins receive no new permission.
 - School-report checks, PGlite approval/RLS suite, focused ESLint and production build passed. Production permission checks passed for all existing auth identities, with spoofed JWT email rejected and anonymous execution disabled. Application commit `29d5912` pushed to all three remotes; Vercel production deployment `dpl_7n19t7pA2aZxLBgXPrfA25DCQbfp` READY at https://physflix.vercel.app.
+
+## School-code change requests — 2026-11-28
+- Approved teachers can request a new unique code in Menu akaun → Profil Guru → Mohon Tukar Kod Sekolah, check status, and revise/resubmit requests.
+- Existing code and approved teacher access remain active pending review. Developer reviews current/requested code in Permohonan Akaun Guru. Approval atomically changes routing; rejection keeps old code. Reports remain bound to teacher UUID.
+- Migration `202611280001_school_code_requests.sql` applied and recorded in production; anonymous access denied, verified Developer checks retained, stale reviews and code collisions rejected.
+- Checks passed: PGlite authorization/approval/rejection/collision/routing/report-preservation suite, focused lint, production build, mocked mobile/desktop UI including status refresh, production migration/permission checks.
+- GitHub push and Vercel deployment pending.

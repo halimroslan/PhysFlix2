@@ -22,7 +22,7 @@ export function TeacherRequestsCard() {
     setError('');
     try {
       const { data, count, error } = await supabase.from('teacher_accounts').select('*', { count: 'exact' })
-        .eq('approval_status', 'pending').order('created_at').order('user_id').range(page * 20, page * 20 + 19);
+        .or('approval_status.eq.pending,and(approval_status.eq.approved,code_change_status.eq.pending)').order('created_at').order('user_id').range(page * 20, page * 20 + 19);
       if (error) throw error;
       if (!data?.length && page > 0) { setPage(value => value - 1); return; }
       setRequests(data || []);
@@ -40,7 +40,8 @@ export function TeacherRequestsCard() {
     setError('');
     setMessage('');
     try {
-      const { error } = await supabase.rpc('review_teacher_request', { p_user_id: account.user_id, p_approve: approve, p_requested_at: account.created_at });
+      const codeChange = account.approval_status === 'approved' && account.code_change_status === 'pending';
+      const { error } = await supabase.rpc(codeChange ? 'review_school_code_change' : 'review_teacher_request', { p_user_id: account.user_id, p_approve: approve, p_requested_at: codeChange ? account.code_requested_at : account.created_at });
       if (error) throw error;
       setMessage(`Permohonan ${account.full_name} ${approve ? 'diluluskan' : 'ditolak'}.`);
       await loadRequests();
@@ -52,12 +53,12 @@ export function TeacherRequestsCard() {
   return (
     <details className="rounded-xl border border-slate-700 bg-slate-900/60 text-white">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-400">
-        <span><span className="block font-semibold">Permohonan Akaun Guru</span><span className="mt-1 block text-xs text-slate-400">Semak dan sahkan permohonan pertukaran akaun.</span></span>
+        <span><span className="block font-semibold">Permohonan Akaun Guru</span><span className="mt-1 block text-xs text-slate-400">Semak permohonan akaun dan pertukaran kod sekolah.</span></span>
         <span className="shrink-0 rounded-full bg-amber-500/10 px-3 py-1 text-xs text-amber-300">{loading ? 'Memuatkan…' : error ? 'Semak status' : `${total} menunggu`}</span>
       </summary>
       <div className="space-y-4 border-t border-slate-800 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-slate-400">Kelulusan oleh abdulhalimroslan@gmail.com sahaja.</p>
+          <p className="text-xs text-slate-400">Kelulusan oleh akaun Developer yang ditetapkan.</p>
           <button type="button" disabled={loading || !!busy} onClick={loadRequests} className="rounded-lg border border-slate-700 px-3 py-2 text-xs hover:bg-slate-800 disabled:opacity-50">Muat semula permohonan</button>
         </div>
         {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
@@ -70,6 +71,7 @@ export function TeacherRequestsCard() {
               <h3 className="break-words font-semibold">{account.full_name}</h3>
               <p className="break-words text-sm text-slate-300">{account.school_name}</p>
               <p className="text-xs text-slate-400">Kod sekolah: <span className="font-mono text-slate-200">{account.school_code}</span></p>
+              {account.approval_status === 'approved' && account.code_change_status === 'pending' && <p className="text-sm text-amber-300">Mohon tukar kod kepada: <span className="font-mono">{account.requested_school_code}</span></p>}
               <p className="break-all font-mono text-[11px] text-slate-500">ID akaun: {account.user_id}</p>
               {account.created_at && <time dateTime={account.created_at} className="block text-xs text-slate-500">{new Date(account.created_at).toLocaleString('ms-MY')}</time>}
             </div>

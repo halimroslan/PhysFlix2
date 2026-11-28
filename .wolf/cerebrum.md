@@ -62,3 +62,5 @@ budget_tokens: 2000
 - Teacher dashboard student reports must start collapsed; teacher clicks student name to reveal progress. Use native details/summary, retain name/class/stable ID in header.
 
 - Both verified developer emails now approve teacher requests: `abdulhalimroslan@gmail.com`, `ahalimroslan@gmail.com`. Keep client allowlist and database is_teacher_approver() aligned; add new migrations instead of rewriting applied ones.
+
+- 2026-11-28: School code no longer permanent. Approved teachers request changes via requested_school_code/code_requested_at/code_change_status; old code stays active until Developer approval. Report ownership uses UUID. Never apply code immediately on request; unique constraint must also run at review time. Read-only uncontrolled code input needs key={account?.school_code} so Semak Status refreshes rendered value.

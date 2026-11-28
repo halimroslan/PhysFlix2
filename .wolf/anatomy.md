@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-11-25T06:05:20.745Z
-> Files: 115 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-28T10:24:34.269Z
+> Files: 116 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -74,7 +74,7 @@
 ## scripts/
 
 - `check-school-reports.mjs` — Run: node --experimental-strip-types scripts/check-school-reports.mjs (~778 tok)
-- `check-teacher-approval.mjs` — Run: npm exec --yes --package=@electric-sql/pglite@0.6.0 -- node scripts/check-teacher-approval.mjs (~1941 tok)
+- `check-teacher-approval.mjs` — Run: npm exec --yes --package=@electric-sql/pglite@0.6.0 -- node scripts/check-teacher-approval.mjs (~2843 tok)
 - `parseQuiz.js` — fs: saveImage (~1729 tok)
 
 ## src/app/
@@ -129,9 +129,9 @@
 - `ReportSubmissionCard.tsx` — ReportSubmissionCard — renders form — uses useState (~1490 tok)
 - `RevisionCollections.tsx` — RevisionCollections (~803 tok)
 - `ScoreBoardView.tsx` — ScoreBoardView — renders chart (~2526 tok)
-- `TeacherAccountModal.tsx` — TeacherAccountModal — renders form, modal — uses useState, useEffect (~1619 tok)
+- `TeacherAccountModal.tsx` — TeacherAccountModal — renders form, modal — uses useState, useEffect (~2314 tok)
 - `TeacherDashboard.tsx` — TeacherDashboard — uses useState, useCallback, useEffect (~2161 tok)
-- `TeacherRequestsCard.tsx` — TeacherRequestsCard — uses useState, useCallback, useEffect (~1659 tok)
+- `TeacherRequestsCard.tsx` — TeacherRequestsCard — uses useState, useCallback, useEffect (~1800 tok)
 - `TopPicks.tsx` — dskpThemes (~5477 tok)
 - `VideoPlayerView.tsx` — VideoPlayerView — uses useState, useEffect, useMemo (~36181 tok)
 
@@ -159,7 +159,7 @@
 ## src/lib/
 
 - `firebase.ts` — Exports auth, googleProvider, db (~309 tok)
-- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 8 more (~845 tok)
+- `schoolReports.ts` — Exports QuizResult, TeacherAccount, ReportVideo, SchoolReport + 8 more (~886 tok)
 - `supabase.ts` — Exports isSupabaseConfigured, supabase (~185 tok)
 
 ## src/types/
@@ -178,3 +178,4 @@
 - `202611250001_teacher_reports.sql` — Self-service teacher mode; codes route explicit student report submissions. (~1854 tok)
 - `202611250002_teacher_approval.sql` — Teacher mode requires approval by the project's named developer. (~1294 tok)
 - `202611250003_second_developer.sql` — Both verified developer accounts may review teacher requests. (~160 tok)
+- `202611280001_school_code_requests.sql` — SQL: 1 alter(s), 2 function(s) (~804 tok)

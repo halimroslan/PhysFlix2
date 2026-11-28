@@ -102,6 +102,21 @@
       ],
       "occurrences": 1,
       "last_seen": "2026-11-25T12:02:40"
+    },
+    {
+      "id": "school-code-status-refresh-20261128",
+      "timestamp": "2026-11-28T18:24:32.864552",
+      "error_message": "School-code input did not refresh after Semak Status approval",
+      "file": "src/components/TeacherAccountModal.tsx",
+      "root_cause": "Uncontrolled read-only input retained previous DOM value after account refresh",
+      "fix": "Key schoolCode input by account.school_code to remount on code changes",
+      "tags": [
+        "teacher",
+        "school-code",
+        "ui"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-28T18:24:32.864552"
     }
   ]
 }

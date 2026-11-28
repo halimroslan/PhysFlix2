@@ -15,6 +15,9 @@ export interface TeacherAccount {
   approval_status: 'pending' | 'approved' | 'rejected';
   created_at?: string;
   reviewed_at?: string | null;
+  requested_school_code?: string | null;
+  code_requested_at?: string | null;
+  code_change_status?: 'pending' | 'approved' | 'rejected' | null;
 }
 export interface ReportVideo {
   id: string;

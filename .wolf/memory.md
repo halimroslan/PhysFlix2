@@ -37,3 +37,5 @@ description: chronological action log per session, consolidated weekly
 | 14:15 | Second Developer release completed; production identity checks passed, migration history confirmed | 29d5912, migration 202611250003 | All three remotes pushed; Vercel dpl_7n19t7pA2aZxLBgXPrfA25DCQbfp READY | ~2754 Graft tokens saved |
 
 | 18:30 | Teacher school-code request and Developer review flow; existing routing preserved until approval | TeacherAccountModal, TeacherRequestsCard, schoolReports, migration 202611280001, approval checks | Local build/lint/DB suite/UI passed; production migration and permission checks passed; release pending | ~3140 Graft tokens saved |
+
+| 18:35 | School-code change release completed | c92f773, migration 202611280001 | All three GitHub remotes pushed; Vercel dpl_4VNUkMm2i6qqXuNj1ghhSM2fiBED READY | ~3140 Graft tokens saved |

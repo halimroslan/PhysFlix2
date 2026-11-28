@@ -47,4 +47,4 @@ Acceptance:
 - Existing code and approved teacher access remain active pending review. Developer reviews current/requested code in Permohonan Akaun Guru. Approval atomically changes routing; rejection keeps old code. Reports remain bound to teacher UUID.
 - Migration `202611280001_school_code_requests.sql` applied and recorded in production; anonymous access denied, verified Developer checks retained, stale reviews and code collisions rejected.
 - Checks passed: PGlite authorization/approval/rejection/collision/routing/report-preservation suite, focused lint, production build, mocked mobile/desktop UI including status refresh, production migration/permission checks.
-- GitHub push and Vercel deployment pending.
+- Commit `c92f773` pushed to all three remotes. Vercel production `dpl_4VNUkMm2i6qqXuNj1ghhSM2fiBED` READY at https://physflix.vercel.app. Next: monitor first real school-code request and Developer decision.
